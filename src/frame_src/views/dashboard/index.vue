@@ -33,6 +33,7 @@
                 </template>
               </el-table-column>
             </el-table>
+              
           </el-card>
         </el-col>
         <el-col :xs="12" :sm="12" :md="12" :lg="12" :xl="11">
@@ -43,7 +44,7 @@
                   <img src="../../../frame_src/imgs/notice.png" alt>
                 </el-col>
                 <el-col :span="22">
-                  <span>纳税人数统计图</span>
+                  <span>区域费用统计</span>
                 </el-col>
               </el-row>
             </div>
@@ -54,6 +55,7 @@
           </el-card>
         </el-col>
         <el-col :xs="0" :sm="0" :md="0" :lg="0" :xl="1"></el-col>
+          <!-- <el-col :xs="12" :sm="12" :lg="8"></el-col> -->
       </el-row>
     </div>
 
@@ -67,7 +69,7 @@
                   <img src="../../../frame_src/imgs/notice.png" alt class="pic">
                 </el-col>
                 <el-col :span="22">
-                  <span>每月纳税图</span>
+                  <span>收入统计</span>
                 </el-col>
               </el-row>
             </div>
@@ -83,7 +85,7 @@
                   <img src="../../../frame_src/imgs/notice.png" alt>
                 </el-col>
                 <el-col :span="22">
-                  <span>纳税分档分析</span>
+                  <span>检查统计</span>
                 </el-col>
               </el-row>
             </div>
@@ -155,7 +157,24 @@ export default {
   data() {
     return {
       currentRole: "adminDashboard",
-      noticeList: [],
+      noticeList: [
+        {
+          NOTICE_TITLE:'关于大港油田物业房屋管理系统建设项目开发通知',
+          NOTICE_DATETIME:'2019-05-22 12:00:00.000'
+        },{
+          NOTICE_TITLE:'关于大港油田物业房屋管理系统建设试运行通知',
+          NOTICE_DATETIME:'2019-05-23 12:00:00.000'
+        },{
+          NOTICE_TITLE:'关于大港油田物业房屋管理系统使用培训通知',
+          NOTICE_DATETIME:'2019-05-24 12:00:00.000'
+        },{
+          NOTICE_TITLE:'关于大港油田物业房屋管理系统正式上线通知',
+          NOTICE_DATETIME:'2019-05-25 12:00:00.000'
+        },{
+          NOTICE_TITLE:'关于大港油田物业房屋管理系统成果汇报通知',
+          NOTICE_DATETIME:'2019-05-26 12:00:00.000'
+        }
+      ],
       detailList: [],
       temp: {
         orgcode: this.$store.state.user.orgCode,
@@ -178,6 +197,12 @@ export default {
         },
         xAxis: {
           data: [],
+        //   grid: {
+        //   left: "0%",
+        //   right: "0%",
+        //   bottom: "0%",
+        //   containLabel: true
+        // },
           axisLabel: {
             inside: true,
             textStyle: {
@@ -224,7 +249,7 @@ export default {
           },
           {
             type: "bar",
-            barMaxWidth:30,
+            barMaxWidth:80,
             itemStyle: {
               normal: {
                 color: new this.$echarts.graphic.LinearGradient(0, 0, 0, 1, [
@@ -319,6 +344,7 @@ export default {
     };
   },
   methods: {
+       
     drawline() {
       ///绘制echarts 柱状图
       let mycharts = this.$echarts.init(document.getElementById("pic1"));
@@ -334,22 +360,28 @@ export default {
       mycharts2.setOption(this.option2);
     },
     getMonthData() {
-      getMonthData(this.temp).then(response => {
-        if (response.data.code === 2000) {
-          this.option.xAxis.data = Object.keys(response.data.items[0]);
-          this.option.series[1].data = Object.values(response.data.items[0]);
-          console.log(this.option)
+     let items=[{"A区":21317,"B区":21234,"C区":33074,"D区":12222,"E区":55548}];
+      this.option.xAxis.data = Object.keys(items[0]);
+          this.option.series[1].data = Object.values(items[0]);
           this.drawline();
-        }
-      });
+      // getMonthData(this.temp).then(response => {
+      //   if (response.data.code === 2000) {
+      //     this.option.xAxis.data = Object.keys(response.data.items[0]);
+      //     this.option.series[1].data = Object.values(response.data.items[0]);
+      //     this.drawline();
+      //   }
+      // });
     },
     getLv() {
-      getLv(this.temp).then(response => {
-        if (response.data.code === 2000) {
-          this.changeLvData(response.data.items);
+      let items=[{"TaxRate":"整改商户","1月":500,"2月":400,"3月":300},{"TaxRate":"合格商户","1月":1863,"2月":2057,"3月":2423}];
+        this.changeLvData(items);
           this.drawline2();
-        }
-      });
+      // getLv(this.temp).then(response => {
+      //   if (response.data.code === 2000) {
+      //     this.changeLvData(response.data.items);
+      //     this.drawline2();
+      //   }
+      // });
     },
     // changeLvData(data) {
     //   let na = "";
@@ -382,7 +414,7 @@ export default {
       let namelist = [];
       data.forEach(item => {
         na = Object.values(item)[0];
-        na += "%";
+        //na += "%";
         namelist.push(na);
         arr = Object.values(item);
         arr.splice(0, 1);
@@ -403,12 +435,15 @@ export default {
       this.option2.legend.data = namelist;
     },
     CompareData() {
-      CompareData(this.temp).then(response => {
-        if (response.data.code === 2000) {
-          this.changeCompareData(response.data.items);
-          this.drawline1();
-        }
-      });
+      let item=[{"mm":1,"KS":98366.06,"DJ":100366.06},{"mm":2,"KS":100702.29,"DJ":103453.27},{"mm":3,"KS":114047.24,"DJ":102994.45}];
+      this.changeCompareData(item);
+      this.drawline1();
+      // CompareData(this.temp).then(response => {
+      //   if (response.data.code === 2000) {
+      //     this.changeCompareData(response.data.items);
+      //     this.drawline1();
+      //   }
+      // });
     },
     changeCompareData(data) {
       let arr1 = [];
@@ -421,22 +456,22 @@ export default {
         arr2.push(item.DJ);
       });
       this.option1.series.push({
-        name: "预缴",
+        name: "房租",
         type: "bar",
         barGap: 0,
-        label: "预缴",
+        label: "房租",
         data: arr1,
         barMaxWidth: 30
       });
       this.option1.series.push({
-        name: "代缴",
+        name: "物业费",
         type: "bar",
         barGap: 0,
-        label: "代缴",
+        label: "物业费",
         data: arr2,
         barMaxWidth: 35
       });
-      this.option1.legend.data = ["预缴", "代缴"];
+      this.option1.legend.data = ["房租", "物业费"];
       this.option1.xAxis.push({
         type: "category",
         axisTick: { show: false },
@@ -544,5 +579,8 @@ export default {
   font-family: "微软雅黑";
   min-height: 360px;
 }
+
+
+
 </style>
 
