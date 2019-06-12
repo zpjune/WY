@@ -38,61 +38,46 @@
             highlight-current-row
             style="width: 100%;text-align:left;"
           >
-            <!-- <el-table-column align="center" label="项目编号">
+            <el-table-column align="center" label="房屋编号">
               <template slot-scope="scope">
-                <span>{{scope.row.XMBH}}</span>
+                <span>{{scope.row.FWBH}}</span>
               </template>
-            </el-table-column> -->
+            </el-table-column>
 
             <el-table-column label="房屋名称" :show-overflow-tooltip="true">
               <template slot-scope="scope">
-                <span>{{scope.row.XMMC}}</span>
+                <span>{{scope.row.FWMC}}</span>
               </template>
             </el-table-column>
-            <el-table-column align="right" prop="MSEG" label="坐落位置">
+            <el-table-column align="right" prop="JZMJ" label="建筑面积">
               <template slot-scope="scope">
-                <span>{{scope.row.XMLB}}</span>
+                <span>{{scope.row.JZMJ}}</span>
               </template>
             </el-table-column>
-            <el-table-column  align="right" prop="CBDW" label="隶属分公司">
+            <el-table-column  align="right" prop="LSFGS" label="隶属分公司">
               <template slot-scope="scope">
-                <span>{{scope.row.CBDW}}</span>
+                <span>{{scope.row.LSFGS}}</span>
               </template>
             </el-table-column>
-            <!-- <el-table-column
-              width="280px"
-              align="right"
-              prop="MSEG"
-              label="建设内容"
-              :show-overflow-tooltip="true"
-            >
+            <el-table-column  align="right" prop="ZLWZ" label="坐落位置">
               <template slot-scope="scope">
-                <span>{{scope.row.JSNR }}</span>
-              </template>
-            </el-table-column> -->
-            <el-table-column  align="right" prop="ZGZSL" label="房租费金额">
-              <template slot-scope="scope">
-                <span>{{scope.row.JHZJE |NumFormat}}</span>
+                <span>{{scope.row.ZLWZ}}</span>
               </template>
             </el-table-column>
-            <el-table-column   align="right" prop="ZGZSL" label="物业费金额">
+            <el-table-column  align="right" prop="FZFJE" label="房租费金额">
               <template slot-scope="scope">
-                <span>{{scope.row.LSJHZJE |NumFormat}}</span>
+                <span>{{scope.row.FZFJE |NumFormat}}</span>
               </template>
             </el-table-column>
-            <!-- <el-table-column width="120px" align="right" prop="ZGZSL" label="本年计划总金额">
+            <el-table-column   align="right" prop="WYFJE" label="物业费金额">
               <template slot-scope="scope">
-                <span>{{scope.row.BNJHZJE |NumFormat}}</span>
+                <span>{{scope.row.WYFJE |NumFormat}}</span>
               </template>
             </el-table-column>
-            <el-table-column width="120px" align="right" prop="ZGZSL" label="未来计划总金额">
+           
+            <el-table-column   align="right" prop="FWSX" label="房屋属性">
               <template slot-scope="scope">
-                <span>{{scope.row.WLJHZJE |NumFormat}}</span>
-              </template>
-            </el-table-column> -->
-            <el-table-column   align="right" prop="ZGZSL" label="房屋属性">
-              <template slot-scope="scope">
-                <span>{{scope.row.SFCZWZ}}</span>
+                <span>{{scope.row.FWSX}}</span>
               </template>
             </el-table-column>
             <el-table-column align="center" width="230" label="操作">
@@ -127,63 +112,52 @@
         <el-form ref="dataForm" :model="temp" :rules="rules" label-width="120px" style="width: 99%;">
           <el-row>
             <el-col :span="12">
-              <el-form-item label="项目编号" prop="XMBH">
-                <el-input v-model="temp.XMBH" disabled="true"></el-input>
+              <el-form-item label="房屋编号" prop="FWBH">
+                <el-input v-model="temp.FWBH" ></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="12">
-              <el-form-item label="项目名称" prop="XMMC">
-                <el-input v-model="temp.XMMC"></el-input>
+              <el-form-item label="房屋名称" prop="FWMC">
+                <el-input v-model="temp.FWMC"></el-input>
               </el-form-item>
             </el-col>
           </el-row>
           <el-row>
             <el-col :span="12">
-              <el-form-item label="项目类别" prop="XMLB">
-                <el-input v-model="temp.XMLB"></el-input>
+              <el-form-item label="建筑面积" prop="JZMJ">
+                <el-input v-model="temp.JZMJ"></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="12">
-              <el-form-item label="承办单位" prop="CBDW">
-                <el-input v-model="temp.CBDW"></el-input>
+              <el-form-item label="隶属分公司" prop="LSFGS">
+                <el-input v-model="temp.LSFGS"></el-input>
               </el-form-item>
             </el-col>
           </el-row>
           <el-row>
             <el-col :span="24">
-              <el-form-item label="建设内容" prop="JSNR">
-                <el-input v-model="temp.JSNR" type="textarea" :rows="3"></el-input>
+              <el-form-item label="坐落位置" prop="ZLWZ">
+                <el-input v-model="temp.ZLWZ" type="textarea" :rows="3"></el-input>
               </el-form-item>
             </el-col>
           </el-row>
           <el-row>
             <el-col :span="12">
-              <el-form-item label="计划总金额" prop="JHZJE">
-                <el-input v-model="temp.JHZJE"></el-input>
+              <el-form-item label="房租费金额" prop="FZFJE">
+                <el-input v-model="temp.FZFJE"></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="12">
-              <el-form-item label="历史计划金额" prop="LSJHZJE">
-                <el-input v-model="temp.LSJHZJE"></el-input>
-              </el-form-item>
-            </el-col>
-          </el-row>
-          <el-row>
-            <el-col :span="12">
-              <el-form-item label="本年计划金额" prop="BNJHZJE">
-                <el-input v-model="temp.BNJHZJE"></el-input>
-              </el-form-item>
-            </el-col>
-            <el-col :span="12">
-              <el-form-item label="未来计划金额" prop="WLJHZJE">
-                <el-input v-model="temp.WLJHZJE"></el-input>
+              <el-form-item label="物业费金额" prop="WYFJE">
+                <el-input v-model="temp.WYFJE"></el-input>
               </el-form-item>
             </el-col>
           </el-row>
+
           <el-row>
             <el-col :span="12">
-                              <el-form-item label="出租出售存在物资" prop="SFCZWZ">
-                    <el-select size="mini" style="width:100%;" v-model="temp.SFCZWZ">
+                              <el-form-item label="房屋属性" prop="FWSX">
+                    <el-select size="mini" style="width:100%;" v-model="temp.FWSX">
                       <el-option
                         v-for="(item,key) in selectOptions"
                         :key="key"
@@ -193,97 +167,24 @@
                     </el-select>
                   </el-form-item>
             </el-col>
-            <el-col :span="12"  v-show="temp.SFCZWZ==!0">
-              <el-form-item label="物资计划金额" prop="WZJHJE">
-                <el-input v-model="temp.WZJHJE"></el-input>
-              </el-form-item>
+            <el-col :span="12">
+                              <el-form-item label="所属区域" prop="FWSX">
+                    <el-select size="mini" style="width:100%;" v-model="temp.SSQY">
+                      <el-option
+                        v-for="(item,key) in areaOptions"
+                        :key="key"
+                        :label="item.label"
+                        :value="item.value"
+                      ></el-option>
+                    </el-select>
+                  </el-form-item>
             </el-col>
           </el-row>
-
-                <el-row>
-                 <el-col :span="24" v-show="temp.SFCZWZ==!0">
-    <el-form :model="inServForm" ref="inServForm" label-width="130px" size="mini" highlight-current-row border >
-      <el-form-item label="物资明细" prop="servin">
-        <el-button type="primary" @click="addRow(infiledList)">新增</el-button>
-
-        <el-table :data="infiledList" size="mini"  highlight-current-row border  style="width: 100%" >
-          <el-table-column prop="fildna" label="物资名称" >
-            <template slot-scope="scope">
-              <el-input size="mini" v-model="scope.row.fildna"></el-input>
-            </template>
-          </el-table-column>
-           <el-table-column prop="fildna" label="物资数量" >
-            <template slot-scope="scope">
-              <el-input size="mini" v-model="scope.row.fildnasl"></el-input>
-            </template>
-          </el-table-column>
-          <el-table-column prop="fildtp" label="类型">
-            <template slot-scope="scope">
-              <el-select v-model="scope.row.fildtp" clearable>
-                <el-option
-                  v-for="(item,index) in fildtps"
-                  :key="index"
-                  :label="item.text"
-                  :value="item.value"
-                ></el-option>
-              </el-select>
-            </template>
-          </el-table-column>
-          <el-table-column prop="remark" label="物资说明">
-            <template slot-scope="scope">
-              <el-input size="mini" v-model="scope.row.remark"></el-input>
-            </template>
-          </el-table-column>
-          <el-table-column fixed="right" label="操作">
-            <template slot-scope="scope">
-              <el-button type="danger" 
-                @click.native.prevent="deleteRow(scope.$index, infiledList)"
-                size="small"
-              >移除</el-button>
-            </template>
-          </el-table-column>
-        </el-table>
-      </el-form-item>
-    </el-form>
-          </el-col>
-                    </el-row>
-          <!-- <el-col :span="24">
-            <el-form-item label="入库时间" prop="RKSJ">
-              <el-date-picker
-                type="date"
-                placeholder="选择日期"
-                v-model="temp.RKSJ"
-                style="width: 100%;"
-              ></el-date-picker>
-            </el-form-item>
-          </el-col>
-          <el-col :span="24">
-            <el-form-item label="数量" prop="SL">
-              <el-input v-model="temp.SL"></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="24">
-            <el-form-item label="金额" prop="JE">
-              <el-input v-model="temp.JE"></el-input>
-            </el-form-item>
-          </el-col>
-
-          <el-col :span="24">
-            <el-form-item label="仓库号" prop="CKH">
-              <el-input v-model="temp.CKH"></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="24">
-            <el-form-item label="库存地点" prop="KCDD">
-              <el-input v-model="temp.KCDD"></el-input>
-            </el-form-item>
-          </el-col>-->
         </el-form>
         <div style="text-align:center">
           <el-button @click="editVisible = false">取消</el-button>
           <el-button v-if="dialogStatus=='create'" type="primary" @click="createData">保存</el-button>
           <el-button v-else type="primary" @click="updateData">保存</el-button>
-          <el-button type="success">提交</el-button>
         </div>
       </el-card>
     </el-dialog>
@@ -308,8 +209,7 @@ export default {
   //   },
   data() {
     return {
-      infiledList: [],
-      fildtps: [{ text: "设备", value: "1" }, { text: "材料", value: "2" }],
+    
       tableKey: 0,
       selectOptions: [
         {
@@ -321,220 +221,110 @@ export default {
           label: "出租"
         }
       ],
+      areaOptions: [
+        {
+          value: 0,
+          label: "A区"
+        },
+        {
+          value: 1,
+          label: "B区"
+        },
+        {
+          value: 2,
+          label: "C区"
+        },
+{
+          value: 3,
+          label: "D区"
+        }
+      ],
       list: [
         {
-          XMBH: "201802210987",
-          XMMC: "房屋1",
-          CBDW: "社区信息化部",
-          XMLB: "运行维护",
-          JSNR:
-            "操作系统维护、业务处理系统维护、WEB系统维护、终端接入系统维护、地图升级、货运车辆公共监督与服务平台数据通信异常等系统故障处理",
-          JHZJE: 100,
-          LSJHZJE: 5,
-          BNJHZJE: 45,
-          WLJHZJE: 30,
-          SFCZWZ: "出售",
-          CHECK_STATE:0
+          FWBH: "A-101",
+          FWMC: "房屋1",
+          JZMJ:"100㎡",
+          LSFGS: "社区信息化部",
+          ZLWZ: "A区",
+          FZFJE: 10000,
+          WYFJE: 1000,
+          FWSX: "出售"
         },
         {
-          XMBH: "20180620988",
-          XMMC: "房屋2",
-          CBDW: "网络技术部",
-          XMLB: "系统建设",
-          JSNR:
-            "在现有系统基础上，增加管理系统与交换机数据的定期核查功能，并生成异常接入告警，同时完善系统查询、账号权限管理等功能模块",
-          JHZJE: 240,
-          LSJHZJE: 5,
-          BNJHZJE: 55,
-          WLJHZJE: 20,
-          SFCZWZ: "出售",
-                    CHECK_STATE:2
+          FWBH: "C-101",
+          FWMC: "房屋2",
+          JZMJ:"100㎡",
+          LSFGS: "分公司1",
+          ZLWZ: "C区",
+          FZFJE: 20000,
+          WYFJE: 2000,
+          FWSX: "出租"
         },
         {
-          XMBH: "201901237578",
-          XMMC: "房屋3",
-          CBDW: "管控中心",
-          XMLB: "网络通信工程",
-          JSNR:
-            "为保障油区无线公网信号覆盖，需要对盛通自投建设的26座无线基站光缆线路进行业务光纤租赁",
-          JHZJE: 30,
-          LSJHZJE: 5,
-          BNJHZJE: 15,
-          WLJHZJE: 5,
-          SFCZWZ: "出售",
-                    CHECK_STATE:0
+          FWBH: "A-309",
+          FWMC: "房屋3",
+          JZMJ:"87㎡",
+          LSFGS: "管控中心",
+          ZLWZ: "A区",
+         FZFJE: 12000,
+          WYFJE: 1000,
+          FWSX: "出售"
         },
         {
-          XMBH: "201802210987",
-          XMMC: "房屋4",
-          CBDW: "网络技术部",
-          XMLB: "运行维护",
-          JSNR:
-            "2台华为S12708交换机、Agile Controller-Campus V100R003_站点1、eSight Network V300R007_站点1， 1年维保",
-          JHZJE: 80,
-          LSJHZJE: 15,
-          BNJHZJE: 25,
-          WLJHZJE: 30,
-          SFCZWZ: "出租",
-                    CHECK_STATE:0
+ FWBH: "B-509",
+          FWMC: "房屋4",
+          JZMJ:"187㎡",
+          LSFGS: "云计算技术部",
+          ZLWZ: "B区",
+         FZFJE: 22000,
+          WYFJE: 1300,
+          FWSX: "出售"
         },
         {
-          XMBH: "201802210987",
-          XMMC: "房屋5",
-          CBDW: "云计算技术部",
-          XMLB: "运行维护",
-          JSNR:
-            "负责数据库的定期运行检查；负责专业数据库运行优化配置；负责数据库故障处理技术支持",
-          JHZJE: 290,
-          LSJHZJE: 25,
-          BNJHZJE: 45,
-          WLJHZJE: 30,
-          SFCZWZ: "出售",
-                    CHECK_STATE:1
+FWBH: "D-211",
+          FWMC: "房屋5",
+          JZMJ:"127㎡",
+          LSFGS: "云计算技术部",
+          ZLWZ: "D区",
+         FZFJE: 25000,
+          WYFJE: 1350,
+          FWSX: "出售"
         },
         {
-          XMBH: "201802210987",
-          XMMC: "房屋6",
-          CBDW: "云计算技术部",
-          XMLB: "运行维护",
-          JSNR:
-            "提供大港油田A8视频会议系统的49类343台设备维护保障服务，包括硬件的维修、更换和软件的维护、升级",
-          JHZJE: 190,
-          LSJHZJE: 25,
-          BNJHZJE: 35,
-          WLJHZJE: 70,
-          SFCZWZ: "出租",
-                    CHECK_STATE:1
+FWBH: "C-310",
+          FWMC: "房屋6",
+          JZMJ:"127㎡",
+          LSFGS: "网络技术部",
+          ZLWZ: "C区",
+         FZFJE: 35000,
+          WYFJE: 2350,
+          FWSX: "出租"
         },
         {
-          XMBH: "20180620988",
-          XMMC: "房屋7",
-          CBDW: "网络技术部",
-          XMLB: "系统建设",
-          JSNR:
-            "在现有系统基础上，增加管理系统与交换机数据的定期核查功能，并生成异常接入告警，同时完善系统查询、账号权限管理等功能模块",
-          JHZJE: 240,
-          LSJHZJE: 5,
-          BNJHZJE: 55,
-          WLJHZJE: 20,
-          SFCZWZ: "出售",
-                    CHECK_STATE:2
-        },
-        {
-          XMBH: "201901237578",
-          XMMC: "房屋8",
-          CBDW: "管控中心",
-          XMLB: "网络通信工程",
-          JSNR:
-            "为保障油区无线公网信号覆盖，需要对盛通自投建设的26座无线基站光缆线路进行业务光纤租赁",
-          JHZJE: 30,
-          LSJHZJE: 5,
-          BNJHZJE: 15,
-          WLJHZJE: 5,
-          SFCZWZ: "出售",
-                    CHECK_STATE:1
-        },
-        {
-          XMBH: "201904215587",
-          XMMC: "房屋9",
-          CBDW: "社区信息化部",
-          XMLB: "系统建设",
-          JSNR: "天津公安平台对接所需设备，网管服务模块、防火墙、一对光猫等",
-          JHZJE: 190,
-          LSJHZJE: 25,
-          BNJHZJE: 35,
-          WLJHZJE: 70,
-          SFCZWZ: "出租",
-                    CHECK_STATE:0
-        },
-        {
-          XMBH: "201802210987",
-          XMMC: "房屋10",
-          CBDW: "社区信息化部",
-          XMLB: "运行维护",
-          JSNR:
-            "操作系统维护、业务处理系统维护、WEB系统维护、终端接入系统维护、地图升级、货运车辆公共监督与服务平台数据通信异常等系统故障处理",
-          JHZJE: 100,
-          LSJHZJE: 5,
-          BNJHZJE: 45,
-          WLJHZJE: 30,
-          SFCZWZ: "出售",
-                    CHECK_STATE:0
-        },
-        {
-          XMBH: "20180620988",
-          XMMC: "房屋11",
-          CBDW: "网络技术部",
-          XMLB: "系统建设",
-          JSNR:
-            "在现有系统基础上，增加管理系统与交换机数据的定期核查功能，并生成异常接入告警，同时完善系统查询、账号权限管理等功能模块",
-          JHZJE: 240,
-          LSJHZJE: 5,
-          BNJHZJE: 55,
-          WLJHZJE: 20,
-          SFCZWZ: "出售",
-                    CHECK_STATE:2
-        },
-
-        {
-          XMBH: "201802210987",
-          XMMC: "房屋12",
-          CBDW: "云计算技术部",
-          XMLB: "运行维护",
-          JSNR:
-            "负责数据库的定期运行检查；负责专业数据库运行优化配置；负责数据库故障处理技术支持",
-          JHZJE: 290,
-          LSJHZJE: 25,
-          BNJHZJE: 45,
-          WLJHZJE: 30,
-          SFCZWZ: "出售",
-                    CHECK_STATE:0
-        },
-        {
-          XMBH: "201802210987",
-          XMMC: "房屋13",
-          CBDW: "云计算技术部",
-          XMLB: "运行维护",
-          JSNR:
-            "提供大港油田A8视频会议系统的49类343台设备维护保障服务，包括硬件的维修、更换和软件的维护、升级",
-          JHZJE: 190,
-          LSJHZJE: 25,
-          BNJHZJE: 35,
-          WLJHZJE: 70,
-          SFCZWZ: "出租",
-                    CHECK_STATE:0
-        },
-
-        {
-          XMBH: "201904215587",
-          XMMC: "房屋14",
-          CBDW: "社区信息化部",
-          XMLB: "A区",
-          JSNR: "天津公安平台对接所需设备，网管服务模块、防火墙、一对光猫等",
-          JHZJE: 190,
-          LSJHZJE: 25,
-          BNJHZJE: 35,
-          WLJHZJE: 70,
-          SFCZWZ: "出租",
-                              CHECK_STATE:0
+FWBH: "B-223",
+          FWMC: "房屋7",
+          JZMJ:"97㎡",
+          LSFGS: "网络技术部",
+          ZLWZ: "B区",
+         FZFJE: 25000,
+          WYFJE: 2050,
+          FWSX: "出租"
         }
       ],
       rules: {
          
-          XMMC: [
-            { required: true, message: '请输入项目名称', trigger: 'change' }
+          FWMC: [
+            { required: true, message: '请输入房屋名称', trigger: 'change' }
           ],
-                  XMLB: [
-            { required: true, message: '请输入项目类别', trigger: 'change' }
+                  LSFGS: [
+            { required: true, message: '请输入所属分公司', trigger: 'change' }
           ],
-                    CBDW: [
-            { required: true, message: '请输入承办单位', trigger: 'change' }
+                    FZFJE: [
+            { required: true, message: '请输入房租金额', trigger: 'change' }
           ],
-                    JSNR: [
-            { required: true, message: '请输入建设内容', trigger: 'change' }
-          ],
-                    JHZJE: [
-            { required: true, message: '请输入计划总金额', trigger: 'change' }
+                    WYFJE: [
+            { required: true, message: '请输入物业费金额', trigger: 'change' }
+          
           ],
         },
       total: 15,
@@ -564,21 +354,18 @@ export default {
         OrgRegion: ""
       },
       temp: {
-        XMBH: "201802210987",
-        XMMC: "大港油田车辆卫星定位系统维保",
-        CBDW: "社区信息化部",
-        XMLB: "运行维护",
-        JSNR:
-          "操作系统维护、业务处理系统维护、WEB系统维护、终端接入系统维护、地图升级、货运车辆公共监督与服务平台数据通信异常等系统故障处理",
-        JHZJE: 90,
-        LSJHZJE: 5,
-        BNJHZJE: 45,
-        WLJHZJE: 30,
-        SFCZWZ: "否"
+FWBH: "D-211",
+          FWMC: "房屋5",
+          JZMJ:"127㎡",
+          LSFGS: "云计算技术部",
+          ZLWZ: "D区",
+         FZFJE: 25000,
+          WYFJE: 1350,
+          FWSX: "出售"
       },
       textMap: {
-        update: "修改计划信息",
-        create: "添加计划信息"
+        update: "修改房屋信息",
+        create: "添加房屋信息"
       },
       editVisible: false,
       dialogStatus: "",
@@ -597,16 +384,14 @@ export default {
 
     resetTemp() {
       this.temp = {
-        XMBH: "",
-        XMMC: "",
-        CBDW: "",
-        XMLB: "",
-        JSNR: "",
-        JHZJE: "",
-        LSJHZJE: "",
-        BNJHZJE: "",
-        WLJHZJE: "",
-        SFCZWZ: ""
+FWBH: "",
+          FWMC: "",
+          JZMJ:"",
+          LSFGS: "",
+          ZLWZ: "",
+         FZFJE: "",
+          WYFJE: "",
+          FWSX: ""
       };
     },
 

@@ -159,19 +159,19 @@ export default {
       currentRole: "adminDashboard",
       noticeList: [
         {
-          NOTICE_TITLE:'关于大港油田物业房屋管理系统建设项目开发通知',
+          NOTICE_TITLE:'关于普丰物业房屋管理系统建设项目开发通知',
           NOTICE_DATETIME:'2019-05-22 12:00:00.000'
         },{
-          NOTICE_TITLE:'关于大港油田物业房屋管理系统建设试运行通知',
+          NOTICE_TITLE:'关于普丰物业房屋管理系统建设试运行通知',
           NOTICE_DATETIME:'2019-05-23 12:00:00.000'
         },{
-          NOTICE_TITLE:'关于大港油田物业房屋管理系统使用培训通知',
+          NOTICE_TITLE:'关于普丰物业房屋管理系统使用培训通知',
           NOTICE_DATETIME:'2019-05-24 12:00:00.000'
         },{
-          NOTICE_TITLE:'关于大港油田物业房屋管理系统正式上线通知',
+          NOTICE_TITLE:'关于普丰物业房屋管理系统正式上线通知',
           NOTICE_DATETIME:'2019-05-25 12:00:00.000'
         },{
-          NOTICE_TITLE:'关于大港油田物业房屋管理系统成果汇报通知',
+          NOTICE_TITLE:'关于普丰物业房屋管理系统成果汇报通知',
           NOTICE_DATETIME:'2019-05-26 12:00:00.000'
         }
       ],
