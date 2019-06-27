@@ -75,7 +75,7 @@
         <el-form ref="dataForm" :model="temp" label-width="120px" style="width: 99%;">
            <el-row>
             <el-col :span="12">
-             <el-form-item label="计划年度" prop="SQSJ">
+             <el-form-item label="计划年度" prop="JHND">
               <el-date-picker
                  type="year"
                 placeholder="选择年度"
@@ -242,7 +242,7 @@ REMARK:""
           JHND:"2019",
 JHMC:"2019年检查工作计划",
 JHSM:"针对辖区内存在的安全隐患进行排查",
-JHSJ:"2018-01-10",
+JHSJ:"2019-01-11",
 REMARK:""
         },
         {
@@ -253,10 +253,10 @@ JHSJ:"2018-01-10",
 REMARK:""
         },
         {
-          JHND:"2018",
+          JHND:"2019",
 JHMC:"2018年检查工作计划",
 JHSM:"针对辖区内存在的安全隐患进行排查",
-JHSJ:"2018-01-10",
+JHSJ:"2019-02-10",
 REMARK:""
         }
       ]
