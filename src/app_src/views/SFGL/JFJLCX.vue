@@ -53,30 +53,6 @@
         size="mini"
       >导出</el-button>
  
-     <el-button
-        class="filter-item"
-        type="primary"
-        :loading="downloadLoading"
-        v-waves
-        @click="tixingclick"
-        size="mini"
-      >提醒房租缴费</el-button>
-      <el-button
-        class="filter-item"
-        type="primary"
-        :loading="downloadLoading"
-        v-waves
-        @click="tixingclick"
-        size="mini"
-      >提醒物业费缴费</el-button>
-      <el-button
-        class="filter-item"
-        type="primary"
-        :loading="downloadLoading"
-        v-waves
-        @click="tixingclick"
-        size="mini"
-      >提醒装修押金缴费</el-button>
     </div>
     <el-table
       :key="tableKey"
@@ -130,12 +106,12 @@
           <span>{{scope.row.fangzufei}}</span>
         </template>
       </el-table-column>
-      <el-table-column align="center" width="120px"  label="是否已缴房租费">
+      <el-table-column align="center" width="120px"  label="已缴房租费">
         <template slot-scope="scope">
           <span>{{scope.row.isfangzufei}}</span>
         </template>
       </el-table-column>
-       <el-table-column align="center" width="120px"  label="房租费截止日期">
+       <el-table-column align="center" width="120px"  label="房租费缴费日期">
         <template slot-scope="scope">
           <span>{{scope.row.fangzuriqi}}</span>
         </template>
@@ -145,12 +121,12 @@
           <span>{{scope.row.wuyefei}}</span>
         </template>
       </el-table-column>
-      <el-table-column align="center" width="120px"  label="是否已缴物业费">
+      <el-table-column align="center" width="120px"  label="已缴物业费">
         <template slot-scope="scope">
           <span>{{scope.row.iswuyefei}}</span>
         </template>
       </el-table-column>
-      <el-table-column align="center" width="120px"  label="物业费截止日期">
+      <el-table-column align="center" width="120px"  label="物业费缴费日期">
         <template slot-scope="scope">
           <span>{{scope.row.wuyefeiriqi}}</span>
         </template>
@@ -160,12 +136,12 @@
           <span>{{scope.row.zhuangxiuyajin}}</span>
         </template>
       </el-table-column>
-      <el-table-column align="center" width="120px"  label="是否已缴装修押金">
+      <el-table-column align="center" width="120px"  label="装修押金缴费日期">
         <template slot-scope="scope">
           <span>{{scope.row.iszhuangxiuyajin}}</span>
         </template>
       </el-table-column>
-       <el-table-column align="center" width="120px"  label="装修押金截止日期">
+       <el-table-column align="center" width="120px"  label="装修押金缴费日期">
         <template slot-scope="scope">
           <span>{{scope.row.zhuangxiuyajinriqi}}</span>
         </template>
@@ -222,11 +198,11 @@ export default {
           zuhu:"李四",
           zuhutel:"13444444444",
           fangzufei:"6000",
-          isfangzufei:"否",
+          isfangzufei:"6000",
           wuyefei:"4000",
-          iswuyefei:"是",
+          iswuyefei:"",
           zhuangxiuyajin:"3500",
-          iszhuangxiuyajin:"否",
+          iszhuangxiuyajin:"",
           fangzuriqi:"2019-06-30",
           wuyefeiriqi:"2019-05-30",
           zhuangxiuyajinriqi:"2019-06-30"
@@ -240,11 +216,11 @@ export default {
           zuhu:"马六",
           zuhutel:"14526548524",
           fangzufei:"6000",
-          isfangzufei:"否",
+          isfangzufei:"",
           wuyefei:"4000",
-          iswuyefei:"是",
+          iswuyefei:"4000",
           zhuangxiuyajin:"3500",
-          iszhuangxiuyajin:"否",
+          iszhuangxiuyajin:"",
           fangzuriqi:"2019-06-30",
           wuyefeiriqi:"2019-05-30",
           zhuangxiuyajinriqi:"2019-06-30"
@@ -257,11 +233,11 @@ export default {
           zuhu:"",
           zuhutel:"",
           fangzufei:"6000",
-          isfangzufei:"否",
+          isfangzufei:"",
           wuyefei:"4000",
-          iswuyefei:"是",
+          iswuyefei:"4000",
           zhuangxiuyajin:"3500",
-          iszhuangxiuyajin:"否",
+          iszhuangxiuyajin:"",
           fangzuriqi:"2019-06-30",
           wuyefeiriqi:"2019-05-30",
           zhuangxiuyajinriqi:"2019-06-30"
@@ -274,11 +250,11 @@ export default {
           zuhu:"",
           zuhutel:"",
           fangzufei:"6000",
-          isfangzufei:"否",
+          isfangzufei:"6000",
           wuyefei:"4000",
-          iswuyefei:"是",
+          iswuyefei:"",
           zhuangxiuyajin:"3500",
-          iszhuangxiuyajin:"否",
+          iszhuangxiuyajin:"",
           fangzuriqi:"2019-06-30",
           wuyefeiriqi:"2019-05-30",
           zhuangxiuyajinriqi:"2019-06-30"
@@ -295,7 +271,7 @@ export default {
           wuyefei:"4000",
           iswuyefei:"是",
           zhuangxiuyajin:"3500",
-          iszhuangxiuyajin:"否",
+          iszhuangxiuyajin:"",
           fangzuriqi:"2019-06-30",
           wuyefeiriqi:"2019-05-30",
           zhuangxiuyajinriqi:"2019-06-30"
@@ -308,11 +284,11 @@ export default {
           zuhu:"",
           zuhutel:"",
           fangzufei:"6000",
-          isfangzufei:"否",
+          isfangzufei:"6000",
           wuyefei:"4000",
-          iswuyefei:"是",
+          iswuyefei:"",
           zhuangxiuyajin:"3500",
-          iszhuangxiuyajin:"否",
+          iszhuangxiuyajin:"",
           fangzuriqi:"2019-06-30",
           wuyefeiriqi:"2019-05-30",
           zhuangxiuyajinriqi:"2019-06-30"
@@ -325,11 +301,11 @@ export default {
           zuhu:"",
           zuhutel:"",
           fangzufei:"6000",
-          isfangzufei:"否",
+          isfangzufei:"",
           wuyefei:"4000",
-          iswuyefei:"是",
+          iswuyefei:"4000",
           zhuangxiuyajin:"3500",
-          iszhuangxiuyajin:"否",
+          iszhuangxiuyajin:"",
           fangzuriqi:"2019-06-30",
           wuyefeiriqi:"2019-05-30",
           zhuangxiuyajinriqi:"2019-06-30"
@@ -342,11 +318,11 @@ export default {
           zuhu:"",
           zuhutel:"",
           fangzufei:"6000",
-          isfangzufei:"否",
+          isfangzufei:"",
           wuyefei:"4000",
-          iswuyefei:"是",
+          iswuyefei:"",
           zhuangxiuyajin:"3500",
-          iszhuangxiuyajin:"否",
+          iszhuangxiuyajin:"3500",
           fangzuriqi:"2019-06-30",
           wuyefeiriqi:"2019-05-30",
           zhuangxiuyajinriqi:"2019-06-30"
@@ -359,11 +335,11 @@ export default {
           zuhu:"李四",
           zuhutel:"13444444444",
           fangzufei:"6000",
-          isfangzufei:"否",
+          isfangzufei:"6000",
           wuyefei:"4000",
-          iswuyefei:"是",
+          iswuyefei:"",
           zhuangxiuyajin:"3500",
-          iszhuangxiuyajin:"否",
+          iszhuangxiuyajin:"",
           fangzuriqi:"2019-06-30",
           wuyefeiriqi:"2019-05-30",
           zhuangxiuyajinriqi:"2019-06-30"
@@ -376,11 +352,11 @@ export default {
           zuhu:"李四",
           zuhutel:"13444444444",
           fangzufei:"6000",
-          isfangzufei:"否",
+          isfangzufei:"",
           wuyefei:"4000",
-          iswuyefei:"是",
+          iswuyefei:"4000",
           zhuangxiuyajin:"3500",
-          iszhuangxiuyajin:"否",
+          iszhuangxiuyajin:"",
           fangzuriqi:"2019-06-30",
           wuyefeiriqi:"2019-05-30",
           zhuangxiuyajinriqi:"2019-06-30"

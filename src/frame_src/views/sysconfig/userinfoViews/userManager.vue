@@ -604,6 +604,7 @@ import {
 } from "@/frame_src/api/user";
 import { fetchOrgList } from "@/frame_src/api/org";
 import { Treeselect, LOAD_CHILDREN_OPTIONS } from "@riophae/vue-treeselect";
+import "@riophae/vue-treeselect/dist/vue-treeselect.css";
 import {
   updateUserForLoginArticle,
   deleteUserForLoginArticle
