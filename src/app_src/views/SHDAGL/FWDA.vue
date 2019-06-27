@@ -1,6 +1,6 @@
 
 <template>
-  <div id="CBJHSQ" class="app-container calendar-list-container">
+  <div id="FWDA" class="app-container calendar-list-container">
     <div class="topSearh" id="topsearch">
       <el-row>
         <el-col :xs="5" :sm="5" :md="5" :lg="4" :xl="3">
@@ -64,14 +64,14 @@
                 <span>{{scope.row.ZLWZ}}</span>
               </template>
             </el-table-column>
-            <el-table-column  align="right" prop="FZFJE" label="房租费金额">
+            <el-table-column  align="right" prop="FZFJE" label="结构类型">
               <template slot-scope="scope">
-                <span>{{scope.row.FZFJE |NumFormat}}</span>
+                <span>{{scope.row.JGLX }}</span>
               </template>
             </el-table-column>
-            <el-table-column   align="right" prop="WYFJE" label="物业费金额">
+            <el-table-column   align="right" prop="WYFJE" label="资产原值">
               <template slot-scope="scope">
-                <span>{{scope.row.WYFJE |NumFormat}}</span>
+                <span>{{scope.row.ZCYZ |NumFormat}}</span>
               </template>
             </el-table-column>
            
@@ -143,13 +143,13 @@
           </el-row>
           <el-row>
             <el-col :span="12">
-              <el-form-item label="房租费金额" prop="FZFJE">
-                <el-input v-model="temp.FZFJE"></el-input>
+              <el-form-item label="结构类型" prop="JGLX">
+                <el-input v-model="temp.JGLX"></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="12">
-              <el-form-item label="物业费金额" prop="WYFJE">
-                <el-input v-model="temp.WYFJE"></el-input>
+              <el-form-item label="资产原值" prop="ZCYZ">
+                <el-input v-model="temp.ZCYZ"></el-input>
               </el-form-item>
             </el-col>
           </el-row>
@@ -180,6 +180,48 @@
                   </el-form-item>
             </el-col>
           </el-row>
+          <el-col :span="24">
+            <el-form-item label="平面图" prop="PMT">
+                <el-upload
+  action="#"
+  list-type="picture-card"
+  :auto-upload="false">
+    <i slot="default" class="el-icon-plus"></i>
+    <div slot="file" slot-scope="{file}">
+      <img
+        class="el-upload-list__item-thumbnail"
+        :src="file.url" alt=""
+      >
+      <span class="el-upload-list__item-actions">
+        <span
+          class="el-upload-list__item-preview"
+          @click="handlePictureCardPreview(file)"
+        >
+          <i class="el-icon-zoom-in"></i>
+        </span>
+        <span
+          v-if="!disabled"
+          class="el-upload-list__item-delete"
+          @click="handleDownload(file)"
+        >
+          <i class="el-icon-download"></i>
+        </span>
+        <span
+          v-if="!disabled"
+          class="el-upload-list__item-delete"
+          @click="handleRemove(file)"
+        >
+          <i class="el-icon-delete"></i>
+        </span>
+      </span>
+    </div>
+</el-upload>
+<el-dialog :visible.sync="dialogVisible">
+  <img width="100%" :src="dialogImageUrl" alt="">
+</el-dialog>
+              </el-form-item>
+
+          </el-col>
         </el-form>
         <div style="text-align:center">
           <el-button @click="editVisible = false">取消</el-button>
@@ -209,7 +251,9 @@ export default {
   //   },
   data() {
     return {
-    
+     dialogImageUrl: '',
+        dialogVisible: false,
+        disabled: false,
       tableKey: 0,
       selectOptions: [
         {
@@ -245,70 +289,77 @@ export default {
           FWMC: "房屋1",
           JZMJ:"100㎡",
           LSFGS: "社区信息化部",
-          ZLWZ: "A区",
-          FZFJE: 10000,
-          WYFJE: 1000,
-          FWSX: "出售"
+          ZLWZ: "港西新城",
+          JGLX: "钢结构",
+          ZCYZ: 10000,
+          FWSX: "出售",
+          SSQY:"A区"
         },
         {
           FWBH: "C-101",
           FWMC: "房屋2",
           JZMJ:"100㎡",
           LSFGS: "分公司1",
-          ZLWZ: "C区",
-          FZFJE: 20000,
-          WYFJE: 2000,
-          FWSX: "出租"
+          ZLWZ: "港西新城",
+          JGLX: "钢结构",
+          ZCYZ: 18000,
+          FWSX: "出租",
+          SSQY:"C区"
         },
         {
           FWBH: "A-309",
           FWMC: "房屋3",
           JZMJ:"87㎡",
           LSFGS: "管控中心",
-          ZLWZ: "A区",
-         FZFJE: 12000,
-          WYFJE: 1000,
-          FWSX: "出售"
+          ZLWZ: "港西新城",
+          JGLX: "钢结构",
+          ZCYZ: 17000,
+          FWSX: "出售",
+          SSQY:"A区"
         },
         {
  FWBH: "B-509",
           FWMC: "房屋4",
           JZMJ:"187㎡",
           LSFGS: "云计算技术部",
-          ZLWZ: "B区",
-         FZFJE: 22000,
-          WYFJE: 1300,
-          FWSX: "出售"
+          ZLWZ: "港西新城",
+          JGLX: "钢结构",
+          ZCYZ: 19000,
+          FWSX: "出售",
+          SSQY:"B区"
         },
         {
 FWBH: "D-211",
           FWMC: "房屋5",
           JZMJ:"127㎡",
           LSFGS: "云计算技术部",
-          ZLWZ: "D区",
-         FZFJE: 25000,
-          WYFJE: 1350,
-          FWSX: "出售"
+          ZLWZ: "港西新城",
+          JGLX: "钢结构",
+          ZCYZ: 24000,
+          FWSX: "出售",
+          SSQY:"D区"
         },
         {
 FWBH: "C-310",
           FWMC: "房屋6",
           JZMJ:"127㎡",
           LSFGS: "网络技术部",
-          ZLWZ: "C区",
-         FZFJE: 35000,
-          WYFJE: 2350,
-          FWSX: "出租"
+          ZLWZ: "港西新城",
+          JGLX: "钢结构",
+          ZCYZ: 7000,
+          FWSX: "出租",
+          SSQY:"C区"
         },
         {
 FWBH: "B-223",
           FWMC: "房屋7",
           JZMJ:"97㎡",
           LSFGS: "网络技术部",
-          ZLWZ: "B区",
-         FZFJE: 25000,
-          WYFJE: 2050,
-          FWSX: "出租"
+          ZLWZ: "港西新城",
+          JGLX: "钢结构",
+          ZCYZ: 12000,
+          FWSX: "出租",
+          SSQY:"B区"
         }
       ],
       rules: {
@@ -374,6 +425,16 @@ FWBH: "D-211",
     };
   },
   methods: {
+    handleRemove(file) {
+        console.log(file);
+      },
+      handlePictureCardPreview(file) {
+        this.dialogImageUrl = file.url;
+        this.dialogVisible = true;
+      },
+      handleDownload(file) {
+        console.log(file);
+      },
       deleteRow(index, rows) {
       //删除改行
       rows.splice(index, 1);
@@ -554,7 +615,7 @@ FWBH: "",
 </script>
 
 <style lang="scss" >
-#CBJHSQ {
+#FWDA {
   .topSearh {
     margin-bottom: 15px;
   }
