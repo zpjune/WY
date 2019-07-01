@@ -229,7 +229,7 @@
               </el-form-item>
             </el-col>
         </el-row>-->
-        <el-card>
+        <el-card >
           <div slot="header">
             <span>商户信息</span>
           </div>
@@ -244,19 +244,20 @@
                     :props="{ multiple: true, checkStrictly: true  }"
                     filterable
                     size="small"
+                    v-model="temp.FWBH"
                   ></el-cascader>
                 </el-form-item>
               </el-col>
               <el-col :span="8">
                 <el-form-item label="房屋名称">
-                  <el-input size="small"></el-input>
+                  <el-input size="small" v-model="temp.FWMC"></el-input>
                 </el-form-item>
               </el-col>
               <el-col :span="8">
-                <el-form-item label="隶属分公司">
+                <el-form-item label="隶属分公司" v-model="temp.LSFGS">
                   <el-select style="width:100%" size="small">
-                    <el-option value="0" label="分公司1"></el-option>
-                    <el-option value="1" label="分公司2"></el-option>
+                    <el-option value=0 label="分公司1"></el-option>
+                    <el-option value=1 label="分公司2"></el-option>
                   </el-select>
                 </el-form-item>
               </el-col>
@@ -265,17 +266,17 @@
             <el-row>
               <el-col :span="8">
                 <el-form-item label="房屋面积">
-                  <el-input size="small"></el-input>
+                  <el-input size="small" v-model="temp.FWMJ"></el-input>
                 </el-form-item>
               </el-col>
               <el-col :span="8">
                 <el-form-item label="坐落位置">
-                  <el-input size="small"></el-input>
+                  <el-input size="small" v-model="temp.ZLWZ"></el-input>
                 </el-form-item>
               </el-col>
               <el-col :span="8">
                 <el-form-item label="物业基准日期">
-                  <el-date-picker style="width:100%" format="yyyy-MM-dd" size="small"></el-date-picker>
+                  <el-date-picker style="width:100%" format="yyyy-MM-dd" size="small" v-model="temp.JZR"></el-date-picker>
                 </el-form-item>
               </el-col>
             </el-row>
@@ -283,21 +284,21 @@
             <el-row>
               <el-col :span="8">
                 <el-form-item label="商户名称">
-                  <el-input size="small"></el-input>
+                  <el-input size="small" v-model="temp.SHMC"></el-input>
                 </el-form-item>
               </el-col>
               <el-col :span="8">
                 <el-form-item label="物业费标准">
-                  <el-input size="small">
+                  <el-input size="small" v-model="temp.WYFBZ">
                     <template slot="append">元/月</template>
                   </el-input>
                 </el-form-item>
               </el-col>
               <el-col :span="8">
-                <el-form-item label="物业缴纳方式">
-                  <el-select style="width:100%" size="small">
-                    <el-option value="0" label="半年"></el-option>
-                    <el-option value="1" label="一年"></el-option>
+                <el-form-item label="物业缴纳方式" >
+                  <el-select style="width:100%" size="small" v-model="temp.JNFS">
+                    <el-option value=0 label="半年"></el-option>
+                    <el-option value=1 label="一年"></el-option>
                   </el-select>
                 </el-form-item>
               </el-col>
@@ -312,8 +313,123 @@
             </el-row>
           </div>
         </el-card>
-        <el-card></el-card>
-        <el-card></el-card>
+        <el-card style="margin-top:20px;">
+          <div slot="header">
+            <span>业主信息</span>
+          </div>
+          <div>
+            <el-row>
+              <el-col :span="8">
+                <el-form-item label="业主姓名" >
+                  <el-input size="small" v-model="temp.YZXM"></el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :span="8">
+                  <el-form-item label="业主类型" >
+                  <el-select style="width:100%" size="small" v-model="temp.YZLX">
+                    <el-option value=0 label="个人"></el-option>
+                    <el-option value=1 label="公司"></el-option>
+                  </el-select>
+                </el-form-item>
+              </el-col>
+              <el-col :span="8">
+                <el-form-item label="业主姓名">
+                  <el-input size="small"></el-input>
+                </el-form-item>
+              </el-col>
+            </el-row>
+
+            <el-row>
+              <el-col :span="8">
+                <el-form-item label="身份证号">
+                  <el-input size="small" v-model="temp.YZSFZH"></el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :span="8">
+                <el-form-item label="手机号码">
+                  <el-input size="small" v-model="temp.YZSJHM">
+                  </el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :span="8">
+                <el-form-item label="固定电话" >
+                  <el-input size="small" v-model="temp.YZGDDH">
+                  </el-input>
+                </el-form-item>
+              </el-col>
+            </el-row>
+
+            <el-row>
+              <el-col :span="8">
+                <el-form-item label="电子邮箱">
+                  <el-input size="small" v-model="temp.YZDZYX"></el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :span="8">
+                 <el-form-item label="使用类型">
+                  <el-select style="width:100%" size="small" v-model="temp.SYLEX">
+                    <el-option value=0 label="自用"></el-option>
+                    <el-option value=1 label="出租"></el-option>
+                  </el-select>
+                </el-form-item>
+              </el-col>
+            </el-row>
+          </div>
+        </el-card>
+        <el-card style="margin-top:20px;" v-if="temp.SYLEX==1">
+          <div slot="header">
+            <span>租户信息</span>
+          </div>
+          <div>
+            <el-row>
+              <el-col :span="8">
+                <el-form-item label="租户姓名">
+                  <el-input size="small" v-model="temp.ZHXM"></el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :span="8">
+                  <el-form-item label="租户类型">
+                  <el-select style="width:100%" size="small" v-model="temp.ZHLX">
+                    <el-option value=0 label="个人"></el-option>
+                    <el-option value=1 label="公司"></el-option>
+                  </el-select>
+                </el-form-item>
+              </el-col>
+              <el-col :span="8">
+                <el-form-item label="租户性别">
+                  <el-input size="small" v-model="temp.ZHXM"></el-input>
+                </el-form-item>
+              </el-col>
+            </el-row>
+
+            <el-row>
+              <el-col :span="8">
+                <el-form-item label="身份证号">
+                  <el-input size="small" v-model="temp.ZHSFZH"></el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :span="8">
+                <el-form-item label="手机号码">
+                  <el-input size="small" v-model="temp.ZHSJHM">
+                  </el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :span="8">
+                <el-form-item label="固定电话">
+                  <el-input size="small" v-model="temp.ZHGDHM"></el-input>
+                </el-form-item>
+              </el-col>
+            </el-row>
+
+            <el-row>
+              <el-col :span="8">
+                <el-form-item label="电子邮箱">
+                  <el-input size="small" v-model="temp.ZHDZYX"></el-input>
+                </el-form-item>
+              </el-col>
+            </el-row>
+          </div>
+        </el-card>
       </el-form>
       <div style="text-align:center">
         <el-button @click="editVisible = false">取消</el-button>
@@ -627,18 +743,35 @@ export default {
         OrgRegion: ""
       },
       temp: {
-        FWBH: "D-211",
-        FWMC: "房屋5",
-        JZMJ: "127㎡",
-        LSFGS: "云计算技术部",
-        ZLWZ: "D区",
-        FZFJE: 25000,
-        WYFJE: 1350,
-        FWSX: "出售"
+        FWBH:'',
+        FWMC:'',
+        LSFGS:'',
+        FWMJ:'',
+        ZLWZ:'',
+        JZR:'',
+        SHMC:'',
+        WYFBZ:'',
+        JNFS:'',
+        JYNR:'',
+        YZXM:'',
+        YZLX:'',
+        YZXB:'',
+        YZSFZH:'',
+        YZSJH:'',
+        YZGD:'',
+        YZDZYX:'',
+        SYLX:'',
+        ZHXM:'',
+        ZHLX:'',
+        ZHXB:'',
+        ZHSFZH:'',
+        ZHSJHM:'',
+        ZHGD:'',
+        ZHDZYX:''
       },
       textMap: {
-        update: "修改房屋信息",
-        create: "添加房屋信息"
+        update: "修改出售房屋信息",
+        create: "添加出售房屋信息"
       },
       editVisible: false,
       dialogStatus: "",
@@ -657,14 +790,31 @@ export default {
 
     resetTemp() {
       this.temp = {
-        FWBH: "",
-        FWMC: "",
-        JZMJ: "",
-        LSFGS: "",
-        ZLWZ: "",
-        FZFJE: "",
-        WYFJE: "",
-        FWSX: ""
+        FWBH:'',
+        FWMC:'',
+        LSFGS:'',
+        FWMJ:'',
+        ZLWZ:'',
+        JZR:'',
+        SHMC:'',
+        WYFBZ:'',
+        JNFS:'',
+        JYNR:'',
+        YZXM:'',
+        YZLX:'',
+        YZXB:'',
+        YZSFZH:'',
+        YZSJH:'',
+        YZGD:'',
+        YZDZYX:'',
+        SYLX:'',
+        ZHXM:'',
+        ZHLX:'',
+        ZHXB:'',
+        ZHSFZH:'',
+        ZHSJHM:'',
+        ZHGD:'',
+        ZHDZYX:''
       };
     },
 
