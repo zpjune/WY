@@ -1,6 +1,6 @@
 
 <template>
-  <div id="SHDA" class="app-container calendar-list-container">
+  <div id="CZSHDA" class="app-container calendar-list-container">
     <div class="topSearh" id="topsearch">
       <el-row>
         <el-col :xs="5" :sm="5" :md="5" :lg="4" :xl="3">
@@ -184,7 +184,7 @@
               </el-form-item>
             </el-col>
           </el-row>
- <el-row>
+          <el-row>
             <el-col :span="12">
               <el-form-item label="联系电话" prop="LXDH">
                 <el-input v-model="temp.LXDH"></el-input>
@@ -198,7 +198,6 @@
           </el-row>
           <el-row>
             <el-col :span="12">
-
               <el-form-item label="合同金额" prop="HTJE">
                 <el-input v-model="temp.HTJE"></el-input>
               </el-form-item>
@@ -211,15 +210,15 @@
           </el-row>
 
           <el-row>
-                 <el-col :span="12">
+            <el-col :span="12">
               <el-form-item label="房号" prop="FWSX">
-               <el-cascader style="width:100%;"
+                <el-cascader
+                  style="width:100%;"
                   placeholder="搜索房号"
                   :options="options"
                   :props="{ multiple: true, checkStrictly: true  }"
                   filterable
-                
-                ></el-cascader> 
+                ></el-cascader>
               </el-form-item>
             </el-col>
             <el-col :span="12">
@@ -234,11 +233,9 @@
                 </el-select>
               </el-form-item>
             </el-col>
-         
           </el-row>
-            <el-row>
+          <el-row>
             <el-col :span="12">
-
               <el-form-item label="合同签订时间" prop="HTQDSJ">
                 <el-input v-model="temp.HTQDSJ"></el-input>
               </el-form-item>
@@ -249,9 +246,8 @@
               </el-form-item>
             </el-col>
           </el-row>
-                      <el-row>
+          <el-row>
             <el-col :span="12">
-
               <el-form-item label="租户姓名" prop="ZHXM">
                 <el-input v-model="temp.ZHXM"></el-input>
               </el-form-item>
@@ -262,9 +258,8 @@
               </el-form-item>
             </el-col>
           </el-row>
-           <el-row>
+          <el-row>
             <el-col :span="12">
-
               <el-form-item label="租户联系电话" prop="ZHDH">
                 <el-input v-model="temp.ZHDH"></el-input>
               </el-form-item>
@@ -302,7 +297,7 @@
 import waves from "@/frame_src/directive/waves"; // 水波纹指令
 import { getToken } from "@/frame_src/utils/auth";
 export default {
-  name: "CBJHSQ",
+  name: "CZSHDA",
   directives: {
     waves
   },
@@ -389,7 +384,6 @@ export default {
                   value: "icon",
                   label: "c-342"
                 }
-               
               ]
             },
             {
@@ -407,9 +401,7 @@ export default {
                 {
                   value: "input",
                   label: "D-707"
-                },
-                
-             
+                }
               ]
             }
           ]

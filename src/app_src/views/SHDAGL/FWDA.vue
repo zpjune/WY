@@ -25,6 +25,15 @@
     </div>
     <el-card>
       <el-row>
+        <el-col>
+          <div style="text-align:right">
+            <img src="@/app_src/img/free.png" alt class="tableicon" title="空闲"><span style="font-weight:bold;color:gray;">空闲</span>
+            <img src="@/app_src/img/rent.png" alt class="tableicon" title="出租"><span style="font-weight:bold;color:gray;">出租</span>
+            <img src="@/app_src/img/sale.png" alt class="tableicon" title="出售"><span style="font-weight:bold;color:gray;">出售</span>
+          </div>
+        </el-col>
+      </el-row>
+      <el-row>
         <el-col :span="24">
           <el-table
             :key="tableKey"
@@ -38,6 +47,13 @@
             highlight-current-row
             style="width: 100%;text-align:left;"
           >
+            <el-table-column align="center" prop="FWSX" label="房屋属性" width="80px">
+              <template slot-scope="scope">
+                <img src="@/app_src/img/free.png" alt class="tableicon" title="空闲" v-if="scope.row.FWSX=='空闲'">
+                <img src="@/app_src/img/rent.png" alt class="tableicon" title="出租" v-else-if="scope.row.FWSX=='出租'">
+                <img src="@/app_src/img/sale.png" alt class="tableicon" title="出售" v-else-if="scope.row.FWSX=='出售'">
+              </template>
+            </el-table-column>
             <el-table-column align="center" label="房屋编号">
               <template slot-scope="scope">
                 <span>{{scope.row.FWBH}}</span>
@@ -54,36 +70,31 @@
                 <span>{{scope.row.JZMJ}}</span>
               </template>
             </el-table-column>
-            <el-table-column  align="right" prop="LSFGS" label="隶属分公司">
+            <el-table-column align="right" prop="LSFGS" label="隶属分公司">
               <template slot-scope="scope">
                 <span>{{scope.row.LSFGS}}</span>
               </template>
             </el-table-column>
-            <el-table-column  align="right" prop="ZLWZ" label="坐落位置">
+            <el-table-column align="right" prop="ZLWZ" label="坐落位置">
               <template slot-scope="scope">
                 <span>{{scope.row.ZLWZ}}</span>
               </template>
             </el-table-column>
-            <el-table-column  align="right" prop="FZFJE" label="结构类型">
+            <el-table-column align="right" prop="FZFJE" label="结构类型">
               <template slot-scope="scope">
                 <span>{{scope.row.JGLX }}</span>
               </template>
             </el-table-column>
-            <el-table-column   align="right" prop="WYFJE" label="资产原值">
+            <el-table-column align="right" prop="WYFJE" label="资产原值">
               <template slot-scope="scope">
                 <span>{{scope.row.ZCYZ |NumFormat}}</span>
               </template>
             </el-table-column>
-           
-            <el-table-column   align="right" prop="FWSX" label="房屋属性">
-              <template slot-scope="scope">
-                <span>{{scope.row.FWSX}}</span>
-              </template>
-            </el-table-column>
+
             <el-table-column align="center" width="230" label="操作">
               <template slot-scope="scope">
-                <el-button type="primary"   size="mini" @click="handleUpdate(scope.row)">修改</el-button>
-                <el-button type="danger"  size="mini" @click="handleDelete(scope.row)">删除</el-button>
+                <el-button type="primary" size="mini" @click="handleUpdate(scope.row)">修改</el-button>
+                <el-button type="danger" size="mini" @click="handleDelete(scope.row)">删除</el-button>
               </template>
             </el-table-column>
           </el-table>
@@ -109,11 +120,17 @@
       width="1000px"
     >
       <el-card>
-        <el-form ref="dataForm" :model="temp" :rules="rules" label-width="120px" style="width: 99%;">
+        <el-form
+          ref="dataForm"
+          :model="temp"
+          :rules="rules"
+          label-width="120px"
+          style="width: 99%;"
+        >
           <el-row>
             <el-col :span="12">
               <el-form-item label="房屋编号" prop="FWBH">
-                <el-input v-model="temp.FWBH" ></el-input>
+                <el-input v-model="temp.FWBH"></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="12">
@@ -156,71 +173,64 @@
 
           <el-row>
             <el-col :span="12">
-                              <el-form-item label="房屋属性" prop="FWSX">
-                    <el-select size="mini" style="width:100%;" v-model="temp.FWSX">
-                      <el-option
-                        v-for="(item,key) in selectOptions"
-                        :key="key"
-                        :label="item.label"
-                        :value="item.value"
-                      ></el-option>
-                    </el-select>
-                  </el-form-item>
+              <el-form-item label="房屋属性" prop="FWSX">
+                <el-select size="mini" style="width:100%;" v-model="temp.FWSX">
+                  <el-option
+                    v-for="(item,key) in selectOptions"
+                    :key="key"
+                    :label="item.label"
+                    :value="item.value"
+                  ></el-option>
+                </el-select>
+              </el-form-item>
             </el-col>
             <el-col :span="12">
-                              <el-form-item label="所属区域" prop="FWSX">
-                    <el-select size="mini" style="width:100%;" v-model="temp.SSQY">
-                      <el-option
-                        v-for="(item,key) in areaOptions"
-                        :key="key"
-                        :label="item.label"
-                        :value="item.value"
-                      ></el-option>
-                    </el-select>
-                  </el-form-item>
+              <el-form-item label="所属区域" prop="FWSX">
+                <el-select size="mini" style="width:100%;" v-model="temp.SSQY">
+                  <el-option
+                    v-for="(item,key) in areaOptions"
+                    :key="key"
+                    :label="item.label"
+                    :value="item.value"
+                  ></el-option>
+                </el-select>
+              </el-form-item>
             </el-col>
           </el-row>
           <el-col :span="24">
             <el-form-item label="平面图" prop="PMT">
-                <el-upload
-  action="#"
-  list-type="picture-card"
-  :auto-upload="false">
-    <i slot="default" class="el-icon-plus"></i>
-    <div slot="file" slot-scope="{file}">
-      <img
-        class="el-upload-list__item-thumbnail"
-        :src="file.url" alt=""
-      >
-      <span class="el-upload-list__item-actions">
-        <span
-          class="el-upload-list__item-preview"
-          @click="handlePictureCardPreview(file)"
-        >
-          <i class="el-icon-zoom-in"></i>
-        </span>
-        <span
-          v-if="!disabled"
-          class="el-upload-list__item-delete"
-          @click="handleDownload(file)"
-        >
-          <i class="el-icon-download"></i>
-        </span>
-        <span
-          v-if="!disabled"
-          class="el-upload-list__item-delete"
-          @click="handleRemove(file)"
-        >
-          <i class="el-icon-delete"></i>
-        </span>
-      </span>
-    </div>
-</el-upload>
-<el-dialog :visible.sync="dialogVisible">
-  <img width="100%" :src="dialogImageUrl" alt="">
-</el-dialog>
-              </el-form-item>
-
+              <el-upload action="#" list-type="picture-card" :auto-upload="false">
+                <i slot="default" class="el-icon-plus"></i>
+                <div slot="file" slot-scope="{file}">
+                  <img class="el-upload-list__item-thumbnail" :src="file.url" alt>
+                  <span class="el-upload-list__item-actions">
+                    <span
+                      class="el-upload-list__item-preview"
+                      @click="handlePictureCardPreview(file)"
+                    >
+                      <i class="el-icon-zoom-in"></i>
+                    </span>
+                    <span
+                      v-if="!disabled"
+                      class="el-upload-list__item-delete"
+                      @click="handleDownload(file)"
+                    >
+                      <i class="el-icon-download"></i>
+                    </span>
+                    <span
+                      v-if="!disabled"
+                      class="el-upload-list__item-delete"
+                      @click="handleRemove(file)"
+                    >
+                      <i class="el-icon-delete"></i>
+                    </span>
+                  </span>
+                </div>
+              </el-upload>
+              <el-dialog :visible.sync="dialogVisible">
+                <img width="100%" :src="dialogImageUrl" alt>
+              </el-dialog>
+            </el-form-item>
           </el-col>
         </el-form>
         <div style="text-align:center">
@@ -251,9 +261,9 @@ export default {
   //   },
   data() {
     return {
-     dialogImageUrl: '',
-        dialogVisible: false,
-        disabled: false,
+      dialogImageUrl: "",
+      dialogVisible: false,
+      disabled: false,
       tableKey: 0,
       selectOptions: [
         {
@@ -278,7 +288,7 @@ export default {
           value: 2,
           label: "C区"
         },
-{
+        {
           value: 3,
           label: "D区"
         }
@@ -287,97 +297,95 @@ export default {
         {
           FWBH: "A-101",
           FWMC: "房屋1",
-          JZMJ:"100㎡",
+          JZMJ: "100㎡",
           LSFGS: "社区信息化部",
           ZLWZ: "港西新城",
           JGLX: "钢结构",
           ZCYZ: 10000,
           FWSX: "出售",
-          SSQY:"A区"
+          SSQY: "A区"
         },
         {
           FWBH: "C-101",
           FWMC: "房屋2",
-          JZMJ:"100㎡",
+          JZMJ: "100㎡",
           LSFGS: "分公司1",
           ZLWZ: "港西新城",
           JGLX: "钢结构",
           ZCYZ: 18000,
           FWSX: "出租",
-          SSQY:"C区"
+          SSQY: "C区"
         },
         {
           FWBH: "A-309",
           FWMC: "房屋3",
-          JZMJ:"87㎡",
+          JZMJ: "87㎡",
           LSFGS: "管控中心",
           ZLWZ: "港西新城",
           JGLX: "钢结构",
           ZCYZ: 17000,
           FWSX: "出售",
-          SSQY:"A区"
+          SSQY: "A区"
         },
         {
- FWBH: "B-509",
+          FWBH: "B-509",
           FWMC: "房屋4",
-          JZMJ:"187㎡",
+          JZMJ: "187㎡",
           LSFGS: "云计算技术部",
           ZLWZ: "港西新城",
           JGLX: "钢结构",
           ZCYZ: 19000,
           FWSX: "出售",
-          SSQY:"B区"
+          SSQY: "B区"
         },
         {
-FWBH: "D-211",
+          FWBH: "D-211",
           FWMC: "房屋5",
-          JZMJ:"127㎡",
+          JZMJ: "127㎡",
           LSFGS: "云计算技术部",
           ZLWZ: "港西新城",
           JGLX: "钢结构",
           ZCYZ: 24000,
           FWSX: "出售",
-          SSQY:"D区"
+          SSQY: "D区"
         },
         {
-FWBH: "C-310",
+          FWBH: "C-310",
           FWMC: "房屋6",
-          JZMJ:"127㎡",
+          JZMJ: "127㎡",
           LSFGS: "网络技术部",
           ZLWZ: "港西新城",
           JGLX: "钢结构",
           ZCYZ: 7000,
           FWSX: "出租",
-          SSQY:"C区"
+          SSQY: "C区"
         },
         {
-FWBH: "B-223",
+          FWBH: "B-223",
           FWMC: "房屋7",
-          JZMJ:"97㎡",
+          JZMJ: "97㎡",
           LSFGS: "网络技术部",
           ZLWZ: "港西新城",
           JGLX: "钢结构",
           ZCYZ: 12000,
           FWSX: "出租",
-          SSQY:"B区"
+          SSQY: "B区"
         }
       ],
       rules: {
-         
-          FWMC: [
-            { required: true, message: '请输入房屋名称', trigger: 'change' }
-          ],
-                  LSFGS: [
-            { required: true, message: '请输入所属分公司', trigger: 'change' }
-          ],
-                    FZFJE: [
-            { required: true, message: '请输入房租金额', trigger: 'change' }
-          ],
-                    WYFJE: [
-            { required: true, message: '请输入物业费金额', trigger: 'change' }
-          
-          ],
-        },
+        FWMC: [
+          { required: true, message: "请输入房屋名称", trigger: "change" }
+        ],
+        LSFGS: [
+          { required: true, message: "请输入所属分公司", trigger: "change" }
+        ],
+        FZFJE: [
+          { required: true, message: "请输入房租金额", trigger: "change" }
+        ],
+        WYFJE: [
+          { required: true, message: "请输入物业费金额", trigger: "change" }
+        ]
+      },
       total: 15,
       listLoading: false,
       importmodeloptions: [
@@ -405,14 +413,14 @@ FWBH: "B-223",
         OrgRegion: ""
       },
       temp: {
-FWBH: "D-211",
-          FWMC: "房屋5",
-          JZMJ:"127㎡",
-          LSFGS: "云计算技术部",
-          ZLWZ: "D区",
-         FZFJE: 25000,
-          WYFJE: 1350,
-          FWSX: "出售"
+        FWBH: "D-211",
+        FWMC: "房屋5",
+        JZMJ: "127㎡",
+        LSFGS: "云计算技术部",
+        ZLWZ: "D区",
+        FZFJE: 25000,
+        WYFJE: 1350,
+        FWSX: "出售"
       },
       textMap: {
         update: "修改房屋信息",
@@ -426,16 +434,16 @@ FWBH: "D-211",
   },
   methods: {
     handleRemove(file) {
-        console.log(file);
-      },
-      handlePictureCardPreview(file) {
-        this.dialogImageUrl = file.url;
-        this.dialogVisible = true;
-      },
-      handleDownload(file) {
-        console.log(file);
-      },
-      deleteRow(index, rows) {
+      console.log(file);
+    },
+    handlePictureCardPreview(file) {
+      this.dialogImageUrl = file.url;
+      this.dialogVisible = true;
+    },
+    handleDownload(file) {
+      console.log(file);
+    },
+    deleteRow(index, rows) {
       //删除改行
       rows.splice(index, 1);
     },
@@ -445,14 +453,14 @@ FWBH: "D-211",
 
     resetTemp() {
       this.temp = {
-FWBH: "",
-          FWMC: "",
-          JZMJ:"",
-          LSFGS: "",
-          ZLWZ: "",
-         FZFJE: "",
-          WYFJE: "",
-          FWSX: ""
+        FWBH: "",
+        FWMC: "",
+        JZMJ: "",
+        LSFGS: "",
+        ZLWZ: "",
+        FZFJE: "",
+        WYFJE: "",
+        FWSX: ""
       };
     },
 
@@ -642,6 +650,10 @@ FWBH: "",
   .el-dialog__body {
     padding: 0px 10px 10px !important;
   }
+}
+.tableicon {
+  width: 25px;
+  height: 25px;
 }
 </style>
 
