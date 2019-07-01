@@ -229,7 +229,7 @@
               </el-form-item>
             </el-col>
         </el-row>-->
-        <el-card >
+        <el-card>
           <div slot="header">
             <span>商户信息</span>
           </div>
@@ -237,15 +237,8 @@
             <el-row>
               <el-col :span="8">
                 <el-form-item label="房屋编号">
-                  <el-cascader
-                    style="width:100%;"
-                    placeholder="搜索房号"
-                    :options="options"
-                    :props="{ multiple: true, checkStrictly: true  }"
-                    filterable
-                    size="small"
-                    v-model="temp.FWBH"
-                  ></el-cascader>
+                  <el-input v-model="temp.FWBH" disabled style="width:70%;"></el-input>
+                  <el-button size="small" type="primary" @click="innerVisible=true">选择房屋</el-button>
                 </el-form-item>
               </el-col>
               <el-col :span="8">
@@ -254,10 +247,10 @@
                 </el-form-item>
               </el-col>
               <el-col :span="8">
-                <el-form-item label="隶属分公司" v-model="temp.LSFGS">
-                  <el-select style="width:100%" size="small">
-                    <el-option value=0 label="分公司1"></el-option>
-                    <el-option value=1 label="分公司2"></el-option>
+                <el-form-item label="隶属分公司">
+                  <el-select style="width:100%" size="small" v-model="temp.LSFGS">
+                    <el-option :value="0" label="分公司1"></el-option>
+                    <el-option :value="1" label="分公司2"></el-option>
                   </el-select>
                 </el-form-item>
               </el-col>
@@ -276,7 +269,12 @@
               </el-col>
               <el-col :span="8">
                 <el-form-item label="物业基准日期">
-                  <el-date-picker style="width:100%" format="yyyy-MM-dd" size="small" v-model="temp.JZR"></el-date-picker>
+                  <el-date-picker
+                    style="width:100%"
+                    format="yyyy-MM-dd"
+                    size="small"
+                    v-model="temp.JZR"
+                  ></el-date-picker>
                 </el-form-item>
               </el-col>
             </el-row>
@@ -295,10 +293,10 @@
                 </el-form-item>
               </el-col>
               <el-col :span="8">
-                <el-form-item label="物业缴纳方式" >
+                <el-form-item label="物业缴纳方式">
                   <el-select style="width:100%" size="small" v-model="temp.JNFS">
-                    <el-option value=0 label="半年"></el-option>
-                    <el-option value=1 label="一年"></el-option>
+                    <el-option :value="0" label="半年"></el-option>
+                    <el-option :value="1" label="一年"></el-option>
                   </el-select>
                 </el-form-item>
               </el-col>
@@ -320,15 +318,15 @@
           <div>
             <el-row>
               <el-col :span="8">
-                <el-form-item label="业主姓名" >
+                <el-form-item label="业主姓名">
                   <el-input size="small" v-model="temp.YZXM"></el-input>
                 </el-form-item>
               </el-col>
               <el-col :span="8">
-                  <el-form-item label="业主类型" >
+                <el-form-item label="业主类型">
                   <el-select style="width:100%" size="small" v-model="temp.YZLX">
-                    <el-option value=0 label="个人"></el-option>
-                    <el-option value=1 label="公司"></el-option>
+                    <el-option :value="0" label="个人"></el-option>
+                    <el-option :value="1" label="公司"></el-option>
                   </el-select>
                 </el-form-item>
               </el-col>
@@ -347,14 +345,12 @@
               </el-col>
               <el-col :span="8">
                 <el-form-item label="手机号码">
-                  <el-input size="small" v-model="temp.YZSJHM">
-                  </el-input>
+                  <el-input size="small" v-model="temp.YZSJHM"></el-input>
                 </el-form-item>
               </el-col>
               <el-col :span="8">
-                <el-form-item label="固定电话" >
-                  <el-input size="small" v-model="temp.YZGDDH">
-                  </el-input>
+                <el-form-item label="固定电话">
+                  <el-input size="small" v-model="temp.YZGDDH"></el-input>
                 </el-form-item>
               </el-col>
             </el-row>
@@ -366,10 +362,10 @@
                 </el-form-item>
               </el-col>
               <el-col :span="8">
-                 <el-form-item label="使用类型">
+                <el-form-item label="使用类型">
                   <el-select style="width:100%" size="small" v-model="temp.SYLEX">
-                    <el-option value=0 label="自用"></el-option>
-                    <el-option value=1 label="出租"></el-option>
+                    <el-option :value="0" label="自用"></el-option>
+                    <el-option :value="1" label="出租"></el-option>
                   </el-select>
                 </el-form-item>
               </el-col>
@@ -388,10 +384,10 @@
                 </el-form-item>
               </el-col>
               <el-col :span="8">
-                  <el-form-item label="租户类型">
+                <el-form-item label="租户类型">
                   <el-select style="width:100%" size="small" v-model="temp.ZHLX">
-                    <el-option value=0 label="个人"></el-option>
-                    <el-option value=1 label="公司"></el-option>
+                    <el-option :value="0" label="个人"></el-option>
+                    <el-option :value="1" label="公司"></el-option>
                   </el-select>
                 </el-form-item>
               </el-col>
@@ -410,8 +406,7 @@
               </el-col>
               <el-col :span="8">
                 <el-form-item label="手机号码">
-                  <el-input size="small" v-model="temp.ZHSJHM">
-                  </el-input>
+                  <el-input size="small" v-model="temp.ZHSJHM"></el-input>
                 </el-form-item>
               </el-col>
               <el-col :span="8">
@@ -436,6 +431,65 @@
         <el-button v-if="dialogStatus=='create'" type="primary" @click="createData">保存</el-button>
         <el-button v-else type="primary" @click="updateData">保存</el-button>
       </div>
+
+      <el-dialog width="50%" title="房屋信息" :visible.sync="innerVisible" append-to-body>
+        <el-table
+            :key="tableKey"
+            :data="list"
+            size="mini"
+            :header-cell-class-name="tableRowClassName"
+            v-loading="listLoading"
+            element-loading-text="给我一点时间"
+            border
+            fit
+            highlight-current-row
+            style="width: 100%;text-align:left;"
+          >
+            <el-table-column align="center" prop="FWSX" label="房屋属性" width="80px">
+              <template slot-scope="scope">
+                <img src="@/app_src/img/free.png" alt class="tableicon" title="空闲" v-if="scope.row.FWSX=='空闲'">
+                <img src="@/app_src/img/rent.png" alt class="tableicon" title="出租" v-else-if="scope.row.FWSX=='出租'">
+                <img src="@/app_src/img/sale.png" alt class="tableicon" title="出售" v-else-if="scope.row.FWSX=='出售'">
+              </template>
+            </el-table-column>
+            <el-table-column align="center" label="房屋编号">
+              <template slot-scope="scope">
+                <span>{{scope.row.FWBH}}</span>
+              </template>
+            </el-table-column>
+
+            <el-table-column label="房屋名称" :show-overflow-tooltip="true">
+              <template slot-scope="scope">
+                <span>{{scope.row.FWMC}}</span>
+              </template>
+            </el-table-column>
+            <el-table-column align="right" prop="JZMJ" label="建筑面积">
+              <template slot-scope="scope">
+                <span>{{scope.row.JZMJ}}</span>
+              </template>
+            </el-table-column>
+            <el-table-column align="right" prop="LSFGS" label="隶属分公司">
+              <template slot-scope="scope">
+                <span>{{scope.row.LSFGS}}</span>
+              </template>
+            </el-table-column>
+            <el-table-column align="right" prop="ZLWZ" label="坐落位置">
+              <template slot-scope="scope">
+                <span>{{scope.row.ZLWZ}}</span>
+              </template>
+            </el-table-column>
+            <el-table-column align="right" prop="FZFJE" label="结构类型">
+              <template slot-scope="scope">
+                <span>{{scope.row.JGLX }}</span>
+              </template>
+            </el-table-column>
+            <el-table-column align="right" prop="WYFJE" label="资产原值">
+              <template slot-scope="scope">
+                <span>{{scope.row.ZCYZ |NumFormat}}</span>
+              </template>
+            </el-table-column>
+          </el-table>
+      </el-dialog>
     </el-dialog>
   </div>
 </template>
@@ -468,7 +522,85 @@ export default {
           name: "出售"
         }
       ],
-
+      list: [
+        {
+          FWBH: "A-101",
+          FWMC: "房屋1",
+          JZMJ: "100㎡",
+          LSFGS: "社区信息化部",
+          ZLWZ: "港西新城",
+          JGLX: "钢结构",
+          ZCYZ: 10000,
+          FWSX: "出售",
+          SSQY: "A区"
+        },
+        {
+          FWBH: "C-101",
+          FWMC: "房屋2",
+          JZMJ: "100㎡",
+          LSFGS: "分公司1",
+          ZLWZ: "港西新城",
+          JGLX: "钢结构",
+          ZCYZ: 18000,
+          FWSX: "出租",
+          SSQY: "C区"
+        },
+        {
+          FWBH: "A-309",
+          FWMC: "房屋3",
+          JZMJ: "87㎡",
+          LSFGS: "管控中心",
+          ZLWZ: "港西新城",
+          JGLX: "钢结构",
+          ZCYZ: 17000,
+          FWSX: "出售",
+          SSQY: "A区"
+        },
+        {
+          FWBH: "B-509",
+          FWMC: "房屋4",
+          JZMJ: "187㎡",
+          LSFGS: "云计算技术部",
+          ZLWZ: "港西新城",
+          JGLX: "钢结构",
+          ZCYZ: 19000,
+          FWSX: "出售",
+          SSQY: "B区"
+        },
+        {
+          FWBH: "D-211",
+          FWMC: "房屋5",
+          JZMJ: "127㎡",
+          LSFGS: "云计算技术部",
+          ZLWZ: "港西新城",
+          JGLX: "钢结构",
+          ZCYZ: 24000,
+          FWSX: "出售",
+          SSQY: "D区"
+        },
+        {
+          FWBH: "C-310",
+          FWMC: "房屋6",
+          JZMJ: "127㎡",
+          LSFGS: "网络技术部",
+          ZLWZ: "港西新城",
+          JGLX: "钢结构",
+          ZCYZ: 7000,
+          FWSX: "出租",
+          SSQY: "C区"
+        },
+        {
+          FWBH: "B-223",
+          FWMC: "房屋7",
+          JZMJ: "97㎡",
+          LSFGS: "网络技术部",
+          ZLWZ: "港西新城",
+          JGLX: "钢结构",
+          ZCYZ: 12000,
+          FWSX: "出租",
+          SSQY: "B区"
+        }
+      ],
       options: [
         {
           value: "zhinan",
@@ -560,6 +692,7 @@ export default {
         }
       ],
       tableKey: 0,
+      innerVisible: false,
       selectOptions: [
         {
           value: 0,
@@ -743,31 +876,31 @@ export default {
         OrgRegion: ""
       },
       temp: {
-        FWBH:'',
-        FWMC:'',
-        LSFGS:'',
-        FWMJ:'',
-        ZLWZ:'',
-        JZR:'',
-        SHMC:'',
-        WYFBZ:'',
-        JNFS:'',
-        JYNR:'',
-        YZXM:'',
-        YZLX:'',
-        YZXB:'',
-        YZSFZH:'',
-        YZSJH:'',
-        YZGD:'',
-        YZDZYX:'',
-        SYLX:'',
-        ZHXM:'',
-        ZHLX:'',
-        ZHXB:'',
-        ZHSFZH:'',
-        ZHSJHM:'',
-        ZHGD:'',
-        ZHDZYX:''
+        FWBH: "",
+        FWMC: "",
+        LSFGS: "",
+        FWMJ: "",
+        ZLWZ: "",
+        JZR: "",
+        SHMC: "",
+        WYFBZ: "",
+        JNFS: "",
+        JYNR: "",
+        YZXM: "",
+        YZLX: "",
+        YZXB: "",
+        YZSFZH: "",
+        YZSJH: "",
+        YZGD: "",
+        YZDZYX: "",
+        SYLX: "",
+        ZHXM: "",
+        ZHLX: "",
+        ZHXB: "",
+        ZHSFZH: "",
+        ZHSJHM: "",
+        ZHGD: "",
+        ZHDZYX: ""
       },
       textMap: {
         update: "修改出售房屋信息",
@@ -790,31 +923,31 @@ export default {
 
     resetTemp() {
       this.temp = {
-        FWBH:'',
-        FWMC:'',
-        LSFGS:'',
-        FWMJ:'',
-        ZLWZ:'',
-        JZR:'',
-        SHMC:'',
-        WYFBZ:'',
-        JNFS:'',
-        JYNR:'',
-        YZXM:'',
-        YZLX:'',
-        YZXB:'',
-        YZSFZH:'',
-        YZSJH:'',
-        YZGD:'',
-        YZDZYX:'',
-        SYLX:'',
-        ZHXM:'',
-        ZHLX:'',
-        ZHXB:'',
-        ZHSFZH:'',
-        ZHSJHM:'',
-        ZHGD:'',
-        ZHDZYX:''
+        FWBH: "",
+        FWMC: "",
+        LSFGS: "",
+        FWMJ: "",
+        ZLWZ: "",
+        JZR: "",
+        SHMC: "",
+        WYFBZ: "",
+        JNFS: "",
+        JYNR: "",
+        YZXM: "",
+        YZLX: "",
+        YZXB: "",
+        YZSFZH: "",
+        YZSJH: "",
+        YZGD: "",
+        YZDZYX: "",
+        SYLX: "",
+        ZHXM: "",
+        ZHLX: "",
+        ZHXB: "",
+        ZHSFZH: "",
+        ZHSJHM: "",
+        ZHGD: "",
+        ZHDZYX: ""
       };
     },
 
@@ -956,6 +1089,34 @@ export default {
         return "el-button--primary is-active"; // 'warning-row'
       } // 'el-button--primary is-plain'// 'warning-row'
       return "";
+    },
+    handleTabsEdit(targetName, action) {
+      if (action === "add") {
+        let newTabName = ++this.tabIndex + "";
+        this.editableTabs.push({
+          title: "New Tab",
+          name: newTabName,
+          content: "New Tab content"
+        });
+        this.editableTabsValue = newTabName;
+      }
+      if (action === "remove") {
+        let tabs = this.editableTabs;
+        let activeName = this.editableTabsValue;
+        if (activeName === targetName) {
+          tabs.forEach((tab, index) => {
+            if (tab.name === targetName) {
+              let nextTab = tabs[index + 1] || tabs[index - 1];
+              if (nextTab) {
+                activeName = nextTab.name;
+              }
+            }
+          });
+        }
+
+        this.editableTabsValue = activeName;
+        //this.editableTabs = tabs.filter(tab => tab.name !== targetName);
+      }
     }
   },
   created() {
