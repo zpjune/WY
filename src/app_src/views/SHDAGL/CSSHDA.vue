@@ -431,7 +431,7 @@
           </div>
         </el-card>
       </el-form>
-      <div style="text-align:center">
+      <div style="text-align:center;margin-top:20px;">
         <el-button @click="editVisible = false">取消</el-button>
         <el-button v-if="dialogStatus=='create'" type="primary" @click="createData">保存</el-button>
         <el-button v-else type="primary" @click="updateData">保存</el-button>
