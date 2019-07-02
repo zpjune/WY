@@ -243,12 +243,12 @@
               </el-col>
               <el-col :span="8">
                 <el-form-item label="房屋名称">
-                  <el-input size="small" v-model="temp.FWMC"></el-input>
+                  <el-input size="small" v-model="temp.FWMC" disabled></el-input>
                 </el-form-item>
               </el-col>
               <el-col :span="8">
                 <el-form-item label="隶属分公司">
-                  <el-select style="width:100%" size="small" v-model="temp.LSFGS">
+                  <el-select style="width:100%" size="small" v-model="temp.LSFGS" disabled>
                     <el-option :value="0" label="分公司1"></el-option>
                     <el-option :value="1" label="分公司2"></el-option>
                   </el-select>
@@ -259,12 +259,12 @@
             <el-row>
               <el-col :span="8">
                 <el-form-item label="房屋面积">
-                  <el-input size="small" v-model="temp.FWMJ"></el-input>
+                  <el-input size="small" v-model="temp.JZMJ" disabled></el-input>
                 </el-form-item>
               </el-col>
               <el-col :span="8">
                 <el-form-item label="坐落位置">
-                  <el-input size="small" v-model="temp.ZLWZ"></el-input>
+                  <el-input size="small" v-model="temp.ZLWZ" disabled></el-input>
                 </el-form-item>
               </el-col>
               <el-col :span="8">
@@ -435,7 +435,7 @@
       <el-dialog width="50%" title="房屋信息" :visible.sync="innerVisible" append-to-body>
         <el-table
             :key="tableKey"
-            :data="list"
+            :data="list1"
             size="mini"
             :header-cell-class-name="tableRowClassName"
             v-loading="listLoading"
@@ -488,6 +488,11 @@
                 <span>{{scope.row.ZCYZ |NumFormat}}</span>
               </template>
             </el-table-column>
+            <el-table-column>
+              <template slot-scope="scope">
+                <el-button size="small" type="primary" @click="selectHouse(scope)">选择</el-button>
+              </template>
+            </el-table-column>
           </el-table>
       </el-dialog>
     </el-dialog>
@@ -522,7 +527,7 @@ export default {
           name: "出售"
         }
       ],
-      list: [
+      list1: [
         {
           FWBH: "A-101",
           FWMC: "房屋1",
@@ -542,7 +547,7 @@ export default {
           ZLWZ: "港西新城",
           JGLX: "钢结构",
           ZCYZ: 18000,
-          FWSX: "出租",
+          FWSX: "出售",
           SSQY: "C区"
         },
         {
@@ -586,7 +591,7 @@ export default {
           ZLWZ: "港西新城",
           JGLX: "钢结构",
           ZCYZ: 7000,
-          FWSX: "出租",
+          FWSX: "出售",
           SSQY: "C区"
         },
         {
@@ -597,7 +602,7 @@ export default {
           ZLWZ: "港西新城",
           JGLX: "钢结构",
           ZCYZ: 12000,
-          FWSX: "出租",
+          FWSX: "出售",
           SSQY: "B区"
         }
       ],
@@ -879,7 +884,7 @@ export default {
         FWBH: "",
         FWMC: "",
         LSFGS: "",
-        FWMJ: "",
+        JZMZ: "",
         ZLWZ: "",
         JZR: "",
         SHMC: "",
@@ -926,7 +931,7 @@ export default {
         FWBH: "",
         FWMC: "",
         LSFGS: "",
-        FWMJ: "",
+        JZMZ: "",
         ZLWZ: "",
         JZR: "",
         SHMC: "",
@@ -1090,33 +1095,9 @@ export default {
       } // 'el-button--primary is-plain'// 'warning-row'
       return "";
     },
-    handleTabsEdit(targetName, action) {
-      if (action === "add") {
-        let newTabName = ++this.tabIndex + "";
-        this.editableTabs.push({
-          title: "New Tab",
-          name: newTabName,
-          content: "New Tab content"
-        });
-        this.editableTabsValue = newTabName;
-      }
-      if (action === "remove") {
-        let tabs = this.editableTabs;
-        let activeName = this.editableTabsValue;
-        if (activeName === targetName) {
-          tabs.forEach((tab, index) => {
-            if (tab.name === targetName) {
-              let nextTab = tabs[index + 1] || tabs[index - 1];
-              if (nextTab) {
-                activeName = nextTab.name;
-              }
-            }
-          });
-        }
-
-        this.editableTabsValue = activeName;
-        //this.editableTabs = tabs.filter(tab => tab.name !== targetName);
-      }
+    selectHouse(data){
+      this.temp=data.row;
+      this.innerVisible=false;
     }
   },
   created() {
@@ -1165,6 +1146,10 @@ export default {
   .el-dialog__body {
     padding: 0px 10px 10px !important;
   }
+}
+.tableicon {
+  width: 25px;
+  height: 25px;
 }
 </style>
 
