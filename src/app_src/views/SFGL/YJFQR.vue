@@ -118,9 +118,11 @@
           <span>{{scope.row.jfrq}}</span>
         </template>
       </el-table-column>
-      <el-table-column align="center" width="230" label="操作" fixed="right">
+      <el-table-column align="center" width="240" label="操作" fixed="right">
       <template slot-scope="scope">
-          <el-button type="primary" size="mini" @click="handleUpdate(scope.row)">商户详情</el-button>
+          <el-button type="primary" size="mini" @click="handleUpdate(scope.row)">查看详情</el-button>
+          <el-button type="success" size="mini" @click="handleUpdate(scope.row)">缴费完成确认</el-button>
+
        </template>
       </el-table-column>
     </el-table>

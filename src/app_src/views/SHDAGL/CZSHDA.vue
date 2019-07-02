@@ -53,77 +53,47 @@
             highlight-current-row
             style="width: 100%;text-align:left;"
           >
-            <el-table-column align="center" label="业主姓名" fixed="left">
-              <template slot-scope="scope">
-                <span>{{scope.row.YZXM}}</span>
-              </template>
-            </el-table-column>
-            <el-table-column align="right" prop="XB" label="性别">
-              <template slot-scope="scope">
-                <span>{{scope.row.XB}}</span>
-              </template>
-            </el-table-column>
-            <el-table-column align="right" prop="YZLX" label="业主类型" fixed="left">
-              <template slot-scope="scope">
-                <span>{{scope.row.YZLX}}</span>
-              </template>
-            </el-table-column>
-            <el-table-column align="right" width="150" prop="SFZH" label="身份证号">
-              <template slot-scope="scope">
-                <span>{{scope.row.SFZH}}</span>
-              </template>
-            </el-table-column>
-            <el-table-column align="right" width="100" prop="LXDH" label="联系电话">
-              <template slot-scope="scope">
-                <span>{{scope.row.LXDH}}</span>
-              </template>
-            </el-table-column>
-            <el-table-column align="right" prop="FWBH" label="房屋编号" fixed="left">
+            <el-table-column align="center" prop="FWBH" label="房屋编号" fixed="left">
               <template slot-scope="scope">
                 <span>{{scope.row.FWBH}}</span>
               </template>
             </el-table-column>
-            <el-table-column align="right" width="100" prop="SYLX" label="房屋使用类型">
+            <el-table-column align="right" prop="FWMC" label="房屋名称" fixed="left">
               <template slot-scope="scope">
-                <span>{{scope.row.SYLX}}</span>
+                <span>{{scope.row.FWMC}}</span>
               </template>
             </el-table-column>
-            <el-table-column label="商铺名称" :show-overflow-tooltip="true">
+            <el-table-column align="right" prop="LSFGS" label="隶属分公司" fixed="left">
               <template slot-scope="scope">
-                <span>{{scope.row.SPMC}}</span>
+                <span>{{scope.row.LSFGS}}</span>
               </template>
             </el-table-column>
-            <el-table-column align="right" width="100" prop="HTQDSJ" label="合同签订时间">
+            <el-table-column align="right" width="150" prop="YZXM" label="业主姓名">
               <template slot-scope="scope">
-                <span>{{scope.row.HTQDSJ}}</span>
+                <span>{{scope.row.YZXM}}</span>
               </template>
             </el-table-column>
-            <el-table-column align="right" prop="YXQ" label="有效期">
+            <el-table-column align="right" width="100" prop="YZLX" label="业主类型">
               <template slot-scope="scope">
-                <span>{{scope.row.YXQ}}</span>
+                <span>{{scope.row.YZLX}}</span>
               </template>
             </el-table-column>
-            <el-table-column align="right" prop="FZFJE" label="租户姓名">
+            <el-table-column align="right" prop="YZSJ" label="业主手机">
               <template slot-scope="scope">
-                <span>{{scope.row.ZHXM }}</span>
+                <span>{{scope.row.YZSJ}}</span>
               </template>
             </el-table-column>
-            <el-table-column align="right" width="150" prop="FZFJE" label="租户身份证号">
+            <el-table-column align="right" width="100" prop="YZGH" label="业主固话">
               <template slot-scope="scope">
-                <span>{{scope.row.ZHSFZ }}</span>
+                <span>{{scope.row.YZGH}}</span>
               </template>
             </el-table-column>
-            <el-table-column align="right" width="100" prop="WYFJE" label="租户联系电话">
+            <el-table-column align="right" width="100" prop="SHZT" label="审核状态">
               <template slot-scope="scope">
-                <span>{{scope.row.ZHDH }}</span>
+                <span>{{scope.row.SHZT}}</span>
               </template>
             </el-table-column>
-
-            <el-table-column align="right" prop="FWSX" label="经营内容" :show-overflow-tooltip="true">
-              <template slot-scope="scope">
-                <span>{{scope.row.JYNR}}</span>
-              </template>
-            </el-table-column>
+          
             <el-table-column align="center" width="230" label="操作" fixed="right">
               <template slot-scope="scope">
                 <el-button type="primary" size="mini" @click="handleUpdate(scope.row)">修改</el-button>
@@ -654,11 +624,12 @@ export default {
 
     handleCreate() {
       this.resetTemp();
-      this.editVisible = true;
-      this.dialogStatus = "create";
-      if (this.$refs["dataForm"] !== undefined) {
-        this.$refs["dataForm"].resetFields();
-      }
+      // this.editVisible = true;
+      // this.dialogStatus = "create";
+      // if (this.$refs["dataForm"] !== undefined) {
+      //   this.$refs["dataForm"].resetFields();
+      // }
+      this.$router.push({ path: "/SHDAGL/CZDAEDIT" });
     },
     handleUpdate(row) {
       this.temp = Object.assign({}, row); // copy obj
@@ -791,7 +762,7 @@ export default {
 </script>
 
 <style lang="scss" >
-#SHDA {
+#CZSHDA {
   .topSearh {
     margin-bottom: 15px;
   }

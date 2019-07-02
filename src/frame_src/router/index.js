@@ -47,9 +47,14 @@ export const constantRouterMap = [
       component: _import('frame_src/views/noticeViews/index'),
       name: '公告列表', meta: { title: '公告列表', icon: 'home', noCache: true },
       hidden: true
+    },
+    {
+      path: '/SHDAGL/CZDAEDIT', name: '出租商户档案维护',
+      meta: { title: '出租商户档案维护', icon: 'home', noCache: true },
+      component: _import('app_src/views/SHDAGL/CZDAEDIT'), hidden: true
     }
     ]
-  },
+  }
 ]
 
 export default new Router({
