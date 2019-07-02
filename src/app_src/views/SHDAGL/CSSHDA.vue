@@ -331,8 +331,11 @@
                 </el-form-item>
               </el-col>
               <el-col :span="8">
-                <el-form-item label="业主姓名">
-                  <el-input size="small"></el-input>
+                <el-form-item label="业主性别">
+                  <el-select style="width:100%;" v-model="temp.YZXB">
+                    <el-option :value="0" label="女"></el-option>
+                    <el-option :value="1" label="男"></el-option>
+                  </el-select>
                 </el-form-item>
               </el-col>
             </el-row>
