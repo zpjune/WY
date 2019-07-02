@@ -16,12 +16,12 @@
               </el-col>
               <el-col :span="8">
                 <el-form-item label="房屋名称">
-                  <el-input size="small" v-model="temp.FWMC"></el-input>
+                  <el-input size="small" v-model="temp.FWMC" disabled></el-input>
                 </el-form-item>
               </el-col>
               <el-col :span="8">
-                <el-form-item label="隶属分公司" v-model="temp.LSFGS">
-                  <el-select style="width:100%" size="small">
+                <el-form-item label="隶属分公司" >
+                  <el-select style="width:100%" size="small" v-model="temp.LSFGS" disabled>
                     <el-option value=0 label="分公司1"></el-option>
                     <el-option value=1 label="分公司2"></el-option>
                   </el-select>
@@ -32,12 +32,12 @@
             <el-row>
               <el-col :span="8">
                 <el-form-item label="房屋面积">
-                  <el-input size="small" v-model="temp.FWMJ"></el-input>
+                  <el-input size="small" v-model="temp.JZMJ" disabled></el-input>
                 </el-form-item>
               </el-col>
               <el-col :span="8">
                 <el-form-item label="坐落位置">
-                  <el-input size="small" v-model="temp.ZLWZ"></el-input>
+                  <el-input size="small" v-model="temp.ZLWZ" disabled></el-input>
                 </el-form-item>
               </el-col>
               <el-col :span="8">
@@ -451,12 +451,12 @@ radio: '',
         // WYFJE: 1350,
         // FWSX: "出售"
 
-        FWBH:"",
-FWMC:"",
-LSFGS:"",
-FWMJ:"",
+        FWBH:"D-211",
+FWMC:"房屋5",
+LSFGS:"普丰公司",
+JZMJ:"127㎡",
 ZLWZ:"",
-JZR:"",
+JZR:"五金日用品",
 SHMC:"",
 WYFBZ:"",
 JNFS:"",

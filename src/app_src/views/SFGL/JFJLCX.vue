@@ -185,7 +185,7 @@
                     style="width:100%"
                     format="yyyy-MM-dd"
                     size="small"
-                    v-model="temp.jfrq"
+                    v-model="temp.jfrq" disabled
                   ></el-date-picker>
                 </el-form-item>
               </el-col>
@@ -194,19 +194,19 @@
             <el-row>
               <el-col :span="8">
                 <el-form-item label="商户名称">
-                  <el-input size="small" v-model="temp.SHMC"></el-input>
+                  <el-input size="small" v-model="temp.SHMC" disabled></el-input>
                 </el-form-item>
               </el-col>
               <el-col :span="8">
                 <el-form-item label="物业费标准">
-                  <el-input size="small" v-model="temp.jiaonajine">
+                  <el-input size="small" v-model="temp.jiaonajine" disabled>
                     <template slot="append">元/月</template>
                   </el-input>
                 </el-form-item>
               </el-col>
               <el-col :span="8">
                 <el-form-item label="物业缴纳方式">
-                  <el-select style="width:100%" size="small" v-model="temp.JNFS">
+                  <el-select style="width:100%" size="small" v-model="temp.JNFS" disabled>
                     <el-option :value="0" label="半年"></el-option>
                     <el-option :value="1" label="一年"></el-option>
                   </el-select>
@@ -217,7 +217,7 @@
             <el-row>
               <el-col :span="24">
                 <el-form-item label="经营内容" prop="JYNR">
-                  <el-input v-model="temp.JYNR" type="textarea" :rows="3"></el-input>
+                  <el-input v-model="temp.JYNR" type="textarea" :rows="3" disabled></el-input>
                 </el-form-item>
               </el-col>
             </el-row>
@@ -231,12 +231,12 @@
             <el-row>
               <el-col :span="8">
                 <el-form-item label="业主姓名">
-                  <el-input size="small" v-model="temp.yezhu"></el-input>
+                  <el-input size="small" v-model="temp.yezhu" disabled></el-input>
                 </el-form-item>
               </el-col>
               <el-col :span="8">
                 <el-form-item label="业主类型">
-                  <el-select style="width:100%" size="small" v-model="temp.YZLX">
+                  <el-select style="width:100%" size="small" v-model="temp.YZLX" disabled>
                     <el-option :value="0" label="个人"></el-option>
                     <el-option :value="1" label="公司"></el-option>
                   </el-select>
@@ -244,7 +244,7 @@
               </el-col>
               <el-col :span="8">
                 <el-form-item label="业主姓名">
-                  <el-input size="small"></el-input>
+                  <el-input size="small" disabled></el-input>
                 </el-form-item>
               </el-col>
             </el-row>
@@ -252,17 +252,17 @@
             <el-row>
               <el-col :span="8">
                 <el-form-item label="身份证号">
-                  <el-input size="small" v-model="temp.YZSFZH"></el-input>
+                  <el-input size="small" v-model="temp.YZSFZH" disabled></el-input>
                 </el-form-item>
               </el-col>
               <el-col :span="8">
                 <el-form-item label="手机号码">
-                  <el-input size="small" v-model="temp.yezhutel"></el-input>
+                  <el-input size="small" v-model="temp.yezhutel" disabled></el-input>
                 </el-form-item>
               </el-col>
               <el-col :span="8">
                 <el-form-item label="固定电话">
-                  <el-input size="small" v-model="temp.YZGDDH"></el-input>
+                  <el-input size="small" v-model="temp.YZGDDH" disabled></el-input>
                 </el-form-item>
               </el-col>
             </el-row>
@@ -270,12 +270,12 @@
             <el-row>
               <el-col :span="8">
                 <el-form-item label="电子邮箱">
-                  <el-input size="small" v-model="temp.YZDZYX"></el-input>
+                  <el-input size="small" v-model="temp.YZDZYX" disabled></el-input>
                 </el-form-item>
               </el-col>
               <el-col :span="8">
                 <el-form-item label="使用类型">
-                  <el-select style="width:100%" size="small" v-model="temp.SYLEX">
+                  <el-select style="width:100%" size="small" v-model="temp.SYLEX" disabled>
                     <el-option :value="0" label="自用"></el-option>
                     <el-option :value="1" label="出租"></el-option>
                   </el-select>

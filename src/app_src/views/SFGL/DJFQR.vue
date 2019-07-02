@@ -38,7 +38,6 @@
       <el-button
         class="filter-item"
         type="primary"
-        v-waves
         icon="el-icon-search"
         @click="handleFilter"
         size="mini"
@@ -46,8 +45,6 @@
       <el-button
         class="filter-item"
         type="primary"
-        :loading="downloadLoading"
-        v-waves
         icon="el-icon-download"
         @click="handleDownload"
         size="mini"
@@ -120,10 +117,10 @@
       </el-table-column>
       <el-table-column align="center" width="400" label="操作" fixed="right">
       <template slot-scope="scope">
-          <el-button type="primary" size="mini" @click="handleUpdate(scope.row)">查看详情</el-button>
+          <el-button type="primary" size="mini" @click="handleDetail(scope.row)">查看详情</el-button>
           <el-button type="success" size="mini" @click="handleUpdate(scope.row)">确认通知单</el-button>
-          <el-button type="danger" size="mini" @click="handleUpdate(scope.row)">催缴</el-button>
-          <el-button type="warning" size="mini" @click="handleUpdate(scope.row)">手动缴费确认</el-button>
+          <el-button type="danger" size="mini" @click="handlePush(scope.row)">催缴</el-button>
+          <el-button type="warning" size="mini" @click="handleCreate(scope.row)">手动缴费确认</el-button>
        </template>
       </el-table-column>
     </el-table>
@@ -137,8 +134,97 @@
               layout="total, sizes, prev, pager, next, jumper"
               :total="10"
             ></el-pagination>
-    
+         <el-dialog width="50%" title="缴费通知" :visible.sync="innerVisible" append-to-body>
+      
+<el-card class="box-card">
+  <pre style="font-size:18px;padding:5px;">
+  <span style="text-decoration:underline">尊敬的丰收道730号业主：</span>
+  根据合同，该房屋已欠缴物业费，现请您务必在<span style="text-decoration:underline">2019年6月25日</span>前缴纳该房屋的物业费578.16元
+  <span style="text-decoration:underline">（2019年1月1日至2019年6月30日）</span>请尽快到普丰物业公司（创新北里物业楼210室缴纳物业费）。
+  缴费方式：刷借记卡、微信、支付宝。
+  联系电话：63950600
+  <label style="float:right">天津市普丰物业管理有限公司</label>
+  <label  style="float:right">2019年5月27日</label>
+  </pre>
+</el-card>
+      </el-dialog>
+
+      <el-dialog
+      :visible.sync="editVisible"
+      class="selecttrees"
+      :title="textMap[dialogStatus]"
+      width="70%"
+    >
+      <el-form ref="dataForm" :model="temp" label-width="120px" style="width: 99%;">
+        <el-row>
+            <el-col :span="12">
+              <el-form-item label="业主姓名" prop="yezhu">
+                <el-input v-model="temp.yezhu"></el-input>
+              </el-form-item>
+            </el-col>
+            <el-col :span="12">
+              <el-form-item label="房屋编号" prop="fanghao">
+                <el-input v-model="temp.fanghao"></el-input>
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="12">
+              <el-form-item label="缴费类型" prop="jflx">
+                <el-input v-model="temp.jflx"></el-input>
+              </el-form-item>
+            </el-col>
+            <el-col :span="12">
+              <el-form-item label="房屋名称" prop="name">
+                <el-input v-model="temp.name"></el-input>
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="12">
+              <el-form-item label="缴费时间" prop="jfrq">
+                  <el-date-picker
+                    style="width:100%"
+                    format="yyyy-MM-dd"
+                    size="small"
+                    v-model="temp.jfrq"
+                  ></el-date-picker>
+              </el-form-item>
+            </el-col>
+            <el-col :span="12">
+              <el-form-item label="费用金额" prop="jiaonajine">
+                <el-input v-model="temp.jiaonajine"></el-input>
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="12">
+              <el-form-item label="有效期（起）" prop="YXQQ">
+                <el-input v-model="temp.YXQQ"></el-input>
+              </el-form-item>
+            </el-col>
+            <el-col :span="12">
+              <el-form-item label="有效期（止）" prop="YXQZ">
+                <el-input v-model="temp.YXQZ"></el-input>
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="24">
+              <el-form-item label="备注" prop="REMARK">
+                <el-input v-model="temp.REMARK" type="textarea" :rows="3"></el-input>
+              </el-form-item>
+            </el-col>
+        </el-row>
+      </el-form>
+            <div style="text-align:center;margin-top:20px;">
+        <el-button @click="editVisible = false">取消</el-button>
+        <el-button v-if="dialogStatus=='create'" type="primary" @click="createData">保存</el-button>
+        <el-button v-else type="primary" @click="updateData">保存</el-button>
+      </div>
+      </el-dialog>
   </div>
+  
 </template>
             
 <script>
@@ -147,10 +233,12 @@ export default {
   data() {
     return {
       listLoading: false,
+      dialogStatus:"",
       listQuery: {
         QuYu: "",
         Name: ""
       },
+      innerVisible:false,
       dateQuery:"",
       options: [
         {
@@ -282,27 +370,157 @@ sfjf:"是",
 jfrq:"2019-05-30"
         }
       ],
-      tableKey:0
+      tableKey:0,
+      temp: {
+        yezhu:"",
+        fanghao:"",
+        jflx:"",
+name:"",
+jfrq:"",
+jiaonajine:"",
+YXQQ:"",
+YXQZ:"",
+REMARK:""
+      },
+      textMap: {
+        update: "确认缴费",
+        create: "手动缴费"
+      },
+      editVisible: false,
     };
   },
   methods: {
     handleFilter() {
        
     },
+    resetTemp() {
+      this.temp = {
+        yezhu:"",
+        fanghao:"",
+        jflx:"",
+name:"",
+jfrq:"",
+jiaonajine:"",
+YXQQ:"",
+YXQZ:"",
+REMARK:""
+      };
+    },
+
     handleDetail(){
         this.DetailVisible=true;
     },
     handleDownload() {
 
     },
+    handleDetail(data){
+      this.innerVisible=true;
+    },
+ handleCreate() {
+      this.resetTemp();
+      this.editVisible = true;
+      this.dialogStatus = "create";
+      if (this.$refs["dataForm"] !== undefined) {
+        this.$refs["dataForm"].resetFields();
+      }
+    },
+    handleUpdate(row) {
+      this.temp = Object.assign({}, row); // copy obj
+      this.editVisible = true;
+      this.dialogStatus = "update";
+      this.$nextTick(() => {
+        this.$refs["dataForm"].clearValidate();
+      });
+    },
     tixingclick(){},
+     createData() {
+      // 创建
+      this.$refs["dataForm"].validate(valid => {
+        if (valid) {
+          //   createTaxOrg(this.temp).then(response => {
+          //     var message = response.data.message;
+          var message = "成功";
+          var title = "失败";
+          var type = "error";
+          //     if (response.data.code === 2000) {
+          title = "成功";
+          type = "success";
+          // this.list.unshift(this.temp)
+          //     }
+          this.editVisible = false;
+          this.$notify({
+            position: "bottom-right",
+            title: title,
+            message: message,
+            type: type,
+            duration: 3000
+          });
+          //   });
+        }
+      });
+    },
+    handlePush()
+    { var message = "催缴成功";
+          var title = "失败";
+          var type = "error";
+          //     if (response.data.code === 2000) {
+          title = "成功";
+          type = "success";
+          // this.list.unshift(this.temp)
+          //     }
+          this.editVisible = false;
+          this.$notify({
+            position: "bottom-right",
+            title: title,
+            message: message,
+            type: type,
+            duration: 3000
+          });},
+    updateData() {
+      this.$refs["dataForm"].validate(valid => {
+        if (valid) {
+          const tempData = Object.assign({}, this.temp); // 这样就不会共用同一个对象
+          //   tempData.S_UpdateBy = this.$store.state.user.userId;
+          //   //tempData.NOTICE_CONTENT=this.content
+          //   updateTaxOrg(tempData).then(response => {
+          //     var message = response.data.message;
+          var message = "成功";
+          var title = "失败";
+          var type = "error";
+          //     if (response.data.code === 2000) {
+          title = "成功";
+          type = "success";
+          // }
+          this.editVisible = false;
+          this.$notify({
+            position: "bottom-right",
+            title: title,
+            message: message,
+            type: type,
+            duration: 3000
+          });
+          //   });
+        }
+      });
+    },
     tableRowClassName({ row, rowIndex }) {
       // 表头行的 className 的回调方法，也可以使用字符串为所有表头行设置一个固定的 className。
       if (rowIndex === 0) {
         return "el-button--primary is-active"; // 'warning-row'
       } // 'el-button--primary is-plain'// 'warning-row'
       return "";
-    }
+    },
+     handleSizeChange(val) {
+      this.listQuery.limit = val;
+    },
+    handleCurrentChange(val) {
+      this.listQuery.page = val;
+
+    },
+    handleFilter() {
+      this.listQuery.page = 1;
+
+    },
   }
 };
 </script>

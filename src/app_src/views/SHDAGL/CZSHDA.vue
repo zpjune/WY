@@ -408,116 +408,75 @@ export default {
       ],
       list: [
         {
-          YZXM: "张三",
-          XB: "男",
-          YZLX: "个人",
-          SFZH: "234567543433343434",
-          LXDH: "127656534111",
-          FWBH: "A-101",
-          SYLX: "出租",
-          SPMC: "五金日用百货",
-          HTQDSJ: "2017-9-12",
-          YXQ: "5",
-          ZHXM: "唐三",
-          ZHSFZ: "43441219889082212",
-          ZHDH: "23454212222",
-          JYNR: "五金日用品"
+         FWBH:"A-101",
+FWMC:"五金店",
+LSFGS:"丰收道130号",
+YZXM:"张三",
+YZLX:"个人",
+YZSJ:"23123445676",
+YZGH:"23431111",
+SHZT:"已审核"
         },
         {
-          YZXM: "张三",
-          XB: "男",
-          YZLX: "个人",
-          SFZH: "234567543433343434",
-          LXDH: "127656534111",
-          FWBH: "A-101",
-          SYLX: "出租",
-          SPMC: "五金日用百货",
-          HTQDSJ: "2017-9-12",
-          YXQ: "5",
-          ZHXM: "唐三",
-          ZHSFZ: "43441219889082212",
-          ZHDH: "23454212222",
-          JYNR: "五金日用品"
+           FWBH:"A-102",
+FWMC:"五金店",
+LSFGS:"丰收道130号",
+YZXM:"张三",
+YZLX:"个人",
+YZSJ:"23123445676",
+YZGH:"23431111",
+SHZT:"已审核"
         },
         {
-          YZXM: "张三",
-          XB: "男",
-          YZLX: "个人",
-          SFZH: "234567543433343434",
-          LXDH: "127656534111",
-          FWBH: "A-101",
-          SYLX: "出租",
-          SPMC: "五金日用百货",
-          HTQDSJ: "2017-9-12",
-          YXQ: "5",
-          ZHXM: "唐三",
-          ZHSFZ: "43441219889082212",
-          ZHDH: "23454212222",
-          JYNR: "五金日用品"
+           FWBH:"A-103",
+         FWMC:"五金店",
+LSFGS:"丰收道130号",
+YZXM:"张三",
+YZLX:"个人",
+YZSJ:"23123445676",
+YZGH:"23431111",
+SHZT:"已审核"
         },
         {
-          YZXM: "张三",
-          XB: "男",
-          YZLX: "个人",
-          SFZH: "234567543433343434",
-          LXDH: "127656534111",
-          FWBH: "A-101",
-          SYLX: "出租",
-          SPMC: "五金日用百货",
-          HTQDSJ: "2017-9-12",
-          YXQ: "5",
-          ZHXM: "唐三",
-          ZHSFZ: "43441219889082212",
-          ZHDH: "23454212222",
-          JYNR: "五金日用品"
+           FWBH:"A-104",
+       FWMC:"五金店",
+LSFGS:"丰收道130号",
+YZXM:"张三",
+YZLX:"个人",
+YZSJ:"23123445676",
+YZGH:"23431111",
+SHZT:"待审核"
         },
         {
-          YZXM: "张三",
-          XB: "男",
-          YZLX: "个人",
-          SFZH: "234567543433343434",
-          LXDH: "127656534111",
-          FWBH: "A-101",
-          SYLX: "出租",
-          SPMC: "五金日用百货",
-          HTQDSJ: "2017-9-12",
-          YXQ: "5",
-          ZHXM: "唐三",
-          ZHSFZ: "43441219889082212",
-          ZHDH: "23454212222",
-          JYNR: "五金日用品"
+           FWBH:"A-105",
+        FWMC:"五金店",
+LSFGS:"丰收道130号",
+YZXM:"张三",
+YZLX:"个人",
+YZSJ:"23123445676",
+YZGH:"23431111",
+SHZT:"已审核"
         },
         {
-          YZXM: "张三",
-          XB: "男",
-          YZLX: "个人",
-          SFZH: "234567543433343434",
-          LXDH: "127656534111",
-          FWBH: "A-101",
-          SYLX: "出租",
-          SPMC: "五金日用百货",
-          HTQDSJ: "2017-9-12",
-          YXQ: "5",
-          ZHXM: "唐三",
-          ZHSFZ: "43441219889082212",
-          ZHDH: "23454212222",
-          JYNR: "五金日用品"
+
+           FWBH:"A-106",
+         FWMC:"五金店",
+LSFGS:"丰收道130号",
+YZXM:"张三",
+YZLX:"个人",
+YZSJ:"23123445676",
+YZGH:"23431111",
+SHZT:"待审核"
         },
         {
-          YZXM: "张三",
-          XB: "男",
-          YZLX: "个人",
-          SFZH: "234567543433343434",
-          LXDH: "127656534111",
-          FWBH: "A-101",
-          SYLX: "出租",
-          SPMC: "五金日用百货",
-          HTQDSJ: "2017-9-12",
-          YXQ: "5",
-          ZHXM: "唐三",
-          ZHSFZ: "43441219889082212",
-          ZHDH: "23454212222",
-          JYNR: "五金日用品"
+           FWBH:"A-107",
+        FWMC:"五金店",
+LSFGS:"丰收道130号",
+YZXM:"张三",
+YZLX:"个人",
+YZSJ:"23123445676",
+YZGH:"23431111",
+SHZT:"已审核"
         }
       ],
       rules: {
@@ -632,12 +591,13 @@ export default {
       this.$router.push({ path: "/SHDAGL/CZDAEDIT" });
     },
     handleUpdate(row) {
-      this.temp = Object.assign({}, row); // copy obj
-      this.editVisible = true;
-      this.dialogStatus = "update";
-      this.$nextTick(() => {
-        this.$refs["dataForm"].clearValidate();
-      });
+      // this.temp = Object.assign({}, row); // copy obj
+      // this.editVisible = true;
+      // this.dialogStatus = "update";
+      // this.$nextTick(() => {
+      //   this.$refs["dataForm"].clearValidate();
+      // });
+      this.$router.push({ path: "/SHDAGL/CZDAEDIT" });
     },
     handleDelete(row) {
       this.$confirm("确认删除信息吗", "提示", {

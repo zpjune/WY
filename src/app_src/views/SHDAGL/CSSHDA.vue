@@ -741,7 +741,9 @@ export default {
           ZHXM: "唐三",
           ZHSFZ: "43441219889082212",
           ZHDH: "23454212222",
-          JYNR: "五金日用品"
+          JYNR: "五金日用品",
+          LSFGS:"普丰物业",
+          LXGH:"26756553"
         },
         {
           YZXM: "张三",
@@ -757,7 +759,8 @@ export default {
           ZHXM: "唐三",
           ZHSFZ: "43441219889082212",
           ZHDH: "23454212222",
-          JYNR: "五金日用品"
+          JYNR: "五金日用品", LSFGS:"普丰物业",
+          LXGH:"26756553"
         },
         {
           YZXM: "张三",
@@ -773,7 +776,9 @@ export default {
           ZHXM: "唐三",
           ZHSFZ: "43441219889082212",
           ZHDH: "23454212222",
-          JYNR: "五金日用品"
+          JYNR: "五金日用品",
+          LSFGS:"普丰物业",
+          LXGH:"26756553"
         },
         {
           YZXM: "张三",
@@ -789,7 +794,9 @@ export default {
           ZHXM: "唐三",
           ZHSFZ: "43441219889082212",
           ZHDH: "23454212222",
-          JYNR: "五金日用品"
+          JYNR: "五金日用品",
+          LSFGS:"普丰物业",
+          LXGH:"26756553"
         },
         {
           YZXM: "张三",
@@ -805,7 +812,9 @@ export default {
           ZHXM: "唐三",
           ZHSFZ: "43441219889082212",
           ZHDH: "23454212222",
-          JYNR: "五金日用品"
+          JYNR: "五金日用品",
+          LSFGS:"普丰物业",
+          LXGH:"26756553"
         },
         {
           YZXM: "张三",
@@ -821,7 +830,9 @@ export default {
           ZHXM: "唐三",
           ZHSFZ: "43441219889082212",
           ZHDH: "23454212222",
-          JYNR: "五金日用品"
+          JYNR: "五金日用品",
+          LSFGS:"普丰物业",
+          LXGH:"26756553"
         },
         {
           YZXM: "张三",
@@ -837,7 +848,9 @@ export default {
           ZHXM: "唐三",
           ZHSFZ: "43441219889082212",
           ZHDH: "23454212222",
-          JYNR: "五金日用品"
+          JYNR: "五金日用品",
+          LSFGS:"普丰物业",
+          LXGH:"26756553"
         }
       ],
       rules: {
@@ -1119,7 +1132,7 @@ export default {
 </script>
 
 <style lang="scss" >
-#SHDA {
+#CSSHDA {
   .topSearh {
     margin-bottom: 15px;
   }
