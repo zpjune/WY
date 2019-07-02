@@ -83,10 +83,12 @@
                 <span>{{scope.row.LXGH}}</span>
               </template>
             </el-table-column>
-            <el-table-column align="center" width="230" label="操作" fixed="right">
+            <el-table-column align="center" width="300" label="操作" fixed="right">
               <template slot-scope="scope">
-                <el-button type="primary" size="mini" @click="handleUpdate(scope.row)">修改</el-button>
-                <el-button type="danger" size="mini" @click="handleDelete(scope.row)">删除</el-button>
+                <el-button type="primary" size="mini" @click="handlePass(scope.row)" v-if="scope.row.SHZT==0">通过审核</el-button>
+                <el-button type="danger" size="mini" @click="handleNotPass(scope.row)" v-else-if="scope.row.SHZT==1">取消审核</el-button>
+                <el-button type="warning" size="mini" @click="handleUpdate(scope.row)">终止物业</el-button>
+                <el-button type="primary" size="mini" @click="handleUpdate(scope.row)">详情</el-button>
               </template>
             </el-table-column>
           </el-table>
@@ -429,7 +431,7 @@
       <div style="text-align:center;margin-top:20px;">
         <el-button @click="editVisible = false">取消</el-button>
         <el-button v-if="dialogStatus=='create'" type="primary" @click="createData">保存</el-button>
-        <el-button v-else type="primary" @click="updateData">保存</el-button>
+        <el-button v-if="dialogStatus=='pass'" type="success" @click="pass">通过审核</el-button>
       </div>
 
       <el-dialog width="50%" title="房屋信息" :visible.sync="innerVisible" append-to-body>
@@ -728,6 +730,7 @@ export default {
       ],
       list: [
         {
+          id:1,
           YZXM: "张三",
           XB: "男",
           YZLX: "个人",
@@ -743,9 +746,11 @@ export default {
           ZHDH: "23454212222",
           JYNR: "五金日用品",
           LSFGS:"普丰物业",
-          LXGH:"26756553"
+          LXGH:"26756553",
+          SHZT:1,
         },
         {
+          id:2,
           YZXM: "张三",
           XB: "男",
           YZLX: "个人",
@@ -760,9 +765,11 @@ export default {
           ZHSFZ: "43441219889082212",
           ZHDH: "23454212222",
           JYNR: "五金日用品", LSFGS:"普丰物业",
-          LXGH:"26756553"
+          LXGH:"26756553",
+          SHZT:1,
         },
         {
+          id:3,
           YZXM: "张三",
           XB: "男",
           YZLX: "个人",
@@ -778,9 +785,11 @@ export default {
           ZHDH: "23454212222",
           JYNR: "五金日用品",
           LSFGS:"普丰物业",
-          LXGH:"26756553"
+          LXGH:"26756553",
+          SHZT:1,
         },
         {
+          id:4,
           YZXM: "张三",
           XB: "男",
           YZLX: "个人",
@@ -796,9 +805,11 @@ export default {
           ZHDH: "23454212222",
           JYNR: "五金日用品",
           LSFGS:"普丰物业",
-          LXGH:"26756553"
+          LXGH:"26756553",
+          SHZT:0,
         },
         {
+          id:5,
           YZXM: "张三",
           XB: "男",
           YZLX: "个人",
@@ -814,9 +825,11 @@ export default {
           ZHDH: "23454212222",
           JYNR: "五金日用品",
           LSFGS:"普丰物业",
-          LXGH:"26756553"
+          LXGH:"26756553",
+          SHZT:0,
         },
         {
+          id:6,
           YZXM: "张三",
           XB: "男",
           YZLX: "个人",
@@ -832,9 +845,11 @@ export default {
           ZHDH: "23454212222",
           JYNR: "五金日用品",
           LSFGS:"普丰物业",
-          LXGH:"26756553"
+          LXGH:"26756553",
+          SHZT:1,
         },
         {
+          id:7,
           YZXM: "张三",
           XB: "男",
           YZLX: "个人",
@@ -850,7 +865,8 @@ export default {
           ZHDH: "23454212222",
           JYNR: "五金日用品",
           LSFGS:"普丰物业",
-          LXGH:"26756553"
+          LXGH:"26756553",
+          SHZT:0,
         }
       ],
       rules: {
@@ -926,7 +942,6 @@ export default {
       },
       editVisible: false,
       dialogStatus: "",
-
       treeData: []
     };
   },
@@ -938,7 +953,47 @@ export default {
     addRow(tableData, event) {
       tableData.push({ fildna: "", fildtp: "", remark: "" });
     },
-
+    handlePass(row){
+      this.temp = Object.assign({}, row); // copy obj
+      this.editVisible = true;
+      this.dialogStatus = "pass";
+      this.$nextTick(() => {
+        this.$refs["dataForm"].clearValidate();
+      });
+    },
+    pass(){
+      var index=this.list.findIndex(t=>t.id==this.temp.id);
+      this.list[index].SHZT=1;
+      this.$notify({
+          title: '成功！',
+          message: '通过审核！',
+          position:'bottom-right',
+          type: 'success'
+        });
+        this.editVisible = false;
+    },
+    handleNotPass(data){
+      this.$confirm('取消审核确认','确认信息',{
+        distinguishCancelAndClose: true,
+          confirmButtonText: '确定',
+          cancelButtonText: '取消'
+      }).then(()=>{
+        data.SHZT=0;
+        this.$notify({
+          title: '成功！',
+          message: '取消审核',
+          position:'bottom-right',
+          type: 'success'
+        });
+      }).catch(()=>{
+        this.$notify({
+          title: '取消！',
+          message: '取消操作',
+          position:'bottom-right',
+          type: "warning"
+        });
+      })
+    },
     resetTemp() {
       this.temp = {
         FWBH: "",
