@@ -20,16 +20,26 @@
             type="primary"
             icon="el-icon-edit"
           >新增</el-button>
+                    <el-button
+        class="filter-item"
+        type="primary"
+        icon="el-icon-download"
+        size="mini"
+      >导出</el-button>
         </el-col>
+
       </el-row>
     </div>
     <el-card>
       <el-row>
         <el-col>
           <div style="text-align:right">
-            <img src="@/app_src/img/free.png" alt class="tableicon" title="空闲"><span style="font-weight:bold;color:gray;">空闲</span>
+            <!-- <img src="@/app_src/img/free.png" alt class="tableicon" title="空闲"><span style="font-weight:bold;color:gray;">空闲</span>
             <img src="@/app_src/img/rent.png" alt class="tableicon" title="出租"><span style="font-weight:bold;color:gray;">出租</span>
-            <img src="@/app_src/img/sale.png" alt class="tableicon" title="出售"><span style="font-weight:bold;color:gray;">出售</span>
+            <img src="@/app_src/img/sale.png" alt class="tableicon" title="出售"><span style="font-weight:bold;color:gray;">出售</span> -->
+            <div style="width:70px;height:18px;float:right;margin:2px;"><span style="float:right;">出售</span><span style="width:30px;height:18px;float:right;display:block;background-color:#67C23A;"></span></div>
+            <div style="width:70px;height:18px;float:right;margin:2px;"><span style="float:right;">出租</span><span style="width:30px;height:18px;float:right;display:block;background-color:#E6A23C;"></span></div>
+            <div style="width:70px;height:18px;float:right;margin:2px;"><span style="float:right;">空闲</span><span style="width:30px;height:18px;float:right;display:block;background-color:#909399;"></span></div>
           </div>
         </el-col>
       </el-row>
@@ -46,12 +56,14 @@
             fit
             highlight-current-row
             style="width: 100%;text-align:left;"
+            :cell-style="cellStyle"
           >
             <el-table-column align="center" prop="FWSX" label="房屋属性" width="80px">
               <template slot-scope="scope">
-                <img src="@/app_src/img/free.png" alt class="tableicon" title="空闲" v-if="scope.row.FWSX=='空闲'">
+                <span>{{scope.row.FWSX}}</span>
+                <!-- <img src="@/app_src/img/free.png" alt class="tableicon" title="空闲" v-if="scope.row.FWSX=='空闲'">
                 <img src="@/app_src/img/rent.png" alt class="tableicon" title="出租" v-else-if="scope.row.FWSX=='出租'">
-                <img src="@/app_src/img/sale.png" alt class="tableicon" title="出售" v-else-if="scope.row.FWSX=='出售'">
+                <img src="@/app_src/img/sale.png" alt class="tableicon" title="出售" v-else-if="scope.row.FWSX=='出售'"> -->
               </template>
             </el-table-column>
             <el-table-column align="center" label="房屋编号">
@@ -302,7 +314,7 @@ export default {
           ZLWZ: "港西新城",
           JGLX: "钢结构",
           ZCYZ: 10000,
-          FWSX: "出售",
+          FWSX: "空闲",
           SSQY: "A区"
         },
         {
@@ -313,7 +325,7 @@ export default {
           ZLWZ: "港西新城",
           JGLX: "钢结构",
           ZCYZ: 18000,
-          FWSX: "出租",
+          FWSX: "空闲",
           SSQY: "C区"
         },
         {
@@ -324,7 +336,7 @@ export default {
           ZLWZ: "港西新城",
           JGLX: "钢结构",
           ZCYZ: 17000,
-          FWSX: "出售",
+          FWSX: "出租",
           SSQY: "A区"
         },
         {
@@ -346,7 +358,7 @@ export default {
           ZLWZ: "港西新城",
           JGLX: "钢结构",
           ZCYZ: 24000,
-          FWSX: "出售",
+          FWSX: "空闲",
           SSQY: "D区"
         },
         {
@@ -433,6 +445,21 @@ export default {
     };
   },
   methods: {
+    cellStyle(row,column,rowIndex,columnIndex)
+    {
+      if(row.column.label==="房屋属性"&&row.row.FWSX=='空闲')
+      {
+        return 'background:#909399'
+      }
+      else if(row.column.label==="房屋属性"&&row.row.FWSX=='出租')
+      {
+        return 'background:#E6A23C'
+      }
+      else if(row.column.label==="房屋属性"&&row.row.FWSX=='出售')
+      {
+        return 'background:#67C23A'
+      }
+    },
     handleRemove(file) {
       console.log(file);
     },

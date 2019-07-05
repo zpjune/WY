@@ -4,7 +4,7 @@
     <div class="topSearh" id="topsearch">
       <el-row>
         <el-col :xs="5" :sm="5" :md="5" :lg="4" :xl="3">
-          <el-input placeholder="业主姓名" style="width:95%;" size="mini" clearable></el-input>
+          <el-input placeholder="租户姓名" style="width:95%;" size="mini" clearable></el-input>
         </el-col>
         <el-col :xs="5" :sm="5" :md="5" :lg="4" :xl="3">
           <!-- <el-input placeholder="业主类型" style="width:95%;" size="mini" clearable></el-input> -->
@@ -12,7 +12,7 @@
             v-model="listQuery.SYLX"
             size="mini"
             style="width:95%;"
-            placeholder="房屋使用类型"
+            placeholder="审核状态"
             clearable
             filterable
           >
@@ -25,7 +25,7 @@
           </el-select>
         </el-col>
 
-        <el-col :xs="6" :sm="6" :md="6" :lg="6" :xl="5">
+        <el-col :xs="14" :sm="14" :md="14" :lg="6" :xl="4">
           <el-button size="mini" class="filter-item" type="primary" v-waves icon="el-icon-search">搜索</el-button>
           <el-button
             size="mini"
@@ -35,6 +35,7 @@
             type="primary"
             icon="el-icon-edit"
           >新增</el-button>
+          <el-button class="filter-item" type="primary" icon="el-icon-download" size="mini">导出</el-button>
         </el-col>
       </el-row>
     </div>
@@ -68,22 +69,22 @@
                 <span>{{scope.row.LSFGS}}</span>
               </template>
             </el-table-column>
-            <el-table-column align="right" width="150" prop="YZXM" label="业主姓名">
+            <el-table-column align="right" width="150" prop="YZXM" label="租户姓名">
               <template slot-scope="scope">
                 <span>{{scope.row.YZXM}}</span>
               </template>
             </el-table-column>
-            <el-table-column align="right" width="100" prop="YZLX" label="业主类型">
+            <el-table-column align="right" width="100" prop="YZLX" label="租户类型">
               <template slot-scope="scope">
                 <span>{{scope.row.YZLX}}</span>
               </template>
             </el-table-column>
-            <el-table-column align="right" prop="YZSJ" label="业主手机">
+            <el-table-column align="right" prop="YZSJ" label="租户手机">
               <template slot-scope="scope">
                 <span>{{scope.row.YZSJ}}</span>
               </template>
             </el-table-column>
-            <el-table-column align="right" width="100" prop="YZGH" label="业主固话">
+            <el-table-column align="right" width="100" prop="YZGH" label="租户固话">
               <template slot-scope="scope">
                 <span>{{scope.row.YZGH}}</span>
               </template>
@@ -93,8 +94,8 @@
                 <span>{{scope.row.SHZT}}</span>
               </template>
             </el-table-column>
-          
-            <el-table-column align="center" width="230" label="操作" fixed="right">
+
+            <el-table-column align="center" width="180" label="操作" fixed="right">
               <template slot-scope="scope">
                 <el-button type="primary" size="mini" @click="handleUpdate(scope.row)">修改</el-button>
                 <el-button type="danger" size="mini" @click="handleDelete(scope.row)">删除</el-button>
@@ -116,154 +117,12 @@
         </el-col>
       </el-row>
     </el-card>
-    <el-dialog
-      :visible.sync="editVisible"
-      class="selecttrees"
-      :title="textMap[dialogStatus]"
-      width="1000px"
-    >
-      <el-card>
-        <el-form
-          ref="dataForm"
-          :model="temp"
-          :rules="rules"
-          label-width="120px"
-          style="width: 99%;"
-        >
-          <el-row>
-            <el-col :span="12">
-              <el-form-item label="业主姓名" prop="YZXM">
-                <el-input v-model="temp.YZXM"></el-input>
-              </el-form-item>
-            </el-col>
-            <el-col :span="12">
-              <el-form-item label="业主类型" prop="YZLX">
-                <el-input v-model="temp.YZLX"></el-input>
-              </el-form-item>
-            </el-col>
-          </el-row>
-          <el-row>
-            <el-col :span="12">
-              <el-form-item label="性别" prop="XB">
-                <el-input v-model="temp.XB"></el-input>
-              </el-form-item>
-            </el-col>
-            <el-col :span="12">
-              <el-form-item label="身份证号" prop="SFZH">
-                <el-input v-model="temp.SFZH"></el-input>
-              </el-form-item>
-            </el-col>
-          </el-row>
-          <el-row>
-            <el-col :span="12">
-              <el-form-item label="联系电话" prop="LXDH">
-                <el-input v-model="temp.LXDH"></el-input>
-              </el-form-item>
-            </el-col>
-            <el-col :span="12">
-              <el-form-item label="邮箱" prop="EMAIL">
-                <el-input v-model="temp.EMAIL"></el-input>
-              </el-form-item>
-            </el-col>
-          </el-row>
-          <el-row>
-            <el-col :span="12">
-              <el-form-item label="合同金额" prop="HTJE">
-                <el-input v-model="temp.HTJE"></el-input>
-              </el-form-item>
-            </el-col>
-            <el-col :span="12">
-              <el-form-item label="物业费金额" prop="WYFJE">
-                <el-input v-model="temp.WYFJE"></el-input>
-              </el-form-item>
-            </el-col>
-          </el-row>
-
-          <el-row>
-            <el-col :span="12">
-              <el-form-item label="房号" prop="FWSX">
-                <el-cascader
-                  style="width:100%;"
-                  placeholder="搜索房号"
-                  :options="options"
-                  :props="{ multiple: true, checkStrictly: true  }"
-                  filterable
-                ></el-cascader>
-              </el-form-item>
-            </el-col>
-            <el-col :span="12">
-              <el-form-item label="房屋使用类型" prop="SYLX">
-                <el-select size="mini" style="width:100%;" v-model="temp.SYLX">
-                  <el-option
-                    v-for="(item,key) in selectOptions"
-                    :key="key"
-                    :label="item.label"
-                    :value="item.value"
-                  ></el-option>
-                </el-select>
-              </el-form-item>
-            </el-col>
-          </el-row>
-          <el-row>
-            <el-col :span="12">
-              <el-form-item label="合同签订时间" prop="HTQDSJ">
-                <el-input v-model="temp.HTQDSJ"></el-input>
-              </el-form-item>
-            </el-col>
-            <el-col :span="12">
-              <el-form-item label="有效期" prop="YXQ">
-                <el-input v-model="temp.YXQ"></el-input>
-              </el-form-item>
-            </el-col>
-          </el-row>
-          <el-row>
-            <el-col :span="12">
-              <el-form-item label="租户姓名" prop="ZHXM">
-                <el-input v-model="temp.ZHXM"></el-input>
-              </el-form-item>
-            </el-col>
-            <el-col :span="12">
-              <el-form-item label="租户身份证号" prop="ZHSFZ">
-                <el-input v-model="temp.ZHSFZ"></el-input>
-              </el-form-item>
-            </el-col>
-          </el-row>
-          <el-row>
-            <el-col :span="12">
-              <el-form-item label="租户联系电话" prop="ZHDH">
-                <el-input v-model="temp.ZHDH"></el-input>
-              </el-form-item>
-            </el-col>
-            <el-col :span="12">
-              <el-form-item label="商铺名称" prop="SPMC">
-                <el-input v-model="temp.SPMC"></el-input>
-              </el-form-item>
-            </el-col>
-          </el-row>
-          <el-row>
-            <el-col :span="24">
-              <el-form-item label="经营内容" prop="JYNR">
-                <el-input v-model="temp.JYNR" type="textarea" :rows="3"></el-input>
-              </el-form-item>
-            </el-col>
-          </el-row>
-        </el-form>
-        <div style="text-align:center">
-          <el-button @click="editVisible = false">取消</el-button>
-          <el-button v-if="dialogStatus=='create'" type="primary" @click="createData">保存</el-button>
-          <el-button v-else type="primary" @click="updateData">保存</el-button>
-        </div>
-      </el-card>
-    </el-dialog>
   </div>
 </template>
 
 
 
 <script>
-// import { Treeselect, LOAD_CHILDREN_OPTIONS } from "@riophae/vue-treeselect";
-// import "@riophae/vue-treeselect/dist/vue-treeselect.css";
-
 import waves from "@/frame_src/directive/waves"; // 水波纹指令
 import { getToken } from "@/frame_src/utils/auth";
 export default {
@@ -271,113 +130,19 @@ export default {
   directives: {
     waves
   },
-  //   components: {
-  //     Treeselect
-  //   },
   data() {
     return {
+      tableKey: 0,
       usedOptions: [
         {
           value: "0",
-          name: "出租"
+          name: "待审核"
         },
         {
           value: "1",
-          name: "出售"
+          name: "已审核"
         }
       ],
-
-      options: [
-        {
-          value: "zhinan",
-          label: "分公司1",
-          children: [
-            {
-              value: "shejiyuanze",
-              label: "A区域",
-              children: [
-                {
-                  value: "yizhi",
-                  label: "A-101"
-                },
-                {
-                  value: "fankui",
-                  label: "A-203"
-                },
-                {
-                  value: "xiaolv",
-                  label: "A-505"
-                },
-                {
-                  value: "kekong",
-                  label: "A-232"
-                }
-              ]
-            },
-            {
-              value: "daohang",
-              label: "B区域",
-              children: [
-                {
-                  value: "cexiangdaohang",
-                  label: "B-508"
-                },
-                {
-                  value: "dingbudaohang",
-                  label: "B-105"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          value: "zujian",
-          label: "分公司2",
-          children: [
-            {
-              value: "basic",
-              label: "C区域",
-              children: [
-                {
-                  value: "layout",
-                  label: "C-191"
-                },
-                {
-                  value: "color",
-                  label: "c-209"
-                },
-                {
-                  value: "typography",
-                  label: "c-502"
-                },
-                {
-                  value: "icon",
-                  label: "c-342"
-                }
-              ]
-            },
-            {
-              value: "form",
-              label: "D区域",
-              children: [
-                {
-                  value: "radio",
-                  label: "D-522"
-                },
-                {
-                  value: "checkbox",
-                  label: "D-244"
-                },
-                {
-                  value: "input",
-                  label: "D-707"
-                }
-              ]
-            }
-          ]
-        }
-      ],
-      tableKey: 0,
       selectOptions: [
         {
           value: 0,
@@ -408,159 +173,86 @@ export default {
       ],
       list: [
         {
-         FWBH:"A-101",
-FWMC:"五金店",
-LSFGS:"丰收道130号",
-YZXM:"张三",
-YZLX:"个人",
-YZSJ:"23123445676",
-YZGH:"23431111",
-SHZT:"已审核"
+          FWBH: "A-101",
+          FWMC: "五金店",
+          LSFGS: "丰收道130号",
+          YZXM: "张三",
+          YZLX: "个人",
+          YZSJ: "23123445676",
+          YZGH: "23431111",
+          SHZT: "已审核"
         },
         {
-           FWBH:"A-102",
-FWMC:"五金店",
-LSFGS:"丰收道130号",
-YZXM:"张三",
-YZLX:"个人",
-YZSJ:"23123445676",
-YZGH:"23431111",
-SHZT:"已审核"
+          FWBH: "A-102",
+          FWMC: "五金店",
+          LSFGS: "丰收道130号",
+          YZXM: "张三",
+          YZLX: "个人",
+          YZSJ: "23123445676",
+          YZGH: "23431111",
+          SHZT: "已审核"
         },
         {
-           FWBH:"A-103",
-         FWMC:"五金店",
-LSFGS:"丰收道130号",
-YZXM:"张三",
-YZLX:"个人",
-YZSJ:"23123445676",
-YZGH:"23431111",
-SHZT:"已审核"
+          FWBH: "A-103",
+          FWMC: "五金店",
+          LSFGS: "丰收道130号",
+          YZXM: "张三",
+          YZLX: "个人",
+          YZSJ: "23123445676",
+          YZGH: "23431111",
+          SHZT: "已审核"
         },
         {
-           FWBH:"A-104",
-       FWMC:"五金店",
-LSFGS:"丰收道130号",
-YZXM:"张三",
-YZLX:"个人",
-YZSJ:"23123445676",
-YZGH:"23431111",
-SHZT:"待审核"
+          FWBH: "A-104",
+          FWMC: "五金店",
+          LSFGS: "丰收道130号",
+          YZXM: "张三",
+          YZLX: "个人",
+          YZSJ: "23123445676",
+          YZGH: "23431111",
+          SHZT: "待审核"
         },
         {
-           FWBH:"A-105",
-        FWMC:"五金店",
-LSFGS:"丰收道130号",
-YZXM:"张三",
-YZLX:"个人",
-YZSJ:"23123445676",
-YZGH:"23431111",
-SHZT:"已审核"
+          FWBH: "A-105",
+          FWMC: "五金店",
+          LSFGS: "丰收道130号",
+          YZXM: "张三",
+          YZLX: "个人",
+          YZSJ: "23123445676",
+          YZGH: "23431111",
+          SHZT: "已审核"
         },
         {
-
-           FWBH:"A-106",
-         FWMC:"五金店",
-LSFGS:"丰收道130号",
-YZXM:"张三",
-YZLX:"个人",
-YZSJ:"23123445676",
-YZGH:"23431111",
-SHZT:"待审核"
+          FWBH: "A-106",
+          FWMC: "五金店",
+          LSFGS: "丰收道130号",
+          YZXM: "张三",
+          YZLX: "个人",
+          YZSJ: "23123445676",
+          YZGH: "23431111",
+          SHZT: "待审核"
         },
         {
-           FWBH:"A-107",
-        FWMC:"五金店",
-LSFGS:"丰收道130号",
-YZXM:"张三",
-YZLX:"个人",
-YZSJ:"23123445676",
-YZGH:"23431111",
-SHZT:"已审核"
+          FWBH: "A-107",
+          FWMC: "五金店",
+          LSFGS: "丰收道130号",
+          YZXM: "张三",
+          YZLX: "个人",
+          YZSJ: "23123445676",
+          YZGH: "23431111",
+          SHZT: "已审核"
         }
       ],
-      rules: {
-        FWMC: [
-          { required: true, message: "请输入房屋名称", trigger: "change" }
-        ],
-        LSFGS: [
-          { required: true, message: "请输入所属分公司", trigger: "change" }
-        ],
-        FZFJE: [
-          { required: true, message: "请输入房租金额", trigger: "change" }
-        ],
-        WYFJE: [
-          { required: true, message: "请输入物业费金额", trigger: "change" }
-        ]
-      },
       total: 15,
       listLoading: false,
-      importmodeloptions: [
-        {
-          value: "样表一",
-          label: "样表一"
-        },
-        {
-          value: "样表二",
-          label: "样表二"
-        }
-      ],
-      taxofficeoptions: [], //税务机关
-      orgregionoptions: [], //机关所在地
-      taxcodeoptions: [], //税号
-      responsibilityoptions: [], //责任中心
       listQuery: {
         limit: 10,
         page: 1,
-        S_OrgCode: null,
-        SYLX: "",
-        TaxOffice: "",
-        ImportModel: "",
-        TaxNumber: "",
-        OrgRegion: ""
-      },
-      temp: {
-        FWBH: "D-211",
-        FWMC: "房屋5",
-        JZMJ: "127㎡",
-        LSFGS: "云计算技术部",
-        ZLWZ: "D区",
-        FZFJE: 25000,
-        WYFJE: 1350,
-        FWSX: "出售"
-      },
-      textMap: {
-        update: "修改房屋信息",
-        create: "添加房屋信息"
-      },
-      editVisible: false,
-      dialogStatus: "",
-
-      treeData: []
+        SYLX: ""
+      }
     };
   },
   methods: {
-    deleteRow(index, rows) {
-      //删除改行
-      rows.splice(index, 1);
-    },
-    addRow(tableData, event) {
-      tableData.push({ fildna: "", fildtp: "", remark: "" });
-    },
-
-    resetTemp() {
-      this.temp = {
-        FWBH: "",
-        FWMC: "",
-        JZMJ: "",
-        LSFGS: "",
-        ZLWZ: "",
-        FZFJE: "",
-        WYFJE: "",
-        FWSX: ""
-      };
-    },
-
     getList() {
       //   this.listLoading = true;
       //   getTaxOrgList(this.listQuery).then(response => {
@@ -582,12 +274,6 @@ SHZT:"已审核"
     },
 
     handleCreate() {
-      this.resetTemp();
-      // this.editVisible = true;
-      // this.dialogStatus = "create";
-      // if (this.$refs["dataForm"] !== undefined) {
-      //   this.$refs["dataForm"].resetFields();
-      // }
       this.$router.push({ path: "/SHDAGL/CZDAEDIT" });
     },
     handleUpdate(row) {
@@ -597,7 +283,7 @@ SHZT:"已审核"
       // this.$nextTick(() => {
       //   this.$refs["dataForm"].clearValidate();
       // });
-      this.$router.push({ path: "/SHDAGL/CZDAEDIT" });
+      this.$router.push({ path: "/SHDAGL/CZDAEDIT", query: { param: row } });
     },
     handleDelete(row) {
       this.$confirm("确认删除信息吗", "提示", {
@@ -629,61 +315,6 @@ SHZT:"已审核"
         })
         .catch(() => {});
     },
-    createData() {
-      // 创建
-      this.$refs["dataForm"].validate(valid => {
-        if (valid) {
-          //   createTaxOrg(this.temp).then(response => {
-          //     var message = response.data.message;
-          var message = "成功";
-          var title = "失败";
-          var type = "error";
-          //     if (response.data.code === 2000) {
-          this.getList();
-          title = "成功";
-          type = "success";
-          // this.list.unshift(this.temp)
-          //     }
-          this.editVisible = false;
-          this.$notify({
-            position: "bottom-right",
-            title: title,
-            message: message,
-            type: type,
-            duration: 3000
-          });
-          //   });
-        }
-      });
-    },
-    updateData() {
-      this.$refs["dataForm"].validate(valid => {
-        if (valid) {
-          const tempData = Object.assign({}, this.temp); // 这样就不会共用同一个对象
-          //   tempData.S_UpdateBy = this.$store.state.user.userId;
-          //   //tempData.NOTICE_CONTENT=this.content
-          //   updateTaxOrg(tempData).then(response => {
-          //     var message = response.data.message;
-          var message = "成功";
-          var title = "失败";
-          var type = "error";
-          //     if (response.data.code === 2000) {
-          this.getList();
-          title = "成功";
-          type = "success";
-          // }
-          this.editVisible = false;
-          this.$notify({
-            position: "bottom-right",
-            title: title,
-            message: message,
-            type: type,
-            duration: 3000
-          });
-          //   });
-        }
-      });
-    },
     handleSizeChange(val) {
       this.listQuery.limit = val;
       this.getList();
@@ -705,7 +336,6 @@ SHZT:"已审核"
   },
   created() {
     this.listLoading = false;
-
     this.getList();
   },
 
@@ -732,23 +362,8 @@ SHZT:"已审核"
   .buttom {
     float: right;
   }
-  .vue-treeselect__control {
-    height: 28px !important;
-    width: 100%;
-  }
-  .vue-treeselect__placeholder,
-  .vue-treeselect__single-value {
-    line-height: 28px;
-  }
+
 }
-.selecttrees {
-  .vue-treeselect--searchable .vue-treeselect__input-container {
-    height: 28px !important;
-    width: 100%;
-  }
-  .el-dialog__body {
-    padding: 0px 10px 10px !important;
-  }
-}
+
 </style>
 
