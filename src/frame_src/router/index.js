@@ -52,6 +52,11 @@ export const constantRouterMap = [
       path: '/SHDAGL/CZDAEDIT', name: '出租商户档案维护',
       meta: { title: '出租商户档案维护', icon: 'home', noCache: true },
       component: _import('app_src/views/SHDAGL/CZDAEDIT'), hidden: true
+    },
+    {
+      path: '/RCGZ/JCJGCXXQ', name: '检查结果查询',
+      meta: { title: '检查结果查询', icon: 'home', noCache: true },
+      component: _import('app_src/views/RCGZ/JCJGCXXQ'), hidden: true
     }
     ]
   }

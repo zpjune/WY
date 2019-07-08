@@ -185,6 +185,7 @@
           </el-table-column>
           <el-table-column fixed="right" label="操作">
             <template slot-scope="scope">
+              <el-button type="primary"  size="mini" >修改</el-button>
               <el-button type="danger" 
                 @click.native.prevent="deleteRow(scope.$index, infiledList)"
                 size="small"

@@ -54,29 +54,31 @@
             highlight-current-row
             style="width: 100%;text-align:left;"
           >
-            <el-table-column align="center" prop="FWBH" label="房屋编号" fixed="left">
-              <template slot-scope="scope">
-                <span>{{scope.row.FWBH}}</span>
-              </template>
-            </el-table-column>
+           
             <el-table-column align="right" prop="RWMC" label="任务名称"  fixed="left">
               <template slot-scope="scope">
                 <span>{{scope.row.RWMC}}</span>
               </template>
             </el-table-column>
-            <el-table-column align="right" prop="YZMC" label="业主名称" fixed="left">
-              <template slot-scope="scope">
-                <span>{{scope.row.YZMC}}</span>
-              </template>
-            </el-table-column>
-            <el-table-column align="right" width="150" prop="JCQY" label="检查区域">
+             <el-table-column align="right" width="150" prop="JCQY" label="检查区域" fixed="left">
               <template slot-scope="scope">
                 <span>{{scope.row.JCQY}}</span>
               </template>
             </el-table-column>
-            <el-table-column align="right" width="100" prop="JCXM" label="检查项目">
+            <el-table-column align="right" width="100" prop="JCXM" label="检查内容">
               <template slot-scope="scope">
                 <span>{{scope.row.JCXM}}</span>
+              </template>
+            </el-table-column>
+
+             <el-table-column align="center" prop="FWBH" label="房屋编号" >
+              <template slot-scope="scope">
+                <span>{{scope.row.FWBH}}</span>
+              </template>
+            </el-table-column>
+                       <el-table-column align="right" prop="YZMC" label="业主名称" >
+              <template slot-scope="scope">
+                <span>{{scope.row.YZMC}}</span>
               </template>
             </el-table-column>
             <el-table-column align="right" prop="JCJG" label="检查结果">
@@ -94,27 +96,19 @@
                 <span>{{scope.row.JCR}}</span>
               </template>
             </el-table-column>
-            <el-table-column label="整改意见" :show-overflow-tooltip="true">
+            <el-table-column label="任务状态">
               <template slot-scope="scope">
-                <span>{{scope.row.ZGYJ}}</span>
+                <span>{{scope.row.RWZT}}</span>
               </template>
             </el-table-column>
           
-            <el-table-column align="right" prop="FCSJ" label="复查时间">
+            <el-table-column align="center" width="240" label="操作" fixed="right">
               <template slot-scope="scope">
-                <span>{{scope.row.FCSJ}}</span>
+                <el-button type="primary" size="mini" @click="handleUpdate(scope.row)">查看详情</el-button>
+                <el-button type="danger" size="mini" @click="handleDelete(scope.row)">发送整改通知</el-button>
               </template>
             </el-table-column>
-            <el-table-column align="right" prop="FZFJE" label="复查结果">
-              <template slot-scope="scope">
-                <span>{{scope.row.FCJG }}</span>
-              </template>
-            </el-table-column>
-            <el-table-column align="right" width="150" prop="FCR" label="复查人">
-              <template slot-scope="scope">
-                <span>{{scope.row.FCR }}</span>
-              </template>
-            </el-table-column>
+          
           </el-table>
           <div class="page">
             <el-pagination
@@ -207,10 +201,7 @@ JCXM:"杂物堆积",
 JCJG:"合格",
 JCSJ:"2019-06-23",
 JCR:"赵六",
-ZGYJ:"",
-FCSJ:"",
-FCJG:"",
-FCR:"",
+RWZT:"已完成"
         },
         {
                   FWBH:"A-101",
@@ -221,10 +212,7 @@ JCXM:"杂物堆积",
 JCJG:"不合格",
 JCSJ:"2019-07-01",
 JCR:"赵六",
-ZGYJ:"清理堆积物",
-FCSJ:"2019-07-12",
-FCJG:"",
-FCR:"",
+RWZT:"待复查"
         },
         {
           FWBH:"A-101",
@@ -235,10 +223,7 @@ JCXM:"杂物堆积",
 JCJG:"不合格",
 JCSJ:"2019-07-01",
 JCR:"赵六",
-ZGYJ:"清理堆积物",
-FCSJ:"2019-07-12",
-FCJG:"合格",
-FCR:"钱七",
+RWZT:"待复查"
         },
         {
  FWBH:"A-101",
@@ -246,13 +231,10 @@ RWMC:"一季度安全检查",
 YZMC:"张三",
 JCQY:"楼道",
 JCXM:"杂物堆积",
-JCJG:"不合格",
+JCJG:"合格",
 JCSJ:"2019-07-01",
 JCR:"赵六",
-ZGYJ:"清理堆积物",
-FCSJ:"2019-07-12",
-FCJG:"合格",
-FCR:"钱七",
+RWZT:"已完成"
         },
         {
           FWBH:"A-101",
@@ -263,10 +245,7 @@ JCXM:"杂物堆积",
 JCJG:"不合格",
 JCSJ:"2019-07-01",
 JCR:"赵六",
-ZGYJ:"清理堆积物",
-FCSJ:"2019-07-12",
-FCJG:"",
-FCR:"",
+RWZT:"待复查"
         },
         {
                            FWBH:"A-101",
@@ -277,10 +256,7 @@ JCXM:"杂物堆积",
 JCJG:"不合格",
 JCSJ:"2019-07-01",
 JCR:"赵六",
-ZGYJ:"清理堆积物",
-FCSJ:"2019-07-12",
-FCJG:"",
-FCR:"",
+RWZT:"待复查"
         },
        {
           FWBH:"A-101",
@@ -288,13 +264,10 @@ RWMC:"一季度安全检查",
 YZMC:"张三",
 JCQY:"楼道",
 JCXM:"杂物堆积",
-JCJG:"不合格",
+JCJG:"合格",
 JCSJ:"2019-07-01",
 JCR:"赵六",
-ZGYJ:"清理堆积物",
-FCSJ:"2019-07-12",
-FCJG:"合格",
-FCR:"钱七",
+RWZT:"已完成"
         },
         {
  FWBH:"A-101",
@@ -302,13 +275,10 @@ RWMC:"一季度安全检查",
 YZMC:"张三",
 JCQY:"楼道",
 JCXM:"杂物堆积",
-JCJG:"不合格",
-JCSJ:"2019-07-01",
-JCR:"赵六",
-ZGYJ:"清理堆积物",
-FCSJ:"2019-07-12",
-FCJG:"合格",
-FCR:"钱七",
+JCJG:"",
+JCSJ:"",
+JCR:"",
+RWZT:"待执行"
         }
       ],
       rules: {
@@ -422,13 +392,9 @@ FCR:"钱七",
       }
     },
     handleUpdate(row) {
-      this.temp = Object.assign({}, row); // copy obj
-      this.editVisible = true;
-      this.dialogStatus = "update";
-      this.$nextTick(() => {
-        this.$refs["dataForm"].clearValidate();
-      });
+      this.$router.push({ path: "/RCGZ/JCJGCXXQ" });
     },
+
     handleDelete(row) {
       this.$confirm("确认删除信息吗", "提示", {
         confirmButtonText: "确定",

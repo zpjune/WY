@@ -6,15 +6,14 @@
       </el-col>
       <el-col :xs="5" :sm="5" :md="5" :lg="4" :xl="3">
         <el-button type="primary" icon="el-icon-search" size="mini">查询</el-button>
-         <el-button
-            size="mini"
-            class="filter-item"
-            style="margin-left: 10px;"
-            @click="handleCreate"
-            type="primary"
-            icon="el-icon-edit"
-          >新增</el-button>
-
+        <el-button
+          size="mini"
+          class="filter-item"
+          style="margin-left: 10px;"
+          @click="handleCreate"
+          type="primary"
+          icon="el-icon-edit"
+        >新增</el-button>
       </el-col>
     </el-row>
     <el-row>
@@ -30,30 +29,46 @@
           highlight-current-row
           style="width: 100%"
         >
-          <el-table-column label="任务编号" prop="RWBH"  ></el-table-column>
-          <el-table-column label="任务名称" prop="RWMC" ></el-table-column>
+          <el-table-column label="任务编号" prop="RWBH"></el-table-column>
+          <el-table-column label="任务名称" prop="RWMC"></el-table-column>
           <el-table-column label="任务开始时间" prop="RWKSSJ"></el-table-column>
           <el-table-column label="任务结束时间" prop="RWJSSJ"></el-table-column>
-          <el-table-column label="任务内容" prop="RWNR" ></el-table-column>
-          <el-table-column label="任务范围" prop="RWFW" ></el-table-column>
-          <el-table-column label="备注" prop="REMARK" ></el-table-column>
-          <el-table-column label="任务状态" prop="TASK_STATE_NAME" ></el-table-column>
+          <el-table-column label="任务内容" prop="RWNR"></el-table-column>
+          <el-table-column label="任务范围" prop="RWFW"></el-table-column>
+          <el-table-column label="备注" prop="REMARK"></el-table-column>
+          <el-table-column label="任务状态" prop="TASK_STATE_NAME"></el-table-column>
           <!-- <el-table-column label="出差事由" prop="CCSY"></el-table-column>
           <el-table-column label="出差天数" prop="CCTS"></el-table-column>
           <el-table-column label="报销金额" prop="BXJE"></el-table-column>
           <el-table-column label="报销金额(大写)" prop="BXJEDX"></el-table-column>
           <el-table-column label="预借差旅费" prop="YJCLF"></el-table-column>
-          <el-table-column label="应退补金额" prop="YTBJE"></el-table-column> -->
+          <el-table-column label="应退补金额" prop="YTBJE"></el-table-column>-->
           <el-table-column align="center" width="280" label="操作" fixed="right">
-              <template slot-scope="scope">
-                <!-- <el-button type="primary" size="mini" @click="handleUpdate(scope.row)">修改</el-button>
-                <el-button type="danger" size="mini" @click="handleDelete(scope.row)">删除</el-button> -->
-                <el-button type="primary"  size="mini"  v-if="scope.row.TASK_STATE=='0'" @click="handleUpdate(scope.row)">修改</el-button>
-                <el-button type="danger"  size="mini"  v-if="scope.row.TASK_STATE=='0'" @click="handleDelete(scope.row)">删除</el-button>
-                <el-button type="success" v-if="scope.row.TASK_STATE=='0'" size="mini">任务下发</el-button>
-                   <el-button type="info"  v-if="scope.row.TASK_STATE=='1'" @click="handleDetail(scope.row)"  size="mini" >查看详情</el-button>
-              </template>
-            </el-table-column>
+            <template slot-scope="scope">
+              <!-- <el-button type="primary" size="mini" @click="handleUpdate(scope.row)">修改</el-button>
+              <el-button type="danger" size="mini" @click="handleDelete(scope.row)">删除</el-button>-->
+              <el-button
+                type="primary"
+                size="mini"
+                v-if="scope.row.TASK_STATE=='0'"
+                @click="handleUpdate(scope.row)"
+              >修改</el-button>
+              <el-button
+                type="danger"
+                size="mini"
+                v-if="scope.row.TASK_STATE=='0'"
+                @click="handleDelete(scope.row)"
+              >删除</el-button>
+              <el-button type="success" v-if="scope.row.TASK_STATE=='0'" size="mini">任务下发</el-button>
+              <el-button
+                type="info"
+                v-if="scope.row.TASK_STATE!='0'"
+                @click="handleDetail(scope.row)"
+                size="mini"
+              >查看详情</el-button>
+              <el-button type="primary"  v-if="scope.row.TASK_STATE=='2'" size="mini">执行情况</el-button>
+            </template>
+          </el-table-column>
         </el-table>
         <el-pagination
           background
@@ -68,15 +83,23 @@
         ></el-pagination>
       </el-col>
     </el-row>
-     <el-dialog
+    <el-dialog
       :visible.sync="editVisible"
       class="selecttrees"
       :title="textMap[dialogStatus]"
       width="1000px"
     >
       <el-card>
-        <el-form ref="dataForm" :model="temp" label-width="120px" style="width: 99%;">
-           <el-row>
+        <el-form ref="dataForm" :model="temp" label-width="120px" style="width: 100%;">
+          <el-row>
+            <el-col :span="24">
+              <el-form-item label="计划内容">
+                <el-input v-model="temp.JCNR" disabled style="width:89%;"></el-input>
+                <el-button size="small" type="primary" @click="innerVisible=true" style="width:10%;">选择明细</el-button>
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <el-row>
             <!-- <el-col :span="12">
              <el-form-item label="计划年度" prop="SQSJ">
               <el-date-picker
@@ -86,17 +109,17 @@
                 style="width: 100%;"
               ></el-date-picker>
             </el-form-item>
-            </el-col> -->
+            </el-col>-->
             <el-col :span="12">
               <el-form-item label="任务编号" prop="RWBH">
                 <el-input v-model="temp.RWBH"></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="12">
-            <el-form-item label="任务名称" prop="RWMC">
+              <el-form-item label="任务名称" prop="RWMC">
                 <el-input v-model="temp.RWMC"></el-input>
-            </el-form-item>
-            <!-- <el-form-item label="费用项目" prop="FYXM">
+              </el-form-item>
+              <!-- <el-form-item label="费用项目" prop="FYXM">
                     <el-select size="mini" style="width:100%;" v-model="temp.FYXM">
                       <el-option
                         v-for="(item,key) in selectOptions"
@@ -105,48 +128,48 @@
                         :value="item.value"
                       ></el-option>
                     </el-select>
-                  </el-form-item> -->
+              </el-form-item>-->
             </el-col>
           </el-row>
-            <el-row>
+          <el-row>
             <el-col :span="12">
-            <el-form-item label="任务开始时间" prop="RWKSSJ">
-              <el-date-picker
-                type="date"
-                placeholder="选择日期"
-                v-model="temp.RWKSSJ"
-                style="width: 100%;"
-              ></el-date-picker>
-            </el-form-item>
+              <el-form-item label="任务开始时间" prop="RWKSSJ">
+                <el-date-picker
+                  type="date"
+                  placeholder="选择日期"
+                  v-model="temp.RWKSSJ"
+                  style="width: 100%;"
+                ></el-date-picker>
+              </el-form-item>
             </el-col>
             <el-col :span="12">
-            <el-form-item label="任务结束时间" prop="RWJSSJ">
-              <el-date-picker
-                type="date"
-                placeholder="选择日期"
-                v-model="temp.RWJSSJ"
-                style="width: 100%;"
-              ></el-date-picker>
-            </el-form-item>
+              <el-form-item label="任务结束时间" prop="RWJSSJ">
+                <el-date-picker
+                  type="date"
+                  placeholder="选择日期"
+                  v-model="temp.RWJSSJ"
+                  style="width: 100%;"
+                ></el-date-picker>
+              </el-form-item>
             </el-col>
           </el-row>
           <el-row>
             <el-col :span="12">
               <el-form-item label="任务范围" prop="RWFW">
-<el-select v-model="value1" multiple placeholder="请选择" style="width:100%">
-    <el-option
-      v-for="item in options"
-      :key="item.value"
-      :label="item.label"
-      :value="item.value">
-    </el-option>
-  </el-select>
+                <el-select v-model="value1" multiple placeholder="请选择" style="width:100%">
+                  <el-option
+                    v-for="item in options"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value"
+                  ></el-option>
+                </el-select>
               </el-form-item>
             </el-col>
-           <el-col :span="12">
-            <el-form-item label="备注" prop="REMARK">
-              <el-input v-model="temp.REMARK"></el-input>
-            </el-form-item>
+            <el-col :span="12">
+              <el-form-item label="备注" prop="REMARK">
+                <el-input v-model="temp.REMARK"></el-input>
+              </el-form-item>
             </el-col>
           </el-row>
 
@@ -161,7 +184,7 @@
                 <el-input v-model="temp.BXJEDX"></el-input>
               </el-form-item>
             </el-col>
-          </el-row> -->
+          </el-row>-->
           <el-row>
             <el-col :span="24">
               <el-form-item label="任务内容" prop="RWNR">
@@ -180,8 +203,7 @@
                 <el-input v-model="temp.YTBJE"></el-input>
               </el-form-item>
             </el-col>
-          </el-row> -->
-
+          </el-row>-->
         </el-form>
         <div style="text-align:center">
           <el-button @click="editVisible = false">取消</el-button>
@@ -190,7 +212,7 @@
         </div>
       </el-card>
     </el-dialog>
- <el-dialog
+    <el-dialog
       :visible.sync="detailVisible"
       class="selecttrees"
       :title="textMap[dialogStatus]"
@@ -237,20 +259,52 @@
             </el-col>
             <el-col :span="12">
               <el-form-item label="备注" prop="REMARK">
-                                <span>{{temp.REMARK}}</span>
+                <span>{{temp.REMARK}}</span>
               </el-form-item>
             </el-col>
           </el-row>
-
-        
-  
         </el-form>
         <div style="text-align:center">
-          <el-button type="success" @click="detailVisible = false" >确定</el-button>
-        
-
+          <el-button type="success" @click="detailVisible = false">确定</el-button>
         </div>
       </el-card>
+    </el-dialog>
+    <el-dialog width="40%" title="年度检查计划明细" :visible.sync="innerVisible" append-to-body>
+      <el-table
+        :data="list2"
+        size="mini"
+        @row-click="showRow"
+        :header-cell-class-name="tableRowClassName"
+        element-loading-text="给我一点时间"
+        border
+        fit
+        highlight-current-row
+        style="width: 100%;text-align:left;"
+      >
+        <el-table-column align="center" label="选择" width="50px">
+          <template slot-scope="scope">
+            <el-radio class="radio" v-model="radio" :label="scope.$index">&nbsp;</el-radio>
+            <!-- <el-radio :label="scope.row.flagIndex" v-model="scope.row.flagValue" @change.native="getTemplateRow(scope.$index,scope.row)"></el-radio> -->
+          </template>
+        </el-table-column>
+        <el-table-column align="center" label="检查区域">
+          <template slot-scope="scope">
+            <span>{{scope.row.RWFW}}</span>
+          </template>
+        </el-table-column>
+
+        <el-table-column label="检查内容" :show-overflow-tooltip="true">
+          <template slot-scope="scope">
+            <span>{{scope.row.JCNR}}</span>
+          </template>
+        </el-table-column>
+
+        <el-table-column align="right" prop="JCLX" label="检查类型">
+          <template slot-scope="scope">
+            <span>{{scope.row.JCLX}}</span>
+          </template>
+        </el-table-column>
+      </el-table>
     </el-dialog>
   </div>
 </template>
@@ -260,101 +314,122 @@ export default {
   name: "NDJCJH",
   data() {
     return {
-        options: [{
-          value: 'A区',
-          label: 'A区'
-        }, {
-          value: 'B区',
-          label: 'B区'
-        }, {
-          value: 'C区',
-          label: 'C区'
-        }, {
-          value: 'D区',
-          label: 'D区'
-        }],
-        value1: [],
-        value2: [],
-            infiledList: [],
-            detailVisible:false,
-            workFlowVisible:false,
-      fildtps: [{ text: "消防", value: "1" }, { text: "安全", value: "2" }],
-         textMap: {
-        update: "修改检查任务",
-        create: "添加检查任务",
-        detail:"查看检查任务"
+      options: [
+        {
+          value: "A区",
+          label: "A区"
+        },
+        {
+          value: "B区",
+          label: "B区"
+        },
+        {
+          value: "C区",
+          label: "C区"
+        },
+        {
+          value: "D区",
+          label: "D区"
+        }
+      ],
+      value1: [],
+      value2: [],
+      textMap: {
+        update: "修改任务信息",
+        create: "添加任务信息"
       },
-    temp: {
-RWBH:"",
-RWMC:"",
-RWKSSJ:"",
-RWJSSJ:"",
-RWNR:"",
-RWFW:"",
-REMARK:"",
-TASK_STATE:""
+      radio: "",
+      detailVisible: false,
+      innerVisible: false,
+      temp: {
+        JCNR: "",
+        RWBH: "",
+        RWMC: "",
+        RWKSSJ: "",
+        RWJSSJ: "",
+        RWNR: "",
+        RWFW: "",
+        REMARK: "",
+        TASK_STATE: ""
       },
       editVisible: false,
       dialogStatus: "",
       listloading: false,
+      list2: [
+        {
+          RWFW: "A区域",
+          JCNR: "消防通道检查",
+          JCLX: "消防"
+        },
+        {
+          RWFW: "A区域,c区域",
+          JCNR: "应急通道检查",
+          JCLX: "安全"
+        },
+        {
+          RWFW: "A区域,B区域,D区域",
+          JCNR: "灭火器更换",
+          JCLX: "消防"
+        }
+      ],
       fac: [
         {
-         RWBH:"20180212XFJC",
-RWMC:"2018年一季度消防安全检查",
-RWKSSJ:"2018-01-10",
-RWJSSJ:"2018-03-11",
-RWNR:"消防检查",
-RWFW:"A区域",
-REMARK:"",
-TASK_STATE:"0",
-TASK_STATE_NAME:"未下发"
+          RWBH: "20180212XFJC",
+          RWMC: "2018年一季度消防安全检查",
+          RWKSSJ: "2018-01-10",
+          RWJSSJ: "2018-03-11",
+          RWNR: "消防检查",
+          RWFW: "A区域",
+          REMARK: "",
+          TASK_STATE: "0",
+          TASK_STATE_NAME: "未下发"
         },
         {
-         RWBH:"20180212XFJC",
-RWMC:"2018年一季度消防安全检查",
-RWKSSJ:"2018-01-10",
-RWJSSJ:"2018-03-11",
-RWNR:"消防检查",
-RWFW:"A区域,C区域,D区域",
-REMARK:"",
-TASK_STATE:"1",
-TASK_STATE_NAME:"已下发"
+          RWBH: "20180212XFJC",
+          RWMC: "2018年一季度消防安全检查",
+          RWKSSJ: "2018-01-10",
+          RWJSSJ: "2018-03-11",
+          RWNR: "消防检查",
+          RWFW: "A区域,C区域,D区域",
+          REMARK: "",
+          TASK_STATE: "1",
+          TASK_STATE_NAME: "已下发"
         },
         {
-         RWBH:"20180212XFJC",
-RWMC:"2018年一季度消防安全检查",
-RWKSSJ:"2018-01-10",
-RWJSSJ:"2018-03-11",
-RWNR:"消防检查",
-RWFW:"C区域",
-REMARK:"",
-TASK_STATE:"0",
-TASK_STATE_NAME:"未下发"
+          RWBH: "20180212XFJC",
+          RWMC: "2018年一季度消防安全检查",
+          RWKSSJ: "2018-01-10",
+          RWJSSJ: "2018-03-11",
+          RWNR: "消防检查",
+          RWFW: "C区域",
+          REMARK: "",
+          TASK_STATE: "2",
+          TASK_STATE_NAME: "执行中"
         },
         {
-         RWBH:"20180212XFJC",
-RWMC:"2018年一季度消防安全检查",
-RWKSSJ:"2018-01-10",
-RWJSSJ:"2018-03-11",
-RWNR:"消防检查",
-RWFW:"A区域,B区域,D区域",
-REMARK:"",
-TASK_STATE:"1",
-TASK_STATE_NAME:"已下发"
+          RWBH: "20180212XFJC",
+          RWMC: "2018年一季度消防安全检查",
+          RWKSSJ: "2018-01-10",
+          RWJSSJ: "2018-03-11",
+          RWNR: "消防检查",
+          RWFW: "A区域,B区域,D区域",
+          REMARK: "",
+          TASK_STATE: "1",
+          TASK_STATE_NAME: "已完成"
         }
       ]
     };
   },
   methods: {
-          deleteRow(index, rows) {
-      //删除改行
-      rows.splice(index, 1);
-    },
-    addRow(tableData, event) {
-      tableData.push({ fildna: "", fildtp: "", remark: "" });
+    showRow(row) {
+      //赋值给radio
+      this.radio = this.list2.indexOf(row);
+      this.selected = row;
+      this.temp = row;
+      this.innerVisible = false;
     },
 
-        handleCreate() {
+    handleCreate() {
       this.resetTemp();
       this.editVisible = true;
       this.dialogStatus = "create";
@@ -370,8 +445,7 @@ TASK_STATE_NAME:"已下发"
         this.$refs["dataForm"].clearValidate();
       });
     },
-    handleDetail(row)
-    {
+    handleDetail(row) {
       this.temp = Object.assign({}, row); // copy obj
       this.detailVisible = true;
       this.dialogStatus = "detail";
@@ -379,7 +453,7 @@ TASK_STATE_NAME:"已下发"
         this.$refs["dataForm"].clearValidate();
       });
     },
-      getList() {
+    getList() {
       //   this.listLoading = true;
       //   getTaxOrgList(this.listQuery).then(response => {
       //     if (response.data.code === 2000) {
@@ -399,13 +473,13 @@ TASK_STATE_NAME:"已下发"
       //   });
     },
 
-      resetTemp() {
+    resetTemp() {
       this.temp = {
-        JHND:"",
-        JHMC:"",
-        JHSM:"",
-        JHSJ:"",
-        REMARK:""
+        JHND: "",
+        JHMC: "",
+        JHSM: "",
+        JHSJ: "",
+        REMARK: ""
       };
     },
     tableRowClassName({ row, rowIndex }) {
@@ -415,13 +489,9 @@ TASK_STATE_NAME:"已下发"
       } // 'el-button--primary is-plain'// 'warning-row'
       return "";
     },
-    handleProcess()
-    {
-      this.workFlowVisible = true;
-    },
     handleSizeChange() {},
     handleCurrentChange() {},
-       handleCreate() {
+    handleCreate() {
       this.resetTemp();
       this.editVisible = true;
       this.dialogStatus = "create";
@@ -429,7 +499,7 @@ TASK_STATE_NAME:"已下发"
         this.$refs["dataForm"].resetFields();
       }
     },
- 
+
     handleDelete(row) {
       this.$confirm("确认删除吗!", "提示", {
         confirmButtonText: "确定",
@@ -514,7 +584,7 @@ TASK_STATE_NAME:"已下发"
           //   });
         }
       });
-    },
+    }
   }
 };
 </script>
