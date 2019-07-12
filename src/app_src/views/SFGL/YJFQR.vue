@@ -122,6 +122,7 @@
         </template>
       </el-table-column>
     </el-table>
+          <div class="page">
     <el-pagination
       background
       @size-change="handleSizeChange"
@@ -132,6 +133,7 @@
       layout="total, sizes, prev, pager, next, jumper"
       :total="10"
     ></el-pagination>
+          </div>
     <el-dialog :visible.sync="editVisible" class="selecttrees" title="商户详情" width="70%">
       <el-form ref="dataForm" :model="temp" label-width="120px" style="width: 99%;">
         <el-card>
@@ -639,5 +641,8 @@ this.innerVisible=true;
 #SKSJ .table-d table td {
   background: #fff;
 }
+ .page {
+    text-align: center;
+  }
 </style>
             

@@ -54,6 +54,21 @@ export const constantRouterMap = [
       component: _import('app_src/views/SHDAGL/CZDAEDIT'), hidden: true
     },
     {
+      path: '/SHDAGL/CZDAXZ', name: '商户续租',
+      meta: { title: '商户续租', icon: 'home', noCache: true },
+      component: _import('app_src/views/SHDAGL/CZDAXZ'), hidden: true
+    },
+    {
+      path: '/SHDAGL/CSDAEDIT', name: '出售商户档案维护',
+      meta: { title: '出售商户档案维护', icon: 'home', noCache: true },
+      component: _import('app_src/views/SHDAGL/CSDAEDIT'), hidden: true
+    },
+    {
+      path: '/SHDAGL/CSDAZS', name: '商户转售',
+      meta: { title: '商户转售', icon: 'home', noCache: true },
+      component: _import('app_src/views/SHDAGL/CSDAZS'), hidden: true
+    },
+    {
       path: '/RCGZ/JCJGCXXQ', name: '检查结果查询',
       meta: { title: '检查结果查询', icon: 'home', noCache: true },
       component: _import('app_src/views/RCGZ/JCJGCXXQ'), hidden: true

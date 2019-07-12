@@ -43,7 +43,7 @@
           <el-table-column label="报销金额(大写)" prop="BXJEDX"></el-table-column>
           <el-table-column label="预借差旅费" prop="YJCLF"></el-table-column>
           <el-table-column label="应退补金额" prop="YTBJE"></el-table-column> -->
-          <el-table-column align="center" width="230" label="操作" fixed="right">
+          <el-table-column align="center" width="200" label="操作" fixed="right">
               <template slot-scope="scope">
                 <!-- <el-button type="primary" size="mini" @click="handleUpdate(scope.row)">修改</el-button>
                 <el-button type="danger" size="mini" @click="handleDelete(scope.row)">删除</el-button> -->

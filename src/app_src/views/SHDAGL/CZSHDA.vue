@@ -98,7 +98,8 @@
             <el-table-column align="center" width="180" label="操作" fixed="right">
               <template slot-scope="scope">
                 <el-button type="primary" size="mini" @click="handleUpdate(scope.row)">修改</el-button>
-                <el-button type="danger" size="mini" @click="handleDelete(scope.row)">删除</el-button>
+                <el-button type="danger" size="mini" v-if="scope.row.SHZT=='待审核'"  @click="handleDelete(scope.row)">删除</el-button>
+                <el-button type="success" size="mini" v-if="scope.row.SHZT=='已审核'" @click="handleXZ(scope.row)">续租</el-button>
               </template>
             </el-table-column>
           </el-table>
@@ -284,6 +285,9 @@ export default {
       //   this.$refs["dataForm"].clearValidate();
       // });
       this.$router.push({ path: "/SHDAGL/CZDAEDIT", query: { param: row } });
+    },
+    handleXZ(row) {
+      this.$router.push({ path: "/SHDAGL/CZDAXZ", query: { param: row } });
     },
     handleDelete(row) {
       this.$confirm("确认删除信息吗", "提示", {

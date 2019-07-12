@@ -85,10 +85,11 @@
             </el-table-column>
             <el-table-column align="center" width="300" label="操作" fixed="right">
               <template slot-scope="scope">
-                <el-button type="primary" size="mini" @click="handlePass(scope.row)" v-if="scope.row.SHZT==0">通过审核</el-button>
-                <el-button type="danger" size="mini" @click="handleNotPass(scope.row)" v-else-if="scope.row.SHZT==1">取消审核</el-button>
-                <el-button type="warning" size="mini" @click="handleUpdate(scope.row)">终止物业</el-button>
-                <el-button type="primary" size="mini" @click="handleUpdate(scope.row)">详情</el-button>
+
+                                <el-button type="primary" size="mini" @click="handleUpdate(scope.row)">查看详情</el-button>
+                <el-button type="success" size="mini"  v-if="scope.row.SHZT==0"    @click="handlePass(scope.row)">审核通过</el-button>
+                 <el-button type="warning"  v-else-if="scope.row.SHZT==1"   size="mini" @click="handleNotPass(scope.row)">取消审核</el-button>
+                <el-button type="danger" size="mini" @click="handleDelete(scope.row)">终止物业</el-button>
               </template>
             </el-table-column>
           </el-table>
@@ -111,127 +112,11 @@
       :visible.sync="editVisible"
       class="selecttrees"
       :title="textMap[dialogStatus]"
-      width="70%"
+      width="1000px"
     >
       <el-form ref="dataForm" :model="temp" :rules="rules" label-width="120px" style="width: 99%;">
-        <!-- <el-row>
-            <el-col :span="12">
-              <el-form-item label="业主姓名" prop="YZXM">
-                <el-input v-model="temp.YZXM"></el-input>
-              </el-form-item>
-            </el-col>
-            <el-col :span="12">
-              <el-form-item label="业主类型" prop="YZLX">
-                <el-input v-model="temp.YZLX"></el-input>
-              </el-form-item>
-            </el-col>
-          </el-row>
-          <el-row>
-            <el-col :span="12">
-              <el-form-item label="性别" prop="XB">
-                <el-input v-model="temp.XB"></el-input>
-              </el-form-item>
-            </el-col>
-            <el-col :span="12">
-              <el-form-item label="身份证号" prop="SFZH">
-                <el-input v-model="temp.SFZH"></el-input>
-              </el-form-item>
-            </el-col>
-          </el-row>
-          <el-row>
-            <el-col :span="12">
-              <el-form-item label="联系电话" prop="LXDH">
-                <el-input v-model="temp.LXDH"></el-input>
-              </el-form-item>
-            </el-col>
-            <el-col :span="12">
-              <el-form-item label="邮箱" prop="EMAIL">
-                <el-input v-model="temp.EMAIL"></el-input>
-              </el-form-item>
-            </el-col>
-          </el-row>
-          <el-row>
-            <el-col :span="12">
-              <el-form-item label="合同金额" prop="HTJE">
-                <el-input v-model="temp.HTJE"></el-input>
-              </el-form-item>
-            </el-col>
-            <el-col :span="12">
-              <el-form-item label="物业费金额" prop="WYFJE">
-                <el-input v-model="temp.WYFJE"></el-input>
-              </el-form-item>
-            </el-col>
-          </el-row>
-
-          <el-row>
-            <el-col :span="12">
-              <el-form-item label="房号" prop="FWSX">
-                <el-cascader
-                  style="width:100%;"
-                  placeholder="搜索房号"
-                  :options="options"
-                  :props="{ multiple: true, checkStrictly: true  }"
-                  filterable
-                ></el-cascader>
-              </el-form-item>
-            </el-col>
-            <el-col :span="12">
-              <el-form-item label="房屋使用类型" prop="SYLX">
-                <el-select size="mini" style="width:100%;" v-model="temp.SYLX">
-                  <el-option
-                    v-for="(item,key) in selectOptions"
-                    :key="key"
-                    :label="item.label"
-                    :value="item.value"
-                  ></el-option>
-                </el-select>
-              </el-form-item>
-            </el-col>
-          </el-row>
-          <el-row>
-            <el-col :span="12">
-              <el-form-item label="合同签订时间" prop="HTQDSJ">
-                <el-input v-model="temp.HTQDSJ"></el-input>
-              </el-form-item>
-            </el-col>
-            <el-col :span="12">
-              <el-form-item label="有效期" prop="YXQ">
-                <el-input v-model="temp.YXQ"></el-input>
-              </el-form-item>
-            </el-col>
-          </el-row>
-          <el-row>
-            <el-col :span="12">
-              <el-form-item label="租户姓名" prop="ZHXM">
-                <el-input v-model="temp.ZHXM"></el-input>
-              </el-form-item>
-            </el-col>
-            <el-col :span="12">
-              <el-form-item label="租户身份证号" prop="ZHSFZ">
-                <el-input v-model="temp.ZHSFZ"></el-input>
-              </el-form-item>
-            </el-col>
-          </el-row>
-          <el-row>
-            <el-col :span="12">
-              <el-form-item label="租户联系电话" prop="ZHDH">
-                <el-input v-model="temp.ZHDH"></el-input>
-              </el-form-item>
-            </el-col>
-            <el-col :span="12">
-              <el-form-item label="商铺名称" prop="SPMC">
-                <el-input v-model="temp.SPMC"></el-input>
-              </el-form-item>
-            </el-col>
-          </el-row>
-          <el-row>
-            <el-col :span="24">
-              <el-form-item label="经营内容" prop="JYNR">
-                <el-input v-model="temp.JYNR" type="textarea" :rows="3"></el-input>
-              </el-form-item>
-            </el-col>
-        </el-row>-->
-        <el-card>
+      
+        <el-card style="margin-top:20px;">
           <div slot="header">
             <span>商户信息</span>
           </div>
@@ -239,8 +124,7 @@
             <el-row>
               <el-col :span="8">
                 <el-form-item label="房屋编号">
-                  <el-input v-model="temp.FWBH" disabled style="width:70%;"></el-input>
-                  <el-button size="small" type="primary" @click="innerVisible=true">选择房屋</el-button>
+                  <el-input v-model="temp.FWBH" disabled></el-input>
                 </el-form-item>
               </el-col>
               <el-col :span="8">
@@ -747,7 +631,7 @@ export default {
           JYNR: "五金日用品",
           LSFGS:"普丰物业",
           LXGH:"26756553",
-          SHZT:1,
+          SHZT:0,
         },
         {
           id:2,
@@ -1061,7 +945,7 @@ export default {
       });
     },
     handleDelete(row) {
-      this.$confirm("确认删除信息吗", "提示", {
+      this.$confirm("确认终止物业吗", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
         type: "warning"

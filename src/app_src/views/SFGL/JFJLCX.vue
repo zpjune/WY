@@ -66,13 +66,13 @@
       size="mini"
       id="table"
     >
-      <el-table-column width="150px" align="center" label="缴费类型">
+      <el-table-column width="150px" align="center" label="缴费类型" fixed="left">
         <template slot-scope="scope">
           <span>{{scope.row.jflx}}</span>
         </template>
       </el-table-column>
 
-      <el-table-column align="center" width="120px" label="房屋编号">
+      <el-table-column align="center" width="120px" label="房屋编号" fixed="left">
         <template slot-scope="scope">
           <span>{{scope.row.fanghao}}</span>
         </template>

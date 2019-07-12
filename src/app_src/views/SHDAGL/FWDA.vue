@@ -3,14 +3,46 @@
   <div id="FWDA" class="app-container calendar-list-container">
     <div class="topSearh" id="topsearch">
       <el-row>
-        <el-col :xs="5" :sm="5" :md="5" :lg="4" :xl="3">
+        <el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
           <el-input placeholder="房屋名称" style="width:95%;" size="mini" clearable></el-input>
         </el-col>
-        <el-col :xs="5" :sm="5" :md="5" :lg="4" :xl="3">
-          <el-input placeholder="隶属分公司" style="width:95%;" size="mini" clearable></el-input>
+        <el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
+          <el-select placeholder="隶属分公司" style="width:95%" size="mini" v-model="listQuery.LSFGS" clearable>
+                    <el-option :value="0" label="物业分公司"></el-option>
+                    <el-option :value="1" label="房地产分公司"></el-option>
+                  </el-select>
+        </el-col>
+        <el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
+          <el-select
+            v-model="listQuery.SYLX"
+            size="mini"
+            style="width:95%;"
+            placeholder="房屋属性"
+            clearable
+            filterable
+          >
+            <el-option
+              v-for="(item,key) in selectOptions"
+              :key="key"
+              :label="item.name"
+              :value="item.value"
+            ></el-option>
+          </el-select>
         </el-col>
 
-        <el-col :xs="6" :sm="6" :md="6" :lg="6" :xl="5">
+        <el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="4">
+          <el-date-picker
+            style="width:95%;"
+            class="filter-item"
+            v-model="dateQuery"
+            type="daterange"
+            range-separator="~"
+            size="mini"
+            start-placeholder="开始日期"
+            end-placeholder="结束日期"
+          ></el-date-picker>
+        </el-col>
+        <el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="4">
           <el-button size="mini" class="filter-item" type="primary" v-waves icon="el-icon-search">搜索</el-button>
           <el-button
             size="mini"
@@ -20,14 +52,8 @@
             type="primary"
             icon="el-icon-edit"
           >新增</el-button>
-                    <el-button
-        class="filter-item"
-        type="primary"
-        icon="el-icon-download"
-        size="mini"
-      >导出</el-button>
+          <el-button class="filter-item" type="primary" icon="el-icon-download" size="mini">导出</el-button>
         </el-col>
-
       </el-row>
     </div>
     <el-card>
@@ -36,10 +62,25 @@
           <div style="text-align:right">
             <!-- <img src="@/app_src/img/free.png" alt class="tableicon" title="空闲"><span style="font-weight:bold;color:gray;">空闲</span>
             <img src="@/app_src/img/rent.png" alt class="tableicon" title="出租"><span style="font-weight:bold;color:gray;">出租</span>
-            <img src="@/app_src/img/sale.png" alt class="tableicon" title="出售"><span style="font-weight:bold;color:gray;">出售</span> -->
-            <div style="width:70px;height:18px;float:right;margin:2px;"><span style="float:right;">出售</span><span style="width:30px;height:18px;float:right;display:block;background-color:#67C23A;"></span></div>
-            <div style="width:70px;height:18px;float:right;margin:2px;"><span style="float:right;">出租</span><span style="width:30px;height:18px;float:right;display:block;background-color:#E6A23C;"></span></div>
-            <div style="width:70px;height:18px;float:right;margin:2px;"><span style="float:right;">空闲</span><span style="width:30px;height:18px;float:right;display:block;background-color:#909399;"></span></div>
+            <img src="@/app_src/img/sale.png" alt class="tableicon" title="出售"><span style="font-weight:bold;color:gray;">出售</span>-->
+            <div style="width:70px;height:18px;float:right;margin:2px;">
+              <span style="float:right;">出售</span>
+              <span
+                style="width:30px;height:18px;float:right;display:block;background-color:#67C23A;"
+              ></span>
+            </div>
+            <div style="width:70px;height:18px;float:right;margin:2px;">
+              <span style="float:right;">出租</span>
+              <span
+                style="width:30px;height:18px;float:right;display:block;background-color:#E6A23C;"
+              ></span>
+            </div>
+            <div style="width:70px;height:18px;float:right;margin:2px;">
+              <span style="float:right;">空闲</span>
+              <span
+                style="width:30px;height:18px;float:right;display:block;background-color:#909399;"
+              ></span>
+            </div>
           </div>
         </el-col>
       </el-row>
@@ -63,7 +104,7 @@
                 <span>{{scope.row.FWSX}}</span>
                 <!-- <img src="@/app_src/img/free.png" alt class="tableicon" title="空闲" v-if="scope.row.FWSX=='空闲'">
                 <img src="@/app_src/img/rent.png" alt class="tableicon" title="出租" v-else-if="scope.row.FWSX=='出租'">
-                <img src="@/app_src/img/sale.png" alt class="tableicon" title="出售" v-else-if="scope.row.FWSX=='出售'"> -->
+                <img src="@/app_src/img/sale.png" alt class="tableicon" title="出售" v-else-if="scope.row.FWSX=='出售'">-->
               </template>
             </el-table-column>
             <el-table-column align="center" label="房屋编号">
@@ -103,10 +144,11 @@
               </template>
             </el-table-column>
 
-            <el-table-column align="center" width="230" label="操作">
+            <el-table-column align="center" width="260" label="操作">
               <template slot-scope="scope">
                 <el-button type="primary" size="mini" @click="handleUpdate(scope.row)">修改</el-button>
                 <el-button type="danger" size="mini" @click="handleDelete(scope.row)">删除</el-button>
+                <el-button type="success" size="mini" @click="handleCondition(scope.row)">使用情况</el-button>
               </template>
             </el-table-column>
           </el-table>
@@ -159,7 +201,11 @@
             </el-col>
             <el-col :span="12">
               <el-form-item label="隶属分公司" prop="LSFGS">
-                <el-input v-model="temp.LSFGS"></el-input>
+                <!-- <el-input v-model="temp.LSFGS"></el-input> -->
+                         <el-select placeholder="隶属分公司" style="width:95%" size="small" v-model="temp.LSFGS" clearable>
+                    <el-option :value="0" label="物业分公司"></el-option>
+                    <el-option :value="1" label="房地产分公司"></el-option>
+                  </el-select>
               </el-form-item>
             </el-col>
           </el-row>
@@ -214,7 +260,7 @@
               <el-upload action="#" list-type="picture-card" :auto-upload="false">
                 <i slot="default" class="el-icon-plus"></i>
                 <div slot="file" slot-scope="{file}">
-                  <img class="el-upload-list__item-thumbnail" :src="file.url" alt>
+                  <img class="el-upload-list__item-thumbnail" :src="file.url" alt />
                   <span class="el-upload-list__item-actions">
                     <span
                       class="el-upload-list__item-preview"
@@ -240,7 +286,7 @@
                 </div>
               </el-upload>
               <el-dialog :visible.sync="dialogVisible">
-                <img width="100%" :src="dialogImageUrl" alt>
+                <img width="100%" :src="dialogImageUrl" alt />
               </el-dialog>
             </el-form-item>
           </el-col>
@@ -251,6 +297,57 @@
           <el-button v-else type="primary" @click="updateData">保存</el-button>
         </div>
       </el-card>
+    </el-dialog>
+    <el-dialog :visible.sync="editVisible2" class="selecttrees" title="商户详情" width="1000px">
+      <el-table
+        :key="tableKey"
+        :data="list2"
+        size="mini"
+        :header-cell-class-name="tableRowClassName"
+        v-loading="listLoading"
+        element-loading-text="给我一点时间"
+        border
+        fit
+        highlight-current-row
+        style="width: 100%;text-align:left;"
+      >
+        <el-table-column align="center" label="开始时间">
+          <template slot-scope="scope">
+            <span>{{scope.row.KSSJ}}</span>
+          </template>
+        </el-table-column>
+
+        <el-table-column label="结束时间">
+          <template slot-scope="scope">
+            <span>{{scope.row.JSSJ}}</span>
+          </template>
+        </el-table-column>
+        <el-table-column align="right" prop="SYLX" label="使用类型">
+          <template slot-scope="scope">
+            <span>{{scope.row.SYLX}}</span>
+          </template>
+        </el-table-column>
+        <el-table-column align="right" prop="LSFGS" label="商户名称">
+          <template slot-scope="scope">
+            <span>{{scope.row.SHMC}}</span>
+          </template>
+        </el-table-column>
+      </el-table>
+      <div class="page">
+        <el-pagination
+          background
+          @size-change="handleSizeChange"
+          @current-change="handleCurrentChange"
+          :current-page="listQuery.page"
+          :page-sizes="[10,20,30, 50]"
+          :page-size="listQuery.limit"
+          layout="total, sizes, prev, pager, next, jumper"
+          :total="total"
+        ></el-pagination>
+      </div>
+      <div style="text-align:center;margin-top:10px;">
+        <el-button @click="editVisible2 = false">取消</el-button>
+      </div>
     </el-dialog>
   </div>
 </template>
@@ -273,23 +370,30 @@ export default {
   //   },
   data() {
     return {
+      dateQuery: "",
       dialogImageUrl: "",
       dialogVisible: false,
+      editVisible2: false,
       disabled: false,
       tableKey: 0,
+
       selectOptions: [
         {
-          value: 0,
-          label: "出售"
+          value: "空闲",
+          label: "空闲"
         },
         {
-          value: 1,
+          value: "出租",
           label: "出租"
+        },
+        {
+          value: "出售",
+          label: "出售"
         }
       ],
       areaOptions: [
         {
-          value: 0,
+          value: "A区",
           label: "A区"
         },
         {
@@ -305,12 +409,32 @@ export default {
           label: "D区"
         }
       ],
+      list2: [
+        {
+          KSSJ: "2015-6-27",
+          JSSJ: "2017-6-27",
+          SYLX: "出租",
+          SHMC: "张三"
+        },
+        {
+          KSSJ: "2017-6-27",
+          JSSJ: "2018-6-27",
+          SYLX: "续租",
+          SHMC: "张三"
+        },
+        {
+          KSSJ: "2018-6-27",
+          JSSJ: "2019-6-27",
+          SYLX: "出租",
+          SHMC: "李四"
+        }
+      ],
       list: [
         {
           FWBH: "A-101",
           FWMC: "房屋1",
           JZMJ: "100㎡",
-          LSFGS: "社区信息化部",
+          LSFGS: "房地产分公司",
           ZLWZ: "港西新城",
           JGLX: "钢结构",
           ZCYZ: 10000,
@@ -321,7 +445,7 @@ export default {
           FWBH: "C-101",
           FWMC: "房屋2",
           JZMJ: "100㎡",
-          LSFGS: "分公司1",
+          LSFGS: "物业分公司",
           ZLWZ: "港西新城",
           JGLX: "钢结构",
           ZCYZ: 18000,
@@ -332,7 +456,7 @@ export default {
           FWBH: "A-309",
           FWMC: "房屋3",
           JZMJ: "87㎡",
-          LSFGS: "管控中心",
+          LSFGS: "物业分公司",
           ZLWZ: "港西新城",
           JGLX: "钢结构",
           ZCYZ: 17000,
@@ -343,7 +467,7 @@ export default {
           FWBH: "B-509",
           FWMC: "房屋4",
           JZMJ: "187㎡",
-          LSFGS: "云计算技术部",
+          LSFGS: "物业分公司",
           ZLWZ: "港西新城",
           JGLX: "钢结构",
           ZCYZ: 19000,
@@ -354,7 +478,7 @@ export default {
           FWBH: "D-211",
           FWMC: "房屋5",
           JZMJ: "127㎡",
-          LSFGS: "云计算技术部",
+          LSFGS: "房地产分公司",
           ZLWZ: "港西新城",
           JGLX: "钢结构",
           ZCYZ: 24000,
@@ -365,7 +489,7 @@ export default {
           FWBH: "C-310",
           FWMC: "房屋6",
           JZMJ: "127㎡",
-          LSFGS: "网络技术部",
+          LSFGS: "物业分公司",
           ZLWZ: "港西新城",
           JGLX: "钢结构",
           ZCYZ: 7000,
@@ -376,7 +500,7 @@ export default {
           FWBH: "B-223",
           FWMC: "房屋7",
           JZMJ: "97㎡",
-          LSFGS: "网络技术部",
+          LSFGS: "房地产分公司",
           ZLWZ: "港西新城",
           JGLX: "钢结构",
           ZCYZ: 12000,
@@ -422,7 +546,8 @@ export default {
         TaxOffice: "",
         ImportModel: "",
         TaxNumber: "",
-        OrgRegion: ""
+        OrgRegion: "",
+        LSFGS:""
       },
       temp: {
         FWBH: "D-211",
@@ -445,19 +570,13 @@ export default {
     };
   },
   methods: {
-    cellStyle(row,column,rowIndex,columnIndex)
-    {
-      if(row.column.label==="房屋属性"&&row.row.FWSX=='空闲')
-      {
-        return 'background:#909399'
-      }
-      else if(row.column.label==="房屋属性"&&row.row.FWSX=='出租')
-      {
-        return 'background:#E6A23C'
-      }
-      else if(row.column.label==="房屋属性"&&row.row.FWSX=='出售')
-      {
-        return 'background:#67C23A'
+    cellStyle(row, column, rowIndex, columnIndex) {
+      if (row.column.label === "房屋属性" && row.row.FWSX == "空闲") {
+        return "background:#909399";
+      } else if (row.column.label === "房屋属性" && row.row.FWSX == "出租") {
+        return "background:#E6A23C";
+      } else if (row.column.label === "房屋属性" && row.row.FWSX == "出售") {
+        return "background:#67C23A";
       }
     },
     handleRemove(file) {
@@ -523,9 +642,17 @@ export default {
       this.temp = Object.assign({}, row); // copy obj
       this.editVisible = true;
       this.dialogStatus = "update";
-      this.$nextTick(() => {
-        this.$refs["dataForm"].clearValidate();
-      });
+      // this.$nextTick(() => {
+      //   this.$refs["dataForm"].clearValidate();
+      // });
+    },
+    handleCondition(row) {
+      this.temp = Object.assign({}, row); // copy obj
+      this.editVisible2 = true;
+      this.dialogStatus = "update";
+      // this.$nextTick(() => {
+      //   this.$refs["dataForm"].clearValidate();
+      // });
     },
     handleDelete(row) {
       this.$confirm("待实现！", "提示", {

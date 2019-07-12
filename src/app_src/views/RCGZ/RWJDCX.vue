@@ -31,10 +31,10 @@
           highlight-current-row
           style="width: 100%"
         >
-          <el-table-column label="任务编号" prop="RWBH"  ></el-table-column>
-          <el-table-column label="任务名称" prop="RWMC" ></el-table-column>
-          <el-table-column label="任务开始时间" prop="RWKSSJ"></el-table-column>
-          <el-table-column label="任务结束时间" prop="RWJSSJ"></el-table-column>
+          <el-table-column label="任务编号" prop="RWBH" fixed="left" ></el-table-column>
+          <el-table-column label="任务名称" prop="RWMC" fixed="left"></el-table-column>
+          <el-table-column label="任务开始时间" prop="RWKSSJ" fixed="left"></el-table-column>
+          <el-table-column label="任务结束时间" prop="RWJSSJ" fixed="left"></el-table-column>
           <el-table-column label="任务范围" prop="RWFW" ></el-table-column>
           <el-table-column label="检查总数" prop="JCZS" ></el-table-column>
           <el-table-column label="已完成数量" prop="JCWC" ></el-table-column>
@@ -179,8 +179,8 @@
         </el-form>
         <div style="text-align:center">
           <el-button @click="editVisible = false">取消</el-button>
-          <el-button v-if="dialogStatus=='create'" type="primary" @click="createData">保存</el-button>
-          <el-button v-else type="primary" @click="updateData">保存</el-button>
+          <!-- <el-button v-if="dialogStatus=='create'" type="primary" @click="createData">保存</el-button>
+          <el-button v-else type="primary" @click="updateData">保存</el-button> -->
         </div>
       </el-card>
     </el-dialog>

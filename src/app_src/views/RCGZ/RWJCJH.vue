@@ -29,20 +29,14 @@
           highlight-current-row
           style="width: 100%"
         >
-          <el-table-column label="任务编号" prop="RWBH"></el-table-column>
-          <el-table-column label="任务名称" prop="RWMC"></el-table-column>
-          <el-table-column label="任务开始时间" prop="RWKSSJ"></el-table-column>
-          <el-table-column label="任务结束时间" prop="RWJSSJ"></el-table-column>
+          <el-table-column label="任务编号" prop="RWBH" fixed="left"></el-table-column>
+          <el-table-column label="任务名称" prop="RWMC" fixed="left"></el-table-column>
+          <el-table-column label="任务开始时间" prop="RWKSSJ" fixed="left"></el-table-column>
+          <el-table-column label="任务结束时间" prop="RWJSSJ" fixed="left"></el-table-column>
           <el-table-column label="任务内容" prop="RWNR"></el-table-column>
           <el-table-column label="任务范围" prop="RWFW"></el-table-column>
           <el-table-column label="备注" prop="REMARK"></el-table-column>
           <el-table-column label="任务状态" prop="TASK_STATE_NAME"></el-table-column>
-          <!-- <el-table-column label="出差事由" prop="CCSY"></el-table-column>
-          <el-table-column label="出差天数" prop="CCTS"></el-table-column>
-          <el-table-column label="报销金额" prop="BXJE"></el-table-column>
-          <el-table-column label="报销金额(大写)" prop="BXJEDX"></el-table-column>
-          <el-table-column label="预借差旅费" prop="YJCLF"></el-table-column>
-          <el-table-column label="应退补金额" prop="YTBJE"></el-table-column>-->
           <el-table-column align="center" width="280" label="操作" fixed="right">
             <template slot-scope="scope">
               <!-- <el-button type="primary" size="mini" @click="handleUpdate(scope.row)">修改</el-button>

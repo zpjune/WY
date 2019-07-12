@@ -1,250 +1,217 @@
 
 <template>
-
-
   <el-form ref="dataForm" :model="temp" :rules="rules" label-width="120px" style="width: 99%;" id="CZDAEDIT">
-        <el-card style="margin-top:20px;">
+    <el-card style="margin-top:20px;">
       <div slot="header">
-        <span>任务信息</span>
+        <span>商户信息</span>
       </div>
       <div>
         <el-row>
           <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-            <el-form-item label="任务名称">
-              <el-input size="small" v-model="temp.RWMC"></el-input>
-            </el-form-item>
+            <el-form-item label="房屋编号">
+              <el-input v-model="temp.FWBH" disabled ></el-input>
+              
+            </el-form-item> 
           </el-col>
           <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-            <el-form-item label="检查区域">
-              <el-select style="width:100%" size="small" v-model="temp.JCQY">
-                <el-option value="0" label="A区"></el-option>
-                <el-option value="1" label="B区"></el-option>
-                <el-option value="2" label="C区"></el-option>
-                <el-option value="3" label="D区"></el-option>
-              </el-select>
+            <el-form-item label="房屋名称">
+              <el-input size="small" v-model="temp.FWMC" disabled></el-input>
             </el-form-item>
           </el-col>
-          <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-            <el-form-item label="检查类型">
-              <el-select style="width:100%" size="small" v-model="temp.JCLX">
-                <el-option value="0" label="消防"></el-option>
-                <el-option value="1" label="安全"></el-option>
-              </el-select>
+          <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8" disabled>
+            <el-form-item label="隶属分公司">
+              <el-select
+            v-model="temp.LSFGS"
+            size="small"
+            style="width:100%;"
+            placeholder="隶属分公司"
+            disabled
+          >
+            <el-option
+              v-for="(item,key) in compOptions"
+              :key="key"
+              :label="item.name"
+              :value="item.value"
+            ></el-option>
+          </el-select>
             </el-form-item>
           </el-col>
         </el-row>
 
-       
+        <el-row>
+          <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
+            <el-form-item label="房屋面积">
+              <el-input size="small" v-model="temp.JZMJ" disabled></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
+            <el-form-item label="坐落位置">
+              <el-input size="small" v-model="temp.ZLWZ" disabled></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
+            <el-form-item label="物业基准日期">
+              <el-date-picker
+                style="width:100%"
+                format="yyyy-MM-dd"
+                size="small"
+                v-model="temp.JZR"
+              ></el-date-picker>
+            </el-form-item>
+          </el-col>
+        </el-row>
+
+        <el-row>
+          <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
+            <el-form-item label="商户名称">
+              <el-input size="small" v-model="temp.SHMC"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
+            <el-form-item label="物业费缴纳方式">
+              <el-select style="width:100%" size="small" v-model="temp.JNFS">
+                <el-option value="0" label="半年"></el-option>
+                <el-option value="1" label="一年"></el-option>
+                <el-option :value="2" label="全部"></el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+          <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
+            <el-form-item label="物业费标准">
+              <el-input size="small" v-model="temp.WYFBZ">
+                <template slot="append">元/月</template>
+              </el-input>
+            </el-form-item>
+          </el-col>
+          
+        </el-row>
 
         <el-row>
           <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
-            <el-form-item label="检查内容">
-              <el-input size="small" v-model="temp.JCNR"></el-input>
+            <el-form-item label="经营内容" prop="JYNR">
+              <el-input v-model="temp.JYNR" type="textarea" :rows="3"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
       </div>
     </el-card>
     <el-card style="margin-top:20px;">
+          <div slot="header">
+            <span>业主信息</span>
+          </div>
+          <div>
+            <el-row>
+              <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
+                <el-form-item label="业主姓名">
+                  <el-input size="small" v-model="temp.YZXM"></el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
+                <el-form-item label="业主类型">
+                  <el-select style="width:100%" size="small" v-model="temp.YZLX">
+                    <el-option :value="0" label="个人"></el-option>
+                    <el-option :value="1" label="公司"></el-option>
+                  </el-select>
+                </el-form-item>
+              </el-col>
+              <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
+                <el-form-item label="业主性别">
+                  <el-select style="width:100%;" v-model="temp.YZXB">
+                    <el-option :value="0" label="女"></el-option>
+                    <el-option :value="1" label="男"></el-option>
+                  </el-select>
+                </el-form-item>
+              </el-col>
+            </el-row>
 
-      <div slot="header">
-        <span>检查信息</span>
-      </div>
+            <el-row>
+              <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
+                <el-form-item label="身份证号">
+                  <el-input size="small" v-model="temp.YZSFZH"></el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
+                <el-form-item label="手机号码">
+                  <el-input size="small" v-model="temp.YZSJHM"></el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
+                <el-form-item label="固定电话">
+                  <el-input size="small" v-model="temp.YZGDDH"></el-input>
+                </el-form-item>
+              </el-col>
+            </el-row>
 
-      <div>
-        <el-tabs type="border-card">
-  <el-tab-pane label="检查情况">
-     <el-row>
-          <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-            <el-form-item label="房屋编号">
-              <el-input size="small" v-model="temp.FWBH"></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-            <el-form-item label="业主名称">
-              <el-input size="small" v-model="temp.YZMC"></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-            <el-form-item label="联系电话">
-              <el-input size="small" v-model="temp.LXDH"></el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
- <el-row>
-          <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-            <el-form-item label="检查结果">
-              <el-select style="width:100%" size="small" v-model="temp.JCJG">
-                <el-option value="0" label="合格"></el-option>
-                <el-option value="1" label="不合格"></el-option>
-              </el-select>
-            </el-form-item>
-          </el-col>
-          <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-            <el-form-item label="检查人">
-              <el-input size="small" v-model="temp.JCR"></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-            <el-form-item label="检查时间">
-               <el-date-picker
-                    style="width:100%"
-                    format="yyyy-MM-dd"
-                    size="small"
-                    v-model="temp.JCSJ"
-                  ></el-date-picker>
-            </el-form-item>
-          </el-col>
-        </el-row>
- 
- <el-row>
-          <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
-            <el-form-item label="检查情况">
-              <el-input size="small" v-model="temp.JCNR"></el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
-               <el-row>
-          <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
+            <el-row>
+              <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
+                <el-form-item label="电子邮箱">
+                  <el-input size="small" v-model="temp.YZDZYX"></el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
+                <el-form-item label="使用类型">
+                  <el-select style="width:100%" size="small" v-model="temp.SYLEX">
+                    <el-option :value="0" label="自用"></el-option>
+                    <el-option :value="1" label="出租"></el-option>
+                  </el-select>
+                </el-form-item>
+              </el-col>
+            </el-row>
+          </div>
+        </el-card>
+        <el-card style="margin-top:20px;" v-if="temp.SYLEX==1">
+          <div slot="header">
+            <span>租户信息</span>
+          </div>
+          <div>
+            <el-row>
+              <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
+                <el-form-item label="租户姓名">
+                  <el-input size="small" v-model="temp.ZHXM"></el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
+                <el-form-item label="租户类型">
+                  <el-select style="width:100%" size="small" v-model="temp.ZHLX">
+                    <el-option :value="0" label="个人"></el-option>
+                    <el-option :value="1" label="公司"></el-option>
+                  </el-select>
+                </el-form-item>
+              </el-col>
+              <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
+                <el-form-item label="租户性别">
+                  <el-input size="small" v-model="temp.ZHXM"></el-input>
+                </el-form-item>
+              </el-col>
+            </el-row>
 
-                    <el-form-item label="检查图片" prop="PMT">
-              <el-upload action="#" list-type="picture-card" :auto-upload="false">
-                <i slot="default" class="el-icon-plus"></i>
-                <div slot="file" slot-scope="{file}">
-                  <img class="el-upload-list__item-thumbnail" :src="file.url" alt>
-                  <span class="el-upload-list__item-actions">
-                    <span
-                      class="el-upload-list__item-preview"
-                      @click="handlePictureCardPreview(file)"
-                    >
-                      <i class="el-icon-zoom-in"></i>
-                    </span>
-                    <span
-                      v-if="!disabled"
-                      class="el-upload-list__item-delete"
-                      @click="handleDownload(file)"
-                    >
-                      <i class="el-icon-download"></i>
-                    </span>
-                    <span
-                      v-if="!disabled"
-                      class="el-upload-list__item-delete"
-                      @click="handleRemove(file)"
-                    >
-                      <i class="el-icon-delete"></i>
-                    </span>
-                  </span>
-                </div>
-              </el-upload>
-              <el-dialog :visible.sync="dialogVisible">
-                <img width="100%" :src="dialogImageUrl" alt>
-              </el-dialog>
-            </el-form-item>
-          </el-col>
-        </el-row>
-  </el-tab-pane>
-  <el-tab-pane label="复查情况">  <el-row>
-          <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
- <el-table
-      :key="tableKey"
-      :data="list"
-      :header-cell-class-name="tableRowClassName"
-      v-loading="listLoading"
-      element-loading-text="给我一点时间"
-      border
-      fit
-      highlight-current-row
-      size="mini"
-      id="table"
-    >
-      <el-table-column width="150px" align="center" label="复查结果">
-        <template slot-scope="scope">
-          <span>{{scope.row.FCJG}}</span>
-        </template>
-      </el-table-column>
+            <el-row>
+              <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
+                <el-form-item label="身份证号">
+                  <el-input size="small" v-model="temp.ZHSFZH"></el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
+                <el-form-item label="手机号码">
+                  <el-input size="small" v-model="temp.ZHSJHM"></el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
+                <el-form-item label="固定电话">
+                  <el-input size="small" v-model="temp.ZHGDHM"></el-input>
+                </el-form-item>
+              </el-col>
+            </el-row>
 
-      <el-table-column align="center" width="120px" label="复查人">
-        <template slot-scope="scope">
-          <span>{{scope.row.FCR}}</span>
-        </template>
-      </el-table-column>
-      <el-table-column width="150px" align="center" label="复查时间">
-        <template slot-scope="scope">
-          <span>{{scope.row.FCSJ}}</span>
-        </template>
-      </el-table-column>
-      <el-table-column align="center" width="120px" label="复查内容">
-        <template slot-scope="scope">
-          <span>{{scope.row.FCNR}}</span>
-        </template>
-      </el-table-column>
-  
-    </el-table>
-    <el-pagination
-      background
-      @size-change="handleSizeChange"
-      @current-change="handleCurrentChange"
-      :current-page="listQuery.page"
-      :page-sizes="[10,20,30, 50]"
-      :page-size="listQuery.limit"
-      layout="total, sizes, prev, pager, next, jumper"
-      :total="10"
-      style="text-align:center;"
-    ></el-pagination>
-          </el-col>
-        </el-row>
-        
-          <el-row>
-          <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
-
-                    <el-form-item label="复查 图片" prop="PMT">
-              <el-upload action="#" list-type="picture-card" :auto-upload="false">
-                <i slot="default" class="el-icon-plus"></i>
-                <div slot="file" slot-scope="{file}">
-                  <img class="el-upload-list__item-thumbnail" :src="file.url" alt>
-                  <span class="el-upload-list__item-actions">
-                    <span
-                      class="el-upload-list__item-preview"
-                      @click="handlePictureCardPreview(file)"
-                    >
-                      <i class="el-icon-zoom-in"></i>
-                    </span>
-                    <span
-                      v-if="!disabled"
-                      class="el-upload-list__item-delete"
-                      @click="handleDownload(file)"
-                    >
-                      <i class="el-icon-download"></i>
-                    </span>
-                    <span
-                      v-if="!disabled"
-                      class="el-upload-list__item-delete"
-                      @click="handleRemove(file)"
-                    >
-                      <i class="el-icon-delete"></i>
-                    </span>
-                  </span>
-                </div>
-              </el-upload>
-              <el-dialog :visible.sync="dialogVisible">
-                <img width="100%" :src="dialogImageUrl" alt>
-              </el-dialog>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        </el-tab-pane>
-</el-tabs>
-
-
-      
-                    
- <el-row>
-
-        </el-row>
-      </div>
-    </el-card>
-
-   
+            <el-row>
+              <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
+                <el-form-item label="电子邮箱">
+                  <el-input size="small" v-model="temp.ZHDZYX"></el-input>
+                </el-form-item>
+              </el-col>
+            </el-row>
+          </div>
+        </el-card>
     <div style="text-align:center;margin-top:20px;margin-bottom:20px;">
       <el-button v-if="dialogStatus=='create'" type="primary" @click="createData">保存</el-button>
       <el-button v-else type="primary" @click="updateData">保存</el-button>
@@ -384,20 +351,6 @@ export default {
           label: "D区"
         }
       ],
-       list: [
-        {
-          FCJG: "不合格",
-          FCR: "张三",
-          FCSJ: "2019-06-25",
-          FCNR: "消防通道堵塞",
-        },
-         {
-          FCJG: "合格",
-          FCR: "张三",
-          FCSJ: "2019-07-05",
-          FCNR: "消防通道堵塞",
-        }
-       ],
       list2: [
         {
           FWBH: "A-101",
@@ -515,7 +468,7 @@ export default {
         LSFGS: "普丰公司",
         JZMJ: "127㎡",
         ZLWZ: "",
-        JZR: "五金日用品",
+        JZR: "",
         SHMC: "",
         WYFBZ: "",
         JNFS: "",

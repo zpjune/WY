@@ -172,13 +172,13 @@ export default {
       value: "",
       list: [
         {
-          quyu: "A区",
-          name: "张三",
+          quyu: "港新新城",
+          name: "张三，李四",
           tel: "1345262556"
         },
         {
-          quyu: "b区",
-          name: "李四",
+          quyu: "阳光家园",
+          name: "赵六，钱七，韩八",
           tel: "13265985415"
         },
         {
@@ -191,26 +191,7 @@ export default {
           name: "马六",
           tel: "1345262556"
         },
-        {
-          quyu: "E区",
-          name: "赵启",
-          tel: "1345262556"
-        },
-        {
-          quyu: "F区",
-          name: "王五",
-          tel: "1345262556"
-        },
-        {
-          quyu: "G区",
-          name: "刘久",
-          tel: "1345262556"
-        },
-        {
-          quyu: "H区",
-          name: "韩十",
-          tel: "1345262556"
-        }
+        
       ],
       textMap: {
         update: "修改区域负责人",
@@ -220,8 +201,8 @@ export default {
       dialogStatus: "",
       tableKey:0,
        temp: {
-        quyu:'A区',
-        name:'张三',
+        quyu:'港新新城',
+        name:'张三，李四',
         tel:'1375565256'
       },
     };
@@ -230,9 +211,15 @@ export default {
     handleFilter() {
        
     },
-    handleUpdate(){
-  this.editVisible=true;
-        this.dialogStatus = "update";
+    handleUpdate(row){
+
+
+        this.temp = Object.assign({}, row); // copy obj
+      this.editVisible = true;
+      this.dialogStatus = "update";
+      this.$nextTick(() => {
+        this.$refs["dataForm"].clearValidate();
+      });
     },
     handleCreate() {
         this.editVisible=true;

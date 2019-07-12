@@ -124,6 +124,7 @@
        </template>
       </el-table-column>
     </el-table>
+          <div class="page">
     <el-pagination
               background
               @size-change="handleSizeChange"
@@ -134,15 +135,24 @@
               layout="total, sizes, prev, pager, next, jumper"
               :total="10"
             ></el-pagination>
+          </div>
          <el-dialog width="50%" title="缴费通知" :visible.sync="innerVisible" append-to-body>
       
 <el-card class="box-card">
-  <pre style="font-size:18px;padding:5px;">
+
+  <h2 style="text-align:center;">缴费通知单</h2>
+  <pre style="font-size:18px;">
   <span style="text-decoration:underline">尊敬的丰收道730号业主：</span>
+
   根据合同，该房屋已欠缴物业费，现请您务必在<span style="text-decoration:underline">2019年6月25日</span>前缴纳该房屋的物业费578.16元
+
   <span style="text-decoration:underline">（2019年1月1日至2019年6月30日）</span>请尽快到普丰物业公司（创新北里物业楼210室缴纳物业费）。
+
   缴费方式：刷借记卡、微信、支付宝。
+
   联系电话：63950600
+
+
   <label style="float:right">天津市普丰物业管理有限公司</label>
   <label  style="float:right">2019年5月27日</label>
   </pre>

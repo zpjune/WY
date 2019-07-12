@@ -77,6 +77,7 @@
               <el-select style="width:100%" size="small" v-model="temp.JNFS">
                 <el-option value="0" label="半年"></el-option>
                 <el-option value="1" label="一年"></el-option>
+                <el-option :value="2" label="全部"></el-option>
               </el-select>
             </el-form-item>
           </el-col>
@@ -470,7 +471,7 @@ export default {
         LSFGS: "普丰公司",
         JZMJ: "127㎡",
         ZLWZ: "",
-        JZR: "五金日用品",
+        JZR: "",
         SHMC: "",
         WYFBZ: "",
         JNFS: "",

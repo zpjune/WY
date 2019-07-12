@@ -168,11 +168,11 @@ export default {
       options: [
         {
           value: "选项1",
-          label: "A区"
+          label: "港新新城"
         },
         {
           value: "选项2",
-          label: "B区"
+          label: "阳光家园"
         },
         {
           value: "选项3",
@@ -186,59 +186,59 @@ export default {
       value: "",
       list: [
         {
-          quyu: "A区",
-          name: "",
+          quyu: "港新新城",
+          name: "日用品超市",
           fanghao: "2-203",
           cishu:"3"
         },
         {
-          quyu: "A区",
-          name: "",
+          quyu: "阳光家园",
+          name: "五金日用品百货",
           fanghao: "2-201",
           cishu:"5"
         },{
-          quyu: "B区",
-          name: "",
+          quyu: "C区",
+          name: "天天饭庄",
           fanghao: "1-202",
           cishu:"1"
         },{
-          quyu: "B区",
-          name: "",
+          quyu: "港新新城",
+          name: "日用品超市",
           fanghao: "4-203",
           cishu:"3"
         },{
-          quyu: "C区",
-          name: "",
+          quyu: "阳光家园",
+          name: "五金日用品百货",
           fanghao: "6-203",
           cishu:"4"
         },{
-          quyu: "D区",
-          name: "",
+               quyu: "C区",
+          name: "天天饭庄",
           fanghao: "7-203",
           cishu:"2"
         }
       ],
        listdetail: [
         {
-          name: "",
+          name: "日用品超市",
           fanghao:"2-201",
           leixing:"消防",
           miaoshu:"没有灭火器"
         },
         {
-          name: "",
+          name: "日用品超市",
           fanghao:"2-201",
           leixing:"消防",
           miaoshu:"水管破裂"
         },
         {
-          name: "",
+          name: "日用品超市",
           fanghao:"2-201",
           leixing:"安全",
           miaoshu:"房屋有裂痕"
         },
         {
-          name: "",
+          name: "日用品超市",
           fanghao:"2-201",
           leixing:"安全",
           miaoshu:"护栏老化"

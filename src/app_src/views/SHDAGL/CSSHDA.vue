@@ -83,10 +83,16 @@
                 <span>{{scope.row.LXGH}}</span>
               </template>
             </el-table-column>
+                     <el-table-column align="right" width="100" prop="SHZT" label="审核状态">
+              <template slot-scope="scope">
+                <span>{{scope.row.SHZT}}</span>
+              </template>
+            </el-table-column>
             <el-table-column align="center" width="230" label="操作" fixed="right">
               <template slot-scope="scope">
                 <el-button type="primary" size="mini" @click="handleUpdate(scope.row)">修改</el-button>
-                <el-button type="danger" size="mini" @click="handleDelete(scope.row)">删除</el-button>
+                <el-button type="danger" size="mini"  v-if="scope.row.SHZT=='待审核'" @click="handleDelete(scope.row)">删除</el-button>
+                 <el-button type="success" size="mini" v-if="scope.row.SHZT=='已审核'" @click="handleZS(scope.row)">转售</el-button>
               </template>
             </el-table-column>
           </el-table>
@@ -180,6 +186,7 @@
                   <el-select style="width:100%" size="small" v-model="temp.JNFS">
                     <el-option :value="0" label="半年"></el-option>
                     <el-option :value="1" label="一年"></el-option>
+                    <el-option :value="2" label="全部"></el-option>
                   </el-select>
                 </el-form-item>
               </el-col>
@@ -629,7 +636,8 @@ export default {
           ZHDH: "23454212222",
           JYNR: "五金日用品",
           LSFGS:"普丰物业",
-          LXGH:"26756553"
+          LXGH:"26756553",
+          SHZT:"待审核"
         },
         {
           YZXM: "张三",
@@ -646,7 +654,8 @@ export default {
           ZHSFZ: "43441219889082212",
           ZHDH: "23454212222",
           JYNR: "五金日用品", LSFGS:"普丰物业",
-          LXGH:"26756553"
+          LXGH:"26756553",
+          SHZT:"已审核"
         },
         {
           YZXM: "张三",
@@ -664,7 +673,8 @@ export default {
           ZHDH: "23454212222",
           JYNR: "五金日用品",
           LSFGS:"普丰物业",
-          LXGH:"26756553"
+          LXGH:"26756553",
+          SHZT:"已审核"
         },
         {
           YZXM: "张三",
@@ -682,7 +692,8 @@ export default {
           ZHDH: "23454212222",
           JYNR: "五金日用品",
           LSFGS:"普丰物业",
-          LXGH:"26756553"
+          LXGH:"26756553",
+          SHZT:"已审核"
         },
         {
           YZXM: "张三",
@@ -700,7 +711,8 @@ export default {
           ZHDH: "23454212222",
           JYNR: "五金日用品",
           LSFGS:"普丰物业",
-          LXGH:"26756553"
+          LXGH:"26756553",
+          SHZT:"待审核"
         },
         {
           YZXM: "张三",
@@ -718,7 +730,8 @@ export default {
           ZHDH: "23454212222",
           JYNR: "五金日用品",
           LSFGS:"普丰物业",
-          LXGH:"26756553"
+          LXGH:"26756553",
+          SHZT:"已审核"
         },
         {
           YZXM: "张三",
@@ -736,7 +749,8 @@ export default {
           ZHDH: "23454212222",
           JYNR: "五金日用品",
           LSFGS:"普丰物业",
-          LXGH:"26756553"
+          LXGH:"26756553",
+          SHZT:"已审核"
         }
       ],
       rules: {
@@ -876,21 +890,25 @@ export default {
     },
 
     handleCreate() {
-      this.resetTemp();
-      this.editVisible = true;
-      this.dialogStatus = "create";
-      if (this.$refs["dataForm"] !== undefined) {
-        this.$refs["dataForm"].resetFields();
-      }
+      // this.resetTemp();
+      // this.editVisible = true;
+      // this.dialogStatus = "create";
+      // if (this.$refs["dataForm"] !== undefined) {
+      //   this.$refs["dataForm"].resetFields();
+      // }
+      this.$router.push({ path: "/SHDAGL/CSDAEDIT" });
     },
     handleUpdate(row) {
-      this.temp = Object.assign({}, row); // copy obj
-      this.editVisible = true;
-      this.dialogStatus = "update";
-      this.$nextTick(() => {
-        this.$refs["dataForm"].clearValidate();
-      });
+      // this.temp = Object.assign({}, row); // copy obj
+      // this.editVisible = true;
+      // this.dialogStatus = "update";
+      // this.$nextTick(() => {
+      //   this.$refs["dataForm"].clearValidate();
+      // });
+      this.$router.push({ path: "/SHDAGL/CSDAEDIT", query: { param: row } });
     },
+    handleZS(row)
+    {      this.$router.push({ path: "/SHDAGL/CSDAZS", query: { param: row } });},
     handleDelete(row) {
       this.$confirm("确认删除信息吗", "提示", {
         confirmButtonText: "确定",

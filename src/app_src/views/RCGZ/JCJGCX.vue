@@ -146,20 +146,20 @@ export default {
   //   },
   data() {
     return {
-      usedOptions: [
-        {
-          value: "0",
-          name: "一季度安全检查"
-        },
-        {
-          value: "1",
-          name: "节前消防检查"
-        },
-        {
-          value: "2",
-          name: "临时安全检查"
-        }
-      ],
+        usedOptions: [
+          {
+            value: "0",
+            name: "一季度安全检查"
+          },
+          {
+            value: "1",
+            name: "节前消防检查"
+          },
+          {
+            value: "2",
+            name: "临时安全检查"
+          }
+        ],
 
       
       tableKey: 0,
@@ -396,7 +396,7 @@ RWZT:"待执行"
     },
 
     handleDelete(row) {
-      this.$confirm("确认删除信息吗", "提示", {
+      this.$confirm("确认发送整改通知吗", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
         type: "warning"
