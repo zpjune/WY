@@ -411,7 +411,7 @@ export default {
             workFlowVisible:false,
       fildtps: [{ text: "消防", value: "1" }, { text: "安全", value: "2" }],
          textMap: {
-        update: "修改商户信息",
+        update: "缴费记录",
         create: "缴费记录",
         detail:"查看商户信息"
       },
