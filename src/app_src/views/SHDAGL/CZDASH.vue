@@ -653,7 +653,8 @@ YZXM:"张三",
 YZLX:"个人",
 YZSJ:"23123445676",
 YZGH:"23431111",
-SHZT:"待审核"
+SHZT:"待审核",
+SFQF:0
         },
         {
                     id:2,
@@ -664,7 +665,8 @@ YZXM:"张三",
 YZLX:"个人",
 YZSJ:"23123445676",
 YZGH:"23431111",
-SHZT:"已审核"
+SHZT:"已审核",
+SFQF:1
         },
         {
                     id:3,
@@ -675,7 +677,8 @@ YZXM:"张三",
 YZLX:"个人",
 YZSJ:"23123445676",
 YZGH:"23431111",
-SHZT:"已审核"
+SHZT:"已审核",
+SFQF:0
         },
         {
                     id:4,
@@ -686,7 +689,8 @@ YZXM:"张三",
 YZLX:"个人",
 YZSJ:"23123445676",
 YZGH:"23431111",
-SHZT:"待审核"
+SHZT:"待审核",
+SFQF:1
         },
         {
                     id:5,
@@ -697,7 +701,8 @@ YZXM:"张三",
 YZLX:"个人",
 YZSJ:"23123445676",
 YZGH:"23431111",
-SHZT:"已审核"
+SHZT:"已审核",
+SFQF:0
         },
         {
           id:6,
@@ -708,7 +713,8 @@ YZXM:"张三",
 YZLX:"个人",
 YZSJ:"23123445676",
 YZGH:"23431111",
-SHZT:"待审核"
+SHZT:"待审核",
+SFQF:1
         },
         {
                     id:7,
@@ -719,7 +725,8 @@ YZXM:"张三",
 YZLX:"个人",
 YZSJ:"23123445676",
 YZGH:"23431111",
-SHZT:"已审核"
+SHZT:"已审核",
+SFQF:0
         }
       ],
       rules: {
@@ -843,13 +850,16 @@ SHZT:"已审核"
       // this.$router.push({ path: "/SHDAGL/CZDAEDIT" });
     },
     handleDelete(row) {
+
+if(row.SFQF==0){
       this.$confirm("确认终止租赁吗", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
         type: "warning"
       })
         .then(() => {
-          row.SHZT="待审核"
+          // row.SHZT="待审核"
+          // this.getList();
           //   const query = { S_ID: row.S_Id };
           //   deleteTaxOrg(query).then(response => {
           //     this.message = response.data.message;
@@ -872,6 +882,31 @@ SHZT:"已审核"
           //   });
         })
         .catch(() => {});
+        }
+        else{
+  this.$confirm("该商户存在欠缴记录，是否确认终止租赁", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      })
+        .then(() => {
+          
+          this.title = "成功";
+          this.type = "success";
+          //     }
+          this.$notify({
+            position: "bottom-right",
+            title: this.title,
+            message: this.message,
+            type: this.type,
+            duration: 2000
+          });
+          //   });
+        })
+        .catch(() => {});
+   
+
+        }
     },
     handleCancel(row){this.$confirm("确认取消审核吗", "提示", {
         confirmButtonText: "确定",
