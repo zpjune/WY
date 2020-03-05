@@ -106,7 +106,7 @@
 
     <el-dialog :visible.sync="showed" :title="title" width="40%">
       <el-form :model="temp" ref="temp" label-width="80px" :rules="rules">
-        <el-form-item label="上级" prop="ParentCode">
+        <el-form-item label="上级" >
           <treeselect
             v-model="temp.ParentCode"
             :multiple="false"
@@ -180,7 +180,7 @@ export default {
         Code: "",
         Name: "",
         EnglishCode: "",
-        SortNo: "",
+        SortNo: 0,
         username: this.$store.state.user.userId
       },
       rules: {
@@ -235,8 +235,8 @@ export default {
         Code: "",
         Name: "",
         EnglishCode: "",
-        SortNo: "",
-        username: this.$store.state.user.name
+        SortNo: 0,
+        username: this.$store.state.user.userId
       };
     },
     createData() {
@@ -415,7 +415,8 @@ export default {
               this.showed = false;
               this.getLeftTree();
               if(this.list[0].ParentCode===this.temp.ParentCode){
-                this.list.push(this.temp);
+                let temp1=this.temp;
+                this.list.push(temp1);
               }
             } else {
               this.$notify({
