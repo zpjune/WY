@@ -4,7 +4,13 @@
     <div class="topSearh" id="topsearch">
       <el-row>
         <el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
-          <el-input placeholder="房屋名称" style="width:95%;" size="mini" clearable v-model="listQuery.FWMC"></el-input>
+          <el-input
+            placeholder="房屋名称"
+            style="width:95%;"
+            size="mini"
+            clearable
+            v-model="listQuery.FWMC"
+          ></el-input>
         </el-col>
         <el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
           <el-select
@@ -14,8 +20,7 @@
             v-model="listQuery.LSFGS"
             clearable
           >
-            <el-option :value="0" label="物业分公司"></el-option>
-            <el-option :value="1" label="房地产分公司"></el-option>
+            <el-option v-for="(item,key) in GSOptions" :key="key" :label="name" :value="Code"></el-option>
           </el-select>
         </el-col>
         <el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
@@ -30,7 +35,7 @@
             <el-option
               v-for="(item,key) in selectOptions"
               :key="key"
-              :label="item.name"
+              :label="item.label"
               :value="item.value"
             ></el-option>
           </el-select>
@@ -47,9 +52,16 @@
             start-placeholder="开始日期"
             end-placeholder="结束日期"
           ></el-date-picker>
-        </el-col> -->
+        </el-col>-->
         <el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="4">
-          <el-button size="mini" class="filter-item" type="primary" v-waves icon="el-icon-search" @click="getList">搜索</el-button>
+          <el-button
+            size="mini"
+            class="filter-item"
+            type="primary"
+            v-waves
+            icon="el-icon-search"
+            @click="getList"
+          >搜索</el-button>
           <el-button
             size="mini"
             class="filter-item"
@@ -213,8 +225,7 @@
                   v-model="temp.LSFGS"
                   clearable
                 >
-                  <el-option :value="0" label="物业分公司"></el-option>
-                  <el-option :value="1" label="房地产分公司"></el-option>
+                  <el-option v-for="(item,key) in GSOptions" :key="key" :label="name" :value="Code"></el-option>
                 </el-select>
               </el-form-item>
             </el-col>
@@ -229,7 +240,15 @@
           <el-row>
             <el-col :span="12">
               <el-form-item label="结构类型" prop="JGLX">
-                <el-input v-model="temp.JGLX"></el-input>
+                <el-select
+                  placeholder="结构类型"
+                  style="width:95%"
+                  size="small"
+                  v-model="temp.JGLX"
+                  clearable
+                >
+                  <el-option v-for="(item,key) in JGOptions" :key="key" :label="name" :value="Code"></el-option>
+                </el-select>
               </el-form-item>
             </el-col>
             <el-col :span="12">
@@ -375,6 +394,7 @@ import {
   UpdateHouseInfo,
   DeleteHouseInfo
 } from "@/app_src/api/SHDAGL/FWDA";
+import { GetOptions } from "@/app_src/api/commonApi";
 import waves from "@/frame_src/directive/waves"; // 水波纹指令
 import { getToken } from "@/frame_src/utils/auth";
 export default {
@@ -494,20 +514,6 @@ export default {
       },
       total: 15,
       listLoading: false,
-      importmodeloptions: [
-        {
-          value: "样表一",
-          label: "样表一"
-        },
-        {
-          value: "样表二",
-          label: "样表二"
-        }
-      ],
-      taxofficeoptions: [], //税务机关
-      orgregionoptions: [], //机关所在地
-      taxcodeoptions: [], //税号
-      responsibilityoptions: [], //责任中心
       // temp: {
       //   FWBH: "D-211",
       //   FWMC: "房屋5",
@@ -525,7 +531,9 @@ export default {
       editVisible: false,
       dialogStatus: "",
       imageUrl: "",
-      treeData: []
+      treeData: [],
+      GSOptions: [],
+      JGOptions: []
     };
   },
   methods: {
@@ -539,9 +547,9 @@ export default {
       }
     },
     handleRemove(file) {
-      let arr=file.url.split("//");
-      let url=arr[arr.length-1]
-      this.temp.newFilePath=this.temp.newFilePath.replace(url+",",'');
+      let arr = file.url.split("//");
+      let url = arr[arr.length - 1];
+      this.temp.newFilePath = this.temp.newFilePath.replace(url + ",", "");
       console.log(this.temp.newFilePath);
     },
     GetUrl(res, file, filelist) {
@@ -637,10 +645,10 @@ export default {
         cancelButtonText: "取消",
         type: "warning"
       })
-        .then(() => {        
-          let temp={
-            FWID:row.FWID
-          }
+        .then(() => {
+          let temp = {
+            FWID: row.FWID
+          };
           DeleteHouseInfo(temp).then(response => {
             this.message = response.data.message;
             this.title = "失败";
@@ -735,12 +743,30 @@ export default {
         return "el-button--primary is-active"; // 'warning-row'
       } // 'el-button--primary is-plain'// 'warning-row'
       return "";
+    },
+    GetOptions() {
+      let temp = {
+        ParentCode: "LSFGS"
+      };
+      let temp1 = {
+        ParentCode: "JGLX"
+      };
+      GetOptions(temp).then(res => {
+        if (res.data.code === 2000) {
+          this.GSOptions = res.data.items;
+        }
+      });
+      GetOptions(temp1).then(res => {
+        if (res.data.code === 2000) {
+          this.JGOptions = res.data.items;
+        }
+      });
     }
   },
   created() {
     this.listLoading = false;
-
     this.getList();
+    this.GetOptions();
   },
 
   computed: {
