@@ -251,7 +251,7 @@ export default {
       this.showed = true;
       this.title = "修改";
       this.temp = Object.assign({}, data);
-      this.temp.username = this.$store.state.user.name;
+      this.temp.username = this.$store.state.user.userId;
       this.$nextTick(() => {
         this.$refs["temp"].clearValidate();
       });

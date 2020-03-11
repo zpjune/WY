@@ -98,8 +98,18 @@
             <el-table-column align="center" width="180" label="操作" fixed="right">
               <template slot-scope="scope">
                 <el-button type="primary" size="mini" @click="handleUpdate(scope.row)">修改</el-button>
-                <el-button type="danger" size="mini" v-if="scope.row.SHZT=='待审核'"  @click="handleDelete(scope.row)">删除</el-button>
-                <el-button type="success" size="mini" v-if="scope.row.SHZT=='已审核'" @click="handleXZ(scope.row)">续租</el-button>
+                <el-button
+                  type="danger"
+                  size="mini"
+                  v-if="scope.row.SHZT=='待审核'"
+                  @click="handleDelete(scope.row)"
+                >删除</el-button>
+                <el-button
+                  type="success"
+                  size="mini"
+                  v-if="scope.row.SHZT=='已审核'"
+                  @click="handleXZ(scope.row)"
+                >续租</el-button>
               </template>
             </el-table-column>
           </el-table>
@@ -126,6 +136,7 @@
 <script>
 import waves from "@/frame_src/directive/waves"; // 水波纹指令
 import { getToken } from "@/frame_src/utils/auth";
+
 export default {
   name: "CZSHDA",
   directives: {
@@ -134,6 +145,7 @@ export default {
   data() {
     return {
       tableKey: 0,
+      
       usedOptions: [
         {
           value: "0",
@@ -244,7 +256,7 @@ export default {
           SHZT: "已审核"
         }
       ],
-      total: 15,
+      total:0,
       listLoading: false,
       listQuery: {
         limit: 10,
@@ -254,6 +266,7 @@ export default {
     };
   },
   methods: {
+    
     getList() {
       //   this.listLoading = true;
       //   getTaxOrgList(this.listQuery).then(response => {
@@ -366,8 +379,6 @@ export default {
   .buttom {
     float: right;
   }
-
 }
-
 </style>
 

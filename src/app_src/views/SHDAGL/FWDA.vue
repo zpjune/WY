@@ -4,17 +4,23 @@
     <div class="topSearh" id="topsearch">
       <el-row>
         <el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
-          <el-input placeholder="房屋名称" style="width:95%;" size="mini" clearable></el-input>
-        </el-col>
-        <el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
-          <el-select placeholder="隶属分公司" style="width:95%" size="mini" v-model="listQuery.LSFGS" clearable>
-                    <el-option :value="0" label="物业分公司"></el-option>
-                    <el-option :value="1" label="房地产分公司"></el-option>
-                  </el-select>
+          <el-input placeholder="房屋名称" style="width:95%;" size="mini" clearable v-model="listQuery.FWMC"></el-input>
         </el-col>
         <el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
           <el-select
-            v-model="listQuery.SYLX"
+            placeholder="隶属分公司"
+            style="width:95%"
+            size="mini"
+            v-model="listQuery.LSFGS"
+            clearable
+          >
+            <el-option :value="0" label="物业分公司"></el-option>
+            <el-option :value="1" label="房地产分公司"></el-option>
+          </el-select>
+        </el-col>
+        <el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
+          <el-select
+            v-model="listQuery.FWSX"
             size="mini"
             style="width:95%;"
             placeholder="房屋属性"
@@ -30,7 +36,7 @@
           </el-select>
         </el-col>
 
-        <el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="4">
+        <!-- <el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="4">
           <el-date-picker
             style="width:95%;"
             class="filter-item"
@@ -41,9 +47,9 @@
             start-placeholder="开始日期"
             end-placeholder="结束日期"
           ></el-date-picker>
-        </el-col>
+        </el-col> -->
         <el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="4">
-          <el-button size="mini" class="filter-item" type="primary" v-waves icon="el-icon-search">搜索</el-button>
+          <el-button size="mini" class="filter-item" type="primary" v-waves icon="el-icon-search" @click="getList">搜索</el-button>
           <el-button
             size="mini"
             class="filter-item"
@@ -99,14 +105,7 @@
             style="width: 100%;text-align:left;"
             :cell-style="cellStyle"
           >
-            <el-table-column align="center" prop="FWSX" label="房屋属性" width="80px">
-              <template slot-scope="scope">
-                <span>{{scope.row.FWSX}}</span>
-                <!-- <img src="@/app_src/img/free.png" alt class="tableicon" title="空闲" v-if="scope.row.FWSX=='空闲'">
-                <img src="@/app_src/img/rent.png" alt class="tableicon" title="出租" v-else-if="scope.row.FWSX=='出租'">
-                <img src="@/app_src/img/sale.png" alt class="tableicon" title="出售" v-else-if="scope.row.FWSX=='出售'">-->
-              </template>
-            </el-table-column>
+            <el-table-column align="center" label="房屋属性" width="80px"></el-table-column>
             <el-table-column align="center" label="房屋编号">
               <template slot-scope="scope">
                 <span>{{scope.row.FWBH}}</span>
@@ -141,6 +140,11 @@
             <el-table-column align="right" prop="WYFJE" label="资产原值">
               <template slot-scope="scope">
                 <span>{{scope.row.ZCYZ |NumFormat}}</span>
+              </template>
+            </el-table-column>
+            <el-table-column align="right" prop="WYFJE" label="总房款">
+              <template slot-scope="scope">
+                <span>{{scope.row.ZFK |NumFormat}}</span>
               </template>
             </el-table-column>
 
@@ -202,10 +206,16 @@
             <el-col :span="12">
               <el-form-item label="隶属分公司" prop="LSFGS">
                 <!-- <el-input v-model="temp.LSFGS"></el-input> -->
-                         <el-select placeholder="隶属分公司" style="width:95%" size="small" v-model="temp.LSFGS" clearable>
-                    <el-option :value="0" label="物业分公司"></el-option>
-                    <el-option :value="1" label="房地产分公司"></el-option>
-                  </el-select>
+                <el-select
+                  placeholder="隶属分公司"
+                  style="width:95%"
+                  size="small"
+                  v-model="temp.LSFGS"
+                  clearable
+                >
+                  <el-option :value="0" label="物业分公司"></el-option>
+                  <el-option :value="1" label="房地产分公司"></el-option>
+                </el-select>
               </el-form-item>
             </el-col>
           </el-row>
@@ -228,11 +238,28 @@
               </el-form-item>
             </el-col>
           </el-row>
+          <el-row>
+            <el-col :span="12">
+              <el-form-item label="总房款" prop="ZFK">
+                <el-input v-model="temp.ZFK"></el-input>
+              </el-form-item>
+            </el-col>
+            <el-col :span="12">
+              <el-form-item label="电表号" prop="ELE_NUMBER">
+                <el-input v-model="temp.ELE_NUMBER"></el-input>
+              </el-form-item>
+            </el-col>
+          </el-row>
 
           <el-row>
             <el-col :span="12">
+              <el-form-item label="水表号" prop="WATER_NUMBER">
+                <el-input v-model="temp.WATER_NUMBER"></el-input>
+              </el-form-item>
+            </el-col>
+            <!-- <el-col :span="12">
               <el-form-item label="房屋属性" prop="FWSX">
-                <el-select size="mini" style="width:100%;" v-model="temp.FWSX">
+                <el-select  style="width:100%;" v-model="temp.FWSX">
                   <el-option
                     v-for="(item,key) in selectOptions"
                     :key="key"
@@ -241,10 +268,10 @@
                   ></el-option>
                 </el-select>
               </el-form-item>
-            </el-col>
+            </el-col>-->
             <el-col :span="12">
               <el-form-item label="所属区域" prop="FWSX">
-                <el-select size="mini" style="width:100%;" v-model="temp.SSQY">
+                <el-select style="width:100%;" v-model="temp.SSQY">
                   <el-option
                     v-for="(item,key) in areaOptions"
                     :key="key"
@@ -257,35 +284,19 @@
           </el-row>
           <el-col :span="24">
             <el-form-item label="平面图" prop="PMT">
-              <el-upload action="#" list-type="picture-card" :auto-upload="false">
-                <i slot="default" class="el-icon-plus"></i>
-                <div slot="file" slot-scope="{file}">
-                  <img class="el-upload-list__item-thumbnail" :src="file.url" alt />
-                  <span class="el-upload-list__item-actions">
-                    <span
-                      class="el-upload-list__item-preview"
-                      @click="handlePictureCardPreview(file)"
-                    >
-                      <i class="el-icon-zoom-in"></i>
-                    </span>
-                    <span
-                      v-if="!disabled"
-                      class="el-upload-list__item-delete"
-                      @click="handleDownload(file)"
-                    >
-                      <i class="el-icon-download"></i>
-                    </span>
-                    <span
-                      v-if="!disabled"
-                      class="el-upload-list__item-delete"
-                      @click="handleRemove(file)"
-                    >
-                      <i class="el-icon-delete"></i>
-                    </span>
-                  </span>
-                </div>
+              <el-upload
+                :action="UploadURL"
+                list-type="picture-card"
+                :auto-upload="true"
+                :on-success="GetUrl"
+                :headers="headers"
+                :file-list="temp.PMT"
+                :on-preview="handlePictureCardPreview"
+                :on-remove="handleRemove"
+              >
+                <i class="el-icon-plus"></i>
               </el-upload>
-              <el-dialog :visible.sync="dialogVisible">
+              <el-dialog :visible.sync="dialogVisible" title="图片预览">
                 <img width="100%" :src="dialogImageUrl" alt />
               </el-dialog>
             </el-form-item>
@@ -357,7 +368,13 @@
 <script>
 // import { Treeselect, LOAD_CHILDREN_OPTIONS } from "@riophae/vue-treeselect";
 // import "@riophae/vue-treeselect/dist/vue-treeselect.css";
-
+import {
+  GetHouseInfo,
+  uploadHouseImg,
+  CreateHouseInfo,
+  UpdateHouseInfo,
+  DeleteHouseInfo
+} from "@/app_src/api/SHDAGL/FWDA";
 import waves from "@/frame_src/directive/waves"; // 水波纹指令
 import { getToken } from "@/frame_src/utils/auth";
 export default {
@@ -370,13 +387,44 @@ export default {
   //   },
   data() {
     return {
+      UploadURL: process.env.BASE_API + "HouseInfo/uploadHouseImg",
       dateQuery: "",
       dialogImageUrl: "",
       dialogVisible: false,
       editVisible2: false,
       disabled: false,
       tableKey: 0,
-
+      listQuery: {
+        FWMC: "",
+        LSFGS: "",
+        FWSX: "",
+        limit: 10,
+        page: 1,
+        baseURL: process.env.BASE_API + "/UploadFiles/HouseImg//"
+      },
+      temp: {
+        FWID: "",
+        FWSX: "",
+        FWBH: "",
+        FWMC: "",
+        JZMJ: "",
+        LSFGS: "",
+        ZLWZ: "",
+        JGLX: "",
+        ZCYZ: "",
+        SSQY: "",
+        PMT: [],
+        WATER_NUMBER: "",
+        ELE_NUMBER: "",
+        CZ_SHID: "",
+        LEASE_ID: "",
+        FEE_ID: "",
+        CJR: "",
+        BJR: "",
+        ZFK: "",
+        userId: this.$store.state.user.userId,
+        newFilePath: ""
+      },
       selectOptions: [
         {
           value: "空闲",
@@ -429,85 +477,7 @@ export default {
           SHMC: "李四"
         }
       ],
-      list: [
-        {
-          FWBH: "A-101",
-          FWMC: "房屋1",
-          JZMJ: "100㎡",
-          LSFGS: "房地产分公司",
-          ZLWZ: "港西新城",
-          JGLX: "钢结构",
-          ZCYZ: 10000,
-          FWSX: "空闲",
-          SSQY: "A区"
-        },
-        {
-          FWBH: "C-101",
-          FWMC: "房屋2",
-          JZMJ: "100㎡",
-          LSFGS: "物业分公司",
-          ZLWZ: "港西新城",
-          JGLX: "钢结构",
-          ZCYZ: 18000,
-          FWSX: "空闲",
-          SSQY: "C区"
-        },
-        {
-          FWBH: "A-309",
-          FWMC: "房屋3",
-          JZMJ: "87㎡",
-          LSFGS: "物业分公司",
-          ZLWZ: "港西新城",
-          JGLX: "钢结构",
-          ZCYZ: 17000,
-          FWSX: "出租",
-          SSQY: "A区"
-        },
-        {
-          FWBH: "B-509",
-          FWMC: "房屋4",
-          JZMJ: "187㎡",
-          LSFGS: "物业分公司",
-          ZLWZ: "港西新城",
-          JGLX: "钢结构",
-          ZCYZ: 19000,
-          FWSX: "出售",
-          SSQY: "B区"
-        },
-        {
-          FWBH: "D-211",
-          FWMC: "房屋5",
-          JZMJ: "127㎡",
-          LSFGS: "房地产分公司",
-          ZLWZ: "港西新城",
-          JGLX: "钢结构",
-          ZCYZ: 24000,
-          FWSX: "空闲",
-          SSQY: "D区"
-        },
-        {
-          FWBH: "C-310",
-          FWMC: "房屋6",
-          JZMJ: "127㎡",
-          LSFGS: "物业分公司",
-          ZLWZ: "港西新城",
-          JGLX: "钢结构",
-          ZCYZ: 7000,
-          FWSX: "出租",
-          SSQY: "C区"
-        },
-        {
-          FWBH: "B-223",
-          FWMC: "房屋7",
-          JZMJ: "97㎡",
-          LSFGS: "房地产分公司",
-          ZLWZ: "港西新城",
-          JGLX: "钢结构",
-          ZCYZ: 12000,
-          FWSX: "出租",
-          SSQY: "B区"
-        }
-      ],
+      list: [],
       rules: {
         FWMC: [
           { required: true, message: "请输入房屋名称", trigger: "change" }
@@ -538,56 +508,49 @@ export default {
       orgregionoptions: [], //机关所在地
       taxcodeoptions: [], //税号
       responsibilityoptions: [], //责任中心
-      listQuery: {
-        limit: 10,
-        page: 1,
-        S_OrgCode: null,
-        ResponsibilityCenter: "",
-        TaxOffice: "",
-        ImportModel: "",
-        TaxNumber: "",
-        OrgRegion: "",
-        LSFGS:""
-      },
-      temp: {
-        FWBH: "D-211",
-        FWMC: "房屋5",
-        JZMJ: "127㎡",
-        LSFGS: "云计算技术部",
-        ZLWZ: "D区",
-        FZFJE: 25000,
-        WYFJE: 1350,
-        FWSX: "出售"
-      },
+      // temp: {
+      //   FWBH: "D-211",
+      //   FWMC: "房屋5",
+      //   JZMJ: "127㎡",
+      //   LSFGS: "云计算技术部",
+      //   ZLWZ: "D区",
+      //   FZFJE: 25000,
+      //   WYFJE: 1350,
+      //   FWSX: "出售"
+      // },
       textMap: {
         update: "修改房屋信息",
         create: "添加房屋信息"
       },
       editVisible: false,
       dialogStatus: "",
-
+      imageUrl: "",
       treeData: []
     };
   },
   methods: {
     cellStyle(row, column, rowIndex, columnIndex) {
-      if (row.column.label === "房屋属性" && row.row.FWSX == "空闲") {
+      if (row.column.label === "房屋属性" && row.row.FWSX == 0) {
         return "background:#909399";
-      } else if (row.column.label === "房屋属性" && row.row.FWSX == "出租") {
+      } else if (row.column.label === "房屋属性" && row.row.FWSX == 1) {
         return "background:#E6A23C";
-      } else if (row.column.label === "房屋属性" && row.row.FWSX == "出售") {
+      } else if (row.column.label === "房屋属性" && row.row.FWSX == 2) {
         return "background:#67C23A";
       }
     },
     handleRemove(file) {
-      console.log(file);
+      let arr=file.url.split("//");
+      let url=arr[arr.length-1]
+      this.temp.newFilePath=this.temp.newFilePath.replace(url+",",'');
+      console.log(this.temp.newFilePath);
+    },
+    GetUrl(res, file, filelist) {
+      this.temp.newFilePath == undefined ? "" : this.temp.newFilePath;
+      this.temp.newFilePath += res.fileName + ",";
     },
     handlePictureCardPreview(file) {
       this.dialogImageUrl = file.url;
       this.dialogVisible = true;
-    },
-    handleDownload(file) {
-      console.log(file);
     },
     deleteRow(index, rows) {
       //删除改行
@@ -599,35 +562,48 @@ export default {
 
     resetTemp() {
       this.temp = {
+        FWID: "",
+        FWSX: "",
         FWBH: "",
         FWMC: "",
         JZMJ: "",
         LSFGS: "",
         ZLWZ: "",
-        FZFJE: "",
-        WYFJE: "",
-        FWSX: ""
+        JGLX: "",
+        ZCYZ: "",
+        SSQY: "",
+        PMT: [],
+        WATER_NUMBER: "",
+        ELE_NUMBER: "",
+        CZ_SHID: "",
+        LEASE_ID: "",
+        FEE_ID: "",
+        CJR: "",
+        BJR: "",
+        ZFK: "",
+        userId: this.$store.state.user.userId,
+        newFilePath: ""
       };
     },
 
     getList() {
-      //   this.listLoading = true;
-      //   getTaxOrgList(this.listQuery).then(response => {
-      //     if (response.data.code === 2000) {
-      //       this.list = response.data.items;
-      this.total = 15;
-      //       this.listLoading = false;
-      //     } else {
-      //       this.listLoading = false;
-      //       this.$notify({
-      //         position: "bottom-right",
-      //         title: "失败",
-      //         message: response.data.message,
-      //         type: "error",
-      //         duration: 2000
-      //       });
-      //     }
-      //   });
+      this.listLoading = true;
+      GetHouseInfo(this.listQuery).then(response => {
+        if (response.data.code === 2000) {
+          this.list = response.data.items;
+          this.total = response.data.totoal;
+          this.listLoading = false;
+        } else {
+          this.listLoading = false;
+          this.$notify({
+            position: "bottom-right",
+            title: "失败",
+            message: response.data.message,
+            type: "error",
+            duration: 2000
+          });
+        }
+      });
     },
 
     handleCreate() {
@@ -655,32 +631,35 @@ export default {
       // });
     },
     handleDelete(row) {
-      this.$confirm("待实现！", "提示", {
+      console.log(row);
+      this.$confirm("您确定要删除此条信息吗？", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
         type: "warning"
       })
-        .then(() => {
-          //   const query = { S_ID: row.S_Id };
-          //   deleteTaxOrg(query).then(response => {
-          //     this.message = response.data.message;
-          //     this.title = "失败";
-          //     this.type = "error";
-          //     if (response.data.code === 2000) {
-          //       // const index = this.list.indexOf(row)
-          //       // this.list.splice(index, 1)
-          this.getList();
-          this.title = "成功";
-          this.type = "success";
-          //     }
-          this.$notify({
-            position: "bottom-right",
-            title: this.title,
-            message: this.message,
-            type: this.type,
-            duration: 2000
+        .then(() => {        
+          let temp={
+            FWID:row.FWID
+          }
+          DeleteHouseInfo(temp).then(response => {
+            this.message = response.data.message;
+            this.title = "失败";
+            this.type = "error";
+            if (response.data.code === 2000) {
+              // const index = this.list.indexOf(row)
+              // this.list.splice(index, 1)
+              this.getList();
+              this.title = "成功";
+              this.type = "success";
+            }
+            this.$notify({
+              position: "bottom-right",
+              title: this.title,
+              message: this.message,
+              type: this.type,
+              duration: 2000
+            });
           });
-          //   });
         })
         .catch(() => {});
     },
@@ -688,26 +667,25 @@ export default {
       // 创建
       this.$refs["dataForm"].validate(valid => {
         if (valid) {
-          //   createTaxOrg(this.temp).then(response => {
-          //     var message = response.data.message;
-          var message = "成功";
-          var title = "失败";
-          var type = "error";
-          //     if (response.data.code === 2000) {
-          this.getList();
-          title = "成功";
-          type = "success";
-          // this.list.unshift(this.temp)
-          //     }
-          this.editVisible = false;
-          this.$notify({
-            position: "bottom-right",
-            title: title,
-            message: message,
-            type: type,
-            duration: 3000
+          this.temp.PMT.forEach(item => {
+            this.temp.newFilePath += item.url;
           });
-          //   });
+          CreateHouseInfo(this.temp).then(response => {
+            var message = response.data.message;
+            if (response.data.code === 2000) {
+              this.getList();
+              title = "成功";
+              type = "success";
+            }
+            this.editVisible = false;
+            this.$notify({
+              position: "bottom-right",
+              title: title,
+              message: message,
+              type: type,
+              duration: 3000
+            });
+          });
         }
       });
     },
@@ -715,27 +693,28 @@ export default {
       this.$refs["dataForm"].validate(valid => {
         if (valid) {
           const tempData = Object.assign({}, this.temp); // 这样就不会共用同一个对象
-          //   tempData.S_UpdateBy = this.$store.state.user.userId;
-          //   //tempData.NOTICE_CONTENT=this.content
-          //   updateTaxOrg(tempData).then(response => {
-          //     var message = response.data.message;
-          var message = "成功";
-          var title = "失败";
-          var type = "error";
-          //     if (response.data.code === 2000) {
-          this.getList();
-          title = "成功";
-          type = "success";
-          // }
-          this.editVisible = false;
-          this.$notify({
-            position: "bottom-right",
-            title: title,
-            message: message,
-            type: type,
-            duration: 3000
+          this.temp.PMT.forEach(item => {
+            this.temp.newFilePath += item.url;
+            console.log(item.url);
           });
-          //   });
+          UpdateHouseInfo(tempData).then(response => {
+            var message = response.data.message;
+            var title = "失败";
+            var type = "error";
+            if (response.data.code === 2000) {
+              this.getList();
+              title = "成功";
+              type = "success";
+            }
+            this.editVisible = false;
+            this.$notify({
+              position: "bottom-right",
+              title: title,
+              message: message,
+              type: type,
+              duration: 3000
+            });
+          });
         }
       });
     },
@@ -771,6 +750,11 @@ export default {
       } else {
         return false;
       }
+    },
+    headers() {
+      return {
+        "X-Token": getToken()
+      };
     }
   }
 };

@@ -13,7 +13,7 @@
               <el-button
                 size="small"
                 type="primary"
-                @click="innerVisible=true"
+                @click="GetHouseInfo"
                 style="width:28%;margin-left:1%;"
               >选择房屋</el-button>
             </el-form-item> 
@@ -69,7 +69,7 @@
         <el-row>
           <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
             <el-form-item label="商户名称">
-              <el-input size="small" v-model="temp.SHMC"></el-input>
+              <el-input size="small" v-model="temp.SHOP_NAME"></el-input>
             </el-form-item>
           </el-col>
           <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
@@ -290,6 +290,7 @@
 
 import waves from "@/frame_src/directive/waves"; // 水波纹指令
 import { getToken } from "@/frame_src/utils/auth";
+import { GetHouseInfo } from "@/app_src/api/SHDAGL/FWDA";
 export default {
   name: "CZSHDA",
   directives: {
@@ -299,7 +300,16 @@ export default {
   //     Treeselect
   //   },
   data() {
+    
     return {
+      listQueryHouseInfo: {
+        FWMC: "",
+        LSFGS: "",
+        FWSX: 0,
+        limit: 10,
+        page: 1,
+        baseURL: process.env.BASE_API + "/UploadFiles/HouseImg//"
+      },
       usedOptions: [
         {
           value: "0",
@@ -354,92 +364,7 @@ export default {
           label: "D区"
         }
       ],
-      list2: [
-        {
-          FWBH: "A-101",
-          FWMC: "房屋1",
-          JZMJ: "100㎡",
-          LSFGS: "社区信息化部",
-          ZLWZ: "港西新城",
-          JGLX: "钢结构",
-          ZCYZ: 10000,
-          FWSX: "空闲",
-          SSQY: "A区",
-          flagValue: 0
-        },
-        {
-          FWBH: "C-101",
-          FWMC: "房屋2",
-          JZMJ: "100㎡",
-          LSFGS: "分公司1",
-          ZLWZ: "港西新城",
-          JGLX: "钢结构",
-          ZCYZ: 18000,
-          FWSX: "空闲",
-          SSQY: "C区",
-          flagValue: 0
-        },
-        {
-          FWBH: "A-309",
-          FWMC: "房屋3",
-          JZMJ: "87㎡",
-          LSFGS: "管控中心",
-          ZLWZ: "港西新城",
-          JGLX: "钢结构",
-          ZCYZ: 17000,
-          FWSX: "空闲",
-          SSQY: "A区",
-          flagValue: 0
-        },
-        {
-          FWBH: "B-509",
-          FWMC: "房屋4",
-          JZMJ: "187㎡",
-          LSFGS: "云计算技术部",
-          ZLWZ: "港西新城",
-          JGLX: "钢结构",
-          ZCYZ: 19000,
-          FWSX: "空闲",
-          SSQY: "B区",
-          flagValue: 0
-        },
-        {
-          FWBH: "D-211",
-          FWMC: "房屋5",
-          JZMJ: "127㎡",
-          LSFGS: "云计算技术部",
-          ZLWZ: "港西新城",
-          JGLX: "钢结构",
-          ZCYZ: 24000,
-          FWSX: "空闲",
-          SSQY: "D区",
-          flagValue: 0
-        },
-        {
-          FWBH: "C-310",
-          FWMC: "房屋6",
-          JZMJ: "127㎡",
-          LSFGS: "网络技术部",
-          ZLWZ: "港西新城",
-          JGLX: "钢结构",
-          ZCYZ: 7000,
-          FWSX: "空闲",
-          SSQY: "C区",
-          flagValue: 0
-        },
-        {
-          FWBH: "B-223",
-          FWMC: "房屋7",
-          JZMJ: "97㎡",
-          LSFGS: "网络技术部",
-          ZLWZ: "港西新城",
-          JGLX: "钢结构",
-          ZCYZ: 12000,
-          FWSX: "空闲",
-          SSQY: "B区",
-          flagValue: 0
-        }
-      ],
+      list2: [ ],
 
       rules: {
         FWBH: [
@@ -466,13 +391,13 @@ export default {
         OrgRegion: ""
       },
       temp: {
-        FWBH: "D-211",
-        FWMC: "房屋5",
-        LSFGS: "普丰公司",
-        JZMJ: "127㎡",
+        FWBH: "",
+        FWMC: "",
+        LSFGS: "",
+        JZMJ: "",
         ZLWZ: "",
         JZR: "",
-        SHMC: "",
+        SHOP_NAME: "",
         WYFBZ: "",
         JNFS: "",
         JYNR: "",
@@ -488,7 +413,9 @@ export default {
         ZLZE: "",
         ZLYJ: "",
         ZLYS: "",
-        JFFS: ""
+        JFFS: "",
+        USE_TYPE:1,
+        IS_SUBLET:0
       },
       textMap: {
         update: "修改房屋信息",
@@ -500,7 +427,15 @@ export default {
     };
   },
   methods: {
-   
+    GetHouseInfo(){
+      this.innerVisible=true;
+      GetHouseInfo(this.listQueryHouseInfo).then(res=>{
+        if(res.data.code===2000){
+          this.list2=res.data.items;
+          this.total = res.data.totoal;
+        }
+      })
+    },
     showRow(row) {
       //赋值给radio
       this.radio = this.list2.indexOf(row);
