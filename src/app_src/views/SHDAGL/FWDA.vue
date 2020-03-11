@@ -53,7 +53,7 @@
             end-placeholder="结束日期"
           ></el-date-picker>
         </el-col>-->
-        <el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="4">
+        <el-col :xs="10" :sm="9" :md="8" :lg="7" :xl="6">
           <el-button
             size="mini"
             class="filter-item"
@@ -65,11 +65,11 @@
           <el-button
             size="mini"
             class="filter-item"
-            style="margin-left: 10px;"
             @click="handleCreate"
             type="primary"
             icon="el-icon-edit"
           >新增</el-button>
+          <el-button class="filter-item" type="primary" @click="btnImpot" icon="el-icon-upload2" size="mini">导入</el-button>
           <el-button class="filter-item" type="primary" icon="el-icon-download" size="mini">导出</el-button>
         </el-col>
       </el-row>
@@ -379,6 +379,30 @@
         <el-button @click="editVisible2 = false">取消</el-button>
       </div>
     </el-dialog>
+     <el-dialog :visible.sync="showUpload" >
+              <el-card class="box-card" >
+                <div class="filter-container" style="height:80px;">
+                  <el-upload
+                    class="upload-demo"
+                    ref="upload"
+                    :action="urlUpload"
+                    :auto-upload="false"
+                    :on-preview="handlePreview"
+                    :on-remove="handleRemove"
+                    :on-exceed="handleExceed"
+                    :on-success="handleSuccess"
+                    :before-remove="beforeRemove"
+                    :headers="headers"
+                    :file-list="fileList"
+                  >
+                   <el-button slot="trigger" size="small"  type="primary">选取文件</el-button>
+                  <el-button style="margin-left: 10px;" size="small" type="success" @click="btnSubmit">导&nbsp;&nbsp;入</el-button>
+                  <a :href="urldownload" style="text-decoration:underline;">模板下載</a>
+                  </el-upload>
+                  
+                </div>
+              </el-card>
+            </el-dialog>
   </div>
 </template>
 
@@ -533,7 +557,11 @@ export default {
       imageUrl: "",
       treeData: [],
       GSOptions: [],
-      JGOptions: []
+      JGOptions: [],
+      showUpload:false,
+       urlUpload: process.env.BASE_API + "HouseInfo/uploadHouseInfo",
+      urldownload: process.env.BASE_API + "ExcelModel/房屋档案表模板.xlsx",
+      fileList:[]
     };
   },
   methods: {
@@ -550,7 +578,6 @@ export default {
       let arr = file.url.split("//");
       let url = arr[arr.length - 1];
       this.temp.newFilePath = this.temp.newFilePath.replace(url + ",", "");
-      console.log(this.temp.newFilePath);
     },
     GetUrl(res, file, filelist) {
       this.temp.newFilePath == undefined ? "" : this.temp.newFilePath;
@@ -761,6 +788,48 @@ export default {
           this.JGOptions = res.data.items;
         }
       });
+     
+    },
+     btnImpot(){
+       this.showUpload=true;
+     },
+     handleRemove(file, fileList) {
+    },
+    handlePreview(file) {
+    },
+    handleExceed(files, fileList) {
+      this.$message.warning(
+        `当前限制选择 1个文件，本次选择了 ${
+          files.length
+        } 个文件，共选择了 ${files.length + fileList.length} 个文件`
+      );
+    },
+    beforeRemove(file, fileList) {
+    },
+    handleSuccess(res, file, fileList) {
+      if (res.code === 2000) {
+        this.getList();
+        title = "导入成功";
+        type = "success";
+      }
+      else{
+      var message = res.message;
+      var title = "导入失败";
+      var type = "error";
+      this.$notify({
+        position: "bottom-right",
+        title: title,
+        message: message,
+        type: type,
+        duration: 2000
+      });
+        this.showUpload = false;
+        this.fileList=[];
+      }
+      
+    },
+    btnSubmit(){
+       this.$refs.upload.submit();
     }
   },
   created() {
