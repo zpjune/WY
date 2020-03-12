@@ -20,7 +20,12 @@
             v-model="listQuery.LSFGS"
             clearable
           >
-            <el-option v-for="(item,key) in GSOptions" :key="key" :label="name" :value="Code"></el-option>
+            <el-option
+              v-for="(item,key) in GSOptions"
+              :key="key"
+              :label="item.Name"
+              :value="item.Code"
+            ></el-option>
           </el-select>
         </el-col>
         <el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
@@ -69,7 +74,13 @@
             type="primary"
             icon="el-icon-edit"
           >新增</el-button>
-          <el-button class="filter-item" type="primary" @click="btnImpot" icon="el-icon-upload2" size="mini">导入</el-button>
+          <el-button
+            class="filter-item"
+            type="primary"
+            @click="btnImpot"
+            icon="el-icon-upload2"
+            size="mini"
+          >导入</el-button>
           <el-button class="filter-item" type="primary" icon="el-icon-download" size="mini">导出</el-button>
         </el-col>
       </el-row>
@@ -134,9 +145,9 @@
                 <span>{{scope.row.JZMJ}}</span>
               </template>
             </el-table-column>
-            <el-table-column align="right" prop="LSFGS" label="隶属分公司">
+            <el-table-column align="right"  label="隶属分公司">
               <template slot-scope="scope">
-                <span>{{scope.row.LSFGS}}</span>
+                <span>{{scope.row.LS}}</span>
               </template>
             </el-table-column>
             <el-table-column align="right" prop="ZLWZ" label="坐落位置">
@@ -144,21 +155,13 @@
                 <span>{{scope.row.ZLWZ}}</span>
               </template>
             </el-table-column>
-            <el-table-column align="right" prop="FZFJE" label="结构类型">
+            <el-table-column align="right"  label="结构类型">
               <template slot-scope="scope">
-                <span>{{scope.row.JGLX }}</span>
+                {{scope.row.JG}}
               </template>
             </el-table-column>
-            <el-table-column align="right" prop="WYFJE" label="资产原值">
-              <template slot-scope="scope">
-                <span>{{scope.row.ZCYZ |NumFormat}}</span>
-              </template>
-            </el-table-column>
-            <el-table-column align="right" prop="WYFJE" label="总房款">
-              <template slot-scope="scope">
-                <span>{{scope.row.ZFK |NumFormat}}</span>
-              </template>
-            </el-table-column>
+            <el-table-column align="right" prop="ZCYZ" label="资产原值"></el-table-column>
+            <el-table-column align="right" prop="ZFK" label="总房款"></el-table-column>
 
             <el-table-column align="center" width="260" label="操作">
               <template slot-scope="scope">
@@ -225,7 +228,12 @@
                   v-model="temp.LSFGS"
                   clearable
                 >
-                  <el-option v-for="(item,key) in GSOptions" :key="key" :label="name" :value="Code"></el-option>
+                  <el-option
+                    v-for="(item,key) in GSOptions"
+                    :key="key"
+                    :label="item.Name"
+                    :value="item.Code"
+                  ></el-option>
                 </el-select>
               </el-form-item>
             </el-col>
@@ -247,7 +255,12 @@
                   v-model="temp.JGLX"
                   clearable
                 >
-                  <el-option v-for="(item,key) in JGOptions" :key="key" :label="name" :value="Code"></el-option>
+                  <el-option
+                    v-for="(item,key) in JGOptions"
+                    :key="key"
+                    :label="item.Name"
+                    :value="item.Code"
+                  ></el-option>
                 </el-select>
               </el-form-item>
             </el-col>
@@ -379,30 +392,34 @@
         <el-button @click="editVisible2 = false">取消</el-button>
       </div>
     </el-dialog>
-     <el-dialog :visible.sync="showUpload" >
-              <el-card class="box-card" >
-                <div class="filter-container" style="height:80px;">
-                  <el-upload
-                    class="upload-demo"
-                    ref="upload"
-                    :action="urlUpload"
-                    :auto-upload="false"
-                    :on-preview="handlePreview"
-                    :on-remove="handleRemove"
-                    :on-exceed="handleExceed"
-                    :on-success="handleSuccess"
-                    :before-remove="beforeRemove"
-                    :headers="headers"
-                    :file-list="fileList"
-                  >
-                   <el-button slot="trigger" size="small"  type="primary">选取文件</el-button>
-                  <el-button style="margin-left: 10px;" size="small" type="success" @click="btnSubmit">导&nbsp;&nbsp;入</el-button>
-                  <a :href="urldownload" style="text-decoration:underline;">模板下載</a>
-                  </el-upload>
-                  
-                </div>
-              </el-card>
-            </el-dialog>
+    <el-dialog :visible.sync="showUpload">
+      <el-card class="box-card">
+        <div class="filter-container" style="height:80px;">
+          <el-upload
+            class="upload-demo"
+            ref="upload"
+            :action="urlUpload"
+            :auto-upload="false"
+            :on-preview="handlePreview"
+            :on-remove="handleRemove"
+            :on-exceed="handleExceed"
+            :on-success="handleSuccess"
+            :before-remove="beforeRemove"
+            :headers="headers"
+            :file-list="fileList"
+          >
+            <el-button slot="trigger" size="small" type="primary">选取文件</el-button>
+            <el-button
+              style="margin-left: 10px;"
+              size="small"
+              type="success"
+              @click="btnSubmit"
+            >导&nbsp;&nbsp;入</el-button>
+            <a :href="urldownload" style="text-decoration:underline;">模板下載</a>
+          </el-upload>
+        </div>
+      </el-card>
+    </el-dialog>
   </div>
 </template>
 
@@ -558,10 +575,10 @@ export default {
       treeData: [],
       GSOptions: [],
       JGOptions: [],
-      showUpload:false,
-       urlUpload: process.env.BASE_API + "HouseInfo/uploadHouseInfo",
+      showUpload: false,
+      urlUpload: process.env.BASE_API + "HouseInfo/uploadHouseInfo",
       urldownload: process.env.BASE_API + "ExcelModel/房屋档案表模板.xlsx",
-      fileList:[]
+      fileList: []
     };
   },
   methods: {
@@ -666,8 +683,14 @@ export default {
       // });
     },
     handleDelete(row) {
-      console.log(row);
-      this.$confirm("您确定要删除此条信息吗？", "提示", {
+      let tipMes;
+      if (row.FWSX != 0) {
+        tipMes =
+          "您所删除的房屋已经绑定了商户,此操作将导致绑定关系失效,是否继续？";
+      } else {
+        tipMes = "您确定要删除此条信息吗？";
+      }
+      this.$confirm(tipMes, "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
         type: "warning"
@@ -708,18 +731,25 @@ export default {
           CreateHouseInfo(this.temp).then(response => {
             var message = response.data.message;
             if (response.data.code === 2000) {
+              this.editVisible = false;
+              this.$notify({
+                position: "bottom-right",
+                title: "成功",
+                message: response.data.message,
+                type: "success",
+                duration: 3000
+              });
               this.getList();
-              title = "成功";
-              type = "success";
+            } else {
+              this.editVisible = false;
+              this.$notify({
+                position: "bottom-right",
+                title: "失败",
+                message: response.data.message,
+                type: "error",
+                duration: 3000
+              });
             }
-            this.editVisible = false;
-            this.$notify({
-              position: "bottom-right",
-              title: title,
-              message: message,
-              type: type,
-              duration: 3000
-            });
           });
         }
       });
@@ -730,7 +760,6 @@ export default {
           const tempData = Object.assign({}, this.temp); // 这样就不会共用同一个对象
           this.temp.PMT.forEach(item => {
             this.temp.newFilePath += item.url;
-            console.log(item.url);
           });
           UpdateHouseInfo(tempData).then(response => {
             var message = response.data.message;
@@ -788,15 +817,12 @@ export default {
           this.JGOptions = res.data.items;
         }
       });
-     
     },
-     btnImpot(){
-       this.showUpload=true;
-     },
-     handleRemove(file, fileList) {
+    btnImpot() {
+      this.showUpload = true;
     },
-    handlePreview(file) {
-    },
+    handleRemove(file, fileList) {},
+    handlePreview(file) {},
     handleExceed(files, fileList) {
       this.$message.warning(
         `当前限制选择 1个文件，本次选择了 ${
@@ -804,32 +830,29 @@ export default {
         } 个文件，共选择了 ${files.length + fileList.length} 个文件`
       );
     },
-    beforeRemove(file, fileList) {
-    },
+    beforeRemove(file, fileList) {},
     handleSuccess(res, file, fileList) {
       if (res.code === 2000) {
         this.getList();
         title = "导入成功";
         type = "success";
-      }
-      else{
-      var message = res.message;
-      var title = "导入失败";
-      var type = "error";
-      this.$notify({
-        position: "bottom-right",
-        title: title,
-        message: message,
-        type: type,
-        duration: 2000
-      });
+      } else {
+        var message = res.message;
+        var title = "导入失败";
+        var type = "error";
+        this.$notify({
+          position: "bottom-right",
+          title: title,
+          message: message,
+          type: type,
+          duration: 2000
+        });
         this.showUpload = false;
-        this.fileList=[];
+        this.fileList = [];
       }
-      
     },
-    btnSubmit(){
-       this.$refs.upload.submit();
+    btnSubmit() {
+      this.$refs.upload.submit();
     }
   },
   created() {

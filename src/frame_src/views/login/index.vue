@@ -6,7 +6,7 @@
                     <el-col :span="2"></el-col>
                     <el-col :span="10">
                         <div class="title">
-                            <img src="../../../frame_src/imgs/logo.png">
+                            <!-- <img src="../../../frame_src/imgs/logo.png"> -->
                             {{sysmessage}}
                         </div>
                     </el-col>
@@ -75,7 +75,7 @@
 
             <el-footer>
                 <div class="copyright">
-                    <span v-if="copyright!=''">©{{copyright}}&nbsp;版权所有</span>
+                    <!-- <span v-if="copyright!=''">©{{copyright}}&nbsp;版权所有</span> -->
                 </div>
             </el-footer>
         </el-container>

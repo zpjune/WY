@@ -4,12 +4,12 @@
     <div class="topSearh" id="topsearch">
       <el-row>
         <el-col :xs="5" :sm="5" :md="5" :lg="4" :xl="3">
-          <el-input placeholder="租户姓名" style="width:95%;" size="mini" clearable></el-input>
+          <el-input placeholder="租户姓名" style="width:95%;" size="mini" clearable v-model="listQuery.ZHXM"></el-input>
         </el-col>
         <el-col :xs="5" :sm="5" :md="5" :lg="4" :xl="3">
           <!-- <el-input placeholder="业主类型" style="width:95%;" size="mini" clearable></el-input> -->
           <el-select
-            v-model="listQuery.SYLX"
+            v-model="listQuery.IS_PASS"
             size="mini"
             style="width:95%;"
             placeholder="审核状态"
@@ -26,7 +26,7 @@
         </el-col>
 
         <el-col :xs="14" :sm="14" :md="14" :lg="6" :xl="4">
-          <el-button size="mini" class="filter-item" type="primary" v-waves icon="el-icon-search">搜索</el-button>
+          <el-button size="mini" class="filter-item" type="primary" v-waves icon="el-icon-search" @click="getList">搜索</el-button>
           <el-button
             size="mini"
             class="filter-item"
@@ -54,45 +54,18 @@
             highlight-current-row
             style="width: 100%;text-align:left;"
           >
-            <el-table-column align="center" prop="FWBH" label="房屋编号" fixed="left">
-              <template slot-scope="scope">
-                <span>{{scope.row.FWBH}}</span>
-              </template>
-            </el-table-column>
-            <el-table-column align="right" prop="FWMC" label="房屋名称" fixed="left">
-              <template slot-scope="scope">
-                <span>{{scope.row.FWMC}}</span>
-              </template>
-            </el-table-column>
-            <el-table-column align="right" prop="LSFGS" label="隶属分公司" fixed="left">
-              <template slot-scope="scope">
-                <span>{{scope.row.LSFGS}}</span>
-              </template>
-            </el-table-column>
-            <el-table-column align="right" width="150" prop="YZXM" label="租户姓名">
-              <template slot-scope="scope">
-                <span>{{scope.row.YZXM}}</span>
-              </template>
-            </el-table-column>
-            <el-table-column align="right" width="100" prop="YZLX" label="租户类型">
-              <template slot-scope="scope">
-                <span>{{scope.row.YZLX}}</span>
-              </template>
-            </el-table-column>
-            <el-table-column align="right" prop="YZSJ" label="租户手机">
-              <template slot-scope="scope">
-                <span>{{scope.row.YZSJ}}</span>
-              </template>
-            </el-table-column>
-            <el-table-column align="right" width="100" prop="YZGH" label="租户固话">
-              <template slot-scope="scope">
-                <span>{{scope.row.YZGH}}</span>
-              </template>
-            </el-table-column>
-            <el-table-column align="right" width="100" prop="SHZT" label="审核状态">
-              <template slot-scope="scope">
-                <span>{{scope.row.SHZT}}</span>
-              </template>
+            <el-table-column align="center" prop="FWBH" label="房屋编号" fixed="left"></el-table-column>
+            <el-table-column align="right" prop="FWMC" label="房屋名称" fixed="left"></el-table-column>
+            <el-table-column align="right" prop="LSFGS" label="隶属分公司" fixed="left"></el-table-column>
+            <el-table-column align="right" prop="SHOPBH" label="商户编号"></el-table-column>
+            <el-table-column align="right" prop="SHOP_NAME" label="商户名称"></el-table-column>
+            <el-table-column align="right" prop="ZHXM" label="租户姓名"></el-table-column>
+            <el-table-column align="right" prop="SFZH" label="身份证号"></el-table-column>
+            <el-table-column align="right" prop="MOBILE_PHONE" label="租户手机"></el-table-column>
+            <el-table-column align="right" prop="TELEPHONE" label="租户固话"></el-table-column>
+            <el-table-column align="right" prop="JYNR" label="经营内容"></el-table-column>
+            <el-table-column align="right" prop="IS_PASS" label="审核状态">
+              <template slot-scope="scope">{{scope.row.IS_PASS|ChangeIS_PASS}}</template>
             </el-table-column>
 
             <el-table-column align="center" width="180" label="操作" fixed="right">
@@ -101,13 +74,13 @@
                 <el-button
                   type="danger"
                   size="mini"
-                  v-if="scope.row.SHZT=='待审核'"
+                  v-if="scope.row.IS_PASS==0"
                   @click="handleDelete(scope.row)"
                 >删除</el-button>
                 <el-button
                   type="success"
                   size="mini"
-                  v-if="scope.row.SHZT=='已审核'"
+                  v-if="scope.row.SHZT==1"
                   @click="handleXZ(scope.row)"
                 >续租</el-button>
               </template>
@@ -136,7 +109,7 @@
 <script>
 import waves from "@/frame_src/directive/waves"; // 水波纹指令
 import { getToken } from "@/frame_src/utils/auth";
-
+import { GetShopInfo, DeleteShopInfo } from "@/app_src/api/SHDAGL/SHOPDA";
 export default {
   name: "CZSHDA",
   directives: {
@@ -145,7 +118,6 @@ export default {
   data() {
     return {
       tableKey: 0,
-      
       usedOptions: [
         {
           value: "0",
@@ -184,107 +156,38 @@ export default {
           label: "D区"
         }
       ],
-      list: [
-        {
-          FWBH: "A-101",
-          FWMC: "五金店",
-          LSFGS: "丰收道130号",
-          YZXM: "张三",
-          YZLX: "个人",
-          YZSJ: "23123445676",
-          YZGH: "23431111",
-          SHZT: "已审核"
-        },
-        {
-          FWBH: "A-102",
-          FWMC: "五金店",
-          LSFGS: "丰收道130号",
-          YZXM: "张三",
-          YZLX: "个人",
-          YZSJ: "23123445676",
-          YZGH: "23431111",
-          SHZT: "已审核"
-        },
-        {
-          FWBH: "A-103",
-          FWMC: "五金店",
-          LSFGS: "丰收道130号",
-          YZXM: "张三",
-          YZLX: "个人",
-          YZSJ: "23123445676",
-          YZGH: "23431111",
-          SHZT: "已审核"
-        },
-        {
-          FWBH: "A-104",
-          FWMC: "五金店",
-          LSFGS: "丰收道130号",
-          YZXM: "张三",
-          YZLX: "个人",
-          YZSJ: "23123445676",
-          YZGH: "23431111",
-          SHZT: "待审核"
-        },
-        {
-          FWBH: "A-105",
-          FWMC: "五金店",
-          LSFGS: "丰收道130号",
-          YZXM: "张三",
-          YZLX: "个人",
-          YZSJ: "23123445676",
-          YZGH: "23431111",
-          SHZT: "已审核"
-        },
-        {
-          FWBH: "A-106",
-          FWMC: "五金店",
-          LSFGS: "丰收道130号",
-          YZXM: "张三",
-          YZLX: "个人",
-          YZSJ: "23123445676",
-          YZGH: "23431111",
-          SHZT: "待审核"
-        },
-        {
-          FWBH: "A-107",
-          FWMC: "五金店",
-          LSFGS: "丰收道130号",
-          YZXM: "张三",
-          YZLX: "个人",
-          YZSJ: "23123445676",
-          YZGH: "23431111",
-          SHZT: "已审核"
-        }
-      ],
-      total:0,
+      list: [],
+      total: 0,
       listLoading: false,
       listQuery: {
         limit: 10,
         page: 1,
-        SYLX: ""
+        ZHXM: "",
+        IS_PASS: "",
+        FWSX: 1,
+        FWID: ""
       }
     };
   },
   methods: {
-    
     getList() {
-      //   this.listLoading = true;
-      //   getTaxOrgList(this.listQuery).then(response => {
-      //     if (response.data.code === 2000) {
-      //       this.list = response.data.items;
-      this.total = 15;
-      //       this.listLoading = false;
-      //     } else {
-      //       this.listLoading = false;
-      //       this.$notify({
-      //         position: "bottom-right",
-      //         title: "失败",
-      //         message: response.data.message,
-      //         type: "error",
-      //         duration: 2000
-      //       });
-      //     }
-      //   });
+      this.listLoading = true;
+      GetShopInfo(this.listQuery).then(response => {
+        if (response.data.code === 2000) {
+          this.list = response.data.items;
+          this.total = response.data.total;
+          this.listLoading = false;
+        } else {
+          this.listLoading = false;
+          this.$notify({
+            position: "bottom-right",
+            title: "失败",
+            message: response.data.message,
+            type: "error",
+            duration: 2000
+          });
+        }
+      });
     },
 
     handleCreate() {
@@ -297,7 +200,10 @@ export default {
       // this.$nextTick(() => {
       //   this.$refs["dataForm"].clearValidate();
       // });
-      this.$router.push({ path: "/SHDAGL/CZDAEDIT", query: { param: row } });
+      this.$router.push({
+        path: "/SHDAGL/CZDAEDIT",
+        query: { param: row.CZ_SHID }
+      });
     },
     handleXZ(row) {
       this.$router.push({ path: "/SHDAGL/CZDAXZ", query: { param: row } });
@@ -362,6 +268,15 @@ export default {
         return true;
       } else {
         return false;
+      }
+    }
+  },
+  filters: {
+    ChangeIS_PASS(val) {
+      if (val === 0) {
+        return "未审核";
+      } else {
+        return "已通过";
       }
     }
   }
