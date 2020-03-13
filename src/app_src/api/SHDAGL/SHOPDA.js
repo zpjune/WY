@@ -63,3 +63,28 @@ export function DeleteShopInfo(query) {
       params:query
     })
   }
+
+  export function SecondHand(data) {
+    return request({
+      url: '/ShopInfo/SecondHand',
+      method: 'post',
+      data
+    })
+  }
+
+  export function GetShopDetailUserInfo(query) {
+    return request({
+      url: '/ShopInfo/GetShopDetailUserInfo',
+      method: 'get',
+      params:query
+    })
+  }
+
+  export function GetShopUserInfo(query) {
+    return request({
+      url: '/ShopInfo/GetShopUserInfo',
+      method: 'get',
+      params:query
+    })
+  }
+

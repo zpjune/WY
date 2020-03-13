@@ -15,7 +15,7 @@
       <div>
         <el-row>
           <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-            <el-form-item label="房屋编号">
+            <el-form-item label="房屋编号" prop="FWBH">
               <el-input v-model="temp.FWBH" disabled style="width:69%;"></el-input>
               <el-button
                 size="small"
@@ -51,7 +51,7 @@
         </el-row>
       </div>
     </el-card>
-    
+
     <el-card style="margin-top:20px;">
       <div slot="header">
         <span>租户信息</span>
@@ -59,7 +59,7 @@
       <div>
         <el-row>
           <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-            <el-form-item label="租户姓名">
+            <el-form-item label="租户姓名" prop="ZHXM">
               <el-input size="small" v-model="temp.ZHXM"></el-input>
             </el-form-item>
           </el-col>
@@ -83,7 +83,7 @@
 
         <el-row>
           <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-            <el-form-item label="身份证号">
+            <el-form-item label="身份证号" prop="SFZH">
               <el-input size="small" v-model="temp.SFZH"></el-input>
             </el-form-item>
           </el-col>
@@ -106,12 +106,12 @@
             </el-form-item>
           </el-col>
           <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-            <el-form-item label="商户编号">
+            <el-form-item label="商户编号" prop="SHOPBH">
               <el-input size="small" v-model="temp.SHOPBH"></el-input>
             </el-form-item>
           </el-col>
           <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-            <el-form-item label="商户名称">
+            <el-form-item label="商户名称" prop="SHOP_NAME">
               <el-input size="small" v-model="temp.SHOP_NAME"></el-input>
             </el-form-item>
           </el-col>
@@ -131,7 +131,7 @@
       </div>
       <el-row>
         <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-          <el-form-item label="物业费缴纳方式">
+          <el-form-item label="物业费缴纳方式" prop="WYJFFS">
             <el-select style="width:100%" size="small" v-model="temp.WYJFFS">
               <el-option value="0" label="半年"></el-option>
               <el-option value="1" label="一年"></el-option>
@@ -140,14 +140,14 @@
           </el-form-item>
         </el-col>
         <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-          <el-form-item label="物业费标准">
+          <el-form-item label="物业费标准" prop="WYJZ">
             <el-input size="small" v-model="temp.WYJZ">
               <template slot="append">元/月</template>
             </el-input>
           </el-form-item>
         </el-col>
         <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-          <el-form-item label="物业基准日期">
+          <el-form-item label="物业基准日期" prop="WYJZSJ">
             <el-date-picker style="width:100%" size="mini" v-model="temp.WYJZSJ"></el-date-picker>
           </el-form-item>
         </el-col>
@@ -160,7 +160,7 @@
       <div>
         <el-row>
           <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-            <el-form-item label="租赁起始日期">
+            <el-form-item label="租赁起始日期" prop="ZLKSSJ">
               <el-date-picker
                 style="width:100%"
                 format="yyyy-MM-dd"
@@ -170,7 +170,7 @@
             </el-form-item>
           </el-col>
           <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-            <el-form-item label="租赁终止日期">
+            <el-form-item label="租赁终止日期" prop="ZLZZSJ">
               <el-date-picker
                 style="width:100%"
                 format="yyyy-MM-dd"
@@ -181,7 +181,7 @@
           </el-col>
 
           <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-            <el-form-item label="租赁总额">
+            <el-form-item label="租赁总额" prop="ZLZE">
               <el-input size="small" v-model="temp.ZLZE"></el-input>
             </el-form-item>
           </el-col>
@@ -189,17 +189,17 @@
 
         <el-row>
           <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-            <el-form-item label="租赁押金">
+            <el-form-item label="租赁押金" prop="ZLYJ">
               <el-input size="small" v-model="temp.ZLYJ"></el-input>
             </el-form-item>
           </el-col>
           <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-            <el-form-item label="租赁月数">
+            <el-form-item label="租赁月数" prop="ZLYS">
               <el-input size="small" v-model="temp.ZLYS"></el-input>
             </el-form-item>
           </el-col>
           <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-            <el-form-item label="缴费方式">
+            <el-form-item label="缴费方式" prop="ZJJFFS">
               <el-select style="width:100%" size="small" v-model="temp.ZJJFFS">
                 <el-option value="0" label="月度"></el-option>
                 <el-option value="1" label="季度"></el-option>
@@ -212,7 +212,7 @@
         </el-row>
       </div>
     </el-card>
-    
+
     <div style="text-align:center;margin-top:20px;margin-bottom:20px;">
       <el-button v-if="dialogStatus=='create'" type="primary" @click="createData">保存</el-button>
       <el-button v-else type="primary" @click="updateData">修改</el-button>
@@ -255,20 +255,15 @@
             <span>{{scope.row.JZMJ}}</span>
           </template>
         </el-table-column>
-        <el-table-column align="right" prop="LSFGS" label="隶属分公司">
-          <template slot-scope="scope">
-            <span>{{scope.row.LSFGS}}</span>
-          </template>
+        <el-table-column align="right" prop="LSF" label="隶属分公司">
+
         </el-table-column>
         <el-table-column align="right" prop="ZLWZ" label="坐落位置">
           <template slot-scope="scope">
             <span>{{scope.row.ZLWZ}}</span>
           </template>
         </el-table-column>
-        <el-table-column align="right" prop="FZFJE" label="结构类型">
-          <template slot-scope="scope">
-            <span>{{scope.row.JGLX }}</span>
-          </template>
+        <el-table-column align="right" prop="JG" label="结构类型">
         </el-table-column>
         <el-table-column align="right" prop="WYFJE" label="资产原值">
           <template slot-scope="scope">
@@ -372,13 +367,47 @@ export default {
         FWBH: [
           { required: true, message: "请输入房屋名称", trigger: "change" }
         ],
-        JZR: [{ required: true, message: "物业基准日期", trigger: "change" }]
-        // FZFJE: [
-        //   { required: true, message: "请输入房租金额", trigger: "change" }
-        // ],
-        // WYFJE: [
-        //   { required: true, message: "请输入物业费金额", trigger: "change" }
-        // ]
+        JZR: [{ required: true, message: "物业基准日期", trigger: "change" }],
+        WYJFFS: [
+          { required: true, message: "请选择缴费方式", trigger: "change" }
+        ],
+        WYJZSJ: [
+          { required: true, message: "请填写物业基准时间", trigger: "change" }
+        ],
+        WYJZ: [
+          { required: true, message: "请填写物业基准费用", trigger: "change" }
+        ],
+        ZHXM: [
+          { required: true, message: "请填写商户姓名", trigger: "change" }
+        ],
+        WYJZ: [
+          { required: true, message: "请填写物业基准费用", trigger: "change" }
+        ],
+        SHOPBH: [
+          { required: true, message: "请填写商铺编号", trigger: "change" }
+        ],
+        SFZH: [
+          { required: true, message: "请填写身份证号", trigger: "change" }
+        ],
+        SHOP_NAME: [
+          { required: true, message: "请填写商铺名称", trigger: "change" }
+        ],
+        JRNR: [
+          { required: true, message: "请填写经营内容", trigger: "change" }
+        ],
+        ZLKSSJ: [
+          { required: true, message: "请填写租赁开始时间", trigger: "change" }
+        ],
+        ZLZZSJ: [
+          { required: true, message: "请填写租赁结束时间", trigger: "change" }
+        ],
+        ZLZE: [
+          { required: true, message: "请填写租赁总额", trigger: "change" }
+        ],
+        ZLYJ: [
+          { required: true, message: "请填写租赁押金", trigger: "change" }
+        ],
+        ZLYS: [{ required: true, message: "请填写租赁月数", trigger: "change" }]
       },
       total: 0,
       listLoading: false,
@@ -418,7 +447,7 @@ export default {
         ZLYS: "",
         //以下是基础信息
         userId: this.$store.state.user.userId,
-        userType: 1//出租用户
+        userType: 1 //出租用户
       },
       textMap: {
         update: "修改房屋信息",
@@ -579,8 +608,8 @@ export default {
       this.$refs["dataForm"].validate(valid => {
         if (valid) {
           const tempData = Object.assign({}, this.temp); // 这样就不会共用同一个对象
-          tempData.userId=this.$store.state.user.userId;
-          tempData.userType=1;
+          tempData.userId = this.$store.state.user.userId;
+          tempData.userType = 1;
           UpdateShopInfo(tempData).then(response => {
             var message = response.data.message;
             var message = "成功";

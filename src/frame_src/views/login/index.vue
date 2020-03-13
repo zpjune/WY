@@ -6,8 +6,8 @@
                     <el-col :span="2"></el-col>
                     <el-col :span="10">
                         <div class="title">
-                            <!-- <img src="../../../frame_src/imgs/logo.png"> -->
-                            {{sysmessage}}
+                            <img src="../../../frame_src/imgs/pufenglogo2.png" style="width:320px;height:60px">
+                            <!-- {{sysmessage}} -->
                         </div>
                     </el-col>
                     <el-col :span="10">
@@ -360,7 +360,7 @@ body {
         background-color:#3e8ddc;
         margin: 0 auto;
         .divbg {
-            background: url("../../../frame_src/imgs/pic9.png") fixed
+            background: url("../../../frame_src/imgs/pufengbackground.jpg") fixed
                 center no-repeat;
             //min-width: 1366px;
             //min-width: 500px;
@@ -372,7 +372,7 @@ body {
             margin-top: 5%;
             width: 390px;
             height: 340px;
-            background-color: rgba(252, 250, 250, 0.25);
+            background-color: rgba(252, 250, 250, 0.73);
             //border-radius: 10px;
             // filter: alpha(opacity=50);
             // -moz-opacity: 0.5;

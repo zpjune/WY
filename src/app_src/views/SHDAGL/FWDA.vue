@@ -167,7 +167,7 @@
               <template slot-scope="scope">
                 <el-button type="primary" size="mini" @click="handleUpdate(scope.row)">修改</el-button>
                 <el-button type="danger" size="mini" @click="handleDelete(scope.row)">删除</el-button>
-                <el-button type="success" size="mini" @click="handleCondition(scope.row)">使用情况</el-button>
+                <!-- <el-button type="success" size="mini" @click="handleCondition(scope.row)">使用情况</el-button> -->
               </template>
             </el-table-column>
           </el-table>

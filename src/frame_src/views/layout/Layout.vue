@@ -4,7 +4,7 @@
         <div class="header el-button--primary  is-active">
             <el-col :span="12">
                 <div class="logo">
-                    <!-- <img src="../../../frame_src/imgs/logo.png"> -->
+                    <img src="../../../frame_src/imgs/logo.png">
                     <!-- <img src="https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif"> -->
                     <span>{{sysNameMessage}}</span>
                 </div>

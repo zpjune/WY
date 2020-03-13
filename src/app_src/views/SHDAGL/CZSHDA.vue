@@ -4,7 +4,13 @@
     <div class="topSearh" id="topsearch">
       <el-row>
         <el-col :xs="5" :sm="5" :md="5" :lg="4" :xl="3">
-          <el-input placeholder="租户姓名" style="width:95%;" size="mini" clearable v-model="listQuery.ZHXM"></el-input>
+          <el-input
+            placeholder="租户姓名"
+            style="width:95%;"
+            size="mini"
+            clearable
+            v-model="listQuery.ZHXM"
+          ></el-input>
         </el-col>
         <el-col :xs="5" :sm="5" :md="5" :lg="4" :xl="3">
           <!-- <el-input placeholder="业主类型" style="width:95%;" size="mini" clearable></el-input> -->
@@ -26,7 +32,14 @@
         </el-col>
 
         <el-col :xs="14" :sm="14" :md="14" :lg="6" :xl="4">
-          <el-button size="mini" class="filter-item" type="primary" v-waves icon="el-icon-search" @click="getList">搜索</el-button>
+          <el-button
+            size="mini"
+            class="filter-item"
+            type="primary"
+            v-waves
+            icon="el-icon-search"
+            @click="getList"
+          >搜索</el-button>
           <el-button
             size="mini"
             class="filter-item"
@@ -70,19 +83,13 @@
 
             <el-table-column align="center" width="180" label="操作" fixed="right">
               <template slot-scope="scope">
-                <el-button type="primary" size="mini" @click="handleUpdate(scope.row)">修改</el-button>
+                <el-button type="primary" size="mini" @click="handleUpdate(scope.row)" v-if="scope.row.IS_PASS==0">修改</el-button>
                 <el-button
                   type="danger"
                   size="mini"
                   v-if="scope.row.IS_PASS==0"
                   @click="handleDelete(scope.row)"
                 >删除</el-button>
-                <el-button
-                  type="success"
-                  size="mini"
-                  v-if="scope.row.SHZT==1"
-                  @click="handleXZ(scope.row)"
-                >续租</el-button>
               </template>
             </el-table-column>
           </el-table>
@@ -206,7 +213,7 @@ export default {
       });
     },
     handleXZ(row) {
-      this.$router.push({ path: "/SHDAGL/CZDAXZ", query: { param: row } });
+      this.$router.push({ path: "/SHDAGL/CSDAZS", query: { param: row.CZ_SHID } });
     },
     handleDelete(row) {
       this.$confirm("确认删除信息吗", "提示", {
@@ -215,25 +222,36 @@ export default {
         type: "warning"
       })
         .then(() => {
-          //   const query = { S_ID: row.S_Id };
-          //   deleteTaxOrg(query).then(response => {
-          //     this.message = response.data.message;
-          //     this.title = "失败";
-          //     this.type = "error";
-          //     if (response.data.code === 2000) {
-          //       // const index = this.list.indexOf(row)
-          //       // this.list.splice(index, 1)
-          this.getList();
-          this.title = "成功";
-          this.type = "success";
-          //     }
-          this.$notify({
-            position: "bottom-right",
-            title: this.title,
-            message: this.message,
-            type: this.type,
-            duration: 2000
+          let temp = {
+            CZ_SHID: row.CZ_SHID,
+            FWID: row.FWID
+          };
+          DeleteShopInfo(temp).then(res => {
+            if (res.data.code === 2000) {
+              
+              this.title = "成功";
+              this.type = "success";
+              //     }
+              this.$notify({
+                position: "bottom-right",
+                title: this.title,
+                message: this.message,
+                type: this.type,
+                duration: 2000
+              });
+              this.getList();
+            }
+            else{
+              this.$notify({
+                position: "bottom-right",
+                title: "失败 ",
+                message: res.data.message,
+                type: 'error',
+                duration: 2000
+              });
+            }
           });
+
           //   });
         })
         .catch(() => {});
