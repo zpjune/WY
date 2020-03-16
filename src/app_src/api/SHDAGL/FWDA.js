@@ -36,3 +36,11 @@ export function CreateHouseInfo(data) {
       params:query
     })
   }
+
+  export function ExportHouseInfo(query) {
+    return request({
+      url: '/HouseInfo/ExportHouseInfo',
+      method: 'get',
+      params:query
+    })
+  }

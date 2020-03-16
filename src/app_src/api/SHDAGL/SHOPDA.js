@@ -88,3 +88,13 @@ export function DeleteShopInfo(query) {
     })
   }
 
+  export function ExportShopInfo(query) {
+    return request({
+      url: '/ShopInfo/ExportShopInfo',
+      method: 'get',
+      params:query
+    })
+  }
+
+
+

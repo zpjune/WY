@@ -55,7 +55,7 @@
           >
             <el-table-column align="center" prop="FWBH" label="房屋编号" fixed="left"></el-table-column>
             <el-table-column align="right" prop="FWMC" label="房屋名称" fixed="left"></el-table-column>
-            <el-table-column align="right" prop="LSFGS" label="隶属分公司" fixed="left"></el-table-column>
+            <el-table-column align="right" prop="Name" label="隶属分公司" fixed="left"></el-table-column>
             <el-table-column align="right" prop="SHOPBH" label="商户编号"></el-table-column>
             <el-table-column align="right" prop="SHOP_NAME" label="商户名称"></el-table-column>
             <el-table-column align="right" prop="ZHXM" label="租户姓名"></el-table-column>

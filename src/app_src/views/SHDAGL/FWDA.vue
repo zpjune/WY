@@ -81,7 +81,13 @@
             icon="el-icon-upload2"
             size="mini"
           >导入</el-button>
-          <el-button class="filter-item" type="primary" icon="el-icon-download" size="mini">导出</el-button>
+          <el-button
+            class="filter-item"
+            type="primary"
+            icon="el-icon-download"
+            size="mini"
+            @click="handleDownload"
+          >导出</el-button>
         </el-col>
       </el-row>
     </div>
@@ -145,7 +151,7 @@
                 <span>{{scope.row.JZMJ}}</span>
               </template>
             </el-table-column>
-            <el-table-column align="right"  label="隶属分公司">
+            <el-table-column align="right" label="隶属分公司">
               <template slot-scope="scope">
                 <span>{{scope.row.LS}}</span>
               </template>
@@ -155,10 +161,8 @@
                 <span>{{scope.row.ZLWZ}}</span>
               </template>
             </el-table-column>
-            <el-table-column align="right"  label="结构类型">
-              <template slot-scope="scope">
-                {{scope.row.JG}}
-              </template>
+            <el-table-column align="right" label="结构类型">
+              <template slot-scope="scope">{{scope.row.JG}}</template>
             </el-table-column>
             <el-table-column align="right" prop="ZCYZ" label="资产原值"></el-table-column>
             <el-table-column align="right" prop="ZFK" label="总房款"></el-table-column>
@@ -433,11 +437,21 @@ import {
   uploadHouseImg,
   CreateHouseInfo,
   UpdateHouseInfo,
-  DeleteHouseInfo
+  DeleteHouseInfo,
+  ExportHouseInfo
 } from "@/app_src/api/SHDAGL/FWDA";
 import { GetOptions } from "@/app_src/api/commonApi";
 import waves from "@/frame_src/directive/waves"; // 水波纹指令
 import { getToken } from "@/frame_src/utils/auth";
+const typeOptions = [
+  { key: 0, type_name: "空闲" },
+  { key: 1, type_name: "出租" },
+  { key: 2, type_name: "出售" }
+];
+const typeTypeKeyValue = typeOptions.reduce((acc, cur) => {
+  acc[cur.key] = cur.type_name;
+  return acc;
+}, {});
 export default {
   name: "CBJHSQ",
   directives: {
@@ -853,6 +867,66 @@ export default {
     },
     btnSubmit() {
       this.$refs.upload.submit();
+    },
+    handleDownload() {
+      // 导出
+      ExportHouseInfo().then(res => {
+        if (res.data.code === 2000) {
+          let list = res.data.items;
+          this.downloadLoading = true;
+          import("@/frame_src/vendor/Export2Excel").then(excel => {
+            const tHeader = [
+              "房屋属性",
+              "房屋编号",
+              "房屋名称",
+              "建筑面积",
+              "隶属分公司",
+              "坐落位置",
+              "结构类型",
+              "资产原值",
+              "总房款"
+            ];
+            const filterVal = [
+              "FWSX",
+              "FWBH",
+              "FWMC",
+              "JZMJ",
+              "LS",
+              "ZLWZ",
+              "JG",
+              "ZCYZ",
+              "ZFK"
+            ];
+            const data = this.formatJson(filterVal, list);
+            //console.log(data);
+            excel.export_json_to_excel({
+              header: tHeader,
+              data,
+              filename: "房屋信息表"
+            });
+            this.downloadLoading = false;
+          });
+        } else {
+          this.$notify({
+            position: "bottom-right",
+            title: "失败",
+            message: res.message,
+            type: "error",
+            duration: 2000
+          });
+        }
+      });
+    },
+    formatJson(filterVal, jsonData) {
+      return jsonData.map(v =>
+        filterVal.map(j => {
+          if (j === "FWSX") {
+            return typeTypeKeyValue[v[j]];
+          } else {
+            return v[j];
+          }
+        })
+      );
     }
   },
   created() {

@@ -475,7 +475,7 @@ export default {
       this.temp.FWID = row.FWID;
       this.temp.FWBH = row.FWBH;
       this.temp.FWMC = row.FWMC;
-      this.temp.Name = row.Name;
+      this.temp.Name = row.LS;
       this.temp.JZMJ = row.JZMJ;
       this.temp.ZLWZ = row.ZLWZ;
       //this.temp.OLDID = row.OLDID;

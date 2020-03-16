@@ -15,7 +15,7 @@
       <div>
         <el-row>
           <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-            <el-form-item label="房屋编号" prop="FWBH">
+            <el-form-item label="房屋编号" >
               <el-input v-model="temp.FWBH" disabled style="width:69%;"></el-input>
             </el-form-item>
           </el-col>
@@ -53,7 +53,7 @@
       <div>
         <el-row>
           <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-            <el-form-item label="业主姓名" prop="ZHXM">
+            <el-form-item label="业主姓名" >
               <el-input size="small" v-model="temp.ZHXM" disabled></el-input>
             </el-form-item>
           </el-col>
@@ -77,7 +77,7 @@
 
         <el-row>
           <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-            <el-form-item label="身份证号" prop="SFZH">
+            <el-form-item label="身份证号" >
               <el-input size="small" v-model="temp.SFZH" disabled></el-input>
             </el-form-item>
           </el-col>
@@ -100,19 +100,19 @@
             </el-form-item>
           </el-col>
           <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-            <el-form-item label="商户编号" prop="SHOPBH">
+            <el-form-item label="商户编号">
               <el-input size="small" v-model="temp.SHOPBH" disabled></el-input>
             </el-form-item>
           </el-col>
           <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-            <el-form-item label="商户名称" prop="SHOP_NAME">
+            <el-form-item label="商户名称" >
               <el-input size="small" v-model="temp.SHOP_NAME" disabled></el-input>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-            <el-form-item label="是否转租" prop="IS_SUBLET">
+            <el-form-item label="是否转租" >
               <el-select v-model="temp.IS_SUBLET" style="width:100%" size="small" disabled>
                 <el-option label="否" :value="0"></el-option>
                 <el-option label="是" :value="1"></el-option>
@@ -122,7 +122,7 @@
         </el-row>
         <el-row>
           <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
-            <el-form-item label="经营内容" prop="JYNR">
+            <el-form-item label="经营内容">
               <el-input v-model="temp.JYNR" type="textarea" :rows="3" disabled></el-input>
             </el-form-item>
           </el-col>
@@ -135,7 +135,7 @@
       </div>
       <el-row>
         <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-          <el-form-item label="物业费缴纳方式" prop="WYJFFS">
+          <el-form-item label="物业费缴纳方式" >
             <el-select style="width:100%" size="small" v-model="temp.WYJFFS" disabled>
               <el-option value="0" label="半年"></el-option>
               <el-option value="1" label="一年"></el-option>
@@ -144,14 +144,14 @@
           </el-form-item>
         </el-col>
         <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-          <el-form-item label="物业费标准" prop="WYJZ">
+          <el-form-item label="物业费标准">
             <el-input size="small" v-model="temp.WYJZ" disabled>
               <template slot="append">元/月</template>
             </el-input>
           </el-form-item>
         </el-col>
         <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-          <el-form-item label="物业基准日期" prop="WYJZSJ">
+          <el-form-item label="物业基准日期" >
             <el-date-picker style="width:100%" size="mini" v-model="temp.WYJZSJ" disabled></el-date-picker>
           </el-form-item>
         </el-col>
@@ -163,7 +163,7 @@
       </div>
       <el-row>
         <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-          <el-form-item label="业主姓名" prop="ZHXM1">
+          <el-form-item label="业主姓名" >
             <el-input size="small" v-model="newtemp.ZHXM1"></el-input>
           </el-form-item>
         </el-col>
@@ -187,7 +187,7 @@
 
       <el-row>
         <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-          <el-form-item label="身份证号" prop="SFZH1">
+          <el-form-item label="身份证号" >
             <el-input size="small" v-model="newtemp.SFZH1"></el-input>
           </el-form-item>
         </el-col>
@@ -210,19 +210,19 @@
           </el-form-item>
         </el-col>
         <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-          <el-form-item label="商户编号" prop="SHOPBH">
+          <el-form-item label="商户编号" >
             <el-input size="small" v-model="newtemp.SHOPBH1"></el-input>
           </el-form-item>
         </el-col>
         <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-          <el-form-item label="商户名称" prop="SHOP_NAME">
+          <el-form-item label="商户名称" >
             <el-input size="small" v-model="newtemp.SHOP_NAME1"></el-input>
           </el-form-item>
         </el-col>
       </el-row>
       <el-row>
         <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
-          <el-form-item label="经营内容" prop="JYNR1">
+          <el-form-item label="经营内容" >
             <el-input v-model="newtemp.JYNR1" type="textarea" :rows="3"></el-input>
           </el-form-item>
         </el-col>
@@ -234,7 +234,7 @@
       </div>
       <el-row>
         <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-          <el-form-item label="物业费缴纳方式" prop="WYJFFS1">
+          <el-form-item label="物业费缴纳方式" >
             <el-select style="width:100%" size="small" v-model="newtemp.WYJFFS1">
               <el-option value="0" label="半年"></el-option>
               <el-option value="1" label="一年"></el-option>
@@ -243,14 +243,14 @@
           </el-form-item>
         </el-col>
         <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-          <el-form-item label="物业费标准" prop="WYJZ1">
+          <el-form-item label="物业费标准" >
             <el-input size="small" v-model="newtemp.WYJZ1">
               <template slot="append">元/月</template>
             </el-input>
           </el-form-item>
         </el-col>
         <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-          <el-form-item label="物业基准日期" prop="WYJZSJ1">
+          <el-form-item label="物业基准日期" >
             <el-date-picker style="width:100%" size="mini" v-model="newtemp.WYJZSJ1"></el-date-picker>
           </el-form-item>
         </el-col>
@@ -328,7 +328,8 @@ import { GetHouseInfo } from "@/app_src/api/SHDAGL/FWDA";
 import {
   CreateShopInfo,
   GetShopInfoDetail,
-  UpdateShopInfo
+  UpdateShopInfo,
+  SecondHand
 } from "@/app_src/api/SHDAGL/SHOPDA";
 export default {
   name: "CZSHDA",
@@ -720,10 +721,12 @@ export default {
     updateData() {
       this.$refs["dataForm"].validate(valid => {
         if (valid) {
-          const tempData = Object.assign({}, this.temp); // 这样就不会共用同一个对象
+          const tempData = Object.assign({}, this.newtemp); // 这样就不会共用同一个对象
           tempData.userId = this.$store.state.user.userId;
+          tempData.CZ_SHID=this.temp.CZ_SHID;
+          tempData.FWID=this.temp.FWID;
           tempData.userType = 2;
-          UpdateShopInfo(tempData).then(response => {
+          SecondHand(tempData).then(response => {
             var message = response.data.message;
             var message = "成功";
             var title = "失败";

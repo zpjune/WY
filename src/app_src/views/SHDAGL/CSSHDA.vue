@@ -4,7 +4,13 @@
     <div class="topSearh" id="topsearch">
       <el-row>
         <el-col :xs="5" :sm="5" :md="5" :lg="4" :xl="3">
-          <el-input placeholder="租户姓名" style="width:95%;" size="mini" clearable v-model="listQuery.ZHXM"></el-input>
+          <el-input
+            placeholder="租户姓名"
+            style="width:95%;"
+            size="mini"
+            clearable
+            v-model="listQuery.ZHXM"
+          ></el-input>
         </el-col>
         <el-col :xs="5" :sm="5" :md="5" :lg="4" :xl="3">
           <!-- <el-input placeholder="业主类型" style="width:95%;" size="mini" clearable></el-input> -->
@@ -26,7 +32,14 @@
         </el-col>
 
         <el-col :xs="14" :sm="14" :md="14" :lg="6" :xl="4">
-          <el-button size="mini" class="filter-item" type="primary" v-waves icon="el-icon-search" @click="getList">搜索</el-button>
+          <el-button
+            size="mini"
+            class="filter-item"
+            type="primary"
+            v-waves
+            icon="el-icon-search"
+            @click="getList"
+          >搜索</el-button>
           <el-button
             size="mini"
             class="filter-item"
@@ -35,7 +48,13 @@
             type="primary"
             icon="el-icon-edit"
           >新增</el-button>
-          <el-button class="filter-item" type="primary" icon="el-icon-download" size="mini">导出</el-button>
+          <el-button
+            class="filter-item"
+            type="primary"
+            icon="el-icon-download"
+            size="mini"
+            @click="handleDownload"
+          >导出</el-button>
         </el-col>
       </el-row>
     </div>
@@ -56,7 +75,7 @@
           >
             <el-table-column align="center" prop="FWBH" label="房屋编号" fixed="left"></el-table-column>
             <el-table-column align="right" prop="FWMC" label="房屋名称" fixed="left"></el-table-column>
-            <el-table-column align="right" prop="LSFGS" label="隶属分公司" fixed="left"></el-table-column>
+            <el-table-column align="right" prop="Name" label="隶属分公司" fixed="left"></el-table-column>
             <el-table-column align="right" prop="SHOPBH" label="商户编号"></el-table-column>
             <el-table-column align="right" prop="SHOP_NAME" label="商户名称"></el-table-column>
             <el-table-column align="right" prop="ZHXM" label="租户姓名"></el-table-column>
@@ -70,14 +89,19 @@
 
             <el-table-column align="center" width="180" label="操作" fixed="right">
               <template slot-scope="scope">
-                <el-button type="primary" size="mini" @click="handleUpdate(scope.row)">修改</el-button>
+                <el-button
+                  type="primary"
+                  size="mini"
+                  @click="handleUpdate(scope.row)"
+                  v-if="scope.row.IS_PASS===0"
+                >修改</el-button>
                 <el-button
                   type="danger"
                   size="mini"
                   v-if="scope.row.IS_PASS==0"
                   @click="handleDelete(scope.row)"
                 >删除</el-button>
-                 <el-button
+                <el-button
                   type="success"
                   size="mini"
                   v-if="scope.row.IS_PASS==1"
@@ -109,7 +133,28 @@
 <script>
 import waves from "@/frame_src/directive/waves"; // 水波纹指令
 import { getToken } from "@/frame_src/utils/auth";
-import { GetShopInfo, DeleteShopInfo } from "@/app_src/api/SHDAGL/SHOPDA";
+import {
+  GetShopInfo,
+  DeleteShopInfo,
+  ExportShopInfo
+} from "@/app_src/api/SHDAGL/SHOPDA";
+const passOptions = [
+  { key: 0, type_name: "未通过" },
+  { key: 1, type_name: "通过" }
+];
+const passTypeKeyValue = passOptions.reduce((acc, cur) => {
+  acc[cur.key] = cur.type_name;
+  return acc;
+}, {});
+const typeOptions = [
+  { key: 0, type_name: "空闲" },
+  { key: 1, type_name: "出租" },
+  { key: 2, type_name: "出售" }
+];
+const typeTypeKeyValue = typeOptions.reduce((acc, cur) => {
+  acc[cur.key] = cur.type_name;
+  return acc;
+}, {});
 export default {
   name: "CZSHDA",
   directives: {
@@ -206,9 +251,12 @@ export default {
       });
     },
     handleXZ(row) {
-      this.$router.push({ path: "/SHDAGL/CSDAZS", query: { param: row.CZ_SHID } });
+      this.$router.push({
+        path: "/SHDAGL/CSDAZS",
+        query: { param: row.CZ_SHID }
+      });
     },
-      handleDelete(row) {
+    handleDelete(row) {
       this.$confirm("确认删除信息吗", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
@@ -221,7 +269,6 @@ export default {
           };
           DeleteShopInfo(temp).then(res => {
             if (res.data.code === 2000) {
-              
               this.title = "成功";
               this.type = "success";
               //     }
@@ -233,13 +280,12 @@ export default {
                 duration: 2000
               });
               this.getList();
-            }
-            else{
+            } else {
               this.$notify({
                 position: "bottom-right",
                 title: "失败 ",
                 message: res.data.message,
-                type: 'error',
+                type: "error",
                 duration: 2000
               });
             }
@@ -266,6 +312,75 @@ export default {
         return "el-button--primary is-active"; // 'warning-row'
       } // 'el-button--primary is-plain'// 'warning-row'
       return "";
+    },
+    handleDownload() {
+      // 导出
+      let temp={
+        FWSX:2
+      }
+      ExportShopInfo().then(res => {
+        if (res.data.code === 2000) {
+          let list = res.data.items;
+          this.downloadLoading = true;
+          import("@/frame_src/vendor/Export2Excel").then(excel => {
+            const tHeader = [
+              "房屋编号",
+              "房屋名称",
+              "隶属分公司",
+              "商户编号",
+              "商户名称",
+              "商户姓名",
+              "身份证号",
+              "租户手机",
+              "租户固话",
+              "经营内容",
+              "审核状态"
+            ];
+            const filterVal = [
+              "FWBH",
+              "FWMC",
+              "Name",
+              "SHOPBH",
+              "SHOP_NAME",
+              "ZHXM",
+              "SFZH",
+              "MOBILE_PHONE",
+              "TELEPHONE",
+              "JYNR",
+              "IS_PASS"
+            ];
+            const data = this.formatJson(filterVal, list);
+            //console.log(data);
+            excel.export_json_to_excel({
+              header: tHeader,
+              data,
+              filename: "出售商户档案表"
+            });
+            this.downloadLoading = false;
+          });
+        } else {
+          this.$notify({
+            position: "bottom-right",
+            title: "失败",
+            message: res.message,
+            type: "error",
+            duration: 2000
+          });
+        }
+      });
+    },
+    formatJson(filterVal, jsonData) {
+      return jsonData.map(v =>
+        filterVal.map(j => {
+          if (j === "FWSX") {
+            return typeTypeKeyValue[v[j]];
+          } else if (j === "IS_PASS") {
+            return passTypeKeyValue[v[j]];
+          } else {
+            return v[j];
+          }
+        })
+      );
     }
   },
   created() {
