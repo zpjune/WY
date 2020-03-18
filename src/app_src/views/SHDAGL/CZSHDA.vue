@@ -73,7 +73,7 @@
             <el-table-column align="right" prop="SHOPBH" label="商户编号"></el-table-column>
             <el-table-column align="right" prop="SHOP_NAME" label="商户名称"></el-table-column>
             <el-table-column align="right" prop="ZHXM" label="租户姓名"></el-table-column>
-            <el-table-column align="right" prop="SFZH" label="身份证号"></el-table-column>
+            <el-table-column align="right" prop="SFZH" label="身份证号" show-overflow-tooltip></el-table-column>
             <el-table-column align="right" prop="MOBILE_PHONE" label="租户手机"></el-table-column>
             <el-table-column align="right" prop="TELEPHONE" label="租户固话"></el-table-column>
             <el-table-column align="right" prop="JYNR" label="经营内容"></el-table-column>

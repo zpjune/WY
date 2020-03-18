@@ -64,7 +64,7 @@
             </el-form-item>
           </el-col>
           <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-            <el-form-item label="租户类型">
+            <el-form-item label="租户类型" prop="ZHLX">
               <el-select style="width:100%" size="small" v-model="temp.ZHLX">
                 <el-option value="0" label="个人"></el-option>
                 <el-option value="1" label="公司"></el-option>
@@ -72,7 +72,7 @@
             </el-form-item>
           </el-col>
           <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-            <el-form-item label="租户性别">
+            <el-form-item label="租户性别" prop="ZHXB">
               <el-select style="width:100%" size="small" v-model="temp.ZHXB">
                 <el-option value="0" label="男"></el-option>
                 <el-option value="1" label="女"></el-option>
@@ -88,7 +88,7 @@
             </el-form-item>
           </el-col>
           <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-            <el-form-item label="手机号码">
+            <el-form-item label="手机号码" prop="MOBILE_PHONE">
               <el-input size="small" v-model="temp.MOBILE_PHONE"></el-input>
             </el-form-item>
           </el-col>
@@ -255,16 +255,13 @@
             <span>{{scope.row.JZMJ}}</span>
           </template>
         </el-table-column>
-        <el-table-column align="right" prop="LSF" label="隶属分公司">
-
-        </el-table-column>
+        <el-table-column align="right" prop="LSF" label="隶属分公司"></el-table-column>
         <el-table-column align="right" prop="ZLWZ" label="坐落位置">
           <template slot-scope="scope">
             <span>{{scope.row.ZLWZ}}</span>
           </template>
         </el-table-column>
-        <el-table-column align="right" prop="JG" label="结构类型">
-        </el-table-column>
+        <el-table-column align="right" prop="JG" label="结构类型"></el-table-column>
         <el-table-column align="right" prop="WYFJE" label="资产原值">
           <template slot-scope="scope">
             <span>{{scope.row.ZCYZ |NumFormat}}</span>
@@ -298,6 +295,29 @@ export default {
   //     Treeselect
   //   },
   data() {
+    const validateDecimal = (rule, value, callback) => {
+      const reg = /^\d+\.?\d*$/;
+      if (reg.test(value)) {
+        callback();
+      } else {
+        return callback(new Error("请输入正确的数字！"));
+      }
+    };
+    const validateIDNumber = (rule, value, callback) => {
+      const reg = /^([1-6][1-9]|50)\d{4}(18|19|20)\d{2}((0[1-9])|10|11|12)(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/;
+      if (reg.test(value)) {
+        callback();
+      } else {
+        callback(new Error("身份证输入错误！"));
+      }
+    };
+    const validateMonth = (rule, value, callback) => {
+      if (value <= 12 && value >= 1) {
+        callback();
+      } else {
+        return callback(new Error("请输入正确的月份!"));
+      }
+    };
     return {
       listQueryHouseInfo: {
         FWMC: "",
@@ -331,7 +351,6 @@ export default {
       innerVisible: false,
       radio: "",
       selected: {},
-
       tableKey: 0,
       selectOptions: [
         {
@@ -364,9 +383,7 @@ export default {
       list2: [],
 
       rules: {
-        FWBH: [
-          { required: true, message: "请输入房屋名称", trigger: "change" }
-        ],
+        FWBH: [{ required: true, message: "房屋编号", trigger: "change" }],
         JZR: [{ required: true, message: "物业基准日期", trigger: "change" }],
         WYJFFS: [
           { required: true, message: "请选择缴费方式", trigger: "change" }
@@ -375,24 +392,48 @@ export default {
           { required: true, message: "请填写物业基准时间", trigger: "change" }
         ],
         WYJZ: [
-          { required: true, message: "请填写物业基准费用", trigger: "change" }
+          { required: true, message: "请填写物业基准费用", trigger: "change" },
+          {
+            validator: validateDecimal,
+            message: "请填写正确的数字",
+            trigger: "change"
+          }
         ],
         ZHXM: [
-          { required: true, message: "请填写商户姓名", trigger: "change" }
+          { required: true, message: "请填写租户姓名", trigger: "change" }
+        ],
+        ZHXB: [
+          { required: true, message: "请填写租户性别", trigger: "change" }
+        ],
+        MOBILE_PHONE: [
+          { required: true, message: "请填写租户手机号", trigger: "change" }
+        ],
+        ZHLX: [
+          { required: true, message: "请填写租户类型", trigger: "change" }
         ],
         WYJZ: [
-          { required: true, message: "请填写物业基准费用", trigger: "change" }
+          { required: true, message: "请填写物业基准费用", trigger: "change" },
+          {
+            validator: validateDecimal,
+            message: "请填写正确的数字",
+            trigger: "change"
+          }
         ],
         SHOPBH: [
           { required: true, message: "请填写商铺编号", trigger: "change" }
         ],
         SFZH: [
-          { required: true, message: "请填写身份证号", trigger: "change" }
+          { required: true, message: "请填写身份证号", trigger: "change" },
+          {
+            validator: validateIDNumber,
+            message: "请输入正确的身份证号!",
+            trigger: "change"
+          }
         ],
         SHOP_NAME: [
           { required: true, message: "请填写商铺名称", trigger: "change" }
         ],
-        JRNR: [
+        JYNR: [
           { required: true, message: "请填写经营内容", trigger: "change" }
         ],
         ZLKSSJ: [
@@ -402,12 +443,29 @@ export default {
           { required: true, message: "请填写租赁结束时间", trigger: "change" }
         ],
         ZLZE: [
-          { required: true, message: "请填写租赁总额", trigger: "change" }
+          { required: true, message: "请填写租赁总额", trigger: "change" },
+          {
+            validator: validateDecimal,
+            message: "请填写正确的数字",
+            trigger: "change"
+          }
         ],
         ZLYJ: [
-          { required: true, message: "请填写租赁押金", trigger: "change" }
+          { required: true, message: "请填写租赁押金", trigger: "change" },
+          {
+            validator: validateDecimal,
+            message: "请填写正确的数字",
+            trigger: "change"
+          }
         ],
-        ZLYS: [{ required: true, message: "请填写租赁月数", trigger: "change" }]
+        ZLYS: [
+          { required: true, message: "请填写租赁月数", trigger: "change" },
+          { type: "number", message: "请填写数字", trigger: "change" },
+          { validator: validateMonth, message: "请填写正确的月份范围" }
+        ],
+        ZJJFFS: [
+          { required: true, message: "请填写租赁缴费方式", trigger: "change" }
+        ]
       },
       total: 0,
       listLoading: false,

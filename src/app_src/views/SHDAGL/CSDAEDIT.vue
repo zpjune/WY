@@ -64,7 +64,7 @@
             </el-form-item>
           </el-col>
           <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-            <el-form-item label="业主类型">
+            <el-form-item label="业主类型" prop="ZHLX">
               <el-select style="width:100%" size="small" v-model="temp.ZHLX">
                 <el-option value="0" label="个人"></el-option>
                 <el-option value="1" label="公司"></el-option>
@@ -72,7 +72,7 @@
             </el-form-item>
           </el-col>
           <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-            <el-form-item label="业主性别">
+            <el-form-item label="业主性别" prop="ZHXB">
               <el-select style="width:100%" size="small" v-model="temp.ZHXB">
                 <el-option value="0" label="男"></el-option>
                 <el-option value="1" label="女"></el-option>
@@ -88,7 +88,7 @@
             </el-form-item>
           </el-col>
           <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-            <el-form-item label="手机号码">
+            <el-form-item label="手机号码" prop="MOBILE_PHONE">
               <el-input size="small" v-model="temp.MOBILE_PHONE"></el-input>
             </el-form-item>
           </el-col>
@@ -141,12 +141,12 @@
       </div>
       <el-row>
         <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-          <el-form-item label="业主姓名" prop="ZHXM1">
+          <el-form-item label="转租姓名" prop="ZHXM1">
             <el-input size="small" v-model="temp.ZHXM1"></el-input>
           </el-form-item>
         </el-col>
         <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-          <el-form-item label="业主类型">
+          <el-form-item label="转租类型" prop="ZHLX1">
             <el-select style="width:100%" size="small" v-model="temp.ZHLX1">
               <el-option value="0" label="个人"></el-option>
               <el-option value="1" label="公司"></el-option>
@@ -154,7 +154,7 @@
           </el-form-item>
         </el-col>
         <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-          <el-form-item label="业主性别">
+          <el-form-item label="转租性别" prop="ZHXB1">
             <el-select style="width:100%" size="small" v-model="temp.ZHXB1">
               <el-option value="0" label="男"></el-option>
               <el-option value="1" label="女"></el-option>
@@ -165,17 +165,17 @@
 
       <el-row>
         <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-          <el-form-item label="身份证号" prop="SFZH1">
+          <el-form-item label="转租身份证号" prop="SFZH1">
             <el-input size="small" v-model="temp.SFZH1"></el-input>
           </el-form-item>
         </el-col>
         <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-          <el-form-item label="手机号码">
+          <el-form-item label="转租手机号码" prop="MOBILE_PHONE1">
             <el-input size="small" v-model="temp.MOBILE_PHONE1"></el-input>
           </el-form-item>
         </el-col>
         <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-          <el-form-item label="固定电话">
+          <el-form-item label="转租固定电话">
             <el-input size="small" v-model="temp.TELEPHONE1"></el-input>
           </el-form-item>
         </el-col>
@@ -183,24 +183,24 @@
 
       <el-row>
         <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-          <el-form-item label="电子邮箱">
+          <el-form-item label="转租电子邮箱">
             <el-input size="small" v-model="temp.E_MAIL1"></el-input>
           </el-form-item>
         </el-col>
         <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-          <el-form-item label="商户编号" prop="SHOPBH">
+          <el-form-item label="转租商户编号" prop="SHOPBH1">
             <el-input size="small" v-model="temp.SHOPBH1"></el-input>
           </el-form-item>
         </el-col>
         <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-          <el-form-item label="商户名称" prop="SHOP_NAME">
+          <el-form-item label="转租商户名称" prop="SHOP_NAME1">
             <el-input size="small" v-model="temp.SHOP_NAME1"></el-input>
           </el-form-item>
         </el-col>
       </el-row>
       <el-row>
         <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
-          <el-form-item label="经营内容" prop="JYNR1">
+          <el-form-item label="转租经营内容" prop="JYNR1">
             <el-input v-model="temp.JYNR1" type="textarea" :rows="3"></el-input>
           </el-form-item>
         </el-col>
@@ -377,6 +377,29 @@ export default {
   //     Treeselect
   //   },
   data() {
+    const validateDecimal = (rule, value, callback) => {
+      const reg = /^\d+\.?\d*$/;
+      if (reg.test(value)) {
+        callback();
+      } else {
+        return callback(new Error("请输入正确的数字！"));
+      }
+    };
+    const validateIDNumber = (rule, value, callback) => {
+      const reg = /^([1-6][1-9]|50)\d{4}(18|19|20)\d{2}((0[1-9])|10|11|12)(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/;
+      if (reg.test(value)) {
+        callback();
+      } else {
+        callback(new Error("身份证输入错误！"));
+      }
+    };
+    const validateMonth = (rule, value, callback) => {
+      if (value <= 12 && value >= 1) {
+        callback();
+      } else {
+        return callback(new Error("请输入正确的月份!"));
+      }
+    };
     return {
       listQueryHouseInfo: {
         FWMC: "",
@@ -443,9 +466,7 @@ export default {
       list2: [],
 
       rules: {
-        FWBH: [
-          { required: true, message: "请输入房屋名称", trigger: "change" }
-        ],
+        FWBH: [{ required: true, message: "请选择房屋", trigger: "change" }],
         JZR: [{ required: true, message: "物业基准日期", trigger: "change" }],
         WYJFFS: [
           { required: true, message: "请选择缴费方式", trigger: "change" }
@@ -454,25 +475,45 @@ export default {
           { required: true, message: "请填写物业基准时间", trigger: "change" }
         ],
         WYJZ: [
-          { required: true, message: "请填写物业基准费用", trigger: "change" }
+          { required: true, message: "请填写物业基准费用", trigger: "change" },
+          {
+            validator: validateDecimal,
+            message: "请填写正确的数字",
+            trigger: "change"
+          }
         ],
         ZHXM: [
           { required: true, message: "请填写商户姓名", trigger: "change" }
         ],
+        ZHXB: [
+          { required: true, message: "请填写商户性别", trigger: "change" }
+        ],
+        MOBILE_PHONE: [
+          { required: true, message: "请填写商户手机号", trigger: "change" }
+        ],
+        ZHLX: [
+          { required: true, message: "请填写商户类型", trigger: "change" }
+        ],
+
         SHOPBH: [
           { required: true, message: "请填写商铺编号", trigger: "change" }
         ],
         SFZH: [
-          { required: true, message: "请填写身份证号", trigger: "change" }
+          { required: true, message: "请填写身份证号", trigger: "change" },
+          {
+            validator: validateIDNumber,
+            message: "请输入正确的身份证号!",
+            trigger: "change"
+          }
         ],
         SHOP_NAME: [
           { required: true, message: "请填写商铺名称", trigger: "change" }
         ],
-        JRNR: [
+        JYNR: [
           { required: true, message: "请填写经营内容", trigger: "change" }
         ],
         IS_SUBLET: [
-          { required: true, message: "请填写经营内容", trigger: "change" }
+          { required: true, message: "请选择是否转租", trigger: "change" }
         ],
         ZLKSSJ: [
           { required: true, message: "请填写租赁开始时间", trigger: "change" }
@@ -490,19 +531,37 @@ export default {
           { required: true, message: "请填写租赁月数", trigger: "change" }
         ],
         ZHXM1: [
-          { required: true, message: "请填写商户姓名", trigger: "change" }
+          { required: true, message: "请填写转租商户姓名", trigger: "change" }
+        ],
+        ZHXB1: [
+          { required: true, message: "请填写转租商户性别", trigger: "change" }
+        ],
+        MOBILE_PHONE1: [
+          { required: true, message: "请填写转租商户手机号", trigger: "change" }
+        ],
+        ZHLX1: [
+          { required: true, message: "请填写转租商户类型", trigger: "change" }
         ],
         SHOPBH1: [
-          { required: true, message: "请填写商铺编号", trigger: "change" }
+          { required: true, message: "请填写转租商铺编号", trigger: "change" }
         ],
         SFZH1: [
-          { required: true, message: "请填写身份证号", trigger: "change" }
+          {
+            required: true,
+            message: "请填写转租者身份证号",
+            trigger: "change"
+          },
+          {
+            validator: validateIDNumber,
+            message: "请输入正确的身份证号!",
+            trigger: "change"
+          }
         ],
         SHOP_NAME1: [
-          { required: true, message: "请填写商铺名称", trigger: "change" }
+          { required: true, message: "请填写转租商铺名称", trigger: "change" }
         ],
-        JRNR1: [
-          { required: true, message: "请填写经营内容", trigger: "change" }
+        JYNR1: [
+          { required: true, message: "请填写转租经营内容", trigger: "change" }
         ]
       },
       total: 0,

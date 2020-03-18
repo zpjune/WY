@@ -306,7 +306,7 @@
               </el-form-item>
             </el-col>-->
             <el-col :span="12">
-              <el-form-item label="所属区域" prop="FWSX">
+              <el-form-item label="所属区域" prop="SSQY">
                 <el-select style="width:100%;" v-model="temp.SSQY">
                   <el-option
                     v-for="(item,key) in areaOptions"
@@ -328,7 +328,7 @@
                 :headers="headers"
                 :file-list="temp.PMT"
                 :on-preview="handlePictureCardPreview"
-                :on-remove="handleRemove"
+                :on-remove="handleRemove1"
               >
                 <i class="el-icon-plus"></i>
               </el-upload>
@@ -452,6 +452,7 @@ const typeTypeKeyValue = typeOptions.reduce((acc, cur) => {
   acc[cur.key] = cur.type_name;
   return acc;
 }, {});
+
 export default {
   name: "CBJHSQ",
   directives: {
@@ -461,6 +462,23 @@ export default {
   //     Treeselect
   //   },
   data() {
+    const validateDecimal = (rule, value, callback) => {
+      const reg = /^\d+\.?\d*$/;
+      if (reg.test(value)) {
+        callback();
+      } else {
+        return callback(new Error("请输入正确的数字！"));
+      }
+    };
+    const validateIDNumber=(rule,value,callback)=>{
+      const reg=/^([1-6][1-9]|50)\d{4}(18|19|20)\d{2}((0[1-9])|10|11|12)(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/;
+      if((reg.test(value))){
+        callback();
+      }
+      else{
+        callback(new Error("身份证输入错误！"));
+      }
+    }
     return {
       UploadURL: process.env.BASE_API + "HouseInfo/uploadHouseImg",
       dateQuery: "",
@@ -502,15 +520,15 @@ export default {
       },
       selectOptions: [
         {
-          value: "空闲",
+          value: 0,
           label: "空闲"
         },
         {
-          value: "出租",
+          value: 1,
           label: "出租"
         },
         {
-          value: "出售",
+          value: 2,
           label: "出售"
         }
       ],
@@ -532,42 +550,52 @@ export default {
           label: "D区"
         }
       ],
-      list2: [
-        {
-          KSSJ: "2015-6-27",
-          JSSJ: "2017-6-27",
-          SYLX: "出租",
-          SHMC: "张三"
-        },
-        {
-          KSSJ: "2017-6-27",
-          JSSJ: "2018-6-27",
-          SYLX: "续租",
-          SHMC: "张三"
-        },
-        {
-          KSSJ: "2018-6-27",
-          JSSJ: "2019-6-27",
-          SYLX: "出租",
-          SHMC: "李四"
-        }
-      ],
+      list2: [],
       list: [],
       rules: {
+        FWBH: [
+          { required: true, message: "请输入房屋名称", trigger: "change" }
+        ],
         FWMC: [
           { required: true, message: "请输入房屋名称", trigger: "change" }
         ],
         LSFGS: [
           { required: true, message: "请输入所属分公司", trigger: "change" }
         ],
-        FZFJE: [
-          { required: true, message: "请输入房租金额", trigger: "change" }
+        JZMJ: [
+          { required: true, message: "请输入建筑面积", trigger: "change" }
         ],
-        WYFJE: [
-          { required: true, message: "请输入物业费金额", trigger: "change" }
-        ]
+        ZLWZ: [
+          { required: true, message: "请输入坐落位置", trigger: "change" }
+        ],
+        JGLX: [
+          { required: true, message: "请输入结构类型", trigger: "change" }
+        ],
+        ZCYZ: [
+          { required: true, message: "请输入资产原值", trigger: "change" },
+          {
+            validator: validateDecimal,
+            message: "请输入正确的值",
+            trigger: "change"
+          }
+        ],
+        ZFK: [
+          { required: true, message: "请输入总房款", trigger: "change" },
+          {
+            validator: validateDecimal,
+            message: "请输入正确的值",
+            trigger: "change"
+          }
+        ],
+        WATER_NUMBER: [
+          { required: true, message: "请输入电表号", trigger: "change" }
+        ],
+        ELE_NUMBER: [
+          { required: true, message: "请输入水表号", trigger: "change" }
+        ],
+        SSQY: [{ required: true, message: "请输入所属区域", trigger: "change" }]
       },
-      total: 15,
+      total: 0,
       listLoading: false,
       // temp: {
       //   FWBH: "D-211",
@@ -605,10 +633,14 @@ export default {
         return "background:#67C23A";
       }
     },
-    handleRemove(file) {
+    handleRemove(file) {},
+    handleRemove1(file) {
+      //平面图删除
       let arr = file.url.split("//");
+      console.log(file.url);
       let url = arr[arr.length - 1];
       this.temp.newFilePath = this.temp.newFilePath.replace(url + ",", "");
+      console.log(this.temp.newFilePath);
     },
     GetUrl(res, file, filelist) {
       this.temp.newFilePath == undefined ? "" : this.temp.newFilePath;
@@ -657,7 +689,7 @@ export default {
       GetHouseInfo(this.listQuery).then(response => {
         if (response.data.code === 2000) {
           this.list = response.data.items;
-          this.total = response.data.totoal;
+          this.total = response.data.total;
           this.listLoading = false;
         } else {
           this.listLoading = false;
@@ -835,7 +867,6 @@ export default {
     btnImpot() {
       this.showUpload = true;
     },
-    handleRemove(file, fileList) {},
     handlePreview(file) {},
     handleExceed(files, fileList) {
       this.$message.warning(
@@ -850,6 +881,15 @@ export default {
         this.getList();
         title = "导入成功";
         type = "success";
+        this.$notify({
+          position: "bottom-right",
+          title: title,
+          message: message,
+          type: type,
+          duration: 2000
+        });
+        this.showUpload = false;
+        this.fileList = [];
       } else {
         var message = res.message;
         var title = "导入失败";

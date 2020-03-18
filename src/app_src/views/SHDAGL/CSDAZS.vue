@@ -15,7 +15,7 @@
       <div>
         <el-row>
           <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-            <el-form-item label="房屋编号" >
+            <el-form-item label="房屋编号">
               <el-input v-model="temp.FWBH" disabled style="width:69%;"></el-input>
             </el-form-item>
           </el-col>
@@ -53,7 +53,7 @@
       <div>
         <el-row>
           <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-            <el-form-item label="业主姓名" >
+            <el-form-item label="业主姓名">
               <el-input size="small" v-model="temp.ZHXM" disabled></el-input>
             </el-form-item>
           </el-col>
@@ -77,7 +77,7 @@
 
         <el-row>
           <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-            <el-form-item label="身份证号" >
+            <el-form-item label="身份证号">
               <el-input size="small" v-model="temp.SFZH" disabled></el-input>
             </el-form-item>
           </el-col>
@@ -105,14 +105,14 @@
             </el-form-item>
           </el-col>
           <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-            <el-form-item label="商户名称" >
+            <el-form-item label="商户名称">
               <el-input size="small" v-model="temp.SHOP_NAME" disabled></el-input>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-            <el-form-item label="是否转租" >
+            <el-form-item label="是否转租">
               <el-select v-model="temp.IS_SUBLET" style="width:100%" size="small" disabled>
                 <el-option label="否" :value="0"></el-option>
                 <el-option label="是" :value="1"></el-option>
@@ -135,7 +135,7 @@
       </div>
       <el-row>
         <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-          <el-form-item label="物业费缴纳方式" >
+          <el-form-item label="物业费缴纳方式">
             <el-select style="width:100%" size="small" v-model="temp.WYJFFS" disabled>
               <el-option value="0" label="半年"></el-option>
               <el-option value="1" label="一年"></el-option>
@@ -151,7 +151,7 @@
           </el-form-item>
         </el-col>
         <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-          <el-form-item label="物业基准日期" >
+          <el-form-item label="物业基准日期">
             <el-date-picker style="width:100%" size="mini" v-model="temp.WYJZSJ" disabled></el-date-picker>
           </el-form-item>
         </el-col>
@@ -163,12 +163,12 @@
       </div>
       <el-row>
         <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-          <el-form-item label="业主姓名" >
+          <el-form-item label="业主姓名" prop="ZHXM1">
             <el-input size="small" v-model="newtemp.ZHXM1"></el-input>
           </el-form-item>
         </el-col>
         <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-          <el-form-item label="业主类型">
+          <el-form-item label="业主类型" prop="ZHLX1">
             <el-select style="width:100%" size="small" v-model="newtemp.ZHLX1">
               <el-option value="0" label="个人"></el-option>
               <el-option value="1" label="公司"></el-option>
@@ -176,7 +176,7 @@
           </el-form-item>
         </el-col>
         <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-          <el-form-item label="业主性别">
+          <el-form-item label="业主性别" prop="ZHXB1">
             <el-select style="width:100%" size="small" v-model="newtemp.ZHXB1">
               <el-option value="0" label="男"></el-option>
               <el-option value="1" label="女"></el-option>
@@ -187,17 +187,17 @@
 
       <el-row>
         <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-          <el-form-item label="身份证号" >
+          <el-form-item label="身份证号" prop="SFZH1">
             <el-input size="small" v-model="newtemp.SFZH1"></el-input>
           </el-form-item>
         </el-col>
         <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-          <el-form-item label="手机号码">
+          <el-form-item label="手机号码" prop="MOBILE_PHONE1">
             <el-input size="small" v-model="newtemp.MOBILE_PHONE1"></el-input>
           </el-form-item>
         </el-col>
         <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-          <el-form-item label="固定电话">
+          <el-form-item label="固定电话" prop="TELEPHONE1">
             <el-input size="small" v-model="newtemp.TELEPHONE1"></el-input>
           </el-form-item>
         </el-col>
@@ -205,24 +205,24 @@
 
       <el-row>
         <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-          <el-form-item label="电子邮箱">
+          <el-form-item label="电子邮箱" >
             <el-input size="small" v-model="newtemp.E_MAIL1"></el-input>
           </el-form-item>
         </el-col>
         <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-          <el-form-item label="商户编号" >
+          <el-form-item label="商户编号" prop="SHOPBH1">
             <el-input size="small" v-model="newtemp.SHOPBH1"></el-input>
           </el-form-item>
         </el-col>
         <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-          <el-form-item label="商户名称" >
+          <el-form-item label="商户名称" prop="SHOP_NAME1">
             <el-input size="small" v-model="newtemp.SHOP_NAME1"></el-input>
           </el-form-item>
         </el-col>
       </el-row>
       <el-row>
         <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
-          <el-form-item label="经营内容" >
+          <el-form-item label="经营内容" prop="JYNR1">
             <el-input v-model="newtemp.JYNR1" type="textarea" :rows="3"></el-input>
           </el-form-item>
         </el-col>
@@ -234,7 +234,7 @@
       </div>
       <el-row>
         <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-          <el-form-item label="物业费缴纳方式" >
+          <el-form-item label="物业费缴纳方式" prop="WYJFFS1">
             <el-select style="width:100%" size="small" v-model="newtemp.WYJFFS1">
               <el-option value="0" label="半年"></el-option>
               <el-option value="1" label="一年"></el-option>
@@ -243,14 +243,14 @@
           </el-form-item>
         </el-col>
         <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-          <el-form-item label="物业费标准" >
+          <el-form-item label="物业费标准" prop="WYJZ1">
             <el-input size="small" v-model="newtemp.WYJZ1">
               <template slot="append">元/月</template>
             </el-input>
           </el-form-item>
         </el-col>
         <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-          <el-form-item label="物业基准日期" >
+          <el-form-item label="物业基准日期" prop="WYJZSJ1">
             <el-date-picker style="width:100%" size="mini" v-model="newtemp.WYJZSJ1"></el-date-picker>
           </el-form-item>
         </el-col>
@@ -340,6 +340,29 @@ export default {
   //     Treeselect
   //   },
   data() {
+    const validateDecimal = (rule, value, callback) => {
+      const reg = /^\d+\.?\d*$/;
+      if (reg.test(value)) {
+        callback();
+      } else {
+        return callback(new Error("请输入正确的数字！"));
+      }
+    };
+    const validateIDNumber = (rule, value, callback) => {
+      const reg = /^([1-6][1-9]|50)\d{4}(18|19|20)\d{2}((0[1-9])|10|11|12)(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/;
+      if (reg.test(value)) {
+        callback();
+      } else {
+        callback(new Error("身份证输入错误！"));
+      }
+    };
+    const validateMonth = (rule, value, callback) => {
+      if (value <= 12 && value >= 1) {
+        callback();
+      } else {
+        return callback(new Error("请输入正确的月份!"));
+      }
+    };
     return {
       listQueryHouseInfo: {
         FWMC: "",
@@ -406,76 +429,53 @@ export default {
       list2: [],
 
       rules: {
-        FWBH: [
-          { required: true, message: "请输入房屋名称", trigger: "change" }
-        ],
-        JZR: [{ required: true, message: "物业基准日期", trigger: "change" }],
-        WYJFFS: [
-          { required: true, message: "请选择缴费方式", trigger: "change" }
-        ],
-        WYJZSJ: [
-          { required: true, message: "请填写物业基准时间", trigger: "change" }
-        ],
-        WYJZ: [
-          { required: true, message: "请填写物业基准费用", trigger: "change" }
-        ],
-        ZHXM: [
-          { required: true, message: "请填写商户姓名", trigger: "change" }
-        ],
-        SHOPBH: [
-          { required: true, message: "请填写商铺编号", trigger: "change" }
-        ],
-        SFZH: [
-          { required: true, message: "请填写身份证号", trigger: "change" }
-        ],
-        SHOP_NAME: [
-          { required: true, message: "请填写商铺名称", trigger: "change" }
-        ],
-        JRNR: [
-          { required: true, message: "请填写经营内容", trigger: "change" }
-        ],
-        IS_SUBLET: [
-          { required: true, message: "请填写经营内容", trigger: "change" }
-        ],
-        ZLKSSJ: [
-          { required: true, message: "请填写租赁开始时间", trigger: "change" }
-        ],
-        ZLZZSJ: [
-          { required: true, message: "请填写租赁结束时间", trigger: "change" }
-        ],
-        ZLZE: [
-          { required: true, message: "请填写租赁总额", trigger: "change" }
-        ],
-        ZLYJ: [
-          { required: true, message: "请填写租赁押金", trigger: "change" }
-        ],
-        ZLYS: [
-          { required: true, message: "请填写租赁月数", trigger: "change" }
-        ],
         ZHXM1: [
-          { required: true, message: "请填写商户姓名", trigger: "change" }
+          { required: true, message: "请填写转售商户姓名", trigger: "change" }
+        ],
+        ZHXB1: [
+          { required: true, message: "请填写转售商户性别", trigger: "change" }
+        ],
+        MOBILE_PHONE1: [
+          { required: true, message: "请填写转售商户手机号", trigger: "change" }
+        ],
+        ZHLX1: [
+          { required: true, message: "请填写转售商户类型", trigger: "change" }
         ],
         SHOPBH1: [
-          { required: true, message: "请填写商铺编号", trigger: "change" }
+          { required: true, message: "请填写转售商铺编号", trigger: "change" }
         ],
         SFZH1: [
-          { required: true, message: "请填写身份证号", trigger: "change" }
+          {
+            required: true,
+            message: "请填写转售身份证号",
+            trigger: "change"
+          },
+          {
+            validator: validateIDNumber,
+            message: "请输入正确的身份证号!",
+            trigger: "change"
+          }
         ],
         SHOP_NAME1: [
-          { required: true, message: "请填写商铺名称", trigger: "change" }
+          { required: true, message: "请填写转售商铺名称", trigger: "change" }
         ],
-        JRNR1: [
-          { required: true, message: "请填写经营内容", trigger: "change" }
-        ],
-        WYJFFS1: [
-          { required: true, message: "请选择缴费方式", trigger: "change" }
+        JYNR1: [
+          { required: true, message: "请填写转售经营内容", trigger: "change" }
         ],
         WYJZSJ1: [
           { required: true, message: "请填写物业基准时间", trigger: "change" }
         ],
         WYJZ1: [
-          { required: true, message: "请填写物业基准费用", trigger: "change" }
-        ]
+          { required: true, message: "请填写物业基准费用", trigger: "change" },
+          {
+            validator: validateDecimal,
+            message: "请填写正确的数字",
+            trigger: "change"
+          }
+        ],
+        WYJFFS1: [
+          { required: true, message: "请选择缴费方式", trigger: "change" }
+        ],
       },
       total: 0,
       listLoading: false,
@@ -530,8 +530,8 @@ export default {
         userType: 2 //出售用户
       },
       newtemp: {
-        FWID:"",
-        CZ_SHID:"",
+        FWID: "",
+        CZ_SHID: "",
         WYJFFS1: "",
         WYJZSJ1: "",
         WYJZ1: "",
@@ -723,8 +723,8 @@ export default {
         if (valid) {
           const tempData = Object.assign({}, this.newtemp); // 这样就不会共用同一个对象
           tempData.userId = this.$store.state.user.userId;
-          tempData.CZ_SHID=this.temp.CZ_SHID;
-          tempData.FWID=this.temp.FWID;
+          tempData.CZ_SHID = this.temp.CZ_SHID;
+          tempData.FWID = this.temp.FWID;
           tempData.userType = 2;
           SecondHand(tempData).then(response => {
             var message = response.data.message;
@@ -775,21 +775,6 @@ export default {
         GetShopInfoDetail(listQuery).then(res => {
           if (res.data.code === 2000) {
             this.temp = res.data.items[0];
-            // this.temp.CZ_SHID1 = "";
-            // this.temp.ZHXM1 = "";
-            // this.temp.ZHLX1 = "";
-            // this.temp.ZHXB1 = "";
-            // this.temp.SFZH1 = "";
-            // this.temp.MOBILE_PHONE1 = "";
-            // this.temp.TELEPHONE1 = "";
-            // this.temp.E_MAIL1 = "";
-            // this.temp.SHOPBH1 = "";
-            // this.temp.SHOP_NAME1 = "";
-            // this.temp.JYNR1 = "";
-            // this.temp.WYJFFS1 = "";
-            // this.temp.WYJZSJ1 = "";
-            // this.temp.WYJZ1 = "";
-            // console.log(this.temp);
           }
         });
       } else {

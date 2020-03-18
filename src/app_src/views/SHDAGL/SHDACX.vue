@@ -1,7 +1,17 @@
 <template>
   <div id="NDJCJH" class="app-container calendar-list-container">
     <el-row style="margin-bottom:10px;">
-      <el-col :xs="5" :sm="5" :md="5" :lg="4" :xl="3">
+      <el-col :xs="4" :sm="4" :md="4" :lg="3" :xl="2">
+        <el-select placeholder="请选择商户类型" size="mini" v-model="listQuery.SHOP_STATUS">
+          <el-option
+            v-for="(item,key) in shopOptions"
+            :key="key"
+            :label="item.label"
+            :value="item.value"
+          ></el-option>
+        </el-select>
+      </el-col>
+      <el-col :xs="4" :sm="4" :md="4" :lg="3" :xl="2">
         <el-input
           placeholder="请输入房屋编号"
           style="width:95%;"
@@ -10,7 +20,7 @@
           v-model="listQuery.FWBH"
         ></el-input>
       </el-col>
-      <el-col :xs="5" :sm="5" :md="5" :lg="4" :xl="3">
+      <el-col :xs="4" :sm="4" :md="4" :lg="3" :xl="2">
         <el-input
           placeholder="请输入商户姓名"
           style="width:95%;"
@@ -19,7 +29,7 @@
           v-model="listQuery.ZHXM"
         ></el-input>
       </el-col>
-      <el-col :xs="5" :sm="5" :md="5" :lg="4" :xl="3">
+      <el-col :xs="4" :sm="4" :md="4" :lg="3" :xl="2">
         <el-input
           placeholder="请输入商户身份证号"
           style="width:95%;"
@@ -28,7 +38,7 @@
           v-model="listQuery.SFZH"
         ></el-input>
       </el-col>
-      <el-col :xs="5" :sm="5" :md="5" :lg="4" :xl="3">
+      <el-col :xs="4" :sm="4" :md="4" :lg="3" :xl="2">
         <el-input
           placeholder="请输入商户编号"
           style="width:95%;"
@@ -37,7 +47,7 @@
           v-model="listQuery.SHOPBH"
         ></el-input>
       </el-col>
-      <el-col :xs="5" :sm="5" :md="5" :lg="4" :xl="3">
+      <el-col :xs="4" :sm="4" :md="4" :lg="3" :xl="2">
         <el-button type="primary" icon="el-icon-search" size="mini" @click="getList">查询</el-button>
         <!-- <el-button type="primary" icon="el-icon-document" size="mini">导出</el-button> -->
         <!-- <el-button
@@ -67,7 +77,7 @@
           <el-table-column label="隶属分公司" prop="Name"></el-table-column>
           <el-table-column label="业主姓名" prop="ZHXM"></el-table-column>
           <el-table-column label="身份证号" prop="SFZH"></el-table-column>
-          <el-table-column label="商户编号" prop="SHOPBH  "></el-table-column>
+          <el-table-column label="商户编号" prop="SHOPBH"></el-table-column>
           <el-table-column label="业主类型" prop="ZHLX"></el-table-column>
           <el-table-column label="业主手机" prop="MOBILE_PHONE"></el-table-column>
           <el-table-column label="业主固话" prop="TELEPHONE"></el-table-column>
@@ -89,7 +99,7 @@
           :page-sizes="[10,20,30, 50]"
           :page-size="1"
           layout="total, sizes, prev, pager, next, jumper"
-          :total="1"
+          :total="total"
           style="text-align: center;"
         ></el-pagination>
       </el-col>
@@ -460,8 +470,31 @@ export default {
         FWBH: "",
         ZHXM: "",
         SFZH: "",
-        SHOPBH: ""
+        SHOPBH: "",
+        SHOP_STATUS:0
       },
+      shopOptions: [
+        {
+          value: 0,
+          label: "全部"
+        },
+        {
+          value: 1,
+          label: "出租"
+        },
+        {
+          value: 2,
+          label: "出售"
+        },
+        {
+          value: 3,
+          label: "转售"
+        },
+        {
+          value: 4,
+          label: "终止物业关系"
+        }
+      ],
       options: [
         {
           value: "A区",
@@ -673,8 +706,14 @@ export default {
     handleProcess() {
       this.workFlowVisible = true;
     },
-    handleSizeChange() {},
-    handleCurrentChange() {},
+    handleSizeChange(val) {
+      this.listQuery.limit=val;
+      this.getList();
+    },
+    handleCurrentChange(val) {
+      this.listQuery.page=val;
+      this.getList();
+    },
     handleCreate() {
       this.resetTemp();
       this.editVisible = true;
