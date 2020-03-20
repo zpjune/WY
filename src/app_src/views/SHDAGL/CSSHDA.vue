@@ -318,7 +318,7 @@ export default {
       let temp={
         FWSX:2
       }
-      ExportShopInfo().then(res => {
+      ExportShopInfo(temp).then(res => {
         if (res.data.code === 2000) {
           let list = res.data.items;
           this.downloadLoading = true;

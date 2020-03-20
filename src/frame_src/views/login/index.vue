@@ -360,7 +360,7 @@ body {
         background-color:#3e8ddc;
         margin: 0 auto;
         .divbg {
-            background: url("../../../frame_src/imgs/pufengbackground.jpg") fixed
+            background: url("../../../frame_src/imgs/pufengbackground1.png") fixed
                 center no-repeat;
             //min-width: 1366px;
             //min-width: 500px;
@@ -369,9 +369,10 @@ body {
             margin: 0 auto;
         }
         .loginform {
-            margin-top: 5%;
+            margin-top: 7.5%;
+            margin-right: 28.65%;
             width: 390px;
-            height: 340px;
+            height: 435px;
             background-color: rgba(252, 250, 250, 0.73);
             //border-radius: 10px;
             // filter: alpha(opacity=50);
@@ -379,7 +380,7 @@ body {
             // -khtml-opacity: 0.5;
             // opacity: 0.5;
             float: right;
-            margin-right: 10%;
+            
             .header {
                 line-height: 40px;
                 font-size: 15px;
@@ -387,7 +388,7 @@ body {
                 font-family: "微软雅黑";
                 //border-radius: 10px 10px 0 0;
                 height: 40px;
-                background-color: rgba(218, 210, 210, 0.904);
+                background-color: rgba(218, 210, 210, 0.6);
             }
             .logo {
                 margin-left: 10%;
@@ -399,6 +400,7 @@ body {
                 border-radius: 5px;
             }
             .login-form {
+                margin-top:10%;
                 .el-input {
                     margin-top: 11%;
                     margin-left: 10%;

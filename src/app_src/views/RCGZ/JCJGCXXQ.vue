@@ -1,9 +1,14 @@
 
 <template>
-
-
-  <el-form ref="dataForm" :model="temp" :rules="rules" label-width="120px" style="width: 99%;" id="CZDAEDIT">
-        <el-card style="margin-top:20px;">
+  <el-form
+    ref="dataForm"
+    :model="temp"
+    :rules="rules"
+    label-width="120px"
+    style="width: 99%;"
+    id="CZDAEDIT"
+  >
+    <el-card style="margin-top:20px;">
       <div slot="header">
         <span>任务信息</span>
       </div>
@@ -34,8 +39,6 @@
           </el-col>
         </el-row>
 
-       
-
         <el-row>
           <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
             <el-form-item label="检查内容">
@@ -46,205 +49,196 @@
       </div>
     </el-card>
     <el-card style="margin-top:20px;">
-
       <div slot="header">
         <span>检查信息</span>
       </div>
 
       <div>
         <el-tabs type="border-card">
-  <el-tab-pane label="检查情况">
-     <el-row>
-          <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-            <el-form-item label="房屋编号">
-              <el-input size="small" v-model="temp.FWBH"></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-            <el-form-item label="业主名称">
-              <el-input size="small" v-model="temp.YZMC"></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-            <el-form-item label="联系电话">
-              <el-input size="small" v-model="temp.LXDH"></el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
- <el-row>
-          <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-            <el-form-item label="检查结果">
-              <el-select style="width:100%" size="small" v-model="temp.JCJG">
-                <el-option value="0" label="合格"></el-option>
-                <el-option value="1" label="不合格"></el-option>
-              </el-select>
-            </el-form-item>
-          </el-col>
-          <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-            <el-form-item label="检查人">
-              <el-input size="small" v-model="temp.JCR"></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-            <el-form-item label="检查时间">
-               <el-date-picker
+          <el-tab-pane label="检查情况">
+            <el-row>
+              <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
+                <el-form-item label="房屋编号">
+                  <el-input size="small" v-model="temp.FWBH"></el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
+                <el-form-item label="业主名称">
+                  <el-input size="small" v-model="temp.YZMC"></el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
+                <el-form-item label="联系电话">
+                  <el-input size="small" v-model="temp.LXDH"></el-input>
+                </el-form-item>
+              </el-col>
+            </el-row>
+            <el-row>
+              <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
+                <el-form-item label="检查结果">
+                  <el-select style="width:100%" size="small" v-model="temp.JCJG">
+                    <el-option value="0" label="合格"></el-option>
+                    <el-option value="1" label="不合格"></el-option>
+                  </el-select>
+                </el-form-item>
+              </el-col>
+              <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
+                <el-form-item label="检查人">
+                  <el-input size="small" v-model="temp.JCR"></el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
+                <el-form-item label="检查时间">
+                  <el-date-picker
                     style="width:100%"
                     format="yyyy-MM-dd"
                     size="small"
                     v-model="temp.JCSJ"
                   ></el-date-picker>
-            </el-form-item>
-          </el-col>
-        </el-row>
- 
- <el-row>
-          <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
-            <el-form-item label="检查情况">
-              <el-input size="small" v-model="temp.JCNR"></el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
-               <el-row>
-          <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
+                </el-form-item>
+              </el-col>
+            </el-row>
 
-                    <el-form-item label="检查图片" prop="PMT">
-              <el-upload action="#" list-type="picture-card" :auto-upload="false">
-                <i slot="default" class="el-icon-plus"></i>
-                <div slot="file" slot-scope="{file}">
-                  <img class="el-upload-list__item-thumbnail" :src="file.url" alt>
-                  <span class="el-upload-list__item-actions">
-                    <span
-                      class="el-upload-list__item-preview"
-                      @click="handlePictureCardPreview(file)"
-                    >
-                      <i class="el-icon-zoom-in"></i>
-                    </span>
-                    <span
-                      v-if="!disabled"
-                      class="el-upload-list__item-delete"
-                      @click="handleDownload(file)"
-                    >
-                      <i class="el-icon-download"></i>
-                    </span>
-                    <span
-                      v-if="!disabled"
-                      class="el-upload-list__item-delete"
-                      @click="handleRemove(file)"
-                    >
-                      <i class="el-icon-delete"></i>
-                    </span>
-                  </span>
-                </div>
-              </el-upload>
-              <el-dialog :visible.sync="dialogVisible">
-                <img width="100%" :src="dialogImageUrl" alt>
-              </el-dialog>
-            </el-form-item>
-          </el-col>
-        </el-row>
-  </el-tab-pane>
-  <el-tab-pane label="复查情况">  <el-row>
-          <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
- <el-table
-      :key="tableKey"
-      :data="list"
-      :header-cell-class-name="tableRowClassName"
-      v-loading="listLoading"
-      element-loading-text="给我一点时间"
-      border
-      fit
-      highlight-current-row
-      size="mini"
-      id="table"
-    >
-      <el-table-column width="150px" align="center" label="复查结果">
-        <template slot-scope="scope">
-          <span>{{scope.row.FCJG}}</span>
-        </template>
-      </el-table-column>
+            <el-row>
+              <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
+                <el-form-item label="检查情况">
+                  <el-input size="small" v-model="temp.JCNR"></el-input>
+                </el-form-item>
+              </el-col>
+            </el-row>
+            <el-row>
+              <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
+                <el-form-item label="检查图片" prop="PMT">
+                  <el-upload action="#" list-type="picture-card" :auto-upload="false">
+                    <i slot="default" class="el-icon-plus"></i>
+                    <div slot="file" slot-scope="{file}">
+                      <img class="el-upload-list__item-thumbnail" :src="file.url" alt />
+                      <span class="el-upload-list__item-actions">
+                        <span
+                          class="el-upload-list__item-preview"
+                          @click="handlePictureCardPreview(file)"
+                        >
+                          <i class="el-icon-zoom-in"></i>
+                        </span>
+                        <span
+                          v-if="!disabled"
+                          class="el-upload-list__item-delete"
+                          @click="handleDownload(file)"
+                        >
+                          <i class="el-icon-download"></i>
+                        </span>
+                        <span
+                          v-if="!disabled"
+                          class="el-upload-list__item-delete"
+                          @click="handleRemove(file)"
+                        >
+                          <i class="el-icon-delete"></i>
+                        </span>
+                      </span>
+                    </div>
+                  </el-upload>
+                  <el-dialog :visible.sync="dialogVisible">
+                    <img width="100%" :src="dialogImageUrl" alt />
+                  </el-dialog>
+                </el-form-item>
+              </el-col>
+            </el-row>
+          </el-tab-pane>
+          <el-tab-pane label="复查情况">
+            <el-row>
+              <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
+                <el-table
+                  :key="tableKey"
+                  :data="list"
+                  :header-cell-class-name="tableRowClassName"
+                  v-loading="listLoading"
+                  element-loading-text="给我一点时间"
+                  border
+                  fit
+                  highlight-current-row
+                  size="mini"
+                  id="table"
+                >
+                  <el-table-column width="150px" align="center" label="复查结果">
+                    <template slot-scope="scope">
+                      <span>{{scope.row.FCJG}}</span>
+                    </template>
+                  </el-table-column>
 
-      <el-table-column align="center" width="120px" label="复查人">
-        <template slot-scope="scope">
-          <span>{{scope.row.FCR}}</span>
-        </template>
-      </el-table-column>
-      <el-table-column width="150px" align="center" label="复查时间">
-        <template slot-scope="scope">
-          <span>{{scope.row.FCSJ}}</span>
-        </template>
-      </el-table-column>
-      <el-table-column align="center" width="120px" label="复查内容">
-        <template slot-scope="scope">
-          <span>{{scope.row.FCNR}}</span>
-        </template>
-      </el-table-column>
-  
-    </el-table>
-    <el-pagination
-      background
-      @size-change="handleSizeChange"
-      @current-change="handleCurrentChange"
-      :current-page="listQuery.page"
-      :page-sizes="[10,20,30, 50]"
-      :page-size="listQuery.limit"
-      layout="total, sizes, prev, pager, next, jumper"
-      :total="10"
-      style="text-align:center;"
-    ></el-pagination>
-          </el-col>
-        </el-row>
-        
-          <el-row>
-          <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
+                  <el-table-column align="center" width="120px" label="复查人">
+                    <template slot-scope="scope">
+                      <span>{{scope.row.FCR}}</span>
+                    </template>
+                  </el-table-column>
+                  <el-table-column width="150px" align="center" label="复查时间">
+                    <template slot-scope="scope">
+                      <span>{{scope.row.FCSJ}}</span>
+                    </template>
+                  </el-table-column>
+                  <el-table-column align="center" width="120px" label="复查内容">
+                    <template slot-scope="scope">
+                      <span>{{scope.row.FCNR}}</span>
+                    </template>
+                  </el-table-column>
+                </el-table>
+                <el-pagination
+                  background
+                  @size-change="handleSizeChange"
+                  @current-change="handleCurrentChange"
+                  :current-page="listQuery.page"
+                  :page-sizes="[10,20,30, 50]"
+                  :page-size="listQuery.limit"
+                  layout="total, sizes, prev, pager, next, jumper"
+                  :total="10"
+                  style="text-align:center;"
+                ></el-pagination>
+              </el-col>
+            </el-row>
 
-                    <el-form-item label="复查 图片" prop="PMT">
-              <el-upload action="#" list-type="picture-card" :auto-upload="false">
-                <i slot="default" class="el-icon-plus"></i>
-                <div slot="file" slot-scope="{file}">
-                  <img class="el-upload-list__item-thumbnail" :src="file.url" alt>
-                  <span class="el-upload-list__item-actions">
-                    <span
-                      class="el-upload-list__item-preview"
-                      @click="handlePictureCardPreview(file)"
-                    >
-                      <i class="el-icon-zoom-in"></i>
-                    </span>
-                    <span
-                      v-if="!disabled"
-                      class="el-upload-list__item-delete"
-                      @click="handleDownload(file)"
-                    >
-                      <i class="el-icon-download"></i>
-                    </span>
-                    <span
-                      v-if="!disabled"
-                      class="el-upload-list__item-delete"
-                      @click="handleRemove(file)"
-                    >
-                      <i class="el-icon-delete"></i>
-                    </span>
-                  </span>
-                </div>
-              </el-upload>
-              <el-dialog :visible.sync="dialogVisible">
-                <img width="100%" :src="dialogImageUrl" alt>
-              </el-dialog>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        </el-tab-pane>
-</el-tabs>
+            <el-row>
+              <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
+                <el-form-item label="复查 图片" prop="PMT">
+                  <el-upload action="#" list-type="picture-card" :auto-upload="false">
+                    <i slot="default" class="el-icon-plus"></i>
+                    <div slot="file" slot-scope="{file}">
+                      <img class="el-upload-list__item-thumbnail" :src="file.url" alt />
+                      <span class="el-upload-list__item-actions">
+                        <span
+                          class="el-upload-list__item-preview"
+                          @click="handlePictureCardPreview(file)"
+                        >
+                          <i class="el-icon-zoom-in"></i>
+                        </span>
+                        <span
+                          v-if="!disabled"
+                          class="el-upload-list__item-delete"
+                          @click="handleDownload(file)"
+                        >
+                          <i class="el-icon-download"></i>
+                        </span>
+                        <span
+                          v-if="!disabled"
+                          class="el-upload-list__item-delete"
+                          @click="handleRemove(file)"
+                        >
+                          <i class="el-icon-delete"></i>
+                        </span>
+                      </span>
+                    </div>
+                  </el-upload>
+                  <el-dialog :visible.sync="dialogVisible">
+                    <img width="100%" :src="dialogImageUrl" alt />
+                  </el-dialog>
+                </el-form-item>
+              </el-col>
+            </el-row>
+          </el-tab-pane>
+        </el-tabs>
 
-
-      
-                    
- <el-row>
-
-        </el-row>
+        <el-row></el-row>
       </div>
     </el-card>
 
-   
     <div style="text-align:center;margin-top:20px;margin-bottom:20px;">
       <el-button v-if="dialogStatus=='create'" type="primary" @click="createData">保存</el-button>
       <el-button v-else type="primary" @click="updateData">保存</el-button>
@@ -384,20 +378,20 @@ export default {
           label: "D区"
         }
       ],
-       list: [
+      list: [
         {
           FCJG: "不合格",
           FCR: "张三",
           FCSJ: "2019-06-25",
-          FCNR: "消防通道堵塞",
+          FCNR: "消防通道堵塞"
         },
-         {
+        {
           FCJG: "合格",
           FCR: "张三",
           FCSJ: "2019-07-05",
-          FCNR: "消防通道堵塞",
+          FCNR: "消防通道堵塞"
         }
-       ],
+      ],
       list2: [
         {
           FWBH: "A-101",
@@ -539,12 +533,10 @@ export default {
         create: "添加房屋信息"
       },
       editVisible: false,
-      dialogStatus: "",
-
+      dialogStatus: ""
     };
   },
   methods: {
-   
     showRow(row) {
       //赋值给radio
       this.radio = this.list2.indexOf(row);
@@ -605,7 +597,6 @@ export default {
       //     }
       //   });
     },
-
 
     handleDelete(row) {
       this.$confirm("确认删除信息吗", "提示", {
@@ -694,7 +685,7 @@ export default {
         this.closetab();
       });
     },
-   
+
     tableRowClassName({ row, rowIndex }) {
       if (rowIndex === 0) {
         return "el-button--primary is-active"; // 'warning-row'
@@ -704,10 +695,9 @@ export default {
   },
   created() {
     var param = this.$route.query.param;
-    if(param!=null){
-    console.log(param.YZXM);
-    }
-    else{
+    if (param != null) {
+      console.log(param.YZXM);
+    } else {
       this.resetTemp();
     }
   },
@@ -726,7 +716,8 @@ export default {
 
 <style lang="scss" >
 #CZDAEDIT {
-  input:disabled,textarea:disabled{
+  input:disabled,
+  textarea:disabled {
     opacity: 1;
     -webkit-text-fill-color: #000;
   }

@@ -16,7 +16,7 @@
           placeholder="选择年度"
           v-model="listQuery.JHND"
           style="width: 100%;"
-          value-format="YYYY-MM-dd"
+          value-format="yyyy"
           size="mini"
         ></el-date-picker>
       </el-col>
@@ -92,6 +92,7 @@
                   placeholder="选择年度"
                   v-model="temp.JHND"
                   style="width: 100%;"
+                  value-format="yyyy"
                 ></el-date-picker>
               </el-form-item>
             </el-col>
@@ -136,17 +137,17 @@
                   border
                   style="width: 100%"
                 >
-                  <el-table-column prop="fildna" label="区域">
+                  <el-table-column  label="区域">
                     <template slot-scope="scope">
                       <el-input size="mini" v-model="scope.row.JCQY"></el-input>
                     </template>
                   </el-table-column>
-                  <el-table-column prop="fildna" label="检查内容">
+                  <el-table-column  label="检查内容">
                     <template slot-scope="scope">
                       <el-input size="mini" v-model="scope.row.JCNR"></el-input>
                     </template>
                   </el-table-column>
-                  <el-table-column prop="fildtp" label="检查类型">
+                  <el-table-column  label="检查类型">
                     <template slot-scope="scope">
                       <el-select v-model="scope.row.JCLX" clearable size="mini">
                         <el-option
@@ -158,7 +159,7 @@
                       </el-select>
                     </template>
                   </el-table-column>
-                  <el-table-column prop="remark" label="排查次数">
+                  <el-table-column  label="排查次数">
                     <template slot-scope="scope">
                       <el-input size="mini" v-model="scope.row.PCCS"></el-input>
                     </template>
@@ -213,7 +214,7 @@ export default {
       workFlowVisible: false,
       listQuery: {
         JHMC: "",
-        JHSJ: "",
+        JHND: "",
         page: 1,
         limit: 10
       },
@@ -448,7 +449,6 @@ export default {
           tempData.CheckPlanDetail = tempData.CheckPlanDetail.concat(
             this.DeleteList
           );
-          console.log(tempData.CheckPlanDetail);
           tempData.userId = this.$store.state.user.userId;
           console.log(tempData);
           UpdateCheckPlan(tempData).then(res => {

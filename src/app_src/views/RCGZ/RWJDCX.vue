@@ -1,28 +1,44 @@
 <template>
   <div id="NDJCJH" class="app-container calendar-list-container">
     <el-row style="margin-bottom:10px;">
-      <el-col :xs="5" :sm="5" :md="5" :lg="4" :xl="3">
-        <el-input placeholder="任务名称" style="width:95%;" size="mini" clearable></el-input>
+      <el-col :xs="6" :sm="6" :md="6" :lg="6" :xl="5">
+        <el-date-picker
+          type="year"
+          placeholder="选择年度"
+          v-model="listQuery.year"
+          value-format="yyyy"
+          size="mini"
+          style="width:95%;"
+        ></el-date-picker>
       </el-col>
       <el-col :xs="5" :sm="5" :md="5" :lg="4" :xl="3">
-        <el-button type="primary" icon="el-icon-search" size="mini">查询</el-button>
-                          <el-button type="primary" icon="el-icon-document" size="mini">导出</el-button>
-         <!-- <el-button
-            size="mini"
-            class="filter-item"
-            style="margin-left: 10px;"
-            @click="handleCreate"
-            type="primary"
-            icon="el-icon-edit"
-          >新增</el-button> -->
-
+        <el-input
+          placeholder="任务名称"
+          style="width:95%;"
+          size="mini"
+          clearable
+          v-model="listQuery.RWMC"
+        ></el-input>
+      </el-col>
+      <el-col :xs="5" :sm="5" :md="5" :lg="4" :xl="3">
+        <el-input
+          placeholder="任务编号"
+          style="width:95%;"
+          size="mini"
+          clearable
+          v-model="listQuery.RWBH"
+        ></el-input>
+      </el-col>
+      <el-col :xs="5" :sm="5" :md="5" :lg="4" :xl="3">
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="getList">查询</el-button>
+        <!-- <el-button type="primary" icon="el-icon-document" size="mini">导出</el-button> -->
       </el-col>
     </el-row>
     <el-row>
       <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
         <el-table
           size="mini"
-          :data="fac"
+          :data="list"
           :header-cell-class-name="tableRowClassName"
           v-loading="listloading"
           element-loading-text="给我一点时间"
@@ -31,14 +47,14 @@
           highlight-current-row
           style="width: 100%"
         >
-          <el-table-column label="任务编号" prop="RWBH" fixed="left" ></el-table-column>
+          <el-table-column label="任务编号" prop="RWBH" fixed="left"></el-table-column>
           <el-table-column label="任务名称" prop="RWMC" fixed="left"></el-table-column>
           <el-table-column label="任务开始时间" prop="RWKSSJ" fixed="left"></el-table-column>
           <el-table-column label="任务结束时间" prop="RWJSSJ" fixed="left"></el-table-column>
-          <el-table-column label="任务范围" prop="RWFW" ></el-table-column>
-          <el-table-column label="检查总数" prop="JCZS" ></el-table-column>
-          <el-table-column label="已完成数量" prop="JCWC" ></el-table-column>
-          <el-table-column label="未完成数量" prop="WWCSL" ></el-table-column>
+          <el-table-column label="任务范围" prop="RWFW"></el-table-column>
+          <el-table-column label="检查总数" prop="total"></el-table-column>
+          <el-table-column label="已完成数量" prop="complete"></el-table-column>
+          <el-table-column label="未完成数量" prop="incomplete"></el-table-column>
           <!-- <el-table-column align="center" width="280" label="操作" fixed="right">
               <template slot-scope="scope">
 
@@ -47,7 +63,7 @@
                 <el-button type="success" v-if="scope.row.TASK_STATE=='0'" size="mini">任务下发</el-button>
                    <el-button type="info"  v-if="scope.row.TASK_STATE=='1'" @click="handleDetail(scope.row)"  size="mini" >查看详情</el-button>
               </template>
-            </el-table-column> -->
+          </el-table-column>-->
         </el-table>
         <el-pagination
           background
@@ -57,12 +73,12 @@
           :page-sizes="[10,20,30, 50]"
           :page-size="1"
           layout="total, sizes, prev, pager, next, jumper"
-          :total="1"
+          :total="total"
           style="text-align: center;"
         ></el-pagination>
       </el-col>
     </el-row>
-     <el-dialog
+    <el-dialog
       :visible.sync="editVisible"
       class="selecttrees"
       :title="textMap[dialogStatus]"
@@ -70,7 +86,7 @@
     >
       <el-card>
         <el-form ref="dataForm" :model="temp" label-width="120px" style="width: 99%;">
-           <el-row>
+          <el-row>
             <!-- <el-col :span="12">
              <el-form-item label="计划年度" prop="SQSJ">
               <el-date-picker
@@ -80,17 +96,17 @@
                 style="width: 100%;"
               ></el-date-picker>
             </el-form-item>
-            </el-col> -->
+            </el-col>-->
             <el-col :span="12">
               <el-form-item label="任务编号" prop="RWBH">
                 <el-input v-model="temp.RWBH"></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="12">
-            <el-form-item label="任务名称" prop="RWMC">
+              <el-form-item label="任务名称" prop="RWMC">
                 <el-input v-model="temp.RWMC"></el-input>
-            </el-form-item>
-            <!-- <el-form-item label="费用项目" prop="FYXM">
+              </el-form-item>
+              <!-- <el-form-item label="费用项目" prop="FYXM">
                     <el-select size="mini" style="width:100%;" v-model="temp.FYXM">
                       <el-option
                         v-for="(item,key) in selectOptions"
@@ -99,48 +115,48 @@
                         :value="item.value"
                       ></el-option>
                     </el-select>
-                  </el-form-item> -->
+              </el-form-item>-->
             </el-col>
           </el-row>
-            <el-row>
+          <el-row>
             <el-col :span="12">
-            <el-form-item label="任务开始时间" prop="RWKSSJ">
-              <el-date-picker
-                type="date"
-                placeholder="选择日期"
-                v-model="temp.RWKSSJ"
-                style="width: 100%;"
-              ></el-date-picker>
-            </el-form-item>
+              <el-form-item label="任务开始时间" prop="RWKSSJ">
+                <el-date-picker
+                  type="date"
+                  placeholder="选择日期"
+                  v-model="temp.RWKSSJ"
+                  style="width: 100%;"
+                ></el-date-picker>
+              </el-form-item>
             </el-col>
             <el-col :span="12">
-            <el-form-item label="任务结束时间" prop="RWJSSJ">
-              <el-date-picker
-                type="date"
-                placeholder="选择日期"
-                v-model="temp.RWJSSJ"
-                style="width: 100%;"
-              ></el-date-picker>
-            </el-form-item>
+              <el-form-item label="任务结束时间" prop="RWJSSJ">
+                <el-date-picker
+                  type="date"
+                  placeholder="选择日期"
+                  v-model="temp.RWJSSJ"
+                  style="width: 100%;"
+                ></el-date-picker>
+              </el-form-item>
             </el-col>
           </el-row>
           <el-row>
             <el-col :span="12">
               <el-form-item label="任务范围" prop="RWFW">
-<el-select v-model="value1" multiple placeholder="请选择" style="width:100%">
-    <el-option
-      v-for="item in options"
-      :key="item.value"
-      :label="item.label"
-      :value="item.value">
-    </el-option>
-  </el-select>
+                <el-select v-model="value1" multiple placeholder="请选择" style="width:100%">
+                  <el-option
+                    v-for="item in options"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value"
+                  ></el-option>
+                </el-select>
               </el-form-item>
             </el-col>
-           <el-col :span="12">
-            <el-form-item label="备注" prop="REMARK">
-              <el-input v-model="temp.REMARK"></el-input>
-            </el-form-item>
+            <el-col :span="12">
+              <el-form-item label="备注" prop="REMARK">
+                <el-input v-model="temp.REMARK"></el-input>
+              </el-form-item>
             </el-col>
           </el-row>
 
@@ -155,7 +171,7 @@
                 <el-input v-model="temp.BXJEDX"></el-input>
               </el-form-item>
             </el-col>
-          </el-row> -->
+          </el-row>-->
           <el-row>
             <el-col :span="24">
               <el-form-item label="任务内容" prop="RWNR">
@@ -174,17 +190,16 @@
                 <el-input v-model="temp.YTBJE"></el-input>
               </el-form-item>
             </el-col>
-          </el-row> -->
-
+          </el-row>-->
         </el-form>
         <div style="text-align:center">
           <el-button @click="editVisible = false">取消</el-button>
           <!-- <el-button v-if="dialogStatus=='create'" type="primary" @click="createData">保存</el-button>
-          <el-button v-else type="primary" @click="updateData">保存</el-button> -->
+          <el-button v-else type="primary" @click="updateData">保存</el-button>-->
         </div>
       </el-card>
     </el-dialog>
- <el-dialog
+    <el-dialog
       :visible.sync="detailVisible"
       class="selecttrees"
       :title="textMap[dialogStatus]"
@@ -231,18 +246,13 @@
             </el-col>
             <el-col :span="12">
               <el-form-item label="备注" prop="REMARK">
-                                <span>{{temp.REMARK}}</span>
+                <span>{{temp.REMARK}}</span>
               </el-form-item>
             </el-col>
           </el-row>
-
-        
-  
         </el-form>
         <div style="text-align:center">
-          <el-button type="success" @click="detailVisible = false" >确定</el-button>
-        
-
+          <el-button type="success" @click="detailVisible = false">确定</el-button>
         </div>
       </el-card>
     </el-dialog>
@@ -250,112 +260,69 @@
 </template>
 
 <script>
+import { GetTaskProcessInfo } from "@/app_src/api/RCGZ/JCJGCX";
 export default {
   name: "NDJCJH",
   data() {
     return {
-        options: [{
-          value: 'A区',
-          label: 'A区'
-        }, {
-          value: 'B区',
-          label: 'B区'
-        }, {
-          value: 'C区',
-          label: 'C区'
-        }, {
-          value: 'D区',
-          label: 'D区'
-        }],
-        value1: [],
-        value2: [],
-            infiledList: [],
-            detailVisible:false,
-            workFlowVisible:false,
-      fildtps: [{ text: "消防", value: "1" }, { text: "安全", value: "2" }],
-         textMap: {
+      options: [
+        {
+          value: "A区",
+          label: "A区"
+        },
+        {
+          value: "B区",
+          label: "B区"
+        },
+        {
+          value: "C区",
+          label: "C区"
+        },
+        {
+          value: "D区",
+          label: "D区"
+        }
+      ],
+      listQuery: {
+        year: "",
+        RWBH: "",
+        RWMC: "",
+        page: 1,
+        limit: 10
+      },
+      total: 0,
+      value1: [],
+      value2: [],
+      infiledList: [],
+      detailVisible: false,
+      workFlowVisible: false,
+      fildtps: [
+        { text: "消防", value: "1" },
+        { text: "安全", value: "2" }
+      ],
+      textMap: {
         update: "修改检查任务",
         create: "添加检查任务",
-        detail:"查看检查任务"
+        detail: "查看检查任务"
       },
-    temp: {
-RWBH:"",
-RWMC:"",
-RWKSSJ:"",
-RWJSSJ:"",
-RWNR:"",
-RWFW:"",
-REMARK:"",
-TASK_STATE:""
+      temp: {
+        RWBH: "",
+        RWMC: "",
+        RWKSSJ: "",
+        RWJSSJ: "",
+        RWNR: "",
+        RWFW: "",
+        REMARK: "",
+        TASK_STATE: ""
       },
       editVisible: false,
       dialogStatus: "",
       listloading: false,
-      fac: [
-        {
-         RWBH:"20180212XFJC",
-RWMC:"2018年一季度消防安全检查",
-RWKSSJ:"2018-01-10",
-RWJSSJ:"2018-03-11",
-RWNR:"消防检查",
-RWFW:"A区域",
-JCZS:"100",
-JCWC:"80",
-WWCSL:"20"
-        },
-        {
-         RWBH:"20180212XFJC",
-RWMC:"2018年一季度消防安全检查",
-RWKSSJ:"2018-01-10",
-RWJSSJ:"2018-03-11",
-RWNR:"消防检查",
-RWFW:"A区域,C区域,D区域",
-JCZS:"300",
-JCWC:"280",
-WWCSL:"20"
-        },
-        {
-         RWBH:"20180212XFJC",
-RWMC:"2018年一季度消防安全检查",
-RWKSSJ:"2018-01-10",
-RWJSSJ:"2018-03-11",
-RWNR:"消防检查",
-RWFW:"C区域",
-JCZS:"120",
-JCWC:"60",
-WWCSL:"60"
-        },
-        {
-         RWBH:"20180212XFJC",
-RWMC:"2018年一季度消防安全检查",
-RWKSSJ:"2018-01-10",
-RWJSSJ:"2018-03-11",
-RWNR:"消防检查",
-RWFW:"A区域,B区域,D区域",
-JCZS:"320",
-JCWC:"280",
-WWCSL:"40"
-        }
+      list: [
       ]
     };
   },
   methods: {
-          deleteRow(index, rows) {
-      //删除改行
-      rows.splice(index, 1);
-    },
-    addRow(tableData, event) {
-      tableData.push({ fildna: "", fildtp: "", remark: "" });
-    },
-
-        handleCreate() {
-      this.resetTemp();
-      this.editVisible = true;
-      this.dialogStatus = "create";
-      if (this.$refs["dataForm"] !== undefined) {
-        this.$refs["dataForm"].resetFields();
-      }
-    },
     handleUpdate(row) {
       this.temp = Object.assign({}, row); // copy obj
       this.editVisible = true;
@@ -364,8 +331,7 @@ WWCSL:"40"
         this.$refs["dataForm"].clearValidate();
       });
     },
-    handleDetail(row)
-    {
+    handleDetail(row) {
       this.temp = Object.assign({}, row); // copy obj
       this.detailVisible = true;
       this.dialogStatus = "detail";
@@ -373,33 +339,33 @@ WWCSL:"40"
         this.$refs["dataForm"].clearValidate();
       });
     },
-      getList() {
-      //   this.listLoading = true;
-      //   getTaxOrgList(this.listQuery).then(response => {
-      //     if (response.data.code === 2000) {
-      //       this.list = response.data.items;
-      this.total = 15;
-      //       this.listLoading = false;
-      //     } else {
-      //       this.listLoading = false;
-      //       this.$notify({
-      //         position: "bottom-right",
-      //         title: "失败",
-      //         message: response.data.message,
-      //         type: "error",
-      //         duration: 2000
-      //       });
-      //     }
-      //   });
+    getList() {
+      this.listLoading = true;
+      GetTaskProcessInfo(this.listQuery).then(response => {
+        if (response.data.code === 2000) {
+          this.list = response.data.items;
+          this.total = response.data.total;
+          this.listLoading = false;
+        } else {
+          this.listLoading = false;
+          this.$notify({
+            position: "bottom-right",
+            title: "失败",
+            message: response.data.message,
+            type: "error",
+            duration: 2000
+          });
+        }
+      });
     },
 
-      resetTemp() {
+    resetTemp() {
       this.temp = {
-        JHND:"",
-        JHMC:"",
-        JHSM:"",
-        JHSJ:"",
-        REMARK:""
+        JHND: "",
+        JHMC: "",
+        JHSM: "",
+        JHSJ: "",
+        REMARK: ""
       };
     },
     tableRowClassName({ row, rowIndex }) {
@@ -409,13 +375,12 @@ WWCSL:"40"
       } // 'el-button--primary is-plain'// 'warning-row'
       return "";
     },
-    handleProcess()
-    {
+    handleProcess() {
       this.workFlowVisible = true;
     },
     handleSizeChange() {},
     handleCurrentChange() {},
-       handleCreate() {
+    handleCreate() {
       this.resetTemp();
       this.editVisible = true;
       this.dialogStatus = "create";
@@ -423,7 +388,7 @@ WWCSL:"40"
         this.$refs["dataForm"].resetFields();
       }
     },
- 
+
     handleDelete(row) {
       this.$confirm("确认删除吗!", "提示", {
         confirmButtonText: "确定",
@@ -509,6 +474,15 @@ WWCSL:"40"
         }
       });
     },
+    getYear() {
+      let date = new Date();
+      let year = date.getFullYear();
+      this.listQuery.year = year.toString();
+    }
+  },
+  mounted() {
+    this.getYear();
+    this.getList();
   }
 };
 </script>

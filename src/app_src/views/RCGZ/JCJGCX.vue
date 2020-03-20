@@ -3,31 +3,46 @@
   <div id="JCJGCX" class="app-container calendar-list-container">
     <div class="topSearh" id="topsearch">
       <el-row>
-        <el-col :xs="5" :sm="5" :md="5" :lg="4" :xl="3">
-          <el-input placeholder="房屋编号" style="width:95%;" size="mini" clearable></el-input>
-        </el-col>
-        <el-col :xs="5" :sm="5" :md="5" :lg="4" :xl="3">
-          <!-- <el-input placeholder="业主类型" style="width:95%;" size="mini" clearable></el-input> -->
-          <el-select
-            v-model="listQuery.SYLX"
+        <el-col :xs="6" :sm="6" :md="6" :lg="6" :xl="5">
+          <el-date-picker
+            type="year"
+            placeholder="选择年度"
+            v-model="listQuery.year"
+            value-format="yyyy"
             size="mini"
             style="width:95%;"
-            placeholder="任务名称"
+          ></el-date-picker>
+        </el-col>
+        <el-col :xs="5" :sm="5" :md="5" :lg="4" :xl="3">
+          <el-input
+            placeholder="房屋编号"
+            style="width:95%;"
+            size="mini"
             clearable
-            filterable
-          >
-            <el-option
-              v-for="(item,key) in usedOptions"
-              :key="key"
-              :label="item.name"
-              :value="item.value"
-            ></el-option>
-          </el-select>
+            v-model="listQuery.FWBH"
+          ></el-input>
+        </el-col>
+        <el-col :xs="5" :sm="5" :md="5" :lg="4" :xl="3">
+          <el-input
+            placeholder="任务名称"
+            style="width:95%;"
+            size="mini"
+            clearable
+            v-model="listQuery.RWMC"
+          ></el-input>
         </el-col>
 
         <el-col :xs="6" :sm="6" :md="6" :lg="6" :xl="5">
-          <el-button size="mini" class="filter-item" type="primary" v-waves icon="el-icon-search">搜索</el-button>
-                            <el-button type="primary" icon="el-icon-document" size="mini">导出</el-button>
+          <el-button
+            size="mini"
+            class="filter-item"
+            type="primary"
+            v-waves
+            icon="el-icon-search"
+            @click="getList"
+          >搜索</el-button>
+
+          <!-- <el-button type="primary" icon="el-icon-document" size="mini">导出</el-button> -->
           <!-- <el-button
             size="mini"
             class="filter-item"
@@ -35,7 +50,7 @@
             @click="handleCreate"
             type="primary"
             icon="el-icon-edit"
-          >新增</el-button> -->
+          >新增</el-button>-->
         </el-col>
       </el-row>
     </div>
@@ -54,31 +69,30 @@
             highlight-current-row
             style="width: 100%;text-align:left;"
           >
-           
-            <el-table-column align="right" prop="RWMC" label="任务名称"  fixed="left">
+            <el-table-column align="right" prop="RWMC" label="任务名称" fixed="left">
               <template slot-scope="scope">
                 <span>{{scope.row.RWMC}}</span>
               </template>
             </el-table-column>
-             <el-table-column align="right" width="150" prop="JCQY" label="检查区域" fixed="left">
+            <el-table-column align="right" width="150" prop="JCQY" label="检查区域" fixed="left">
               <template slot-scope="scope">
                 <span>{{scope.row.JCQY}}</span>
               </template>
             </el-table-column>
-            <el-table-column align="right" width="100" prop="JCXM" label="检查内容">
+            <el-table-column align="right" width="100" prop="JCXM" label="检查情况">
               <template slot-scope="scope">
-                <span>{{scope.row.JCXM}}</span>
+                <span>{{scope.row.JCQK}}</span>
               </template>
             </el-table-column>
 
-             <el-table-column align="center" prop="FWBH" label="房屋编号" >
+            <el-table-column align="center" prop="FWBH" label="房屋编号">
               <template slot-scope="scope">
                 <span>{{scope.row.FWBH}}</span>
               </template>
             </el-table-column>
-                       <el-table-column align="right" prop="YZMC" label="业主名称" >
+            <el-table-column align="right" prop="YZMC" label="业主名称">
               <template slot-scope="scope">
-                <span>{{scope.row.YZMC}}</span>
+                <span>{{scope.row.ZHXM}}</span>
               </template>
             </el-table-column>
             <el-table-column align="right" prop="JCJG" label="检查结果">
@@ -86,7 +100,7 @@
                 <span>{{scope.row.JCJG}}</span>
               </template>
             </el-table-column>
-              <el-table-column align="right" width="100" prop="JCSJ" label="检查时间">
+            <el-table-column align="right" width="100" prop="JCSJ" label="检查时间">
               <template slot-scope="scope">
                 <span>{{scope.row.JCSJ}}</span>
               </template>
@@ -96,19 +110,18 @@
                 <span>{{scope.row.JCR}}</span>
               </template>
             </el-table-column>
-            <el-table-column label="任务状态">
+            <!-- <el-table-column label="任务状态">
               <template slot-scope="scope">
                 <span>{{scope.row.RWZT}}</span>
               </template>
-            </el-table-column>
-          
-            <el-table-column align="center" width="240" label="操作" fixed="right">
+            </el-table-column>-->
+
+            <!-- <el-table-column align="center" width="240" label="操作" fixed="right">
               <template slot-scope="scope">
                 <el-button type="primary" size="mini" @click="handleUpdate(scope.row)">查看详情</el-button>
                 <el-button type="danger" size="mini" @click="handleDelete(scope.row)">发送整改通知</el-button>
               </template>
-            </el-table-column>
-          
+            </el-table-column> -->
           </el-table>
           <div class="page">
             <el-pagination
@@ -136,6 +149,7 @@
 
 import waves from "@/frame_src/directive/waves"; // 水波纹指令
 import { getToken } from "@/frame_src/utils/auth";
+import { GetCheckResult } from "@/app_src/api/RCGZ/JCJGCX";
 export default {
   name: "JCJGCX",
   directives: {
@@ -146,22 +160,21 @@ export default {
   //   },
   data() {
     return {
-        usedOptions: [
-          {
-            value: "0",
-            name: "一季度安全检查"
-          },
-          {
-            value: "1",
-            name: "节前消防检查"
-          },
-          {
-            value: "2",
-            name: "临时安全检查"
-          }
-        ],
+      usedOptions: [
+        {
+          value: "0",
+          name: "一季度安全检查"
+        },
+        {
+          value: "1",
+          name: "节前消防检查"
+        },
+        {
+          value: "2",
+          name: "临时安全检查"
+        }
+      ],
 
-      
       tableKey: 0,
       selectOptions: [
         {
@@ -191,96 +204,7 @@ export default {
           label: "D区"
         }
       ],
-      list: [
-        {
-         FWBH:"A-101",
-RWMC:"一季度安全检查",
-YZMC:"张三",
-JCQY:"楼道",
-JCXM:"杂物堆积",
-JCJG:"合格",
-JCSJ:"2019-06-23",
-JCR:"赵六",
-RWZT:"已完成"
-        },
-        {
-                  FWBH:"A-101",
-RWMC:"一季度安全检查",
-YZMC:"张三",
-JCQY:"楼道",
-JCXM:"杂物堆积",
-JCJG:"不合格",
-JCSJ:"2019-07-01",
-JCR:"赵六",
-RWZT:"待复查"
-        },
-        {
-          FWBH:"A-101",
-RWMC:"一季度安全检查",
-YZMC:"张三",
-JCQY:"楼道",
-JCXM:"杂物堆积",
-JCJG:"不合格",
-JCSJ:"2019-07-01",
-JCR:"赵六",
-RWZT:"待复查"
-        },
-        {
- FWBH:"A-101",
-RWMC:"一季度安全检查",
-YZMC:"张三",
-JCQY:"楼道",
-JCXM:"杂物堆积",
-JCJG:"合格",
-JCSJ:"2019-07-01",
-JCR:"赵六",
-RWZT:"已完成"
-        },
-        {
-          FWBH:"A-101",
-RWMC:"一季度安全检查",
-YZMC:"张三",
-JCQY:"楼道",
-JCXM:"杂物堆积",
-JCJG:"不合格",
-JCSJ:"2019-07-01",
-JCR:"赵六",
-RWZT:"待复查"
-        },
-        {
-                           FWBH:"A-101",
-RWMC:"一季度安全检查",
-YZMC:"张三",
-JCQY:"楼道",
-JCXM:"杂物堆积",
-JCJG:"不合格",
-JCSJ:"2019-07-01",
-JCR:"赵六",
-RWZT:"待复查"
-        },
-       {
-          FWBH:"A-101",
-RWMC:"一季度安全检查",
-YZMC:"张三",
-JCQY:"楼道",
-JCXM:"杂物堆积",
-JCJG:"合格",
-JCSJ:"2019-07-01",
-JCR:"赵六",
-RWZT:"已完成"
-        },
-        {
- FWBH:"A-101",
-RWMC:"一季度安全检查",
-YZMC:"张三",
-JCQY:"楼道",
-JCXM:"杂物堆积",
-JCJG:"",
-JCSJ:"",
-JCR:"",
-RWZT:"待执行"
-        }
-      ],
+      list: [],
       rules: {
         FWMC: [
           { required: true, message: "请输入房屋名称", trigger: "change" }
@@ -295,31 +219,14 @@ RWZT:"待执行"
           { required: true, message: "请输入物业费金额", trigger: "change" }
         ]
       },
-      total: 15,
+      total:0,
       listLoading: false,
-      importmodeloptions: [
-        {
-          value: "样表一",
-          label: "样表一"
-        },
-        {
-          value: "样表二",
-          label: "样表二"
-        }
-      ],
-      taxofficeoptions: [], //税务机关
-      orgregionoptions: [], //机关所在地
-      taxcodeoptions: [], //税号
-      responsibilityoptions: [], //责任中心
       listQuery: {
-        limit: 10,
+        year: "",
+        FWBH: "",
+        RWMC: "",
         page: 1,
-        S_OrgCode: null,
-        SYLX: "",
-        TaxOffice: "",
-        ImportModel: "",
-        TaxNumber: "",
-        OrgRegion: ""
+        limit: 10
       },
       temp: {
         FWBH: "D-211",
@@ -364,21 +271,23 @@ RWZT:"待执行"
     },
 
     getList() {
-      //   this.listLoading = true;
-      //   getTaxOrgList(this.listQuery).then(response => {
-      //     if (response.data.code === 2000) {
-      //       this.list = response.data.items;
-      this.total = 15;
-      //       this.listLoading = false;
-      //     } else {
-      //       this.listLoading = false;
-      //       this.$notify({
-      //         position: "bottom-right",
-      //         title: "失败",
-      //         message: response.data.message,
-      //         type: "error",
-      //         duration: 2000
-      //       });
+      this.listLoading = true;
+      GetCheckResult(this.listQuery).then(res => {
+        if (res.data.code === 2000) {
+          this.list = res.data.items;
+          this.total = res.data.total;
+          this.listLoading = false;
+        } else {
+          this.$notify({
+            position: "bottom-right",
+            title: "失败",
+            message: res.data.message,
+            type: "error",
+            duration: 2000
+          });
+        }
+      });
+
       //     }
       //   });
     },
@@ -497,11 +406,16 @@ RWZT:"待执行"
         return "el-button--primary is-active"; // 'warning-row'
       } // 'el-button--primary is-plain'// 'warning-row'
       return "";
+    },
+    getYear() {
+      let date = new Date();
+      let year = date.getFullYear();
+      this.listQuery.year = year.toString();
     }
   },
   created() {
     this.listLoading = false;
-
+    this.getYear();
     this.getList();
   },
 

@@ -2,10 +2,13 @@
   <div id="NDJCJH" class="app-container calendar-list-container">
     <el-row style="margin-bottom:10px;">
       <el-col :xs="5" :sm="5" :md="5" :lg="4" :xl="3">
-        <el-input placeholder="任务名称" style="width:95%;" size="mini" clearable></el-input>
+        <el-input placeholder="任务编号" style="width:95%;" size="mini" clearable v-model="listQuery.RWBH"></el-input>
       </el-col>
       <el-col :xs="5" :sm="5" :md="5" :lg="4" :xl="3">
-        <el-button type="primary" icon="el-icon-search" size="mini">查询</el-button>
+        <el-input placeholder="任务名称" style="width:95%;" size="mini" clearable v-model="listQuery.RWMC"></el-input>
+      </el-col>
+      <el-col :xs="5" :sm="5" :md="5" :lg="4" :xl="3">
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="getList">查询</el-button>
         <el-button
           size="mini"
           class="filter-item"
@@ -41,26 +44,11 @@
             <template slot-scope="scope">
               <!-- <el-button type="primary" size="mini" @click="handleUpdate(scope.row)">修改</el-button>
               <el-button type="danger" size="mini" @click="handleDelete(scope.row)">删除</el-button>-->
-              <el-button
-                type="primary"
-                size="mini"
-                v-if="scope.row.TASK_STATE=='0'"
-                @click="handleUpdate(scope.row)"
-              >修改</el-button>
-              <el-button
-                type="danger"
-                size="mini"
-                v-if="scope.row.TASK_STATE=='0'"
-                @click="handleDelete(scope.row)"
-              >删除</el-button>
+              <el-button type="primary" size="mini" @click="handleUpdate(scope.row)">修改</el-button>
+              <el-button type="danger" size="mini" @click="handleDelete(scope.row)">删除</el-button>
               <el-button type="success" v-if="scope.row.TASK_STATE=='0'" size="mini">任务下发</el-button>
-              <el-button
-                type="info"
-                v-if="scope.row.TASK_STATE!='0'"
-                @click="handleDetail(scope.row)"
-                size="mini"
-              >查看详情</el-button>
-              <el-button type="primary"  v-if="scope.row.TASK_STATE=='2'" size="mini">执行情况</el-button>
+              <el-button type="info" @click="handleDetail(scope.row)" size="mini">查看详情</el-button>
+              <el-button type="primary" v-if="scope.row.TASK_STATE=='2'" size="mini">执行情况</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -72,7 +60,7 @@
           :page-sizes="[10,20,30, 50]"
           :page-size="1"
           layout="total, sizes, prev, pager, next, jumper"
-          :total="1"
+          :total="total"
           style="text-align: center;"
         ></el-pagination>
       </el-col>
@@ -84,26 +72,67 @@
       width="1000px"
     >
       <el-card>
-        <el-form ref="dataForm" :model="temp" label-width="120px" style="width: 100%;">
+        <el-form
+          ref="dataForm"
+          :model="temp"
+          label-width="120px"
+          style="width: 100%;"
+          :rules="rules"
+        >
           <el-row>
             <el-col :span="24">
-              <el-form-item label="计划内容">
-                <el-input v-model="temp.JCNR" disabled style="width:89%;"></el-input>
-                <el-button size="small" type="primary" @click="innerVisible=true" style="width:10%;">选择明细</el-button>
+              <el-form-item label="年度计划">
+                <el-input v-model="temp.JHMC" disabled style="width:89%;"></el-input>
+                <el-button
+                  size="small"
+                  type="primary"
+                  @click="ShowCheckPlan"
+                  style="width:10%;"
+                >选择计划</el-button>
+              </el-form-item>
+              <el-form-item label="计划明细" prop="PLAN_DETAIL_ID">
+                <el-row>
+                  <el-col>
+                    <el-button
+                      type="primary"
+                      icon="el-icon-search"
+                      size="mini"
+                      @click="GetAllCheckPlanDetail"
+                      style="float:right"
+                    >查询</el-button>
+                  </el-col>
+                </el-row>
+                <span style="display:none">{{temp.PLAN_DETAIL_ID}}</span>
+                <el-row>
+                  <el-table
+                    :data="list3"
+                    size="mini"
+                    :header-cell-class-name="tableRowClassName"
+                    element-loading-text="给我一点时间"
+                    border
+                    fit
+                    highlight-current-row
+                  >
+                    <el-table-column align="center" label="选择" width="50px">
+                      <template slot-scope="scope">
+                        <el-radio
+                          class="radio"
+                          v-model="radio1"
+                          :label="scope.$index"
+                          @change="selectCheckPlanDetail(scope.row)"
+                        >&nbsp;</el-radio>
+                      </template>
+                    </el-table-column>
+                    <el-table-column label="检查区域" prop="JCQY"></el-table-column>
+                    <el-table-column label="检查内容" :show-overflow-tooltip="true" prop="JCNR"></el-table-column>
+                    <el-table-column prop="JCLX" label="检查类型"></el-table-column>
+                    <el-table-column label="排查次数" prop="PCCS"></el-table-column>
+                  </el-table>
+                </el-row>
               </el-form-item>
             </el-col>
           </el-row>
           <el-row>
-            <!-- <el-col :span="12">
-             <el-form-item label="计划年度" prop="SQSJ">
-              <el-date-picker
-                 type="year"
-                placeholder="选择年度"
-                v-model="temp.JHND"
-                style="width: 100%;"
-              ></el-date-picker>
-            </el-form-item>
-            </el-col>-->
             <el-col :span="12">
               <el-form-item label="任务编号" prop="RWBH">
                 <el-input v-model="temp.RWBH"></el-input>
@@ -113,16 +142,6 @@
               <el-form-item label="任务名称" prop="RWMC">
                 <el-input v-model="temp.RWMC"></el-input>
               </el-form-item>
-              <!-- <el-form-item label="费用项目" prop="FYXM">
-                    <el-select size="mini" style="width:100%;" v-model="temp.FYXM">
-                      <el-option
-                        v-for="(item,key) in selectOptions"
-                        :key="key"
-                        :label="item.label"
-                        :value="item.value"
-                      ></el-option>
-                    </el-select>
-              </el-form-item>-->
             </el-col>
           </el-row>
           <el-row>
@@ -150,7 +169,7 @@
           <el-row>
             <el-col :span="12">
               <el-form-item label="任务范围" prop="RWFW">
-                <el-select v-model="value1" multiple placeholder="请选择" style="width:100%">
+                <el-select v-model="temp.RWFW" placeholder="请选择" style="width:100%">
                   <el-option
                     v-for="item in options"
                     :key="item.value"
@@ -167,18 +186,6 @@
             </el-col>
           </el-row>
 
-          <!-- <el-row>
-            <el-col :span="12">
-              <el-form-item label="报销金额" prop="BXJE">
-                <el-input v-model="temp.BXJE"></el-input>
-              </el-form-item>
-            </el-col>
-            <el-col :span="12">
-              <el-form-item label="金额大写" prop="BXJEDX">
-                <el-input v-model="temp.BXJEDX"></el-input>
-              </el-form-item>
-            </el-col>
-          </el-row>-->
           <el-row>
             <el-col :span="24">
               <el-form-item label="任务内容" prop="RWNR">
@@ -186,23 +193,11 @@
               </el-form-item>
             </el-col>
           </el-row>
-          <!-- <el-row>
-            <el-col :span="12">
-              <el-form-item label="预借差旅费" prop="YJCLF">
-                <el-input v-model="temp.YJCLF"></el-input>
-              </el-form-item>
-            </el-col>
-            <el-col :span="12">
-              <el-form-item label="应退补金额" prop="YTBJE">
-                <el-input v-model="temp.YTBJE"></el-input>
-              </el-form-item>
-            </el-col>
-          </el-row>-->
         </el-form>
         <div style="text-align:center">
           <el-button @click="editVisible = false">取消</el-button>
           <el-button v-if="dialogStatus=='create'" type="primary" @click="createData">保存</el-button>
-          <el-button v-else type="primary" @click="updateData">保存</el-button>
+          <el-button v-if="dialogStatus=='update'" type="primary" @click="updateData">保存</el-button>
         </div>
       </el-card>
     </el-dialog>
@@ -263,22 +258,53 @@
         </div>
       </el-card>
     </el-dialog>
-    <el-dialog width="40%" title="年度检查计划明细" :visible.sync="innerVisible" append-to-body>
-      <el-table
-        :data="list2"
-        size="mini"
-        @row-click="showRow"
-        :header-cell-class-name="tableRowClassName"
-        element-loading-text="给我一点时间"
-        border
-        fit
-        highlight-current-row
-        style="width: 100%;text-align:left;"
-      >
-        <el-table-column align="center" label="选择" width="50px">
+    <el-dialog
+      width="40%"
+      :visible.sync="innerVisible"
+      title="年度检查计划"
+      append-to-body
+      @close="close"
+    >
+      <el-card>
+        <el-row>
+          <el-col :span="5">
+            <el-date-picker
+              type="year"
+              placeholder="选择年度"
+              v-model="checkPlanQuery.JHND"
+              style="width: 100%;"
+              value-format="yyyy"
+              size="small"
+            ></el-date-picker>
+          </el-col>
+          <el-col :span="5">
+            <el-button @click="GetCheckPlan" type="primary" size="small">搜索</el-button>
+          </el-col>
+        </el-row>
+        <el-table
+          :data="list2"
+          size="mini"
+          @row-click="showRow"
+          :header-cell-class-name="tableRowClassName"
+          element-loading-text="给我一点时间"
+          border
+          fit
+          highlight-current-row
+          style="width: 100%;text-align:left;"
+          @expand-change="GetCheckPlanDetail"
+        >
+          <el-table-column align="center" label="选择" width="50px">
+            <template slot-scope="scope">
+              <el-radio class="radio" v-model="radio" :label="scope.$index">&nbsp;</el-radio>
+            </template>
+          </el-table-column>
+          <el-table-column label="计划年度" prop="JHND"></el-table-column>
+          <el-table-column label="计划名称" prop="JHMC"></el-table-column>
+          <el-table-column label="计划说明" prop="JHSM"></el-table-column>
+          <el-table-column label="计划时间" prop="JHSJ"></el-table-column>
+          <!-- <el-table-column align="center" label="选择" width="50px">
           <template slot-scope="scope">
             <el-radio class="radio" v-model="radio" :label="scope.$index">&nbsp;</el-radio>
-            <!-- <el-radio :label="scope.row.flagIndex" v-model="scope.row.flagValue" @change.native="getTemplateRow(scope.$index,scope.row)"></el-radio> -->
           </template>
         </el-table-column>
         <el-table-column align="center" label="检查区域">
@@ -297,17 +323,32 @@
           <template slot-scope="scope">
             <span>{{scope.row.JCLX}}</span>
           </template>
-        </el-table-column>
-      </el-table>
+          </el-table-column>-->
+        </el-table>
+      </el-card>
     </el-dialog>
   </div>
 </template>
 
 <script>
+import { GetCheckPlan, GetCheckPlanDetail } from "@/app_src/api/RCGZ/NDJHJC";
+import {
+  GetTaskInfo,
+  DeleteTask,
+  CreateTask,
+  UpdateTask,
+  GetPlanCheckAndDetail
+} from "@/app_src/api/RCGZ/RWJCJH";
 export default {
   name: "NDJCJH",
   data() {
     return {
+      listQuery: {
+        RWBH: "",
+        RWMC: "",
+        page: 1,
+        limit: 10
+      },
       options: [
         {
           value: "A区",
@@ -326,6 +367,13 @@ export default {
           label: "D区"
         }
       ],
+      checkPlanQuery: {
+        JHMC: "",
+        JHND: "",
+        page: 1,
+        limit: 10
+      },
+      CheckPlanList: [],
       value1: [],
       value2: [],
       textMap: {
@@ -333,10 +381,15 @@ export default {
         create: "添加任务信息"
       },
       radio: "",
+      radio1: "",
+      total:0,
       detailVisible: false,
       innerVisible: false,
+      innerVisible1: false,
       temp: {
-        JCNR: "",
+        JHMC: "",
+        TASK_ID: "",
+        PLAN_DETAIL_ID: "",
         RWBH: "",
         RWMC: "",
         RWKSSJ: "",
@@ -344,85 +397,121 @@ export default {
         RWNR: "",
         RWFW: "",
         REMARK: "",
-        TASK_STATE: ""
+        userId: this.$store.state.user.userId
       },
       editVisible: false,
       dialogStatus: "",
       listloading: false,
-      list2: [
-        {
-          RWFW: "A区域",
-          JCNR: "消防通道检查",
-          JCLX: "消防"
-        },
-        {
-          RWFW: "A区域,c区域",
-          JCNR: "应急通道检查",
-          JCLX: "安全"
-        },
-        {
-          RWFW: "A区域,B区域,D区域",
-          JCNR: "灭火器更换",
-          JCLX: "消防"
-        }
-      ],
-      fac: [
-        {
-          RWBH: "20180212XFJC",
-          RWMC: "2018年一季度消防安全检查",
-          RWKSSJ: "2018-01-10",
-          RWJSSJ: "2018-03-11",
-          RWNR: "消防检查",
-          RWFW: "A区域",
-          REMARK: "",
-          TASK_STATE: "0",
-          TASK_STATE_NAME: "未下发"
-        },
-        {
-          RWBH: "20180212XFJC",
-          RWMC: "2018年一季度消防安全检查",
-          RWKSSJ: "2018-01-10",
-          RWJSSJ: "2018-03-11",
-          RWNR: "消防检查",
-          RWFW: "A区域,C区域,D区域",
-          REMARK: "",
-          TASK_STATE: "1",
-          TASK_STATE_NAME: "已下发"
-        },
-        {
-          RWBH: "20180212XFJC",
-          RWMC: "2018年一季度消防安全检查",
-          RWKSSJ: "2018-01-10",
-          RWJSSJ: "2018-03-11",
-          RWNR: "消防检查",
-          RWFW: "C区域",
-          REMARK: "",
-          TASK_STATE: "2",
-          TASK_STATE_NAME: "执行中"
-        },
-        {
-          RWBH: "20180212XFJC",
-          RWMC: "2018年一季度消防安全检查",
-          RWKSSJ: "2018-01-10",
-          RWJSSJ: "2018-03-11",
-          RWNR: "消防检查",
-          RWFW: "A区域,B区域,D区域",
-          REMARK: "",
-          TASK_STATE: "1",
-          TASK_STATE_NAME: "已完成"
-        }
-      ]
+      list2: [],
+      list3: [],
+      fac: [],
+      rules: {
+        JHMC: [
+          {
+            required: true,
+            message: "请输入计划名称",
+            trigger: "change"
+          }
+        ],
+        PLAN_DETAIL_ID: [
+          {
+            required: true,
+            message: "请选择计划明细",
+            trigger: "change"
+          }
+        ],
+        RWBH: [
+          {
+            required: true,
+            message: "请输入任务编号",
+            trigger: "change"
+          }
+        ],
+        RWMC: [
+          {
+            required: true,
+            message: "请输入任务名称",
+            trigger: "change"
+          }
+        ],
+        RWKSSJ: [
+          {
+            required: true,
+            message: "请输入任务开始时间",
+            trigger: "change"
+          }
+        ],
+        RWJSSJ: [
+          {
+            required: true,
+            message: "请输入任务结束时间",
+            trigger: "change"
+          }
+        ],
+        RWNR: [
+          {
+            required: true,
+            message: "请输入任务内容",
+            trigger: "change"
+          }
+        ],
+        RWFW: [
+          {
+            required: true,
+            message: "请输入任务范围",
+            trigger: "change"
+          }
+        ],
+        REMARK: [
+          {
+            required: true,
+            message: "请输入备注",
+            trigger: "change"
+          }
+        ],
+        PLAN_DETAIL_ID: [
+          {
+            required: true,
+            message: "请选择计划明细",
+            trigger: "change"
+          }
+        ]
+      }
     };
   },
   methods: {
     showRow(row) {
       //赋值给radio
       this.radio = this.list2.indexOf(row);
-      this.selected = row;
-      this.temp = row;
+      console.log(this.radio);
+      let temp = {
+        PLAN_ID: row.PLAN_ID
+      };
+      GetCheckPlanDetail(temp).then(res => {
+        if (res.data.code === 2000) {
+          this.list3 = res.data.items;
+        }
+      });
+      this.temp.PLAN_ID = row.PLAN_ID;
+      this.temp.JHMC = row.JHMC;
       this.innerVisible = false;
     },
-
+    GetAllCheckPlanDetail() {
+      console.log(this.temp);
+      let temp = {
+        PLAN_ID: this.temp.PLAN_ID
+      };
+      GetCheckPlanDetail(temp).then(res => {
+        if (res.data.code === 2000) {
+          this.list3 = res.data.items;
+          this.radio1 = "";
+          this.PLAN_DETAIL_ID = "";
+        }
+      });
+    },
+    selectCheckPlanDetail(row) {
+      this.temp.PLAN_DETAIL_ID = row.PLAN_DETAIL_ID;
+    },
     handleCreate() {
       this.resetTemp();
       this.editVisible = true;
@@ -432,7 +521,21 @@ export default {
       }
     },
     handleUpdate(row) {
+      this.resetTemp();
+      this.dialogStatus == "update";
       this.temp = Object.assign({}, row); // copy obj
+      let temp = {
+        TASK_ID: row.TASK_ID
+      };
+      GetPlanCheckAndDetail(temp).then(res => {
+        if (res.data.code === 2000) {
+          this.temp.PLAN_ID = res.data.checkplan[0].PLAN_ID;
+          this.temp.JHMC = res.data.checkplan[0].JHMC;
+          this.temp.PLAN_DETAIL_ID = res.data.detail[0].PLAN_DETAIL_ID;
+          this.list3 = res.data.detail;
+          this.radio1 = 0;
+        }
+      });
       this.editVisible = true;
       this.dialogStatus = "update";
       this.$nextTick(() => {
@@ -440,41 +543,70 @@ export default {
       });
     },
     handleDetail(row) {
-      this.temp = Object.assign({}, row); // copy obj
-      this.detailVisible = true;
-      this.dialogStatus = "detail";
-      this.$nextTick(() => {
-        this.$refs["dataForm"].clearValidate();
+      this.dialogStatus=='';
+      this.handleUpdate(row);
+    },
+    GetCheckPlanDetail(row) {
+      let temp = {
+        PLAN_ID: row.PLAN_ID
+      };
+      GetCheckPlanDetail(temp).then(res => {
+        if (res.data.code === 2000) {
+        }
       });
     },
+    ShowCheckPlan() {
+      this.innerVisible = true;
+      this.getYear();
+      this.GetCheckPlan();
+    },
+    GetCheckPlan() {
+      GetCheckPlan(this.checkPlanQuery).then(res => {
+        if (res.data.code === 2000) {
+          this.list2 = res.data.items;
+        }
+      });
+    },
+    close() {
+      this.CheckPlanList = [];
+    },
     getList() {
-      //   this.listLoading = true;
-      //   getTaxOrgList(this.listQuery).then(response => {
-      //     if (response.data.code === 2000) {
-      //       this.list = response.data.items;
-      this.total = 15;
-      //       this.listLoading = false;
-      //     } else {
-      //       this.listLoading = false;
-      //       this.$notify({
-      //         position: "bottom-right",
-      //         title: "失败",
-      //         message: response.data.message,
-      //         type: "error",
-      //         duration: 2000
-      //       });
-      //     }
-      //   });
+      this.listLoading = true;
+      GetTaskInfo(this.listQuery).then(response => {
+        if (response.data.code === 2000) {
+          this.fac = response.data.items;
+          this.total = response.data.total;
+          this.listLoading = false;
+        } else {
+          this.listLoading = false;
+          this.$notify({
+            position: "bottom-right",
+            title: "失败",
+            message: response.data.message,
+            type: "error",
+            duration: 2000
+          });
+        }
+      });
     },
 
     resetTemp() {
       this.temp = {
-        JHND: "",
+        PLAN_ID: "",
         JHMC: "",
-        JHSM: "",
-        JHSJ: "",
-        REMARK: ""
+        TASK_ID: "",
+        PLAN_DETAIL_ID: "",
+        RWBH: "",
+        RWMC: "",
+        RWKSSJ: "",
+        RWJSSJ: "",
+        RWNR: "",
+        RWFW: "",
+        REMARK: "",
+        userId: this.$store.state.user.userId
       };
+      this.radio = "";
+      this.radio1 = "";
     },
     tableRowClassName({ row, rowIndex }) {
       // 表头行的 className 的回调方法，也可以使用字符串为所有表头行设置一个固定的 className。
@@ -483,8 +615,14 @@ export default {
       } // 'el-button--primary is-plain'// 'warning-row'
       return "";
     },
-    handleSizeChange() {},
-    handleCurrentChange() {},
+    handleSizeChange(val) {
+      this.listQuery.limit=val;
+      this.getList();
+    },
+    handleCurrentChange(val) {
+      this.listQuery.page=val;
+      this.getList();
+    },
     handleCreate() {
       this.resetTemp();
       this.editVisible = true;
@@ -501,26 +639,30 @@ export default {
         type: "warning"
       })
         .then(() => {
-          //   const query = { S_ID: row.S_Id };
-          //   deleteTaxOrg(query).then(response => {
-          //     this.message = response.data.message;
-          //     this.title = "失败";
-          //     this.type = "error";
-          //     if (response.data.code === 2000) {
-          //       // const index = this.list.indexOf(row)
-          //       // this.list.splice(index, 1)
-          this.getList();
-          this.title = "成功";
-          this.type = "success";
-          //     }
-          this.$notify({
-            position: "bottom-right",
-            title: this.title,
-            message: this.message,
-            type: this.type,
-            duration: 2000
+          let temp = {
+            TASK_ID: row.TASK_ID
+          };
+          DeleteTask(temp).then(res => {
+            if (res.data.code === 2000) {
+              this.$notify({
+                position: "bottom-right",
+                title: "成功",
+                message: res.data.message,
+                type: "success",
+                duration: 2000
+              });
+              this.getList();
+            }
+            else{
+              this.$notify({
+                position: "bottom-right",
+                title: "失败",
+                message: res.data.message,
+                type: "error",
+                duration: 2000
+              });
+            }
           });
-          //   });
         })
         .catch(() => {});
     },
@@ -528,26 +670,27 @@ export default {
       // 创建
       this.$refs["dataForm"].validate(valid => {
         if (valid) {
-          //   createTaxOrg(this.temp).then(response => {
-          //     var message = response.data.message;
-          var message = "成功";
-          var title = "失败";
-          var type = "error";
-          //     if (response.data.code === 2000) {
-          this.getList();
-          title = "成功";
-          type = "success";
-          // this.list.unshift(this.temp)
-          //     }
-          this.editVisible = false;
-          this.$notify({
-            position: "bottom-right",
-            title: title,
-            message: message,
-            type: type,
-            duration: 3000
+          CreateTask(this.temp).then(res => {
+            if (res.data.code === 2000) {
+              this.$notify({
+                position: "bottom-right",
+                title: "成功",
+                message: res.data.message,
+                type: "success",
+                duration: 3000
+              });
+              this.editVisible = false;
+              this.getList();
+            } else {
+              this.$notify({
+                position: "bottom-right",
+                title: "失败",
+                message: res.data.message,
+                type: "error",
+                duration: 3000
+              });
+            }
           });
-          //   });
         }
       });
     },
@@ -555,30 +698,39 @@ export default {
       this.$refs["dataForm"].validate(valid => {
         if (valid) {
           const tempData = Object.assign({}, this.temp); // 这样就不会共用同一个对象
-          //   tempData.S_UpdateBy = this.$store.state.user.userId;
-          //   //tempData.NOTICE_CONTENT=this.content
-          //   updateTaxOrg(tempData).then(response => {
-          //     var message = response.data.message;
-          var message = "成功";
-          var title = "失败";
-          var type = "error";
-          //     if (response.data.code === 2000) {
-          this.getList();
-          title = "成功";
-          type = "success";
-          // }
-          this.editVisible = false;
-          this.$notify({
-            position: "bottom-right",
-            title: title,
-            message: message,
-            type: type,
-            duration: 3000
+          tempData.userId = this.$store.state.user.userId;
+          UpdateTask(tempData).then(res => {
+            if (res.data.code === 2000) {
+              this.$notify({
+                position: "bottom-right",
+                title: "成功",
+                message: res.data.message,
+                type: "success",
+                duration: 3000
+              });
+              this.editVisible = false;
+              this.getList();
+            } else {
+              this.$notify({
+                position: "bottom-right",
+                title: "失败",
+                message: res.data.message,
+                type: "error",
+                duration: 3000
+              });
+            }
           });
-          //   });
         }
       });
+    },
+    getYear() {
+      let date = new Date();
+      let year = date.getFullYear();
+      this.checkPlanQuery.JHND = year.toString();
     }
+  },
+  mounted() {
+    this.getList();
   }
 };
 </script>

@@ -161,6 +161,7 @@
                 <span>{{scope.row.ZLWZ}}</span>
               </template>
             </el-table-column>
+            <el-table-column align="right" prop="SS" label="所属区域"></el-table-column>
             <el-table-column align="right" label="结构类型">
               <template slot-scope="scope">{{scope.row.JG}}</template>
             </el-table-column>
@@ -311,8 +312,8 @@
                   <el-option
                     v-for="(item,key) in areaOptions"
                     :key="key"
-                    :label="item.label"
-                    :value="item.value"
+                    :label="item.Name"
+                    :value="item.Code"
                   ></el-option>
                 </el-select>
               </el-form-item>
@@ -470,15 +471,14 @@ export default {
         return callback(new Error("请输入正确的数字！"));
       }
     };
-    const validateIDNumber=(rule,value,callback)=>{
-      const reg=/^([1-6][1-9]|50)\d{4}(18|19|20)\d{2}((0[1-9])|10|11|12)(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/;
-      if((reg.test(value))){
+    const validateIDNumber = (rule, value, callback) => {
+      const reg = /^([1-6][1-9]|50)\d{4}(18|19|20)\d{2}((0[1-9])|10|11|12)(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/;
+      if (reg.test(value)) {
         callback();
-      }
-      else{
+      } else {
         callback(new Error("身份证输入错误！"));
       }
-    }
+    };
     return {
       UploadURL: process.env.BASE_API + "HouseInfo/uploadHouseImg",
       dateQuery: "",
@@ -532,24 +532,7 @@ export default {
           label: "出售"
         }
       ],
-      areaOptions: [
-        {
-          value: "A区",
-          label: "A区"
-        },
-        {
-          value: 1,
-          label: "B区"
-        },
-        {
-          value: 2,
-          label: "C区"
-        },
-        {
-          value: 3,
-          label: "D区"
-        }
-      ],
+      areaOptions: [],
       list2: [],
       list: [],
       rules: {
@@ -853,6 +836,9 @@ export default {
       let temp1 = {
         ParentCode: "JGLX"
       };
+      let temp2 = {
+        ParentCode: "SSQY"
+      };
       GetOptions(temp).then(res => {
         if (res.data.code === 2000) {
           this.GSOptions = res.data.items;
@@ -861,6 +847,11 @@ export default {
       GetOptions(temp1).then(res => {
         if (res.data.code === 2000) {
           this.JGOptions = res.data.items;
+        }
+      });
+      GetOptions(temp2).then(res => {
+        if (res.data.code === 2000) {
+          this.areaOptions = res.data.items;
         }
       });
     },
