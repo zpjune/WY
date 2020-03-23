@@ -51,7 +51,7 @@
           <el-table-column label="任务名称" prop="RWMC" fixed="left"></el-table-column>
           <el-table-column label="任务开始时间" prop="RWKSSJ" fixed="left"></el-table-column>
           <el-table-column label="任务结束时间" prop="RWJSSJ" fixed="left"></el-table-column>
-          <el-table-column label="任务范围" prop="RWFW"></el-table-column>
+          <el-table-column label="任务范围" prop="NAME"></el-table-column>
           <el-table-column label="检查总数" prop="total"></el-table-column>
           <el-table-column label="已完成数量" prop="complete"></el-table-column>
           <el-table-column label="未完成数量" prop="incomplete"></el-table-column>
@@ -142,7 +142,7 @@
           </el-row>
           <el-row>
             <el-col :span="12">
-              <el-form-item label="任务范围" prop="RWFW">
+              <el-form-item label="任务范围" prop="NAME">
                 <el-select v-model="value1" multiple placeholder="请选择" style="width:100%">
                   <el-option
                     v-for="item in options"
@@ -241,7 +241,7 @@
           <el-row>
             <el-col :span="12">
               <el-form-item label="任务范围" prop="RWFW">
-                <span>{{temp.RWFW}}</span>
+                <span>{{temp.NAME}}</span>
               </el-form-item>
             </el-col>
             <el-col :span="12">

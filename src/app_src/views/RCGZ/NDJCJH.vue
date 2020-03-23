@@ -75,6 +75,7 @@
       class="selecttrees"
       :title="textMap[dialogStatus]"
       width="1000px"
+      :close-on-click-modal="false"
     >
       <el-card>
         <el-form
@@ -137,17 +138,25 @@
                   border
                   style="width: 100%"
                 >
-                  <el-table-column  label="区域">
+                  <el-table-column label="区域">
                     <template slot-scope="scope">
-                      <el-input size="mini" v-model="scope.row.JCQY"></el-input>
+                      <!-- <el-input size="mini" v-model="scope.row.JCQY"></el-input> -->
+                      <el-select style="width:100%;" v-model="scope.row.JCQY" multiple>
+                        <el-option
+                          v-for="(item,key) in areaOptions"
+                          :key="key"
+                          :label="item.Name"
+                          :value="item.Code"
+                        ></el-option>
+                      </el-select>
                     </template>
                   </el-table-column>
-                  <el-table-column  label="检查内容">
+                  <el-table-column label="检查内容">
                     <template slot-scope="scope">
                       <el-input size="mini" v-model="scope.row.JCNR"></el-input>
                     </template>
                   </el-table-column>
-                  <el-table-column  label="检查类型">
+                  <el-table-column label="检查类型">
                     <template slot-scope="scope">
                       <el-select v-model="scope.row.JCLX" clearable size="mini">
                         <el-option
@@ -159,7 +168,7 @@
                       </el-select>
                     </template>
                   </el-table-column>
-                  <el-table-column  label="排查次数">
+                  <el-table-column label="排查次数">
                     <template slot-scope="scope">
                       <el-input size="mini" v-model="scope.row.PCCS"></el-input>
                     </template>
@@ -204,6 +213,7 @@ import {
   CreateCheckPlan,
   UpdateCheckPlan
 } from "@/app_src/api/RCGZ/NDJHJC";
+import { GetOptions } from "@/app_src/api/commonApi";
 export default {
   name: "NDJCJH",
   data() {
@@ -240,6 +250,7 @@ export default {
       dialogStatus: "",
       listloading: false,
       list: [],
+      areaOptions:[],
       rules: {
         JHND: [
           {
@@ -368,8 +379,14 @@ export default {
     handleProcess() {
       this.workFlowVisible = true;
     },
-    handleSizeChange() {},
-    handleCurrentChange() {},
+    handleSizeChange(val) {
+      this.listQuery.limit=val;
+      this.getList();
+    },
+    handleCurrentChange(val) {
+      this.listQuery.page=val;
+      this.getList();
+    },
     handleCreate() {
       this.resetTemp();
       this.editVisible = true;
@@ -450,7 +467,6 @@ export default {
             this.DeleteList
           );
           tempData.userId = this.$store.state.user.userId;
-          console.log(tempData);
           UpdateCheckPlan(tempData).then(res => {
             if (res.data.code === 2000) {
               this.$notify({
@@ -474,10 +490,21 @@ export default {
           });
         }
       });
+    },
+    GetOptions() {
+      let temp2 = {
+        ParentCode: "SSQY"
+      };
+      GetOptions(temp2).then(res => {
+        if (res.data.code === 2000) {
+          this.areaOptions = res.data.items;
+        }
+      });
     }
   },
   mounted() {
     this.getList();
+    this.GetOptions();
   }
 };
 </script>

@@ -196,6 +196,7 @@
       class="selecttrees"
       :title="textMap[dialogStatus]"
       width="1000px"
+      :close-on-click-modal="false"
     >
       <el-card>
         <el-form

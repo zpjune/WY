@@ -101,7 +101,7 @@
         </el-col>
       </el-row>
     </el-card>
-    <el-dialog :visible.sync="editVisible2" class="selecttrees" title="商户详情" width="75%">
+    <el-dialog :visible.sync="editVisible2" class="selecttrees" title="商户详情" width="75%" :close-on-click-modal="false">
       <el-card>
         <el-form
           ref="dataForm"

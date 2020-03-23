@@ -38,3 +38,11 @@ export function DeleteTask(query) {
       data
     })
   }
+
+  export function PushTask(query) {
+    return request({
+      url: '/Task/PushTask',
+      method: 'get',
+      params: query
+    })
+  }

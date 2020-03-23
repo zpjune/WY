@@ -109,6 +109,7 @@
       class="selecttrees"
       :title="textMap[dialogStatus]"
       width="1000px"
+      :close-on-click-modal="false"
     >
       <el-card>
         <el-table
@@ -166,6 +167,7 @@
       class="selecttrees"
       :title="textMap[dialogStatus]"
       width="1000px"
+      :close-on-click-modal="false"
     >
       <el-form ref="dataForm" :model="temp" label-width="120px" style="width: 99%;">
         <el-card style="margin-top:20px;">

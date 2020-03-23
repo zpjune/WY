@@ -219,7 +219,7 @@
       <el-button @click="closetab">取消</el-button>
       <!-- <el-button type="success">提交</el-button> -->
     </div>
-    <el-dialog width="50%" title="房屋信息" :visible.sync="innerVisible" append-to-body>
+    <el-dialog width="50%" title="房屋信息" :visible.sync="innerVisible" append-to-body :close-on-click-modal="false">
       <el-table
         :key="tableKey"
         :data="list2"

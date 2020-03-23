@@ -2,10 +2,22 @@
   <div id="NDJCJH" class="app-container calendar-list-container">
     <el-row style="margin-bottom:10px;">
       <el-col :xs="5" :sm="5" :md="5" :lg="4" :xl="3">
-        <el-input placeholder="任务编号" style="width:95%;" size="mini" clearable v-model="listQuery.RWBH"></el-input>
+        <el-input
+          placeholder="任务编号"
+          style="width:95%;"
+          size="mini"
+          clearable
+          v-model="listQuery.RWBH"
+        ></el-input>
       </el-col>
       <el-col :xs="5" :sm="5" :md="5" :lg="4" :xl="3">
-        <el-input placeholder="任务名称" style="width:95%;" size="mini" clearable v-model="listQuery.RWMC"></el-input>
+        <el-input
+          placeholder="任务名称"
+          style="width:95%;"
+          size="mini"
+          clearable
+          v-model="listQuery.RWMC"
+        ></el-input>
       </el-col>
       <el-col :xs="5" :sm="5" :md="5" :lg="4" :xl="3">
         <el-button type="primary" icon="el-icon-search" size="mini" @click="getList">查询</el-button>
@@ -39,16 +51,32 @@
           <el-table-column label="任务内容" prop="RWNR"></el-table-column>
           <el-table-column label="任务范围" prop="RWFW"></el-table-column>
           <el-table-column label="备注" prop="REMARK"></el-table-column>
-          <el-table-column label="任务状态" prop="TASK_STATE_NAME"></el-table-column>
-          <el-table-column align="center" width="280" label="操作" fixed="right">
+          <!-- <el-table-column label="任务状态" prop="TASK_STATE_NAME"></el-table-column> -->
+          <el-table-column align="center" label="操作" fixed="right" min-width="150">
             <template slot-scope="scope">
               <!-- <el-button type="primary" size="mini" @click="handleUpdate(scope.row)">修改</el-button>
               <el-button type="danger" size="mini" @click="handleDelete(scope.row)">删除</el-button>-->
-              <el-button type="primary" size="mini" @click="handleUpdate(scope.row)">修改</el-button>
-              <el-button type="danger" size="mini" @click="handleDelete(scope.row)">删除</el-button>
-              <el-button type="success" v-if="scope.row.TASK_STATE=='0'" size="mini">任务下发</el-button>
+              <el-button
+                type="primary"
+                size="mini"
+                @click="handleUpdate(scope.row)"
+                v-if="scope.row.IS_PUSH==0"
+              >修改</el-button>
+              <el-button
+                type="danger"
+                size="mini"
+                @click="handleDelete(scope.row)"
+                v-if="scope.row.IS_PUSH==0"
+              >删除</el-button>
+              <el-button
+                type="success"
+                v-if="scope.row.IS_PUSH==0"
+                size="mini"
+                @click="push(scope.row)"
+              >推送</el-button>
+              <el-button type="success" v-else-if="scope.row.IS_PUSH==1" size="mini">已推送</el-button>
               <el-button type="info" @click="handleDetail(scope.row)" size="mini">查看详情</el-button>
-              <el-button type="primary" v-if="scope.row.TASK_STATE=='2'" size="mini">执行情况</el-button>
+              <!-- <el-button type="primary" v-if="scope.row.IS_PUSH=='2'" size="mini">执行情况</el-button> -->
             </template>
           </el-table-column>
         </el-table>
@@ -70,6 +98,7 @@
       class="selecttrees"
       :title="textMap[dialogStatus]"
       width="1000px"
+      :close-on-click-modal="false"
     >
       <el-card>
         <el-form
@@ -123,7 +152,7 @@
                         >&nbsp;</el-radio>
                       </template>
                     </el-table-column>
-                    <el-table-column label="检查区域" prop="JCQY"></el-table-column>
+                    <el-table-column label="检查区域" prop="ALLPLACENAME"></el-table-column>
                     <el-table-column label="检查内容" :show-overflow-tooltip="true" prop="JCNR"></el-table-column>
                     <el-table-column prop="JCLX" label="检查类型"></el-table-column>
                     <el-table-column label="排查次数" prop="PCCS"></el-table-column>
@@ -168,7 +197,7 @@
           </el-row>
           <el-row>
             <el-col :span="12">
-              <el-form-item label="任务范围" prop="RWFW">
+              <!-- <el-form-item label="任务范围" prop="RWFW">
                 <el-select v-model="temp.RWFW" placeholder="请选择" style="width:100%">
                   <el-option
                     v-for="item in options"
@@ -177,7 +206,7 @@
                     :value="item.value"
                   ></el-option>
                 </el-select>
-              </el-form-item>
+              </el-form-item>-->
             </el-col>
             <el-col :span="12">
               <el-form-item label="备注" prop="REMARK">
@@ -206,6 +235,7 @@
       class="selecttrees"
       :title="textMap[dialogStatus]"
       width="1000px"
+      :close-on-click-modal="false"
     >
       <el-card>
         <el-form ref="dataForm" :model="temp" label-width="120px" style="width: 99%;">
@@ -264,6 +294,7 @@
       title="年度检查计划"
       append-to-body
       @close="close"
+      :close-on-click-modal="false"
     >
       <el-card>
         <el-row>
@@ -337,7 +368,8 @@ import {
   DeleteTask,
   CreateTask,
   UpdateTask,
-  GetPlanCheckAndDetail
+  GetPlanCheckAndDetail,
+  PushTask
 } from "@/app_src/api/RCGZ/RWJCJH";
 export default {
   name: "NDJCJH",
@@ -382,7 +414,7 @@ export default {
       },
       radio: "",
       radio1: "",
-      total:0,
+      total: 0,
       detailVisible: false,
       innerVisible: false,
       innerVisible1: false,
@@ -543,7 +575,7 @@ export default {
       });
     },
     handleDetail(row) {
-      this.dialogStatus=='';
+      this.dialogStatus == "";
       this.handleUpdate(row);
     },
     GetCheckPlanDetail(row) {
@@ -616,11 +648,11 @@ export default {
       return "";
     },
     handleSizeChange(val) {
-      this.listQuery.limit=val;
+      this.listQuery.limit = val;
       this.getList();
     },
     handleCurrentChange(val) {
-      this.listQuery.page=val;
+      this.listQuery.page = val;
       this.getList();
     },
     handleCreate() {
@@ -652,8 +684,7 @@ export default {
                 duration: 2000
               });
               this.getList();
-            }
-            else{
+            } else {
               this.$notify({
                 position: "bottom-right",
                 title: "失败",
@@ -719,6 +750,31 @@ export default {
                 duration: 3000
               });
             }
+          });
+        }
+      });
+    },
+    push(row) {
+      let temp = {
+        TASK_ID: row.TASK_ID
+      };
+      PushTask(temp).then(res => {
+        if (res.data.code === 2000) {
+          this.$notify({
+            position: "bottom-right",
+            title: "成功",
+            message: res.data.message,
+            type: "success",
+            duration: 3000
+          });
+          this.getList();
+        } else {
+          this.$notify({
+            position: "bottom-right",
+            title: "失败",
+            message: res.data.message,
+            type: "error",
+            duration: 3000
           });
         }
       });
