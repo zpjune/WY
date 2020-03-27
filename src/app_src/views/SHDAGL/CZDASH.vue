@@ -243,8 +243,8 @@
               </el-col>
               <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
                 <el-form-item label="物业费标准">
-                  <el-input size="small" v-model="temp.WYJZ" disabled>
-                    <template slot="append">元/月</template>
+                  <el-input size="small" v-model="temp.WYDJ" disabled>
+                    <template slot="append">元/平/月</template>
                   </el-input>
                 </el-form-item>
               </el-col>
@@ -384,6 +384,7 @@ export default {
         WYJFFS: "",
         WYJZSJ: "",
         WYJZ: "",
+        WYDJ:"",
         //以下是商户信息
         CZ_SHID: "",
         ZHXM: "",
@@ -493,6 +494,7 @@ export default {
         WYJFFS: "",
         WYJZSJ: "",
         WYJZ: "",
+        WYDJ:"",
         //以下是商户信息
         CZ_SHID: "",
         ZHXM: "",

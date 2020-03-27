@@ -1,7 +1,13 @@
 <template>
-  <div id="JFJLCX" class="app-container calendar-list-container">
+  <div id="YJFQR" class="app-container calendar-list-container">
     <div class="filter-container">
-      <el-select v-model="value" placeholder="缴费类型" size="mini" class="filter-item">
+      <el-select
+        v-model="listQuery.JFLX"
+        placeholder="缴费类型"
+        size="mini"
+        class="filter-item"
+        clearable
+      >
         <el-option
           v-for="item in options"
           :key="item.value"
@@ -15,7 +21,7 @@
         style="width: 200px;"
         class="filter-item"
         placeholder="请输入房屋名称"
-        v-model="listQuery.Name"
+        v-model="listQuery.FWMC"
         size="mini"
       ></el-input>
       <el-input
@@ -23,11 +29,11 @@
         style="width: 200px;"
         class="filter-item"
         placeholder="请输入房号"
-        v-model="listQuery.Name"
+        v-model="listQuery.FWBH"
         size="mini"
       ></el-input>
 
-      <el-date-picker
+      <!-- <el-date-picker
         class="filter-item"
         v-model="dateQuery"
         type="daterange"
@@ -35,12 +41,12 @@
         size="mini"
         start-placeholder="开始日期"
         end-placeholder="结束日期"
-      ></el-date-picker>
+      ></el-date-picker>-->
       <el-button
         class="filter-item"
         type="primary"
         icon="el-icon-search"
-        @click="handleFilter"
+        @click="getList"
         size="mini"
       >查询</el-button>
       <el-button
@@ -50,6 +56,13 @@
         @click="handleDownload"
         size="mini"
       >导出</el-button>
+      <el-button
+        type="success"
+        size="mini"
+        @click="confirmReciveMoney"
+        class="filter-item"
+        :disabled="selectList.length==0"
+      >确认缴费</el-button>
     </div>
     <el-table
       :key="tableKey"
@@ -62,550 +75,432 @@
       highlight-current-row
       size="mini"
       id="table"
+      @select="select"
+      @select-all="selectall"
     >
+      <el-table-column type="selection" width="55"></el-table-column>
       <el-table-column width="150px" align="center" label="缴费类型">
         <template slot-scope="scope">
-          <span>{{scope.row.jflx}}</span>
+          <span>{{scope.row.JFLX|changeType}}</span>
         </template>
       </el-table-column>
 
       <el-table-column align="center" width="120px" label="房屋编号">
         <template slot-scope="scope">
-          <span>{{scope.row.fanghao}}</span>
+          <span>{{scope.row.FWBH}}</span>
         </template>
       </el-table-column>
       <el-table-column width="150px" align="center" label="房屋名称">
         <template slot-scope="scope">
-          <span>{{scope.row.name}}</span>
+          <span>{{scope.row.FWMC}}</span>
         </template>
       </el-table-column>
       <el-table-column align="center" width="120px" label="业主姓名">
         <template slot-scope="scope">
-          <span>{{scope.row.yezhu}}</span>
+          <span>{{scope.row.ZHXM}}</span>
         </template>
       </el-table-column>
       <el-table-column align="center" width="120px" label="业主电话">
         <template slot-scope="scope">
-          <span>{{scope.row.yezhutel}}</span>
+          <span>{{scope.row.MOBILE_PHONE}}</span>
         </template>
       </el-table-column>
 
       <el-table-column align="center" label="缴费金额">
         <template slot-scope="scope">
-          <span>{{scope.row.jiaonajine}}</span>
+          <span>{{scope.row.JFJE}}</span>
         </template>
       </el-table-column>
-      <el-table-column align="center" width="120px" label="是否发送通知单">
+      <el-table-column align="center" label="有效期起">
+        <template slot-scope="scope">{{scope.row.YXQS|parseTime}}</template>
+      </el-table-column>
+      <el-table-column align="center" label="有效期止">
+        <template slot-scope="scope">{{scope.row.YXQZ|parseTime}}</template>
+      </el-table-column>
+      <el-table-column align="center" width="120px" label="是否确认收据">
         <template slot-scope="scope">
-          <span>{{scope.row.isfoutongzhi}}</span>
+          <span>{{scope.row.CONFIRM_RECIVEMONEY|changeSFTZ}}</span>
         </template>
       </el-table-column>
       <el-table-column align="center" width="120px" label="催缴次数">
         <template slot-scope="scope">
-          <span>{{scope.row.jfcs}}</span>
+          <span>{{scope.row.JFCS}}</span>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="是否缴费">
+      <el-table-column align="center" width="120px" label="催缴日期">
         <template slot-scope="scope">
-          <span>{{scope.row.sfjf}}</span>
-        </template>
-      </el-table-column>
-      <el-table-column align="center" width="120px" label="费缴费日期">
-        <template slot-scope="scope">
-          <span>{{scope.row.jfrq}}</span>
-        </template>
-      </el-table-column>
-      <el-table-column align="center" width="240" label="操作" fixed="right">
-        <template slot-scope="scope">
-          <el-button type="primary" size="mini" @click="handleUpdate(scope.row)">商户详情</el-button>
-          <el-button type="success" size="mini" @click="handleConfirm(scope.row)">缴费完成确认</el-button>
+          <span>{{scope.row.JFRQ}}</span>
         </template>
       </el-table-column>
     </el-table>
-          <div class="page">
-    <el-pagination
-      background
-      @size-change="handleSizeChange"
-      @current-change="handleCurrentChange"
-      :current-page="listQuery.page"
-      :page-sizes="[10,20,30, 50]"
-      :page-size="listQuery.limit"
-      layout="total, sizes, prev, pager, next, jumper"
-      :total="10"
-    ></el-pagination>
-          </div>
-    <el-dialog :visible.sync="editVisible" class="selecttrees" title="商户详情" width="70%">
+    <div style="text-align:center">
+      <el-pagination
+        background
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+        :current-page="listQuery.page"
+        :page-sizes="[10,20,30, 50]"
+        :page-size="listQuery.limit"
+        layout="total, sizes, prev, pager, next, jumper"
+        :total="total"
+      ></el-pagination>
+    </div>
+    <el-dialog width="50%" title="缴费通知" :visible.sync="innerVisible" append-to-body>
+      <el-card class="box-card">
+        <h2 style="text-align:center;">缴费通知单</h2>
+        <pre style="font-size:18px;">
+  <span style="text-decoration:underline">尊敬的丰收道730号业主：</span>
+
+  根据合同，该房屋已欠缴物业费，现请您务必在<span style="text-decoration:underline">2019年6月25日</span>前缴纳该房屋的物业费578.16元
+
+  <span style="text-decoration:underline">（2019年1月1日至2019年6月30日）</span>请尽快到普丰物业公司（创新北里物业楼210室缴纳物业费）。
+
+  缴费方式：刷借记卡、微信、支付宝。
+
+  联系电话：63950600
+
+
+  <label
+  style="float:right"
+>天津市普丰物业管理有限公司</label>
+  <label style="float:right">2019年5月27日</label>
+  </pre>
+      </el-card>
+    </el-dialog>
+
+    <el-dialog
+      :visible.sync="editVisible"
+      class="selecttrees"
+      :title="textMap[dialogStatus]"
+      width="70%"
+    >
       <el-form ref="dataForm" :model="temp" label-width="120px" style="width: 99%;">
-        <el-card>
-          <div slot="header">
-            <span>商户信息</span>
-          </div>
-          <div>
-            <el-row>
-              <el-col :span="8">
-                <el-form-item label="房屋编号">
-                  <el-input v-model="temp.fanghao" disabled></el-input>
-                </el-form-item>
-              </el-col>
-              <el-col :span="8">
-                <el-form-item label="房屋名称">
-                  <el-input size="small" v-model="temp.name" disabled></el-input>
-                </el-form-item>
-              </el-col>
-              <el-col :span="8">
-                <el-form-item label="隶属分公司">
-                  <el-select style="width:100%" size="small" v-model="temp.LSFGS" disabled>
-                    <el-option :value="0" label="分公司1"></el-option>
-                    <el-option :value="1" label="分公司2"></el-option>
-                  </el-select>
-                </el-form-item>
-              </el-col>
-            </el-row>
-
-            <el-row>
-              <el-col :span="8">
-                <el-form-item label="房屋面积">
-                  <el-input size="small" v-model="temp.JZMJ" disabled></el-input>
-                </el-form-item>
-              </el-col>
-              <el-col :span="8">
-                <el-form-item label="坐落位置">
-                  <el-input size="small" v-model="temp.ZLWZ" disabled></el-input>
-                </el-form-item>
-              </el-col>
-              <el-col :span="8">
-                <el-form-item label="物业基准日期">
-                  <el-date-picker
-                    style="width:100%"
-                    format="yyyy-MM-dd"
-                    size="small"
-                    v-model="temp.jfrq"
-                    disabled
-                  ></el-date-picker>
-                </el-form-item>
-              </el-col>
-            </el-row>
-
-            <el-row>
-              <el-col :span="8">
-                <el-form-item label="商户名称">
-                  <el-input size="small" v-model="temp.SHMC" disabled></el-input>
-                </el-form-item>
-              </el-col>
-              <el-col :span="8">
-                <el-form-item label="物业费标准">
-                  <el-input size="small" v-model="temp.jiaonajine" disabled>
-                    <template slot="append">元/月</template>
-                  </el-input>
-                </el-form-item>
-              </el-col>
-              <el-col :span="8">
-                <el-form-item label="物业缴纳方式">
-                  <el-select style="width:100%" size="small" v-model="temp.JNFS" disabled>
-                    <el-option :value="0" label="半年"></el-option>
-                    <el-option :value="1" label="一年"></el-option>
-                  </el-select>
-                </el-form-item>
-              </el-col>
-            </el-row>
-
-            <el-row>
-              <el-col :span="24">
-                <el-form-item label="经营内容" prop="JYNR">
-                  <el-input v-model="temp.JYNR" type="textarea" :rows="3" disabled></el-input>
-                </el-form-item>
-              </el-col>
-            </el-row>
-          </div>
-        </el-card>
-        <el-card style="margin-top:20px;">
-          <div slot="header">
-            <span>业主信息</span>
-          </div>
-          <div>
-            <el-row>
-              <el-col :span="8">
-                <el-form-item label="业主姓名">
-                  <el-input size="small" v-model="temp.YZXM" disabled></el-input>
-                </el-form-item>
-              </el-col>
-              <el-col :span="8">
-                <el-form-item label="业主类型">
-                  <el-select style="width:100%" size="small" v-model="temp.YZLX" disabled>
-                    <el-option :value="0" label="个人"></el-option>
-                    <el-option :value="1" label="公司"></el-option>
-                  </el-select>
-                </el-form-item>
-              </el-col>
-              <el-col :span="8">
-                <el-form-item label="业主性别">
-                  <el-input size="small" disabled v-model="temp.XB"></el-input>
-                </el-form-item>
-              </el-col>
-            </el-row>
-
-            <el-row>
-              <el-col :span="8">
-                <el-form-item label="身份证号">
-                  <el-input size="small" v-model="temp.YZSFZH" disabled></el-input>
-                </el-form-item>
-              </el-col>
-              <el-col :span="8">
-                <el-form-item label="手机号码">
-                  <el-input size="small" v-model="temp.yezhutel" disabled></el-input>
-                </el-form-item>
-              </el-col>
-              <el-col :span="8">
-                <el-form-item label="固定电话">
-                  <el-input size="small" v-model="temp.YZGDDH" disabled></el-input>
-                </el-form-item>
-              </el-col>
-            </el-row>
-
-            <el-row>
-              <el-col :span="8">
-                <el-form-item label="电子邮箱">
-                  <el-input size="small" v-model="temp.YZDZYX" disabled></el-input>
-                </el-form-item>
-              </el-col>
-              <el-col :span="8">
-                <el-form-item label="使用类型">
-                  <el-select style="width:100%" size="small" v-model="temp.SYLEX" disabled>
-                    <el-option :value="0" label="自用"></el-option>
-                    <el-option :value="1" label="出租"></el-option>
-                  </el-select>
-                </el-form-item>
-              </el-col>
-            </el-row>
-          </div>
-        </el-card>
-        <el-card style="margin-top:20px;" v-if="temp.SYLEX==1">
-          <div slot="header">
-            <span>租户信息</span>
-          </div>
-          <div>
-            <el-row>
-              <el-col :span="8">
-                <el-form-item label="租户姓名">
-                  <el-input size="small" v-model="temp.ZHXM"></el-input>
-                </el-form-item>
-              </el-col>
-              <el-col :span="8">
-                <el-form-item label="租户类型">
-                  <el-select style="width:100%" size="small" v-model="temp.ZHLX">
-                    <el-option :value="0" label="个人"></el-option>
-                    <el-option :value="1" label="公司"></el-option>
-                  </el-select>
-                </el-form-item>
-              </el-col>
-              <el-col :span="8">
-                <el-form-item label="租户性别">
-                  <el-input size="small" v-model="temp.ZHXM"></el-input>
-                </el-form-item>
-              </el-col>
-            </el-row>
-
-            <el-row>
-              <el-col :span="8">
-                <el-form-item label="身份证号">
-                  <el-input size="small" v-model="temp.ZHSFZH"></el-input>
-                </el-form-item>
-              </el-col>
-              <el-col :span="8">
-                <el-form-item label="手机号码">
-                  <el-input size="small" v-model="temp.ZHSJHM"></el-input>
-                </el-form-item>
-              </el-col>
-              <el-col :span="8">
-                <el-form-item label="固定电话">
-                  <el-input size="small" v-model="temp.ZHGDHM"></el-input>
-                </el-form-item>
-              </el-col>
-            </el-row>
-
-            <el-row>
-              <el-col :span="8">
-                <el-form-item label="电子邮箱">
-                  <el-input size="small" v-model="temp.ZHDZYX"></el-input>
-                </el-form-item>
-              </el-col>
-            </el-row>
-          </div>
-        </el-card>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="业主姓名" prop="yezhu">
+              <el-input v-model="temp.ZHXM" disabled></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="房屋编号" prop="fanghao">
+              <el-input v-model="temp.FWBH" disabled></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="缴费类型" prop="jflx">
+              <el-input v-model="temp.JFLX" disabled></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="房屋名称" prop="name">
+              <el-input v-model="temp.FWMC" disabled></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="费用金额" prop="jiaonajine">
+              <el-input v-model="temp.JFJE" disabled></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="有效期（起）" prop="YXQQ">
+              <el-date-picker v-model="temp.YXQS" disabled></el-date-picker>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="有效期（止）" prop="YXQZ">
+              <el-date-picker v-model="temp.YXQZ" disabled></el-date-picker>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <!-- <el-row>
+          <el-col :span="24">
+            <el-form-item label="备注" prop="REMARK">
+              <el-input v-model="temp.REMARK" type="textarea" :rows="3"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>-->
       </el-form>
       <div style="text-align:center;margin-top:20px;">
         <el-button @click="editVisible = false">取消</el-button>
+        <el-button type="primary" @click="handleFee">确定</el-button>
       </div>
     </el-dialog>
-     <el-dialog width="50%" title="缴费确认" :visible.sync="innerVisible" append-to-body id="SKSJ">
-      
-<el-card  class="table-d">
- 
-
-
-
-      <el-form ref="dataForm" :model="temp" label-width="120px" style="width: 99%;" >
-        <table width="100%" border="0" cellspacing="1" cellpadding="0" style="font-size:16px;text-align:center">
-          <caption>
-            普丰物业公司（收款收据）
-          </caption>
-          <tbody>
-            <tr>
-              <td>租户姓名</td>
-              <td>张三</td>
-              <td>地上位置</td>
-              <td colspan="2">丰收道738号</td>
-              <td>底商面积</td>
-              <td>370.53</td>
-            </tr>
-            <tr>
-              <td colspan="2">费用项目</td>
-              <td colspan="2">底商面积</td>
-              <td>单价</td>
-              <td>金额</td>
-              <td>备注</td>
-            </tr>
-            <tr>
-              <td colspan="2">物业费</td>
-              <td colspan="2">370.53</td>
-              <td>2.00</td>
-              <td>11，115.90</td>
-              <td>2018-3-7~2018-6-16</td>
-            </tr>
-            <tr>
-            <td colspan="2"></td>
-              <td colspan="2"></td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-            </tr>
-            <tr>
-              <td colspan="2"></td>
-              <td colspan="2"></td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-            </tr>
-            <tr>
-              <td colspan="2"></td>
-              <td colspan="2"></td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-            </tr>
-            <tr>
-              <td>合计大写</td>
-              <td colspan="2">壹万壹仟壹佰壹拾伍元玖角整</td>
-              <td>合计小写</td>
-              <td colspan="2">11，115.90</td>
-              <td>&nbsp;</td>
-            </tr>
-            <tr>
-              <td>收款人</td>
-              <td colspan="2">朱梦悦</td>
- 
-              <td>交款人</td>
-              <td colspan="2">张三</td>
-              <td>日期：2019-6-21</td>
-            </tr>
-            
-          </tbody>
-        </table>
-      </el-form>
-       <div style="text-align:center;margin-top:20px;">
-           <el-button @click="innerVisible = false">取消</el-button>
-          <el-button  type="primary" @click="innerVisible = false">确认</el-button>
-
-        </div>
-</el-card>
-      </el-dialog>
+    <el-dialog :visible.sync="createdialogVisible" class="selecttrees" title="选择生成方式" width="20%">
+      <el-card>
+        <el-row style="text-align:center">
+          <el-col>
+            <el-radio v-model="radio" label="0">当月</el-radio>
+            <el-radio v-model="radio" label="1">季度</el-radio>
+          </el-col>
+        </el-row>
+        <el-row style="margin-top:30px;text-align:center">
+          <el-col>
+            <el-button type="primary" @click="submit">生成</el-button>
+            <el-button @click="createdialogVisible = false">取消</el-button>
+          </el-col>
+        </el-row>
+      </el-card>
+    </el-dialog>
   </div>
 </template>
             
 <script>
+import {
+  GetFeeResult,
+  GetShopInfo,
+  CreateNotification,
+  ConfirmNotificationList,
+  PushNotification,
+  ConfirmFee,
+  ConfirmReciveMoney
+} from "@/app_src/api/SFGL/SFGL";
+import { parseTime } from "@/frame_src/utils";
 export default {
-  name: "JFJLCX",
+  name: "YJFQR",
   data() {
     return {
       listLoading: false,
-      editVisible: false,
-      innerVisible:false,
+      dialogStatus: "",
       listQuery: {
-        QuYu: "",
-        Name: ""
+        JFLX: "",
+        FWMC: "",
+        FWBH: "",
+        JFSTATUS: 1,
+        page: 1,
+        limit: 10
       },
+      total: 0,
+      radio: "",
+      innerVisible: false,
       dateQuery: "",
       options: [
         {
-          value: "物业费",
+          value: "0",
           label: "物业费"
         },
         {
-          value: "房租费",
-          label: "房租费"
+          value: "1",
+          label: "水费"
         },
         {
-          value: "其他",
-          label: "其他"
+          value: "2",
+          label: "电费"
         }
       ],
       anquan: "",
-      value: "",
-      list: [
-        {
-          jflx: "房租费",
-          fanghao: "A-101",
-          name: "商铺101",
-          yezhu: "张三",
-          yezhutel: "12309099991",
-          jiaonajine: "210000",
-          isfoutongzhi: "是",
-          jfcs: "3",
-          sfjf: "是",
-          jfrq: "2019-06-30"
-        },
-        {
-          jflx: "房租费",
-          fanghao: "A-101",
-          name: "商铺101",
-          yezhu: "张三",
-          yezhutel: "12309099991",
-          jiaonajine: "210000",
-          isfoutongzhi: "是",
-          jfcs: "3",
-          sfjf: "是",
-          jfrq: "2019-06-30"
-        },
-        {
-          jflx: "房租费",
-          fanghao: "A-101",
-          name: "商铺101",
-          yezhu: "张三",
-          yezhutel: "12309099991",
-          jiaonajine: "210000",
-          isfoutongzhi: "是",
-          jfcs: "3",
-          sfjf: "是",
-          jfrq: "2019-06-30"
-        },
-        {
-          jflx: "物业费",
-          fanghao: "A-101",
-          name: "商铺D101",
-          yezhu: "王五",
-          yezhutel: "12309099991",
-          jiaonajine: "1700",
-          isfoutongzhi: "是",
-          jfcs: "3",
-          sfjf: "是",
-          jfrq: "2019-04-30"
-        },
-        {
-          jflx: "房租费",
-          fanghao: "A-101",
-          name: "商铺101",
-          yezhu: "张三",
-          yezhutel: "12309099991",
-          jiaonajine: "210000",
-          isfoutongzhi: "是",
-          jfcs: "3",
-          sfjf: "是",
-          jfrq: "2019-06-30"
-        },
-        {
-          jflx: "房租费",
-          fanghao: "A-101",
-          name: "商铺101",
-          yezhu: "张三",
-          yezhutel: "12309099991",
-          jiaonajine: "210000",
-          isfoutongzhi: "是",
-          jfcs: "3",
-          sfjf: "是",
-          jfrq: "2019-06-30"
-        },
-        {
-          jflx: "物业费",
-          fanghao: "E-101",
-          name: "商铺E101",
-          yezhu: "赵六",
-          yezhutel: "12304099991",
-          jiaonajine: "1100",
-          isfoutongzhi: "是",
-          jfcs: "3",
-          sfjf: "是",
-          jfrq: "2019-06-22"
-        },
-        {
-          jflx: "房租费",
-          fanghao: "A-101",
-          name: "商铺101",
-          yezhu: "张三",
-          yezhutel: "12309099991",
-          jiaonajine: "210000",
-          isfoutongzhi: "是",
-          jfcs: "3",
-          sfjf: "是",
-          jfrq: "2019-06-30"
-        },
-        {
-          jflx: "物业费",
-          fanghao: "C-101",
-          name: "商铺C101",
-          yezhu: "赵六",
-          yezhutel: "14309099991",
-          jiaonajine: "1800",
-          isfoutongzhi: "是",
-          jfcs: "3",
-          sfjf: "否",
-          jfrq: "2019-06-30"
-        },
-        {
-          jflx: "物业费",
-          fanghao: "D-101",
-          name: "商铺D101",
-          yezhu: "李四",
-          yezhutel: "12309099991",
-          jiaonajine: "2100",
-          isfoutongzhi: "是",
-          jfcs: "3",
-          sfjf: "是",
-          jfrq: "2019-05-30"
-        }
-      ],
+      list: [],
+      selectList: [],
       tableKey: 0,
       temp: {
-        fanghao: "A-101",
-        name: "五金百货",
-        LSFGS: "分公司1",
-        JZMJ: "100㎡",
-        ZLWZ: "大港",
-        jfrq: "2019-01-21",
-        YZXM: "张三",
-        XB: "男",
-        YZLX: "个人",
-        SFZH: "234567543433343434",
-        LXDH: "127656534111",
-        FWBH: "A-101",
-        SYLX: "出租",
-        SPMC: "五金日用百货",
-        HTQDSJ: "2017-9-12",
-        YXQ: "5",
-        ZHXM: "唐三",
-        ZHSFZ: "43441219889082212",
-        ZHDH: "23454212222",
-        JYNR: "五金日用品",
-        LSFGS: "普丰物业",
-        LXGH: "26756553"
-      }
+        yezhu: "",
+        fanghao: "",
+        jflx: "",
+        name: "",
+        jfrq: "",
+        jiaonajine: "",
+        YXQQ: "",
+        YXQZ: "",
+        REMARK: ""
+      },
+      textMap: {
+        update: "确认缴费",
+        create: "手动缴费"
+      },
+      editVisible: false,
+      createdialogVisible: false
     };
   },
   methods: {
-    handleDetail() {
+    select(selection, row) {
+      this.selectList = [];
+      selection.forEach(items => {
+        let temp = {
+          RECORD_ID: items.RECORD_ID,
+          CZ_SHID: items.CZ_SHID,
+          OPEN_ID: items.OPEN_ID,
+          CONFIRM_RECIVEMONEY: items.CONFIRM_RECIVEMONEY
+        };
+        this.selectList.push(temp);
+      });
+    },
+    selectall(selection) {
+      this.selectList = [];
+      selection.forEach(items => {
+        let temp = {
+          RECORD_ID: items.RECORD_ID,
+          CZ_SHID: items.CZ_SHID,
+          OPEN_ID: items.OPEN_ID,
+          CONFIRM_RECIVEMONEY: items.CONFIRM_RECIVEMONEY
+        };
+        this.selectList.push(temp);
+      });
+    },
+    confirmReciveMoney() {
+      this.$confirm("确定发送所勾选的用户的收据吗？", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      }).then(() => {
+        confirmReciveMoney(this.selectList).then(response => {
+          if (response.data.code === 2000) {
+            this.$notify({
+              position: "bottom-right",
+              title: "成功",
+              message: response.data.message,
+              type: "success",
+              duration: 2000
+            });
+            this.getList();
+          } else {
+            this.listLoading = false;
+            this.$notify({
+              position: "bottom-right",
+              title: "失败",
+              message: response.data.message,
+              type: "error",
+              duration: 2000
+            });
+          }
+        });
+      });
+    },
+    create() {
+      this.createdialogVisible = true;
+    },
+    submit() {
+      let temp = {
+        type: this.radio
+      };
+      CreateNotification(temp).then(response => {
+        if (response.data.code === 2000) {
+          this.$notify({
+            position: "bottom-right",
+            title: "成功",
+            message: response.data.message,
+            type: "success",
+            duration: 2000
+          });
+          this.createdialogVisible = false;
+          this.getList();
+          this.selectList = [];
+        } else {
+          this.$notify({
+            position: "bottom-right",
+            title: "失败",
+            message: response.data.message,
+            type: "error",
+            duration: 2000
+          });
+        }
+      });
+    },
+    resetTemp() {
+      this.temp = {
+        yezhu: "",
+        fanghao: "",
+        jflx: "",
+        name: "",
+        jfrq: "",
+        jiaonajine: "",
+        YXQQ: "",
+        YXQZ: "",
+        REMARK: ""
+      };
+    },
+    getList() {
+      this.listLoading = true;
+      GetFeeResult(this.listQuery).then(response => {
+        if (response.data.code === 2000) {
+          this.list = response.data.items;
+          this.total = response.data.total;
+          this.listLoading = false;
+        } else {
+          this.listLoading = false;
+          this.$notify({
+            position: "bottom-right",
+            title: "失败",
+            message: response.data.message,
+            type: "error",
+            duration: 2000
+          });
+        }
+      });
+    },
+    handleDetail(row) {
       this.DetailVisible = true;
+      let temp = {
+        FWID: row.FWID
+      };
+      GetShopInfo(temp).then(res => {
+        // if(res.data.code===2000){
+        //   this.temp
+        // }
+      });
     },
     handleDownload() {},
+    handleDetail(data) {
+      this.innerVisible = true;
+    },
     tixingclick() {},
+    createData() {
+      // 创建
+      this.$refs["dataForm"].validate(valid => {
+        if (valid) {
+          //   createTaxOrg(this.temp).then(response => {
+          //     var message = response.data.message;
+          var message = "成功";
+          var title = "失败";
+          var type = "error";
+          //     if (response.data.code === 2000) {
+          title = "成功";
+          type = "success";
+          // this.list.unshift(this.temp)
+          //     }
+          this.editVisible = false;
+          this.$notify({
+            position: "bottom-right",
+            title: title,
+            message: message,
+            type: type,
+            duration: 3000
+          });
+          //   });
+        }
+      });
+    },
+    updateData() {
+      this.$refs["dataForm"].validate(valid => {
+        if (valid) {
+          const tempData = Object.assign({}, this.temp); // 这样就不会共用同一个对象
+          //   tempData.S_UpdateBy = this.$store.state.user.userId;
+          //   //tempData.NOTICE_CONTENT=this.content
+          //   updateTaxOrg(tempData).then(response => {
+          //     var message = response.data.message;
+          var message = "成功";
+          var title = "失败";
+          var type = "error";
+          //     if (response.data.code === 2000) {
+          title = "成功";
+          type = "success";
+          // }
+          this.editVisible = false;
+          this.$notify({
+            position: "bottom-right",
+            title: title,
+            message: message,
+            type: type,
+            duration: 3000
+          });
+          //   });
+        }
+      });
+    },
     tableRowClassName({ row, rowIndex }) {
       // 表头行的 className 的回调方法，也可以使用字符串为所有表头行设置一个固定的 className。
       if (rowIndex === 0) {
@@ -621,28 +516,33 @@ export default {
     },
     handleFilter() {
       this.listQuery.page = 1;
-    },
-    handleUpdate(data) {
-      this.editVisible = true;
-      // this.temp=data;
-    },
-    handleConfirm(data) {
-this.innerVisible=true;
-      // this.temp=data;
     }
+  },
+  mounted() {
+    this.getList();
+  },
+  filters: {
+    changeType(val) {
+      if (val === "0") {
+        return "物业费";
+      } else if (val === "1") {
+        return "水费";
+      } else if (val === "2") {
+        return "电费";
+      }
+    },
+    changeSFTZ(val) {
+      if (val === 0) {
+        return "否";
+      } else {
+        return "是";
+      }
+    },
+    parseTime
   }
 };
 </script>
             
-<style  lang="scss">
-#SKSJ .table-d table {
-  background: #000;
-}
-#SKSJ .table-d table td {
-  background: #fff;
-}
- .page {
-    text-align: center;
-  }
+<style>
 </style>
             

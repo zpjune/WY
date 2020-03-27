@@ -214,16 +214,14 @@
         <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
           <el-form-item label="物业费缴纳方式" prop="WYJFFS">
             <el-select style="width:100%" size="small" v-model="temp.WYJFFS">
-              <el-option value="0" label="半年"></el-option>
-              <el-option value="1" label="一年"></el-option>
-              <el-option :value="2" label="全部"></el-option>
+              <el-option v-for="(item,key) in PAY_WAYOPTIONS" :key="key" :value="item.Code" :label="item.Name"></el-option>
             </el-select>
           </el-form-item>
         </el-col>
         <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-          <el-form-item label="物业费标准" prop="WYJZ">
-            <el-input size="small" v-model="temp.WYJZ">
-              <template slot="append">元/月</template>
+          <el-form-item label="物业费标准" prop="WYDJ">
+            <el-input size="small" v-model="temp.WYDJ">
+              <template slot="append">元/平/月</template>
             </el-input>
           </el-form-item>
         </el-col>
@@ -301,7 +299,43 @@
       <el-button @click="closetab">取消</el-button>
       <!-- <el-button type="success">提交</el-button> -->
     </div>
-    <el-dialog width="50%" title="房屋信息" :visible.sync="innerVisible" append-to-body :close-on-click-modal="false">
+   <el-dialog
+      width="80%"
+      title="房屋信息"
+      :visible.sync="innerVisible"
+      append-to-body
+      :close-on-click-modal="false"
+    >
+      <el-row>
+        <el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
+          <el-input
+            placeholder="房屋编号"
+            style="width:95%;"
+            size="mini"
+            clearable
+            v-model="listQueryHouseInfo.FWBH"
+          ></el-input>
+        </el-col>
+        <el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
+          <el-input
+            placeholder="房屋名称"
+            style="width:95%;"
+            size="mini"
+            clearable
+            v-model="listQueryHouseInfo.FWMC"
+          ></el-input>
+        </el-col>
+        <el-col :xs="10" :sm="9" :md="8" :lg="7" :xl="6">
+          <el-button
+            size="mini"
+            class="filter-item"
+            type="primary"
+            v-waves
+            icon="el-icon-search"
+            @click="GetHouseInfo"
+          >搜索</el-button>
+        </el-col>
+      </el-row>
       <el-table
         :key="tableKey"
         :data="list2"
@@ -337,7 +371,7 @@
             <span>{{scope.row.JZMJ}}</span>
           </template>
         </el-table-column>
-        <el-table-column align="right" prop="LS" label="隶属分公司"></el-table-column>
+        <el-table-column align="right" prop="LSF" label="隶属分公司"></el-table-column>
         <el-table-column align="right" prop="ZLWZ" label="坐落位置">
           <template slot-scope="scope">
             <span>{{scope.row.ZLWZ}}</span>
@@ -350,6 +384,18 @@
           </template>
         </el-table-column>
       </el-table>
+      <div style="text-align:center">
+        <el-pagination
+          background
+          @size-change="handleSizeChange"
+          @current-change="handleCurrentChange"
+          :current-page="listQueryHouseInfo.page"
+          :page-sizes="[10,20,30, 50]"
+          :page-size="listQueryHouseInfo.limit"
+          layout="total, sizes, prev, pager, next, jumper"
+          :total="total"
+        ></el-pagination>
+      </div>
     </el-dialog>
   </el-form>
 </template>
@@ -368,6 +414,7 @@ import {
   GetShopInfoDetail,
   UpdateShopInfo
 } from "@/app_src/api/SHDAGL/SHOPDA";
+import { GetOptions } from "@/app_src/api/commonApi";
 export default {
   name: "CZSHDA",
   directives: {
@@ -402,6 +449,7 @@ export default {
     };
     return {
       listQueryHouseInfo: {
+        FWBH:"",
         FWMC: "",
         LSFGS: "",
         FWSX: 0,
@@ -464,7 +512,8 @@ export default {
         }
       ],
       list2: [],
-
+      total:0,
+      PAY_WAYOPTIONS:[],
       rules: {
         FWBH: [{ required: true, message: "请选择房屋", trigger: "change" }],
         JZR: [{ required: true, message: "物业基准日期", trigger: "change" }],
@@ -475,6 +524,14 @@ export default {
           { required: true, message: "请填写物业基准时间", trigger: "change" }
         ],
         WYJZ: [
+          { required: true, message: "请填写物业基准费用", trigger: "change" },
+          {
+            validator: validateDecimal,
+            message: "请填写正确的数字",
+            trigger: "change"
+          }
+        ],
+        WYDJ: [
           { required: true, message: "请填写物业基准费用", trigger: "change" },
           {
             validator: validateDecimal,
@@ -625,13 +682,31 @@ export default {
     };
   },
   methods: {
-    GetHouseInfo() {
+   GetHouseInfo() {
       this.innerVisible = true;
       //this.temp.OLDID = this.temp.FWID;
       GetHouseInfo(this.listQueryHouseInfo).then(res => {
         if (res.data.code === 2000) {
           this.list2 = res.data.items;
-          this.total = res.data.totoal;
+          this.total = res.data.total;
+        }
+      });
+    },
+    handleSizeChange(val) {
+      this.listQueryHouseInfo.limit = val;
+      this.GetHouseInfo();
+    },
+    handleCurrentChange(val) {
+      this.listQueryHouseInfo.page = val;
+      this.GetHouseInfo();
+    },
+    GetOptions() {
+      let temp = {
+        ParentCode: "PAY_WAY"
+      };
+      GetOptions(temp).then(res => {
+        if (res.data.code === 2000) {
+          this.PAY_WAYOPTIONS = res.data.items;
         }
       });
     },
@@ -726,7 +801,16 @@ export default {
       //     }
       //   });
     },
-
+     GetOptions() {
+      let temp = {
+        ParentCode: "PAY_WAY"
+      };
+      GetOptions(temp).then(res => {
+        if (res.data.code === 2000) {
+          this.PAY_WAYOPTIONS = res.data.items;
+        }
+      });
+    },
     handleDelete(row) {
       this.$confirm("确认删除信息吗", "提示", {
         confirmButtonText: "确定",
@@ -848,6 +932,7 @@ export default {
   },
   created() {
     this.GetEditData();
+    this.GetOptions();
   },
 
   computed: {

@@ -137,16 +137,14 @@
         <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
           <el-form-item label="物业费缴纳方式">
             <el-select style="width:100%" size="small" v-model="temp.WYJFFS" disabled>
-              <el-option value="0" label="半年"></el-option>
-              <el-option value="1" label="一年"></el-option>
-              <el-option :value="2" label="全部"></el-option>
+              <el-option v-for="(item,key) in PAY_WAYOPTIONS" :key="key" :value="item.Code" :label="item.Name"></el-option>
             </el-select>
           </el-form-item>
         </el-col>
         <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
           <el-form-item label="物业费标准">
-            <el-input size="small" v-model="temp.WYJZ" disabled>
-              <template slot="append">元/月</template>
+            <el-input size="small" v-model="temp.WYDJ" disabled>
+              <template slot="append">元/平/月</template>
             </el-input>
           </el-form-item>
         </el-col>
@@ -157,6 +155,7 @@
         </el-col>
       </el-row>
     </el-card>
+    
     <el-card style="margin-top:20px;">
       <div slot="header">
         <span>现业主信息</span>
@@ -234,23 +233,21 @@
       </div>
       <el-row>
         <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-          <el-form-item label="物业费缴纳方式" prop="WYJFFS1">
+          <el-form-item label="物业费缴纳方式" >
             <el-select style="width:100%" size="small" v-model="newtemp.WYJFFS1">
-              <el-option value="0" label="半年"></el-option>
-              <el-option value="1" label="一年"></el-option>
-              <el-option :value="2" label="全部"></el-option>
+             <el-option v-for="(item,key) in PAY_WAYOPTIONS" :key="key" :value="item.Code" :label="item.Name"></el-option>
             </el-select>
           </el-form-item>
         </el-col>
         <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-          <el-form-item label="物业费标准" prop="WYJZ1">
-            <el-input size="small" v-model="newtemp.WYJZ1">
-              <template slot="append">元/月</template>
+          <el-form-item label="物业费标准">
+            <el-input size="small" v-model="newtemp.WYDJ1">
+              <template slot="append">元/平/月</template>
             </el-input>
           </el-form-item>
         </el-col>
         <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-          <el-form-item label="物业基准日期" prop="WYJZSJ1">
+          <el-form-item label="物业基准日期" >
             <el-date-picker style="width:100%" size="mini" v-model="newtemp.WYJZSJ1"></el-date-picker>
           </el-form-item>
         </el-col>
@@ -325,6 +322,7 @@
 import waves from "@/frame_src/directive/waves"; // 水波纹指令
 import { getToken } from "@/frame_src/utils/auth";
 import { GetHouseInfo } from "@/app_src/api/SHDAGL/FWDA";
+import { GetOptions } from "@/app_src/api/commonApi";
 import {
   CreateShopInfo,
   GetShopInfoDetail,
@@ -396,7 +394,7 @@ export default {
       innerVisible: false,
       radio: "",
       selected: {},
-
+      PAY_WAYOPTIONS:[],
       tableKey: 0,
       selectOptions: [
         {
@@ -473,6 +471,14 @@ export default {
             trigger: "change"
           }
         ],
+        WYDJ1: [
+          { required: true, message: "请填写物业基准费用", trigger: "change" },
+          {
+            validator: validateDecimal,
+            message: "请填写正确的数字",
+            trigger: "change"
+          }
+        ],
         WYJFFS1: [
           { required: true, message: "请选择缴费方式", trigger: "change" }
         ],
@@ -493,6 +499,7 @@ export default {
         WYJFFS: "",
         WYJZSJ: "",
         WYJZ: "",
+        WYDJ:"",
         //以下是商户信息
         CZ_SHID: "",
         ZHXM: "",
@@ -535,6 +542,7 @@ export default {
         WYJFFS1: "",
         WYJZSJ1: "",
         WYJZ1: "",
+        WYDJ1:"",
         ZHXM1: "",
         ZHLX1: "",
         ZHXB1: "",
@@ -594,10 +602,12 @@ export default {
         WYJFFS: "",
         WYJZSJ: "",
         WYJZ: "",
+        WYDJ:"",
         //现物业信息
         WYJFFS1: "",
         WYJZSJ1: "",
         WYJZ1: "",
+        WYDJ1:"",
         //以下是商户信息
         CZ_SHID: "",
         ZHXM: "",
@@ -690,6 +700,16 @@ export default {
           //   });
         })
         .catch(() => {});
+    },
+    GetOptions() {
+      let temp = {
+        ParentCode: "PAY_WAY"
+      };
+      GetOptions(temp).then(res => {
+        if (res.data.code === 2000) {
+         this.PAY_WAYOPTIONS = res.data.items;
+        }
+      });
     },
     createData() {
       // 创建
@@ -784,6 +804,7 @@ export default {
   },
   created() {
     this.GetEditData();
+    this.GetOptions();
   },
 
   computed: {

@@ -4,7 +4,13 @@
     <div class="topSearh" id="topsearch">
       <el-row>
         <el-col :xs="5" :sm="5" :md="5" :lg="4" :xl="3">
-          <el-input placeholder="业主姓名" style="width:95%;" size="mini" clearable v-model="listQuery.ZHXM"></el-input>
+          <el-input
+            placeholder="业主姓名"
+            style="width:95%;"
+            size="mini"
+            clearable
+            v-model="listQuery.ZHXM"
+          ></el-input>
         </el-col>
         <el-col :xs="5" :sm="5" :md="5" :lg="4" :xl="3">
           <!-- <el-input placeholder="业主类型" style="width:95%;" size="mini" clearable></el-input> -->
@@ -22,11 +28,18 @@
               :label="item.name"
               :value="item.value"
             ></el-option>
-          </el-select> -->
+          </el-select>-->
         </el-col>
 
         <el-col :xs="6" :sm="6" :md="6" :lg="6" :xl="5">
-          <el-button size="mini" class="filter-item" type="primary" v-waves icon="el-icon-search" @click="getList">搜索</el-button>
+          <el-button
+            size="mini"
+            class="filter-item"
+            type="primary"
+            v-waves
+            icon="el-icon-search"
+            @click="getList"
+          >搜索</el-button>
           <!-- <el-button
             size="mini"
             class="filter-item"
@@ -101,7 +114,13 @@
         </el-col>
       </el-row>
     </el-card>
-    <el-dialog :visible.sync="editVisible2" class="selecttrees" title="商户详情" width="75%" :close-on-click-modal="false">
+    <el-dialog
+      :visible.sync="editVisible2"
+      class="selecttrees"
+      title="商户详情"
+      width="75%"
+      :close-on-click-modal="false"
+    >
       <el-card>
         <el-form
           ref="dataForm"
@@ -243,8 +262,8 @@
               </el-col>
               <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
                 <el-form-item label="物业费标准">
-                  <el-input size="small" v-model="temp.WYJZ" disabled>
-                    <template slot="append">元/月</template>
+                  <el-input size="small" v-model="temp.WYDJ" disabled>
+                    <template slot="append">元/平/月</template>
                   </el-input>
                 </el-form-item>
               </el-col>
@@ -254,67 +273,6 @@
                 </el-form-item>
               </el-col>
             </el-row>
-          </el-card>
-          <el-card style="margin-top:20px;">
-            <div slot="header">
-              <span>租赁信息</span>
-            </div>
-            <div>
-              <el-row>
-                <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-                  <el-form-item label="租赁起始日期">
-                    <el-date-picker
-                      style="width:100%"
-                      format="yyyy-MM-dd"
-                      size="small"
-                      v-model="temp.ZLKSSJ"
-                      disabled
-                    ></el-date-picker>
-                  </el-form-item>
-                </el-col>
-                <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-                  <el-form-item label="租赁终止日期">
-                    <el-date-picker
-                      style="width:100%"
-                      format="yyyy-MM-dd"
-                      size="small"
-                      v-model="temp.ZLZZSJ"
-                      disabled
-                    ></el-date-picker>
-                  </el-form-item>
-                </el-col>
-
-                <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-                  <el-form-item label="租赁总额">
-                    <el-input size="small" v-model="temp.ZLZE" disabled></el-input>
-                  </el-form-item>
-                </el-col>
-              </el-row>
-
-              <el-row>
-                <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-                  <el-form-item label="租赁押金">
-                    <el-input size="small" v-model="temp.ZLYJ" disabled></el-input>
-                  </el-form-item>
-                </el-col>
-                <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-                  <el-form-item label="租赁月数">
-                    <el-input size="small" v-model="temp.ZLYS" disabled></el-input>
-                  </el-form-item>
-                </el-col>
-                <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-                  <el-form-item label="缴费方式">
-                    <el-select style="width:100%" size="small" v-model="temp.ZJJFFS" disabled>
-                      <el-option value="0" label="月度"></el-option>
-                      <el-option value="1" label="季度"></el-option>
-                      <el-option value="2" label="半年度"></el-option>
-                      <el-option value="3" label="年度"></el-option>
-                      <el-option value="3" label="全额"></el-option>
-                    </el-select>
-                  </el-form-item>
-                </el-col>
-              </el-row>
-            </div>
           </el-card>
         </el-form>
         <div style="text-align:center;margin-top:10px;">
@@ -341,6 +299,7 @@ import {
   UnpassInfo,
   EndLease
 } from "@/app_src/api/SHDAGL/SHOPDA";
+import { GetOptions } from "@/app_src/api/commonApi";
 export default {
   name: "CSSHDA",
   directives: {
@@ -384,6 +343,7 @@ export default {
         WYJFFS: "",
         WYJZSJ: "",
         WYJZ: "",
+        WYDJ: "",
         //以下是商户信息
         CZ_SHID: "",
         ZHXM: "",
@@ -438,6 +398,7 @@ export default {
         }
       ],
       list: [],
+      PAY_WAYOPTIONS: [],
       rules: {
         FWMC: [
           { required: true, message: "请输入房屋名称", trigger: "change" }
@@ -493,6 +454,7 @@ export default {
         WYJFFS: "",
         WYJZSJ: "",
         WYJZ: "",
+        WYDJ: "",
         //以下是商户信息
         CZ_SHID: "",
         ZHXM: "",
@@ -681,11 +643,17 @@ export default {
       });
     },
     EndLease(row) {
-      this.$confirm("您确定解除编号为"+row.FWBH+"的租赁关系吗?解除后，商户的信息以及租赁物业信息等都将消失！", "提示", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        type: "warning"
-      }).then(() => {
+      this.$confirm(
+        "您确定解除编号为" +
+          row.FWBH +
+          "的租赁关系吗?解除后，商户的信息以及租赁物业信息等都将消失！",
+        "提示",
+        {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning"
+        }
+      ).then(() => {
         let temp = {
           FWID: row.FWID,
           CZ_SHID: row.CZ_SHID
@@ -729,11 +697,22 @@ export default {
         return "el-button--primary is-active"; // 'warning-row'
       } // 'el-button--primary is-plain'// 'warning-row'
       return "";
+    },
+    GetOptions() {
+      let temp = {
+        ParentCode: "PAY_WAY"
+      };
+      GetOptions(temp).then(res => {
+        if (res.data.code === 2000) {
+          this.PAY_WAYOPTIONS = res.data.items;
+        }
+      });
     }
   },
   created() {
     this.listLoading = false;
     this.getList();
+    this.GetOptions();
   },
   filters: {
     ChangeIS_PASS(val) {
