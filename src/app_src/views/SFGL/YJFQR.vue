@@ -347,7 +347,7 @@ export default {
         cancelButtonText: "取消",
         type: "warning"
       }).then(() => {
-        confirmReciveMoney(this.selectList).then(response => {
+        ConfirmReciveMoney(this.selectList).then(response => {
           if (response.data.code === 2000) {
             this.$notify({
               position: "bottom-right",

@@ -923,6 +923,9 @@ export default {
         GetShopInfoDetail(listQuery).then(res => {
           if (res.data.code === 2000) {
             this.temp = res.data.items[0];
+            this.$nextTick(() => {
+              this.$refs["dataForm"].clearValidate();
+            });
           }
         });
       } else {

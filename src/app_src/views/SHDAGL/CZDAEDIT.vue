@@ -473,7 +473,7 @@ export default {
             trigger: "change"
           }
         ],
-         WYDJ: [
+        WYDJ: [
           { required: true, message: "请填写物业基准费用", trigger: "change" },
           {
             validator: validateDecimal,
@@ -546,7 +546,7 @@ export default {
         WYJFFS: "",
         WYJZSJ: "",
         WYJZ: "",
-        WYDJ:"",
+        WYDJ: "",
         //以下是商户信息
         CZ_SHID: "",
         ZHXM: "",
@@ -636,7 +636,7 @@ export default {
         WYJFFS: "",
         WYJZSJ: "",
         WYJZ: "",
-        WYDJ:"",
+        WYDJ: "",
         //以下是商户信息
         CZ_SHID: "",
         ZHXM: "",
@@ -800,6 +800,9 @@ export default {
         GetShopInfoDetail(listQuery).then(res => {
           if (res.data.code === 2000) {
             this.temp = res.data.items[0];
+            this.$nextTick(() => {
+              this.$refs["dataForm"].clearValidate();
+            });
           }
         });
       } else {

@@ -3,7 +3,7 @@
   <div id="FWDA" class="app-container calendar-list-container">
     <div class="topSearh" id="topsearch">
       <el-row>
-         <el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
+        <el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
           <el-input
             placeholder="房屋编号"
             style="width:95%;"
@@ -292,30 +292,25 @@
               </el-form-item>
             </el-col>
             <el-col :span="12">
-              <el-form-item label="电表号" prop="ELE_NUMBER">
-                <el-input v-model="temp.ELE_NUMBER"></el-input>
+              <el-form-item label="水表号" prop="WATER_NUMBER">
+                <el-input v-model="temp.WATER_NUMBER"></el-input>
               </el-form-item>
             </el-col>
           </el-row>
 
           <el-row>
             <el-col :span="12">
-              <el-form-item label="水表号" prop="WATER_NUMBER">
-                <el-input v-model="temp.WATER_NUMBER"></el-input>
+              <el-form-item label="电表号" prop="ELE_NUMBER">
+                <el-input v-model="temp.ELE_NUMBER"></el-input>
               </el-form-item>
             </el-col>
-            <!-- <el-col :span="12">
-              <el-form-item label="房屋属性" prop="FWSX">
-                <el-select  style="width:100%;" v-model="temp.FWSX">
-                  <el-option
-                    v-for="(item,key) in selectOptions"
-                    :key="key"
-                    :label="item.label"
-                    :value="item.value"
-                  ></el-option>
-                </el-select>
+            <el-col :span="12">
+              <el-form-item label="采集器ID" prop="CID">
+                <el-input v-model="temp.CID"></el-input>
               </el-form-item>
-            </el-col>-->
+            </el-col>
+          </el-row>
+          <el-row>
             <el-col :span="12">
               <el-form-item label="所属区域" prop="SSQY">
                 <el-select style="width:100%;" v-model="temp.SSQY">
@@ -498,7 +493,7 @@ export default {
       disabled: false,
       tableKey: 0,
       listQuery: {
-        FWBH:"",
+        FWBH: "",
         FWMC: "",
         LSFGS: "",
         FWSX: "",
@@ -526,6 +521,7 @@ export default {
         CJR: "",
         BJR: "",
         ZFK: "",
+        CID:"",
         userId: this.$store.state.user.userId,
         newFilePath: ""
       },
@@ -583,6 +579,9 @@ export default {
         ],
         WATER_NUMBER: [
           { required: true, message: "请输入电表号", trigger: "change" }
+        ],
+        CID: [
+          { required: true, message: "请输入采集器ID", trigger: "change" }
         ],
         ELE_NUMBER: [
           { required: true, message: "请输入水表号", trigger: "change" }
@@ -673,6 +672,7 @@ export default {
         CJR: "",
         BJR: "",
         ZFK: "",
+        CID:"",
         userId: this.$store.state.user.userId,
         newFilePath: ""
       };
@@ -710,9 +710,9 @@ export default {
       this.temp = Object.assign({}, row); // copy obj
       this.editVisible = true;
       this.dialogStatus = "update";
-      // this.$nextTick(() => {
-      //   this.$refs["dataForm"].clearValidate();
-      // });
+      this.$nextTick(() => {
+        this.$refs["dataForm"].clearValidate();
+      });
     },
     handleCondition(row) {
       this.temp = Object.assign({}, row); // copy obj

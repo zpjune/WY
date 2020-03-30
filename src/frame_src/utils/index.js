@@ -3,7 +3,7 @@
  */
 
 export function parseTime(time, cFormat) {
-  if (arguments.length === 0) {
+  if (arguments[0]===null||arguments.length === 0) {
     return null
   }
   const format = cFormat || '{y}-{m}-{d} {h}:{i}:{s}'
@@ -36,6 +36,7 @@ export function parseTime(time, cFormat) {
 
 export function parseTime1(time, cFormat) {
   if (arguments.length === 0) {
+    
     return null
   }
   const format = cFormat || '{y}-{m}-{d}'
