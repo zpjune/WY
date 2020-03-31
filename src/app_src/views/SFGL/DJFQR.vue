@@ -276,9 +276,29 @@ import {
   CreateNotification,
   ConfirmNotificationList,
   PushNotification,
-  ConfirmFee
+  ConfirmFee,
+  ExportFeeResult
 } from "@/app_src/api/SFGL/SFGL";
 import { parseTime } from "@/frame_src/utils";
+
+const TypeOptions = [
+  { key: 0, type_name: "物业费" },
+  { key: 1, type_name: "水费" },
+  { key: 2, type_name: "电费" }
+];
+const TypeKeyValue = TypeOptions.reduce((acc, cur) => {
+  acc[cur.key] = cur.type_name;
+  return acc;
+}, {});
+
+const TZOptions = [
+  { key: 0, type_name: "否" },
+  { key: 1, type_name: "是" }
+];
+const TZKeyValue = TZOptions.reduce((acc, cur) => {
+  acc[cur.key] = cur.type_name;
+  return acc;
+}, {});
 export default {
   name: "DJFQR",
   data() {
@@ -598,6 +618,74 @@ export default {
     },
     handleFilter() {
       this.listQuery.page = 1;
+    },
+    handleDownload() {
+      // 导出
+      import("@/frame_src/vendor/Export2Excel").then(excel => {
+        const tHeader = [
+          "缴费类型",
+          "房屋编号",
+          "房屋名称",
+          "业主姓名",
+          "业主电话",
+          "缴费金额",
+          "有效期起",
+          "有效期止",
+          "是否发送通知单",
+          "催缴次数",
+          "催缴日期"
+        ];
+        const filterVal = [
+          "JFLX",
+          "FWBH",
+          "FWMC",
+          "ZHXM",
+          "MOBILE_PHONE",
+          "JFJE",
+          "YXQS",
+          "YXQZ",
+          "SFTZ",
+          "JFCS",
+          "JFRQ"
+        ];
+        let temp = {
+          JFSTATUS: 0
+        };
+        ExportFeeResult(temp).then(res => {
+          if (res.data.code === 2000) {
+            let list = res.data.items;
+            const data = this.formatJson(filterVal, this.list);
+            //console.log(data);
+            excel.export_json_to_excel({
+              header: tHeader,
+              data,
+              filename: "待缴费信息表"
+            });
+          } else {
+            this.$notify({
+              position: "bottom-right",
+              title: "失败",
+              message: res.message,
+              type: "error",
+              duration: 2000
+            });
+          }
+        });
+      });
+    },
+    formatJson(filterVal, jsonData) {
+      return jsonData.map(v =>
+        filterVal.map(j => {
+          if (j === "JFLX") {
+            return TypeKeyValue[v[j]];
+          }
+          if (j === "SFTZ") {
+            return TZKeyValue[v[j]];
+          } else {
+            return v[j];
+          }
+        })
+      );
     }
   },
   mounted() {

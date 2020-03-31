@@ -238,6 +238,64 @@
                 </el-col>
               </el-row>
               <el-row>
+                <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
+                  <el-form-item label="装修押金" prop="ZXYJ">
+                    <el-input size="small" v-model="temp.ZXYJ" disabled></el-input>
+                  </el-form-item>
+                </el-col>
+                <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
+                  <el-form-item label="缴费时间">
+                    <el-date-picker
+                      style="width:100%"
+                      size="mini"
+                      v-model="temp.ZXYJJFSJ"
+                      value-format="yyyy-MM-dd"
+                      disabled
+                    ></el-date-picker>
+                  </el-form-item>
+                </el-col>
+                <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
+                  <el-form-item label="退费时间">
+                    <el-date-picker
+                      style="width:100%"
+                      size="mini"
+                      v-model="temp.ZXYJTFSJ"
+                      value-format="yyyy-MM-dd"
+                      disabled
+                    ></el-date-picker>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+              <el-row>
+                <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
+                  <el-form-item label="消防保证金" prop="XFBZJ">
+                    <el-input size="small" v-model="temp.XFBZJ" disabled></el-input>
+                  </el-form-item>
+                </el-col>
+                <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
+                  <el-form-item label="缴费时间">
+                    <el-date-picker
+                      style="width:100%"
+                      size="mini"
+                      v-model="temp.XFBZJJFSJ"
+                      value-format="yyyy-MM-dd"
+                      disabled
+                    ></el-date-picker>
+                  </el-form-item>
+                </el-col>
+                <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
+                  <el-form-item label="退费时间">
+                    <el-date-picker
+                      style="width:100%"
+                      size="mini"
+                      v-model="temp.XFBZJTFSJ"
+                      value-format="yyyy-MM-dd"
+                      disabled
+                    ></el-date-picker>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+              <el-row>
                 <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
                   <el-form-item label="经营内容" prop="JYNR">
                     <el-input v-model="temp.JYNR" type="textarea" :rows="3" disabled></el-input>
@@ -253,7 +311,7 @@
             <el-row>
               <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
                 <el-form-item label="物业费缴纳方式">
-                 <el-input style="width:100%" size="small" v-model="temp.NAME2" disabled></el-input>
+                  <el-input style="width:100%" size="small" v-model="temp.NAME2" disabled></el-input>
                 </el-form-item>
               </el-col>
               <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">

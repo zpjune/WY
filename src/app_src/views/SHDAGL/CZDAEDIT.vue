@@ -117,6 +117,60 @@
           </el-col>
         </el-row>
         <el-row>
+          <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
+            <el-form-item label="装修押金" prop="ZXYJ">
+              <el-input size="small" v-model="temp.ZXYJ"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
+            <el-form-item label="缴费时间">
+              <el-date-picker
+                style="width:100%"
+                size="mini"
+                v-model="temp.ZXYJJFSJ"
+                value-format="yyyy-MM-dd"
+              ></el-date-picker>
+            </el-form-item>
+          </el-col>
+          <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
+            <el-form-item label="退费时间">
+              <el-date-picker
+                style="width:100%"
+                size="mini"
+                v-model="temp.ZXYJTFSJ"
+                value-format="yyyy-MM-dd"
+              ></el-date-picker>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
+            <el-form-item label="消防保证金" prop="XFBZJ">
+              <el-input size="small" v-model="temp.XFBZJ"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
+            <el-form-item label="缴费时间">
+              <el-date-picker
+                style="width:100%"
+                size="mini"
+                v-model="temp.XFBZJJFSJ"
+                value-format="yyyy-MM-dd"
+              ></el-date-picker>
+            </el-form-item>
+          </el-col>
+          <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
+            <el-form-item label="退费时间">
+              <el-date-picker
+                style="width:100%"
+                size="mini"
+                v-model="temp.XFBZJTFSJ"
+                value-format="yyyy-MM-dd"
+              ></el-date-picker>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
           <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
             <el-form-item label="经营内容" prop="JYNR">
               <el-input v-model="temp.JYNR" type="textarea" :rows="3"></el-input>
@@ -151,7 +205,12 @@
         </el-col>
         <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
           <el-form-item label="物业基准日期" prop="WYJZSJ">
-            <el-date-picker style="width:100%" size="mini" v-model="temp.WYJZSJ" value-format="yyyy-MM-dd"></el-date-picker>
+            <el-date-picker
+              style="width:100%"
+              size="mini"
+              v-model="temp.WYJZSJ"
+              value-format="yyyy-MM-dd"
+            ></el-date-picker>
           </el-form-item>
         </el-col>
       </el-row>
@@ -365,7 +424,7 @@ export default {
       }
     };
     const validateMonth = (rule, value, callback) => {
-      if (value <= 12 && value >= 1) {
+      if (value >= 1) {
         callback();
       } else {
         return callback(new Error("请输入正确的月份!"));
@@ -527,6 +586,20 @@ export default {
         ],
         ZJJFFS: [
           { required: true, message: "请填写租赁缴费方式", trigger: "change" }
+        ],
+        ZXYJ: [
+          {
+            validator: validateDecimal,
+            message: "请填写正确的数字",
+            trigger: "change"
+          }
+        ],
+        XFBZJ: [
+          {
+            validator: validateDecimal,
+            message: "请填写正确的数字",
+            trigger: "change"
+          }
         ]
       },
       total: 0,
@@ -560,6 +633,12 @@ export default {
         SHOP_NAME: "",
         JYNR: "",
         IS_SUBLET: 0,
+        ZXYJ: "",
+        ZXYJJFSJ: "",
+        ZXYJTFSJ: "",
+        XFBZJ: "",
+        XFBZJJFSJ: "",
+        XFBZJTFSJ: "",
         //以下是租赁信息
         LEASE_ID: "",
         ZLKSSJ: "",
@@ -650,6 +729,12 @@ export default {
         SHOP_NAME: "",
         JYNR: "",
         IS_SUBLET: 0,
+        ZXYJ: "",
+        ZXYJJFSJ: "",
+        ZXYJTFSJ: "",
+        XFBZJ: "",
+        XFBZJJFSJ: "",
+        XFBZJTFSJ: "",
         //以下是租赁信息
         LEASE_ID: "",
         ZLKSSJ: "",

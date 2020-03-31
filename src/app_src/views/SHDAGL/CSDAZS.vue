@@ -122,6 +122,64 @@
             </el-col>
           </el-row>
           <el-row>
+            <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
+              <el-form-item label="装修押金" prop="ZXYJ">
+                <el-input size="small" v-model="temp.ZXYJ" disabled></el-input>
+              </el-form-item>
+            </el-col>
+            <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
+              <el-form-item label="缴费时间">
+                <el-date-picker
+                  style="width:100%"
+                  size="mini"
+                  v-model="temp.ZXYJJFSJ"
+                  value-format="yyyy-MM-dd"
+                  disabled
+                ></el-date-picker>
+              </el-form-item>
+            </el-col>
+            <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
+              <el-form-item label="退费时间">
+                <el-date-picker
+                  style="width:100%"
+                  size="mini"
+                  v-model="temp.ZXYJTFSJ"
+                  value-format="yyyy-MM-dd"
+                  disabled
+                ></el-date-picker>
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <el-row>
+            <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
+              <el-form-item label="消防保证金" prop="XFBZJ">
+                <el-input size="small" v-model="temp.XFBZJ" disabled></el-input>
+              </el-form-item>
+            </el-col>
+            <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
+              <el-form-item label="缴费时间">
+                <el-date-picker
+                  style="width:100%"
+                  size="mini"
+                  v-model="temp.XFBZJJFSJ"
+                  value-format="yyyy-MM-dd"
+                  disabled
+                ></el-date-picker>
+              </el-form-item>
+            </el-col>
+            <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
+              <el-form-item label="退费时间">
+                <el-date-picker
+                  style="width:100%"
+                  size="mini"
+                  v-model="temp.XFBZJTFSJ"
+                  value-format="yyyy-MM-dd"
+                  disabled
+                ></el-date-picker>
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <el-row>
             <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
               <el-form-item label="经营内容">
                 <el-input v-model="temp.JYNR" type="textarea" :rows="3" disabled></el-input>
@@ -233,7 +291,7 @@
         </div>
         <el-row>
           <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-            <el-form-item label="业主姓名" prop="ZHXM1" >
+            <el-form-item label="业主姓名" prop="ZHXM1">
               <el-input size="small" v-model="newtemp.ZHXM1"></el-input>
             </el-form-item>
           </el-col>
@@ -291,6 +349,60 @@
           </el-col>
         </el-row>
         <el-row>
+          <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
+            <el-form-item label="装修押金" prop="ZXYJ1">
+              <el-input size="small" v-model="newtemp.ZXYJ1"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
+            <el-form-item label="缴费时间">
+              <el-date-picker
+                style="width:100%"
+                size="mini"
+                v-model="newtemp.ZXYJJFSJ1"
+                value-format="yyyy-MM-dd"
+              ></el-date-picker>
+            </el-form-item>
+          </el-col>
+          <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
+            <el-form-item label="退费时间">
+              <el-date-picker
+                style="width:100%"
+                size="mini"
+                v-model="newtemp.ZXYJTFSJ1"
+                value-format="yyyy-MM-dd"
+              ></el-date-picker>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
+            <el-form-item label="消防保证金" prop="XFBZJ1">
+              <el-input size="small" v-model="newtemp.XFBZJ1"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
+            <el-form-item label="缴费时间">
+              <el-date-picker
+                style="width:100%"
+                size="mini"
+                v-model="newtemp.XFBZJJFSJ1"
+                value-format="yyyy-MM-dd"
+              ></el-date-picker>
+            </el-form-item>
+          </el-col>
+          <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
+            <el-form-item label="退费时间">
+              <el-date-picker
+                style="width:100%"
+                size="mini"
+                v-model="newtemp.XFBZJTFSJ1"
+                value-format="yyyy-MM-dd"
+              ></el-date-picker>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
           <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
             <el-form-item label="经营内容" prop="JYNR1">
               <el-input v-model="newtemp.JYNR1" type="textarea" :rows="3"></el-input>
@@ -324,7 +436,12 @@
           </el-col>
           <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
             <el-form-item label="物业基准日期" prop="WYJZSJ1">
-              <el-date-picker style="width:100%" size="mini" v-model="newtemp.WYJZSJ1" value-format="yyyy-MM-dd"></el-date-picker>
+              <el-date-picker
+                style="width:100%"
+                size="mini"
+                v-model="newtemp.WYJZSJ1"
+                value-format="yyyy-MM-dd"
+              ></el-date-picker>
             </el-form-item>
           </el-col>
         </el-row>
@@ -508,6 +625,20 @@ export default {
         ],
         WYJFFS1: [
           { required: true, message: "请选择缴费方式", trigger: "change" }
+        ],
+        ZXYJ1: [
+          {
+            validator: validateDecimal,
+            message: "请填写正确的数字",
+            trigger: "change"
+          }
+        ],
+        XFBZJ1: [
+          {
+            validator: validateDecimal,
+            message: "请填写正确的数字",
+            trigger: "change"
+          }
         ]
       },
       total: 0,
@@ -540,6 +671,12 @@ export default {
         SHOP_NAME: "",
         JYNR: "",
         IS_SUBLET: 0,
+        ZXYJ: "",
+        ZXYJJFSJ: "",
+        ZXYJTFSJ: "",
+        XFBZJ: "",
+        XFBZJJFSJ: "",
+        XFBZJTFSJ: "",
         //转租信息
         CZ_SHID1: "",
         ZHXM1: "",
@@ -579,7 +716,13 @@ export default {
         E_MAIL1: "",
         SHOPBH1: "",
         SHOP_NAME1: "",
-        JYNR1: ""
+        JYNR1: "",
+        ZXYJ1: "",
+        ZXYJJFSJ1: "",
+        ZXYJTFSJ1: "",
+        XFBZJ1: "",
+        XFBZJJFSJ1: "",
+        XFBZJTFSJ1: ""
       },
       textMap: {
         update: "修改房屋信息",
@@ -648,6 +791,12 @@ export default {
         SHOP_NAME: "",
         JYNR: "",
         IS_SUBLET: 0,
+        ZXYJ: "",
+        ZXYJJFSJ: "",
+        ZXYJTFSJ: "",
+        XFBZJ: "",
+        XFBZJJFSJ: "",
+        XFBZJTFSJ: "",
         //转租信息
         CZ_SHID1: "",
         ZHXM1: "",

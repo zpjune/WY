@@ -127,6 +127,60 @@
           </el-col>
         </el-row>
         <el-row>
+          <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
+            <el-form-item label="装修押金" prop="ZXYJ">
+              <el-input size="small" v-model="temp.ZXYJ"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
+            <el-form-item label="缴费时间">
+              <el-date-picker
+                style="width:100%"
+                size="mini"
+                v-model="temp.ZXYJJFSJ"
+                value-format="yyyy-MM-dd"
+              ></el-date-picker>
+            </el-form-item>
+          </el-col>
+          <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
+            <el-form-item label="退费时间">
+              <el-date-picker
+                style="width:100%"
+                size="mini"
+                v-model="temp.ZXYJTFSJ"
+                value-format="yyyy-MM-dd"
+              ></el-date-picker>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
+            <el-form-item label="消防保证金" prop="XFBZJ">
+              <el-input size="small" v-model="temp.XFBZJ"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
+            <el-form-item label="缴费时间">
+              <el-date-picker
+                style="width:100%"
+                size="mini"
+                v-model="temp.XFBZJJFSJ"
+                value-format="yyyy-MM-dd"
+              ></el-date-picker>
+            </el-form-item>
+          </el-col>
+          <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
+            <el-form-item label="退费时间">
+              <el-date-picker
+                style="width:100%"
+                size="mini"
+                v-model="temp.XFBZJTFSJ"
+                value-format="yyyy-MM-dd"
+              ></el-date-picker>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
           <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
             <el-form-item label="经营内容" prop="JYNR">
               <el-input v-model="temp.JYNR" type="textarea" :rows="3"></el-input>
@@ -214,7 +268,12 @@
         <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
           <el-form-item label="物业费缴纳方式" prop="WYJFFS">
             <el-select style="width:100%" size="small" v-model="temp.WYJFFS">
-              <el-option v-for="(item,key) in PAY_WAYOPTIONS" :key="key" :value="item.Code" :label="item.Name"></el-option>
+              <el-option
+                v-for="(item,key) in PAY_WAYOPTIONS"
+                :key="key"
+                :value="item.Code"
+                :label="item.Name"
+              ></el-option>
             </el-select>
           </el-form-item>
         </el-col>
@@ -227,7 +286,12 @@
         </el-col>
         <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
           <el-form-item label="物业基准日期" prop="WYJZSJ">
-            <el-date-picker style="width:100%" size="mini" v-model="temp.WYJZSJ"  value-format="yyyy-MM-dd"></el-date-picker>
+            <el-date-picker
+              style="width:100%"
+              size="mini"
+              v-model="temp.WYJZSJ"
+              value-format="yyyy-MM-dd"
+            ></el-date-picker>
           </el-form-item>
         </el-col>
       </el-row>
@@ -299,7 +363,7 @@
       <el-button @click="closetab">取消</el-button>
       <!-- <el-button type="success">提交</el-button> -->
     </div>
-   <el-dialog
+    <el-dialog
       width="80%"
       title="房屋信息"
       :visible.sync="innerVisible"
@@ -441,7 +505,7 @@ export default {
       }
     };
     const validateMonth = (rule, value, callback) => {
-      if (value <= 12 && value >= 1) {
+      if (value >= 1) {
         callback();
       } else {
         return callback(new Error("请输入正确的月份!"));
@@ -449,7 +513,7 @@ export default {
     };
     return {
       listQueryHouseInfo: {
-        FWBH:"",
+        FWBH: "",
         FWMC: "",
         LSFGS: "",
         FWSX: 0,
@@ -512,8 +576,8 @@ export default {
         }
       ],
       list2: [],
-      total:0,
-      PAY_WAYOPTIONS:[],
+      total: 0,
+      PAY_WAYOPTIONS: [],
       rules: {
         FWBH: [{ required: true, message: "请选择房屋", trigger: "change" }],
         JZR: [{ required: true, message: "物业基准日期", trigger: "change" }],
@@ -619,6 +683,20 @@ export default {
         ],
         JYNR1: [
           { required: true, message: "请填写转租经营内容", trigger: "change" }
+        ],
+        ZXYJ: [
+          {
+            validator: validateDecimal,
+            message: "请填写正确的数字",
+            trigger: "change"
+          }
+        ],
+        XFBZJ: [
+          {
+            validator: validateDecimal,
+            message: "请填写正确的数字",
+            trigger: "change"
+          }
         ]
       },
       total: 0,
@@ -650,6 +728,12 @@ export default {
         SHOP_NAME: "",
         JYNR: "",
         IS_SUBLET: 0,
+        ZXYJ: "",
+        ZXYJJFSJ: "",
+        ZXYJTFSJ: "",
+        XFBZJ: "",
+        XFBZJJFSJ: "",
+        XFBZJTFSJ: "",
         //转租信息
         CZ_SHID1: "",
         ZHXM1: "",
@@ -682,7 +766,7 @@ export default {
     };
   },
   methods: {
-   GetHouseInfo() {
+    GetHouseInfo() {
       this.innerVisible = true;
       //this.temp.OLDID = this.temp.FWID;
       GetHouseInfo(this.listQueryHouseInfo).then(res => {
@@ -752,6 +836,12 @@ export default {
         SHOP_NAME: "",
         JYNR: "",
         IS_SUBLET: 0,
+        ZXYJ: "",
+        ZXYJJFSJ: "",
+        ZXYJTFSJ: "",
+        XFBZJ: "",
+        XFBZJJFSJ: "",
+        XFBZJTFSJ: "",
         //转租信息
         CZ_SHID1: "",
         ZHXM1: "",
@@ -801,7 +891,7 @@ export default {
       //     }
       //   });
     },
-     GetOptions() {
+    GetOptions() {
       let temp = {
         ParentCode: "PAY_WAY"
       };

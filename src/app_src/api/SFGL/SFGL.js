@@ -69,3 +69,11 @@ export function ConfirmReciveMoney(data) {
     data
   })
 }
+
+export function ExportFeeResult(query) {
+  return request({
+    url: '/FeeResult/ExportFeeResult',
+    method: 'get',
+    params: query
+  })
+}
