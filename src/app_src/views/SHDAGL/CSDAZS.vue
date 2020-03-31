@@ -324,7 +324,7 @@
           </el-col>
           <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
             <el-form-item label="物业基准日期" prop="WYJZSJ1">
-              <el-date-picker style="width:100%" size="mini" v-model="newtemp.WYJZSJ1"></el-date-picker>
+              <el-date-picker style="width:100%" size="mini" v-model="newtemp.WYJZSJ1" value-format="yyyy-MM-dd"></el-date-picker>
             </el-form-item>
           </el-col>
         </el-row>

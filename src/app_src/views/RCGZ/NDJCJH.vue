@@ -116,6 +116,7 @@
                   placeholder="选择日期"
                   v-model="temp.JHSJ"
                   style="width: 100%;"
+                  value-format="yyyy-MM-dd"
                 ></el-date-picker>
               </el-form-item>
             </el-col>

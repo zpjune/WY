@@ -95,7 +95,7 @@
                   size="mini"
                   @click="unpass(scope.row)"
                 >取消审核</el-button>
-                <el-button type="danger" size="mini" @click="EndLease(scope.row)">终止租赁</el-button>
+                <el-button type="danger" size="mini" @click="EndLease(scope.row)">终止物业</el-button>
               </template>
             </el-table-column>
           </el-table>
@@ -253,11 +253,7 @@
             <el-row>
               <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
                 <el-form-item label="物业费缴纳方式">
-                  <el-select style="width:100%" size="small" v-model="temp.WYJFFS" disabled>
-                    <el-option value="0" label="半年"></el-option>
-                    <el-option value="1" label="一年"></el-option>
-                    <el-option :value="2" label="全部"></el-option>
-                  </el-select>
+                 <el-input style="width:100%" size="small" v-model="temp.NAME2" disabled></el-input>
                 </el-form-item>
               </el-col>
               <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
@@ -646,7 +642,7 @@ export default {
       this.$confirm(
         "您确定解除编号为" +
           row.FWBH +
-          "的租赁关系吗?解除后，商户的信息以及租赁物业信息等都将消失！",
+          "的物业关系吗?解除后，商户的信息以及租赁物业信息等都将消失！",
         "提示",
         {
           confirmButtonText: "确定",

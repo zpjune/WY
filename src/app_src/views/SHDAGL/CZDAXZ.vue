@@ -54,6 +54,7 @@
               <el-date-picker
                 style="width:100%"
                 format="yyyy-MM-dd"
+                value-format="yyyy-MM-dd"
                 size="small"
                 v-model="temp.JZR"
               ></el-date-picker>
@@ -161,6 +162,7 @@
               <el-date-picker
                 style="width:100%"
                 format="yyyy-MM-dd"
+                value-format="yyyy-MM-dd"
                 size="small"
                 v-model="temp.ZLQSRQ"
               ></el-date-picker>
@@ -171,6 +173,7 @@
               <el-date-picker
                 style="width:100%"
                 format="yyyy-MM-dd"
+                value-format="yyyy-MM-dd"
                 size="small"
                 v-model="temp.ZLZZRQ"
               ></el-date-picker>

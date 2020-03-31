@@ -120,6 +120,11 @@
           <span>{{scope.row.JFRQ}}</span>
         </template>
       </el-table-column>
+      <el-table-column align="center" width="120px" label="是否缴费">
+        <template slot-scope="scope">
+          <span>{{scope.row.JFZT|changeSFTZ}}</span>
+        </template>
+      </el-table-column>
     </el-table>
     <div class="page">
       <el-pagination
@@ -441,9 +446,11 @@ export default {
     },
     handleSizeChange(val) {
       this.listQuery.limit = val;
+      this.getList();
     },
     handleCurrentChange(val) {
       this.listQuery.page = val;
+      this.getList();
     },
     handleFilter() {
       this.listQuery.page = 1;
@@ -463,10 +470,10 @@ export default {
       }
     },
     changeSFTZ(val) {
-      if (val === 0) {
-        return "否";
-      } else {
+      if (val === 1) {
         return "是";
+      } else {
+        return "否";
       }
     }
   }

@@ -82,7 +82,7 @@
                   size="mini"
                   @click="unpass(scope.row)"
                 >取消审核</el-button>
-                <el-button type="danger" size="mini" @click="EndLease(scope.row)">终止租赁</el-button>
+                <el-button type="danger" size="mini" @click="EndLease(scope.row)">终止物业</el-button>
               </template>
             </el-table-column>
           </el-table>
@@ -234,11 +234,7 @@
             <el-row>
               <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
                 <el-form-item label="物业费缴纳方式">
-                  <el-select style="width:100%" size="small" v-model="temp.WYJFFS" disabled>
-                    <el-option value="0" label="半年"></el-option>
-                    <el-option value="1" label="一年"></el-option>
-                    <el-option :value="2" label="全部"></el-option>
-                  </el-select>
+                  <el-input style="width:100%" size="small" v-model="temp.NAME2" disabled></el-input>
                 </el-form-item>
               </el-col>
               <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
@@ -250,7 +246,7 @@
               </el-col>
               <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
                 <el-form-item label="物业基准日期">
-                  <el-date-picker style="width:100%" size="mini" v-model="temp.WYJZSJ" disabled></el-date-picker>
+                  <el-date-picker style="width:100%" size="mini" v-model="temp.WYJZSJ" disabled value-format="yyyy-MM-dd"></el-date-picker>
                 </el-form-item>
               </el-col>
             </el-row>
@@ -266,6 +262,7 @@
                     <el-date-picker
                       style="width:100%"
                       format="yyyy-MM-dd"
+                      value-format="yyyy-MM-dd"
                       size="small"
                       v-model="temp.ZLKSSJ"
                       disabled
@@ -277,6 +274,7 @@
                     <el-date-picker
                       style="width:100%"
                       format="yyyy-MM-dd"
+                      value-format="yyyy-MM-dd"
                       size="small"
                       v-model="temp.ZLZZSJ"
                       disabled
@@ -303,15 +301,7 @@
                   </el-form-item>
                 </el-col>
                 <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-                  <el-form-item label="缴费方式">
-                    <el-select style="width:100%" size="small" v-model="temp.ZJJFFS" disabled>
-                      <el-option value="0" label="月度"></el-option>
-                      <el-option value="1" label="季度"></el-option>
-                      <el-option value="2" label="半年度"></el-option>
-                      <el-option value="3" label="年度"></el-option>
-                      <el-option value="3" label="全额"></el-option>
-                    </el-select>
-                  </el-form-item>
+                 <el-input style="width:100%" size="small" v-model="temp.NAME1" disabled></el-input>
                 </el-col>
               </el-row>
             </div>
