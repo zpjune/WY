@@ -107,7 +107,7 @@
       </el-table-column>
       <el-table-column align="center" width="120px" label="催缴日期">
         <template slot-scope="scope">
-          <span>{{scope.row.JFRQ}}</span>
+          <span>{{scope.row.JFRQ|parseTime}}</span>
         </template>
       </el-table-column>
     </el-table>
