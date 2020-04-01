@@ -96,5 +96,21 @@ export function DeleteShopInfo(query) {
     })
   }
 
+  export function uploadCZSHOPInfo(data) {
+    return request({
+      url: '/ShopInfo/uploadCZSHOPInfo',
+      method: 'post',
+      data
+    })
+  }
+
+  export function uploadCSSHOPInfo(data) {
+    return request({
+      url: '/ShopInfo/uploadCSSHOPInfo',
+      method: 'post',
+      data
+    })
+  }
+
 
 

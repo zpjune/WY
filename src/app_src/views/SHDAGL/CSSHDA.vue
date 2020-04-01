@@ -48,6 +48,13 @@
             type="primary"
             icon="el-icon-edit"
           >新增</el-button>
+           <el-button
+            class="filter-item"
+            type="primary"
+            icon="el-icon-upload2"
+            size="mini"
+            @click="showUpload = true;"
+          >导入</el-button>
           <el-button
             class="filter-item"
             type="primary"
@@ -125,6 +132,31 @@
         </el-col>
       </el-row>
     </el-card>
+    <el-dialog :visible.sync="showUpload">
+      <el-card class="box-card">
+        <div class="filter-container" style="height:80px;">
+          <el-upload
+            class="upload-demo"
+            ref="upload"
+            :action="urlUpload"
+            :auto-upload="false"
+            :on-exceed="handleExceed"
+            :on-success="handleSuccess"
+            :headers="headers"
+            :file-list="fileList"
+          >
+            <el-button slot="trigger" size="small" type="primary">选取文件</el-button>
+            <el-button
+              style="margin-left: 10px;"
+              size="small"
+              type="success"
+              @click="btnSubmit"
+            >导&nbsp;&nbsp;入</el-button>
+            <a :href="urldownload" style="text-decoration:underline;">模板下載</a>
+          </el-upload>
+        </div>
+      </el-card>
+    </el-dialog>
   </div>
 </template>
 
@@ -211,7 +243,11 @@ export default {
         IS_PASS: "",
         FWSX: 2,
         FWID: ""
-      }
+      },
+       showUpload: false,
+      urlUpload: process.env.BASE_API + "ShopInfo/uploadCSSHOPInfo",
+      urldownload: process.env.BASE_API + "ExcelModel/出售商户模板.xls",
+      fileList:[],
     };
   },
   methods: {
@@ -234,7 +270,45 @@ export default {
         }
       });
     },
-
+     handleExceed(files, fileList) {
+      this.$message.warning(
+        `当前限制选择 1个文件，本次选择了 ${
+          files.length
+        } 个文件，共选择了 ${files.length + fileList.length} 个文件`
+      );
+    },
+    handleSuccess(res, file, fileList) {
+      if (res.code === 2000) {
+        this.getList();
+        title = "导入成功";
+        type = "success";
+        this.$notify({
+          position: "bottom-right",
+          title: title,
+          message: message,
+          type: type,
+          duration: 2000
+        });
+        this.showUpload = false;
+        this.fileList = [];
+      } else {
+        var message = res.message;
+        var title = "导入失败";
+        var type = "error";
+        this.$notify({
+          position: "bottom-right",
+          title: title,
+          message: message,
+          type: type,
+          duration: 2000
+        });
+        this.showUpload = false;
+        this.fileList = [];
+      }
+    },
+    btnSubmit() {
+      this.$refs.upload.submit();
+    },
     handleCreate() {
       this.$router.push({ path: "/SHDAGL/CSDAEDIT" });
     },
