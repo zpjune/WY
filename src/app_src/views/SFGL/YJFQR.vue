@@ -621,8 +621,10 @@ export default {
     changeSFTZ(val) {
       if (val === 0) {
         return "否";
-      } else {
+      } else if (val === 1) {
         return "是";
+      } else if (val === 2) {
+        return "法律诉讼";
       }
     },
     parseTime

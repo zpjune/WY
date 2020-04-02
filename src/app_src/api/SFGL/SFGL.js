@@ -70,6 +70,14 @@ export function ConfirmReciveMoney(data) {
   })
 }
 
+export function PayOff(data) {
+  return request({
+    url: '/FeeResult/PayOff',
+    method: 'post',
+    data
+  })
+}
+
 export function ExportFeeResult(query) {
   return request({
     url: '/FeeResult/ExportFeeResult',

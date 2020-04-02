@@ -49,6 +49,13 @@
         @click="getList"
         size="mini"
       >查询</el-button>
+      <el-button
+        type="warning"
+        size="mini"
+        @click="PayOff"
+        class="filter-item"
+        :disabled="selectList.length==0"
+      >清缴</el-button>
     </div>
     <el-table
       :key="tableKey"
@@ -61,30 +68,32 @@
       highlight-current-row
       size="mini"
       id="table"
+      @select="select"
+      @select-all="selectall"
     >
-      <!-- <el-table-column type="selection" width="55"></el-table-column> -->
-      <el-table-column width="150px" align="center" label="缴费类型">
+      <el-table-column type="selection" width="55"></el-table-column>
+      <el-table-column align="center" label="缴费类型">
         <template slot-scope="scope">
           <span>{{scope.row.JFLX|changeType}}</span>
         </template>
       </el-table-column>
 
-      <el-table-column align="center" width="120px" label="房屋编号">
+      <el-table-column align="center" label="房屋编号">
         <template slot-scope="scope">
           <span>{{scope.row.FWBH}}</span>
         </template>
       </el-table-column>
-      <el-table-column width="150px" align="center" label="房屋名称">
+      <el-table-column align="center" label="房屋名称">
         <template slot-scope="scope">
           <span>{{scope.row.FWMC}}</span>
         </template>
       </el-table-column>
-      <el-table-column align="center" width="120px" label="业主姓名">
+      <el-table-column align="center" label="业主姓名">
         <template slot-scope="scope">
           <span>{{scope.row.ZHXM}}</span>
         </template>
       </el-table-column>
-      <el-table-column align="center" width="120px" label="业主电话">
+      <el-table-column align="center" label="业主电话">
         <template slot-scope="scope">
           <span>{{scope.row.MOBILE_PHONE}}</span>
         </template>
@@ -95,17 +104,17 @@
           <span>{{scope.row.JFJE}}</span>
         </template>
       </el-table-column>
-      <el-table-column align="center" width="120px" label="是否发送通知单">
+      <el-table-column align="center" label="是否发送通知单">
         <template slot-scope="scope">
           <span>{{scope.row.SFTZ|changeSFTZ}}</span>
         </template>
       </el-table-column>
-      <el-table-column align="center" width="120px" label="催缴次数">
+      <el-table-column align="center" label="催缴次数">
         <template slot-scope="scope">
           <span>{{scope.row.JFCS}}</span>
         </template>
       </el-table-column>
-      <el-table-column align="center" width="120px" label="催缴日期">
+      <el-table-column align="center" label="催缴日期">
         <template slot-scope="scope">
           <span>{{scope.row.JFRQ|parseTime}}</span>
         </template>
@@ -231,7 +240,8 @@ import {
   ConfirmNotificationList,
   PushNotification,
   GetHistoryFeeResult,
-  GetBadFeeResult
+  GetBadFeeResult,
+  PayOff
 } from "@/app_src/api/SFGL/SFGL";
 export default {
   name: "QJJLCX",
@@ -308,6 +318,36 @@ export default {
           OPEN_ID: items.OPEN_ID
         };
         this.selectList.push(temp);
+      });
+    },
+    PayOff() {
+      this.$confirm("确定将勾选的通知标记为法律诉讼并发送通知单吗？", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      }).then(() => {
+        PayOff(this.selectList).then(response => {
+          if (response.data.code === 2000) {
+            this.$notify({
+              position: "bottom-right",
+              title: "成功",
+              message: response.data.message,
+              type: "success",
+              duration: 2000
+            });
+            this.getList();
+            this.selectList = [];
+          } else {
+            this.listLoading = false;
+            this.$notify({
+              position: "bottom-right",
+              title: "失败",
+              message: response.data.message,
+              type: "error",
+              duration: 2000
+            });
+          }
+        });
       });
     },
     create() {
@@ -457,8 +497,11 @@ export default {
     changeSFTZ(val) {
       if (val === 0) {
         return "否";
-      } else {
+      } else if(val===1) {
         return "是";
+      }
+      else if(val===2){
+        return "法律诉讼";
       }
     }
   }
