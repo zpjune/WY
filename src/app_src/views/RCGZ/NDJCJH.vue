@@ -304,6 +304,9 @@ export default {
         .catch(() => {});
     },
     addRow(tableData, event) {
+      if(tableData===undefined){
+        this.DetailList=[];
+      }
       tableData.push({
         JCQY: "",
         JCNR: "",

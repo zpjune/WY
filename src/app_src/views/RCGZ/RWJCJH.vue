@@ -49,7 +49,7 @@
           <el-table-column label="任务开始时间" prop="RWKSSJ" fixed="left"></el-table-column>
           <el-table-column label="任务结束时间" prop="RWJSSJ" fixed="left"></el-table-column>
           <el-table-column label="任务内容" prop="RWNR"></el-table-column>
-          <el-table-column label="任务范围" prop="RWFW"></el-table-column>
+          <el-table-column label="任务范围" prop="NAME"></el-table-column>
           <el-table-column label="备注" prop="REMARK"></el-table-column>
           <!-- <el-table-column label="任务状态" prop="TASK_STATE_NAME"></el-table-column> -->
           <el-table-column align="center" label="操作" fixed="right" min-width="150">
@@ -273,7 +273,7 @@
           <el-row>
             <el-col :span="12">
               <el-form-item label="任务范围" prop="RWFW">
-                <span>{{temp.RWFW}}</span>
+                <span>{{temp.NAME}}</span>
               </el-form-item>
             </el-col>
             <el-col :span="12">
@@ -371,8 +371,12 @@ import {
   GetPlanCheckAndDetail,
   PushTask
 } from "@/app_src/api/RCGZ/RWJCJH";
+import { parseTime } from "@/frame_src/utils";
 export default {
   name: "NDJCJH",
+  filters:{
+    parseTime
+  },
   data() {
     return {
       listQuery: {
@@ -639,6 +643,7 @@ export default {
       };
       this.radio = "";
       this.radio1 = "";
+      this.CheckPlanList=[];
     },
     tableRowClassName({ row, rowIndex }) {
       // 表头行的 className 的回调方法，也可以使用字符串为所有表头行设置一个固定的 className。
