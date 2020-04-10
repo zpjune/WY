@@ -251,7 +251,7 @@ export default {
       dialogStatus: "",
       listloading: false,
       list: [],
-      areaOptions:[],
+      areaOptions: [],
       rules: {
         JHND: [
           {
@@ -304,9 +304,6 @@ export default {
         .catch(() => {});
     },
     addRow(tableData, event) {
-      if(tableData===undefined){
-        this.DetailList=[];
-      }
       tableData.push({
         JCQY: "",
         JCNR: "",
@@ -384,11 +381,11 @@ export default {
       this.workFlowVisible = true;
     },
     handleSizeChange(val) {
-      this.listQuery.limit=val;
+      this.listQuery.limit = val;
       this.getList();
     },
     handleCurrentChange(val) {
-      this.listQuery.page=val;
+      this.listQuery.page = val;
       this.getList();
     },
     handleCreate() {
