@@ -31,3 +31,11 @@ export function DeleteTaskDetailConfig(query) {
       data
     })
   } 
+
+  export function GetParentCodeConfig(data) {
+    return request({
+      url: '/TaskDetailConfig/GetParentCodeConfig',
+      method: 'get',
+      data
+    })
+  } 

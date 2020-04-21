@@ -163,8 +163,8 @@
                         <el-option
                           v-for="(item,index) in fildtps"
                           :key="index"
-                          :label="item.text"
-                          :value="item.value"
+                          :label="item.Name"
+                          :value="item.Code"
                         ></el-option>
                       </el-select>
                     </template>
@@ -214,6 +214,9 @@ import {
   CreateCheckPlan,
   UpdateCheckPlan
 } from "@/app_src/api/RCGZ/NDJHJC";
+import {
+  GetParentCodeConfig
+} from "@/app_src/api/JCSZ/TaskDetailConfig";
 import { GetOptions } from "@/app_src/api/commonApi";
 export default {
   name: "NDJCJH",
@@ -230,8 +233,7 @@ export default {
         limit: 10
       },
       fildtps: [
-        { text: "消防", value: "1" },
-        { text: "安全", value: "2" }
+
       ],
       textMap: {
         update: "修改年度计划",
@@ -357,7 +359,13 @@ export default {
         }
       });
     },
-
+    GetJCOptions(){
+      GetParentCodeConfig().then(res=>{
+        if(res.data.code===2000){
+          this.fildtps=res.data.items;
+        }
+      })
+    },
     resetTemp() {
       this.temp = {
         JHND: "",
@@ -506,6 +514,7 @@ export default {
   mounted() {
     this.getList();
     this.GetOptions();
+    this.GetJCOptions();
   }
 };
 </script>

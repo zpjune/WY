@@ -107,21 +107,21 @@ export default {
         ParentID: [
           {
             required: true,
-            message: "请输入计划年度",
+            message: "请选择父节点",
             trigger: "change"
           }
         ],
         Code: [
           {
             required: true,
-            message: "请输入计划年度",
+            message: "请输入编码",
             trigger: "change"
           }
         ],
         Name: [
           {
             required: true,
-            message: "请输入计划年度",
+            message: "请输入名称",
             trigger: "change"
           }
         ]
