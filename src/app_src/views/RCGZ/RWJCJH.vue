@@ -154,7 +154,7 @@
                     </el-table-column>
                     <el-table-column label="检查区域" prop="ALLPLACENAME"></el-table-column>
                     <el-table-column label="检查内容" :show-overflow-tooltip="true" prop="JCNR"></el-table-column>
-                    <el-table-column prop="JCLX" label="检查类型"></el-table-column>
+                    <el-table-column prop="JCNAME" label="检查类型"></el-table-column>
                     <el-table-column label="排查次数" prop="PCCS"></el-table-column>
                   </el-table>
                 </el-row>
