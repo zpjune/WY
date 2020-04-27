@@ -49,7 +49,7 @@
           <el-table-column label="任务开始时间" prop="RWKSSJ" fixed="left"></el-table-column>
           <el-table-column label="任务结束时间" prop="RWJSSJ" fixed="left"></el-table-column>
           <el-table-column label="任务内容" prop="RWNR"></el-table-column>
-          <el-table-column label="任务范围" prop="NAME"></el-table-column>
+          <el-table-column label="任务范围" prop="NAME" show-overflow-tooltip></el-table-column>
           <el-table-column label="备注" prop="REMARK"></el-table-column>
           <!-- <el-table-column label="任务状态" prop="TASK_STATE_NAME"></el-table-column> -->
           <el-table-column align="center" label="操作" fixed="right" min-width="150">
@@ -141,8 +141,11 @@
                     border
                     fit
                     highlight-current-row
+                    @selection-change="handleSelectionChange"
+                    ref="multipleTable"
                   >
-                    <el-table-column align="center" label="选择" width="50px">
+                    <el-table-column type="selection" width="55"></el-table-column>
+                    <!-- <el-table-column align="center" label="选择" width="50px">
                       <template slot-scope="scope">
                         <el-radio
                           class="radio"
@@ -151,7 +154,7 @@
                           @change="selectCheckPlanDetail(scope.row)"
                         >&nbsp;</el-radio>
                       </template>
-                    </el-table-column>
+                    </el-table-column> -->
                     <el-table-column label="检查区域" prop="ALLPLACENAME"></el-table-column>
                     <el-table-column label="检查内容" :show-overflow-tooltip="true" prop="JCNR"></el-table-column>
                     <el-table-column prop="JCNAME" label="检查类型"></el-table-column>
@@ -333,28 +336,6 @@
           <el-table-column label="计划名称" prop="JHMC"></el-table-column>
           <el-table-column label="计划说明" prop="JHSM"></el-table-column>
           <el-table-column label="计划时间" prop="JHSJ"></el-table-column>
-          <!-- <el-table-column align="center" label="选择" width="50px">
-          <template slot-scope="scope">
-            <el-radio class="radio" v-model="radio" :label="scope.$index">&nbsp;</el-radio>
-          </template>
-        </el-table-column>
-        <el-table-column align="center" label="检查区域">
-          <template slot-scope="scope">
-            <span>{{scope.row.RWFW}}</span>
-          </template>
-        </el-table-column>
-
-        <el-table-column label="检查内容" :show-overflow-tooltip="true">
-          <template slot-scope="scope">
-            <span>{{scope.row.JCNR}}</span>
-          </template>
-        </el-table-column>
-
-        <el-table-column align="right" prop="JCLX" label="检查类型">
-          <template slot-scope="scope">
-            <span>{{scope.row.JCLX}}</span>
-          </template>
-          </el-table-column>-->
         </el-table>
       </el-card>
     </el-dialog>
@@ -374,7 +355,7 @@ import {
 import { parseTime } from "@/frame_src/utils";
 export default {
   name: "NDJCJH",
-  filters:{
+  filters: {
     parseTime
   },
   data() {
@@ -435,6 +416,7 @@ export default {
         REMARK: "",
         userId: this.$store.state.user.userId
       },
+      multipleSelection: [],
       editVisible: false,
       dialogStatus: "",
       listloading: false,
@@ -519,7 +501,6 @@ export default {
     showRow(row) {
       //赋值给radio
       this.radio = this.list2.indexOf(row);
-      console.log(this.radio);
       let temp = {
         PLAN_ID: row.PLAN_ID
       };
@@ -532,8 +513,16 @@ export default {
       this.temp.JHMC = row.JHMC;
       this.innerVisible = false;
     },
+    handleSelectionChange(val){
+      this.multipleSelection=val.map(item=>item.PLAN_DETAIL_ID);
+      if(this.multipleSelection.length>0){
+        this.temp.PLAN_DETAIL_ID="已选中";
+      }
+      else{
+        this.temp.PLAN_DETAIL_ID="";
+      }
+    },
     GetAllCheckPlanDetail() {
-      console.log(this.temp);
       let temp = {
         PLAN_ID: this.temp.PLAN_ID
       };
@@ -569,6 +558,12 @@ export default {
           this.temp.JHMC = res.data.checkplan[0].JHMC;
           this.temp.PLAN_DETAIL_ID = res.data.detail[0].PLAN_DETAIL_ID;
           this.list3 = res.data.detail;
+          this.$nextTick(()=>{
+            this.list3.forEach(items => {
+            this.$refs.multipleTable.toggleRowSelection(items,true);
+          });
+          })
+          
           this.radio1 = 0;
         }
       });
@@ -643,7 +638,9 @@ export default {
       };
       this.radio = "";
       this.radio1 = "";
-      this.CheckPlanList=[];
+      this.CheckPlanList = [];
+      this.multipleSelection=[];
+      this.list3=[];
     },
     tableRowClassName({ row, rowIndex }) {
       // 表头行的 className 的回调方法，也可以使用字符串为所有表头行设置一个固定的 className。
@@ -706,7 +703,9 @@ export default {
       // 创建
       this.$refs["dataForm"].validate(valid => {
         if (valid) {
-          CreateTask(this.temp).then(res => {
+          let tempData=Object.assign({},this.temp);
+          tempData.PLAN_DETAIL_ARR=this.multipleSelection;
+          CreateTask(tempData).then(res => {
             if (res.data.code === 2000) {
               this.$notify({
                 position: "bottom-right",
@@ -733,7 +732,8 @@ export default {
     updateData() {
       this.$refs["dataForm"].validate(valid => {
         if (valid) {
-          const tempData = Object.assign({}, this.temp); // 这样就不会共用同一个对象
+          let tempData = Object.assign({}, this.temp); // 这样就不会共用同一个对象
+          tempData.PLAN_DETAIL_ARR=this.multipleSelection;
           tempData.userId = this.$store.state.user.userId;
           UpdateTask(tempData).then(res => {
             if (res.data.code === 2000) {

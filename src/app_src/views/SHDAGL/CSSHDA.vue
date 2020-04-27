@@ -237,6 +237,7 @@ export default {
       total: 0,
       listLoading: false,
       listQuery: {
+        ORG_CODE:this.$store.state.user.orgCode,
         limit: 10,
         page: 1,
         ZHXM: "",

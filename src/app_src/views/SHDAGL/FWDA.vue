@@ -402,6 +402,7 @@
         <el-button @click="editVisible2 = false">取消</el-button>
       </div>
     </el-dialog>
+    <!-- 导入房屋信息 -->
     <el-dialog :visible.sync="showUpload">
       <el-card class="box-card">
         <div class="filter-container" style="height:80px;">
@@ -417,6 +418,7 @@
             :before-remove="beforeRemove"
             :headers="headers"
             :file-list="fileList"
+            :data="upLoadInfo"
           >
             <el-button slot="trigger" size="small" type="primary">选取文件</el-button>
             <el-button
@@ -493,6 +495,7 @@ export default {
       disabled: false,
       tableKey: 0,
       listQuery: {
+        ORG_CODE:this.$store.state.user.orgCode,
         FWBH: "",
         FWMC: "",
         LSFGS: "",
@@ -500,6 +503,10 @@ export default {
         limit: 10,
         page: 1,
         baseURL: process.env.BASE_API + "/UploadFiles/HouseImg//"
+      },
+      upLoadInfo:{
+        userId: this.$store.state.user.userId,
+        ORG_CODE:this.$store.state.user.orgCode
       },
       temp: {
         FWID: "",
@@ -523,7 +530,8 @@ export default {
         ZFK: "",
         CID:"",
         userId: this.$store.state.user.userId,
-        newFilePath: ""
+        newFilePath: "",
+        ORG_CODE:this.$store.state.user.orgCode
       },
       selectOptions: [
         {

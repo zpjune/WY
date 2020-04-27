@@ -108,6 +108,12 @@
                   v-if="scope.row.IS_PASS==0"
                   @click="handleDelete(scope.row)"
                 >删除</el-button>
+                <el-button
+                  type="success"
+                  size="mini"
+                  v-if="scope.row.IS_PASS==1"
+                  @click="GetDate(scope.row)"
+                >续租</el-button>
               </template>
             </el-table-column>
           </el-table>
@@ -126,7 +132,7 @@
         </el-col>
       </el-row>
     </el-card>
-    <el-dialog :visible.sync="showUpload">
+    <el-dialog :visible.sync="showUpload" append-to-body :close-on-click-modal="false">
       <el-card class="box-card">
         <div class="filter-container" style="height:80px;">
           <el-upload
@@ -149,6 +155,66 @@
             <a :href="urldownload" style="text-decoration:underline;">模板下載</a>
           </el-upload>
         </div>
+      </el-card>
+    </el-dialog>
+    <el-dialog :visible.sync="leaseDialog" append-to-body :close-on-click-modal="false" title="续租">
+      <el-card>
+        <el-form
+          ref="dataForm"
+          :model="temp"
+          :rules="rules"
+          label-width="120px"
+          style="width: 99%;"
+        >
+          <el-row>
+            <el-col :span="12">
+              <el-form-item label="原租赁起始日期">
+                <el-date-picker
+                  style="width:100%"
+                  size="mini"
+                  v-model="temp.ZLKSSSJ"
+                  value-format="yyyy-MM-dd"
+                  disabled
+                ></el-date-picker>
+              </el-form-item>
+            </el-col>
+            <el-col :span="12">
+              <el-form-item label="原租赁结束日期">
+                <el-date-picker
+                  style="width:100%"
+                  size="mini"
+                  v-model="temp.ZLJSSJ"
+                  value-format="yyyy-MM-dd"
+                  disabled
+                ></el-date-picker>
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="12">
+              <el-form-item label="现租赁起始日期">
+                <el-date-picker
+                  style="width:100%"
+                  size="mini"
+                  v-model="temp.ZLKSSSJ1"
+                  value-format="yyyy-MM-dd"
+                  
+                ></el-date-picker>
+              </el-form-item>
+            </el-col>
+            <el-col :span="12">
+              <el-form-item label="现租赁结束日期">
+                <el-date-picker
+                  style="width:100%"
+                  size="mini"
+                  v-model="temp.ZLJSSJ1"
+                  value-format="yyyy-MM-dd"
+                  
+                ></el-date-picker>
+              </el-form-item>
+            </el-col>
+          </el-row>
+        </el-form>
       </el-card>
     </el-dialog>
   </div>
@@ -239,10 +305,21 @@ export default {
         FWSX: 1,
         FWID: ""
       },
+      leaseDialog: false,
       showUpload: false,
       urlUpload: process.env.BASE_API + "ShopInfo/uploadCZSHOPInfo",
       urldownload: process.env.BASE_API + "ExcelModel/出租商户模板.xls",
-      fileList:[],
+      fileList: [],
+      temp: {
+        ZLKSSSJ: "",
+        ZLJSSSJ: ""
+      },
+      rules: {
+        ZLKSSSJ: [
+          { required: true, message: "租赁开始时间不能为空", trigger: "change" }
+        ],
+        ZLJSSJ: [{ required: true, message: "租赁结束日期", trigger: "change" }]
+      }
     };
   },
   methods: {
@@ -300,6 +377,13 @@ export default {
         this.showUpload = false;
         this.fileList = [];
       }
+    },
+    GetDate(row) {
+      //this.leaseDialog = true;
+      this.$router.push({
+        path: "/SHDAGL/CZDAXZ",
+        query: { param: row.CZ_SHID }
+      });
     },
     btnSubmit() {
       this.$refs.upload.submit();

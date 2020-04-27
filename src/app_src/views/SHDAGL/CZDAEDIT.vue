@@ -83,7 +83,7 @@
 
         <el-row>
           <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-            <el-form-item label="身份证号" prop="SFZH">
+            <el-form-item label="身份证号" >
               <el-input size="small" v-model="temp.SFZH"></el-input>
             </el-form-item>
           </el-col>
@@ -222,7 +222,7 @@
       <div>
         <el-row>
           <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-            <el-form-item label="租赁起始日期" prop="ZLKSSJ">
+            <el-form-item label="租赁起始日期" >
               <el-date-picker
                 style="width:100%"
                 value-format="yyyy-MM-dd"
@@ -232,7 +232,7 @@
             </el-form-item>
           </el-col>
           <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-            <el-form-item label="租赁终止日期" prop="ZLZZSJ">
+            <el-form-item label="租赁终止日期" >
               <el-date-picker
                 style="width:100%"
                 value-format="yyyy-MM-dd"
@@ -243,7 +243,7 @@
           </el-col>
 
           <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-            <el-form-item label="租赁总额" prop="ZLZE">
+            <el-form-item label="租赁总额" >
               <el-input size="small" v-model="temp.ZLZE"></el-input>
             </el-form-item>
           </el-col>
@@ -251,17 +251,17 @@
 
         <el-row>
           <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-            <el-form-item label="租赁押金" prop="ZLYJ">
+            <el-form-item label="租赁押金" >
               <el-input size="small" v-model="temp.ZLYJ"></el-input>
             </el-form-item>
           </el-col>
           <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-            <el-form-item label="租赁月数" prop="ZLYS">
+            <el-form-item label="租赁月数" >
               <el-input size="small" v-model.number="temp.ZLYS"></el-input>
             </el-form-item>
           </el-col>
           <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-            <el-form-item label="缴费方式" prop="ZJJFFS">
+            <el-form-item label="缴费方式">
               <el-select style="width:100%" size="small" v-model="temp.ZJJFFS">
                 <el-option
                   v-for="(item,key) in PAY_WAYOPTIONS"

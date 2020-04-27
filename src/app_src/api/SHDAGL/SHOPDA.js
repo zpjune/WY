@@ -112,5 +112,13 @@ export function DeleteShopInfo(query) {
     })
   }
 
+   export function Renewal(data) {
+    return request({
+      url: '/ShopInfo/Renewal',
+      method: 'post',
+      data
+    })
+  }
+
 
 

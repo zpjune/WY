@@ -64,6 +64,11 @@ export const constantRouterMap = [
       component: _import('app_src/views/SHDAGL/CSDAEDIT'), hidden: true
     },
     {
+      path: '/SHDAGL/CZDAXZ', name: '出租商户续租',
+      meta: { title: '出租商户续租', icon: 'home', noCache: true },
+      component: _import('app_src/views/SHDAGL/CZDAXZ'), hidden: true
+    },
+    {
       path: '/SHDAGL/CSDAZS', name: '商户转售',
       meta: { title: '商户转售', icon: 'home', noCache: true },
       component: _import('app_src/views/SHDAGL/CSDAZS'), hidden: true
