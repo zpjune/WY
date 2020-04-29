@@ -118,7 +118,7 @@
         </el-row>
         <el-row>
           <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-            <el-form-item label="装修押金" prop="ZXYJ">
+            <el-form-item label="装修押金" >
               <el-input size="small" v-model="temp.ZXYJ"></el-input>
             </el-form-item>
           </el-col>
@@ -145,7 +145,7 @@
         </el-row>
         <el-row>
           <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-            <el-form-item label="消防保证金" prop="XFBZJ">
+            <el-form-item label="消防保证金" >
               <el-input size="small" v-model="temp.XFBZJ"></el-input>
             </el-form-item>
           </el-col>
@@ -646,6 +646,7 @@ export default {
         ZLZE: "",
         ZLYJ: "",
         ZLYS: "",
+        ZJJFFS:"",
         //以下是基础信息
         userId: this.$store.state.user.userId,
         userType: 1 //出租用户
@@ -742,6 +743,7 @@ export default {
         ZLZE: "",
         ZLYJ: "",
         ZLYS: "",
+        ZJJFFS:"",
         //以下是基础信息
         userId: this.$store.state.user.userId,
         userType: 1
