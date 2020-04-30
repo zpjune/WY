@@ -343,6 +343,12 @@ export default {
           RECORD_ID: items.RECORD_ID,
           CZ_SHID: items.CZ_SHID,
           OPEN_ID: items.OPEN_ID,
+          FWBH:items.FWBH,
+          FWMC:items.FWMC,
+          YXQS:items.YXQS,
+          YXQZ:items.YXQZ,
+          JFJE:items.JFJE,
+          ZHXM:items.ZHXM,
           CONFIRM_RECIVEMONEY: items.CONFIRM_RECIVEMONEY
         };
         this.selectList.push(temp);
@@ -355,6 +361,12 @@ export default {
           RECORD_ID: items.RECORD_ID,
           CZ_SHID: items.CZ_SHID,
           OPEN_ID: items.OPEN_ID,
+          FWBH:items.FWBH,
+          FWMC:items.FWMC,
+          YXQS:items.YXQS,
+          YXQZ:items.YXQZ,
+          JFJE:items.JFJE,
+          ZHXM:items.ZHXM,
           CONFIRM_RECIVEMONEY: items.CONFIRM_RECIVEMONEY
         };
         this.selectList.push(temp);

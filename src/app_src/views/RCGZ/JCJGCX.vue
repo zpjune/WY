@@ -3,7 +3,7 @@
   <div id="JCJGCX" class="app-container calendar-list-container">
     <div class="topSearh" id="topsearch">
       <el-row>
-        <el-col :xs="6" :sm="6" :md="6" :lg="6" :xl="5">
+        <el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="4">
           <el-date-picker
             type="year"
             placeholder="选择年度"
@@ -13,7 +13,7 @@
             style="width:95%;"
           ></el-date-picker>
         </el-col>
-        <el-col :xs="5" :sm="5" :md="5" :lg="4" :xl="3">
+        <el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="4">
           <el-input
             placeholder="房屋编号"
             style="width:95%;"
@@ -22,7 +22,7 @@
             v-model="listQuery.FWBH"
           ></el-input>
         </el-col>
-        <el-col :xs="5" :sm="5" :md="5" :lg="4" :xl="3">
+        <el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="4">
           <el-input
             placeholder="任务名称"
             style="width:95%;"
@@ -31,8 +31,13 @@
             v-model="listQuery.RWMC"
           ></el-input>
         </el-col>
-
-        <el-col :xs="6" :sm="6" :md="6" :lg="6" :xl="5">
+        <el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="4">
+          <el-select placeholder="请选择检查结果" v-model="listQuery.JCJG" clearable size="mini"  style="width:95%">
+            <el-option label="合格" :value="1"></el-option>
+            <el-option label="不合格" :value="0" ></el-option>
+          </el-select>
+        </el-col>
+        <el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="4">
           <el-button
             size="mini"
             class="filter-item"
@@ -41,16 +46,13 @@
             icon="el-icon-search"
             @click="getList"
           >搜索</el-button>
-
-          <!-- <el-button type="primary" icon="el-icon-document" size="mini">导出</el-button> -->
-          <!-- <el-button
+          <el-button
             size="mini"
             class="filter-item"
-            style="margin-left: 10px;"
-            @click="handleCreate"
-            type="primary"
-            icon="el-icon-edit"
-          >新增</el-button>-->
+            type="success"
+            v-waves
+            @click="getList"
+          >提醒</el-button>
         </el-col>
       </el-row>
     </div>
@@ -68,60 +70,55 @@
             fit
             highlight-current-row
             style="width: 100%;text-align:left;"
+            @select="select"
+            @select-all="selectall"
           >
-            <el-table-column align="right" prop="RWMC" label="任务名称" fixed="left">
+            <el-table-column type="selection" width="55"></el-table-column>
+            <el-table-column align="center" prop="RWMC" label="任务名称" fixed="left">
               <template slot-scope="scope">
                 <span>{{scope.row.RWMC}}</span>
               </template>
             </el-table-column>
-            <el-table-column align="right" width="150" prop="JCQY" label="检查区域" fixed="left">
+            <el-table-column align="center" prop="JCQY" label="检查区域" fixed="left">
               <template slot-scope="scope">
                 <span>{{scope.row.JCQY}}</span>
               </template>
             </el-table-column>
-            <el-table-column align="right" width="100" prop="JCXM" label="检查情况">
-              <template slot-scope="scope">
-                <span>{{scope.row.JCQK}}</span>
-              </template>
-            </el-table-column>
-
             <el-table-column align="center" prop="FWBH" label="房屋编号">
               <template slot-scope="scope">
                 <span>{{scope.row.FWBH}}</span>
               </template>
             </el-table-column>
-            <el-table-column align="right" prop="YZMC" label="业主名称">
+            <el-table-column align="center" prop="FWBH" label="房屋区域">
+              <template slot-scope="scope">
+                <span>{{scope.row.Name}}</span>
+              </template>
+            </el-table-column>
+            <el-table-column align="center" prop="YZMC" label="业主名称">
               <template slot-scope="scope">
                 <span>{{scope.row.ZHXM}}</span>
               </template>
             </el-table-column>
-            <el-table-column align="right" prop="JCJG" label="检查结果">
+            <el-table-column align="center" prop="JCJG" label="检查结果">
               <template slot-scope="scope">
-                <span>{{scope.row.JCJG}}</span>
+                <span>{{scope.row.JCJG|change}}</span>
               </template>
             </el-table-column>
-            <el-table-column align="right" width="100" prop="JCSJ" label="检查时间">
+            <el-table-column align="center" prop="JCSJ" label="检查时间">
               <template slot-scope="scope">
                 <span>{{scope.row.JCSJ}}</span>
               </template>
             </el-table-column>
-            <el-table-column align="right" width="100" prop="JCR" label="检查人">
+            <el-table-column align="center" prop="JCR" label="检查人">
               <template slot-scope="scope">
-                <span>{{scope.row.JCR}}</span>
+                <span>{{scope.row.FZR}}</span>
               </template>
             </el-table-column>
-            <!-- <el-table-column label="任务状态">
+            <el-table-column align="center" prop="JCR" label="操作">
               <template slot-scope="scope">
-                <span>{{scope.row.RWZT}}</span>
+                <el-button type="primary" @click="GetDetail(scope.row)" size="mini">查看检查明细</el-button>
               </template>
-            </el-table-column>-->
-
-            <!-- <el-table-column align="center" width="240" label="操作" fixed="right">
-              <template slot-scope="scope">
-                <el-button type="primary" size="mini" @click="handleUpdate(scope.row)">查看详情</el-button>
-                <el-button type="danger" size="mini" @click="handleDelete(scope.row)">发送整改通知</el-button>
-              </template>
-            </el-table-column> -->
+            </el-table-column>
           </el-table>
           <div class="page">
             <el-pagination
@@ -138,6 +135,11 @@
         </el-col>
       </el-row>
     </el-card>
+    <el-dialog :visible.sync="detailDialog" title="检查结果详情">
+      <el-card>
+
+      </el-card>
+    </el-dialog>
   </div>
 </template>
 
@@ -160,50 +162,7 @@ export default {
   //   },
   data() {
     return {
-      usedOptions: [
-        {
-          value: "0",
-          name: "一季度安全检查"
-        },
-        {
-          value: "1",
-          name: "节前消防检查"
-        },
-        {
-          value: "2",
-          name: "临时安全检查"
-        }
-      ],
-
       tableKey: 0,
-      selectOptions: [
-        {
-          value: 0,
-          label: "出售"
-        },
-        {
-          value: 1,
-          label: "出租"
-        }
-      ],
-      areaOptions: [
-        {
-          value: 0,
-          label: "A区"
-        },
-        {
-          value: 1,
-          label: "B区"
-        },
-        {
-          value: 2,
-          label: "C区"
-        },
-        {
-          value: 3,
-          label: "D区"
-        }
-      ],
       list: [],
       rules: {
         FWMC: [
@@ -219,24 +178,15 @@ export default {
           { required: true, message: "请输入物业费金额", trigger: "change" }
         ]
       },
-      total:0,
+      total: 0,
       listLoading: false,
       listQuery: {
+        JCJG:"",
         year: "",
         FWBH: "",
         RWMC: "",
         page: 1,
         limit: 10
-      },
-      temp: {
-        FWBH: "D-211",
-        FWMC: "房屋5",
-        JZMJ: "127㎡",
-        LSFGS: "云计算技术部",
-        ZLWZ: "D区",
-        FZFJE: 25000,
-        WYFJE: 1350,
-        FWSX: "出售"
       },
       textMap: {
         update: "修改房屋信息",
@@ -244,11 +194,19 @@ export default {
       },
       editVisible: false,
       dialogStatus: "",
-
-      treeData: []
+      treeData: [],
+      detailDialog:false,
     };
   },
   methods: {
+     select(selection, row) {
+      this.selectList =selection;
+      
+    },
+    selectall(selection) {
+      this.selectList = selection;
+      
+    },
     deleteRow(index, rows) {
       //删除改行
       rows.splice(index, 1);
@@ -287,11 +245,11 @@ export default {
           });
         }
       });
-
-      //     }
-      //   });
     },
-
+    GetDetail(row){
+      this.detailDialog=true;
+      console.log(row.RESULT_ID);
+    },
     handleCreate() {
       this.resetTemp();
       this.editVisible = true;
@@ -425,6 +383,15 @@ export default {
         return true;
       } else {
         return false;
+      }
+    }
+  },
+  filters: {
+    change(val) {
+      if (val === 1) {
+        return "合格";
+      } else {
+        return "不合格";
       }
     }
   }

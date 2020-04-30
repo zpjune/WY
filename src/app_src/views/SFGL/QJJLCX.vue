@@ -304,7 +304,13 @@ export default {
         let temp = {
           RECORD_ID: items.RECORD_ID,
           CZ_SHID: items.CZ_SHID,
-          OPEN_ID: items.OPEN_ID
+          OPEN_ID: items.OPEN_ID,
+          FWBH:items.FWBH,
+          FWMC:items.FWMC,
+          YXQS:items.YXQS,
+          YXQZ:items.YXQZ,
+          JFJE:items.JFJE,
+          ZHXM:items.ZHXM
         };
         this.selectList.push(temp);
       });
@@ -315,7 +321,13 @@ export default {
         let temp = {
           RECORD_ID: items.RECORD_ID,
           CZ_SHID: items.CZ_SHID,
-          OPEN_ID: items.OPEN_ID
+          OPEN_ID: items.OPEN_ID,
+          FWBH:items.FWBH,
+          FWMC:items.FWMC,
+          YXQS:items.YXQS,
+          YXQZ:items.YXQZ,
+          JFJE:items.JFJE,
+          ZHXM:items.ZHXM
         };
         this.selectList.push(temp);
       });
@@ -471,6 +483,7 @@ export default {
     },
     handleSizeChange(val) {
       this.listQuery.limit = val;
+      this.getList();
     },
     handleCurrentChange(val) {
       this.listQuery.page = val;

@@ -344,7 +344,7 @@ export default {
     getList() {
       this.listLoading = true;
       GetHistoryFeeResult(this.listQuery).then(response => {
-        if (response.data.code === 2000) {
+        if (response.data.code === 2000) {     
           this.list = response.data.items;
           this.total = response.data.total;
           this.listLoading = false;
