@@ -438,7 +438,8 @@ export default {
         FWSX: 0,
         limit: 10,
         page: 1,
-        baseURL: process.env.BASE_API + "/UploadFiles/HouseImg//"
+        baseURL: process.env.BASE_API + "/UploadFiles/HouseImg//",
+        ORG_CODE:this.$store.state.user.orgCode
       },
       usedOptions: [
         {
@@ -823,8 +824,8 @@ export default {
             this.editVisible = false;
             this.$notify({
               position: "bottom-right",
-              title: title,
-              message: message,
+              title: response.message,
+              message: response.message,
               type: type,
               duration: 3000
             });
@@ -859,8 +860,8 @@ export default {
             this.editVisible = false;
             this.$notify({
               position: "bottom-right",
-              title: title,
-              message: message,
+              title: response.message,
+              message: response.message,
               type: type,
               duration: 3000
             });

@@ -8,6 +8,14 @@ export function GetCheckResult(query) {
   })
 }
 
+export function GetCheckResultDetail(query) {
+  return request({
+    url: '/CheckResult/GetCheckResultDetail',
+    method: 'get',
+    params: query
+  })
+}
+
 export function GetTaskProcessInfo(query) {
     return request({
       url: '/CheckResult/GetTaskProcessInfo',

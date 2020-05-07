@@ -247,7 +247,7 @@ export default {
       },
        showUpload: false,
       urlUpload: process.env.BASE_API + "ShopInfo/uploadCSSHOPInfo",
-      urldownload: process.env.BASE_API + "ExcelModel/出售商户模板.xls",
+      urldownload: process.env.BASE_API + "WY_API/ExcelModel/出售商户模板.xls",
       fileList:[],
     };
   },
@@ -470,6 +470,11 @@ export default {
       } else {
         return false;
       }
+    },
+    headers() {
+      return {
+        "X-Token": getToken()
+      };
     }
   },
   filters: {

@@ -133,7 +133,7 @@ export default {
         return {
             showUpload: false,
             urlUpload: process.env.BASE_API + "org/uploadOrgArticle",
-            urldownload: process.env.BASE_API + "ExcelModel/组织机构.xls",
+            urldownload: process.env.BASE_API + "WY_API/ExcelModel/组织机构.xls",
             dialogLoading: false,
             dialogVisible: false,
             Useorg: undefined,

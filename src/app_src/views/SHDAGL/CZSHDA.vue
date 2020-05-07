@@ -308,7 +308,7 @@ export default {
       leaseDialog: false,
       showUpload: false,
       urlUpload: process.env.BASE_API + "ShopInfo/uploadCZSHOPInfo",
-      urldownload: process.env.BASE_API + "ExcelModel/出租商户模板.xls",
+      urldownload: process.env.BASE_API + "WY_API/ExcelModel/出租商户模板.xls",
       fileList: [],
       temp: {
         ZLKSSSJ: "",

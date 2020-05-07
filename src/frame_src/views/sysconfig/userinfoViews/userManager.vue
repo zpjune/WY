@@ -679,7 +679,7 @@ export default {
     return {
       showUpload: false,
       urlUpload: process.env.BASE_API + "user/uploadUserArticle",
-      urldownload: process.env.BASE_API + "ExcelModel/用户.xlsx",
+      urldownload: process.env.BASE_API + "WY_API/ExcelModel/用户.xls",
       fileList: [],
       tableKey: 0,
       list: null,

@@ -502,7 +502,8 @@ export default {
         FWSX: "",
         limit: 10,
         page: 1,
-        baseURL: process.env.BASE_API + "/UploadFiles/HouseImg//"
+        baseURL: process.env.BASE_API + "WY_API/UploadFiles/HouseImg/",
+        ORG_CODE:this.$store.state.user.orgCode
       },
       upLoadInfo:{
         userId: this.$store.state.user.userId,
@@ -620,7 +621,7 @@ export default {
       JGOptions: [],
       showUpload: false,
       urlUpload: process.env.BASE_API + "HouseInfo/uploadHouseInfo",
-      urldownload: process.env.BASE_API + "ExcelModel/房屋档案表模板.xlsx",
+      urldownload: process.env.BASE_API + "WY_API/ExcelModel/房屋档案表模板.xlsx",
       fileList: []
     };
   },
@@ -637,9 +638,8 @@ export default {
     handleRemove(file) {},
     handleRemove1(file) {
       //平面图删除
-      let arr = file.url.split("//");
-      console.log(file.url);
-      let url = arr[arr.length - 1];
+      let arr = file.url.split("/");//将访问路径拆分成数组
+      let url = arr[arr.length - 1];//数组的最后一个字符串为路径
       this.temp.newFilePath = this.temp.newFilePath.replace(url + ",", "");
       console.log(this.temp.newFilePath);
     },
@@ -682,7 +682,8 @@ export default {
         ZFK: "",
         CID:"",
         userId: this.$store.state.user.userId,
-        newFilePath: ""
+        newFilePath: "",
+        ORG_CODE:this.$store.state.user.orgCode
       };
     },
 

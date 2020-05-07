@@ -32,9 +32,16 @@
           ></el-input>
         </el-col>
         <el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="4">
-          <el-select placeholder="请选择检查结果" v-model="listQuery.JCJG" clearable size="mini"  style="width:95%">
+          <el-select
+            placeholder="请选择检查结果"
+            v-model="listQuery.JCJG"
+            clearable
+            size="mini"
+            style="width:95%"
+            @change="elselectchange"
+          >
             <el-option label="合格" :value="1"></el-option>
-            <el-option label="不合格" :value="0" ></el-option>
+            <el-option label="不合格" :value="0"></el-option>
           </el-select>
         </el-col>
         <el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="4">
@@ -46,13 +53,7 @@
             icon="el-icon-search"
             @click="getList"
           >搜索</el-button>
-          <el-button
-            size="mini"
-            class="filter-item"
-            type="success"
-            v-waves
-            @click="getList"
-          >提醒</el-button>
+          <el-button size="mini" class="filter-item" type="success" v-waves @click="getList">提醒</el-button>
         </el-col>
       </el-row>
     </div>
@@ -72,8 +73,9 @@
             style="width: 100%;text-align:left;"
             @select="select"
             @select-all="selectall"
+            ref="table"
           >
-            <el-table-column type="selection" width="55"></el-table-column>
+            <el-table-column type="selection" width="55" v-if="listQuery.JCJG===0"></el-table-column>
             <el-table-column align="center" prop="RWMC" label="任务名称" fixed="left">
               <template slot-scope="scope">
                 <span>{{scope.row.RWMC}}</span>
@@ -137,7 +139,21 @@
     </el-card>
     <el-dialog :visible.sync="detailDialog" title="检查结果详情">
       <el-card>
-
+        <el-table
+          :data="detaillist"
+          size="mini"
+          :header-cell-class-name="tableRowClassName"
+          v-loading="listLoading"
+          border
+          fit
+          highlight-current-row
+          style="width: 100%;text-align:left;"
+          :span-method="arraySpanMethod"
+        >
+          <el-table-column label="检查大类" prop="DL"></el-table-column>
+          <el-table-column label="检查内容" prop="XL"></el-table-column>
+          <el-table-column label="检查结果" prop="result"></el-table-column>
+        </el-table>
       </el-card>
     </el-dialog>
   </div>
@@ -151,7 +167,10 @@
 
 import waves from "@/frame_src/directive/waves"; // 水波纹指令
 import { getToken } from "@/frame_src/utils/auth";
-import { GetCheckResult } from "@/app_src/api/RCGZ/JCJGCX";
+import {
+  GetCheckResult,
+  GetCheckResultDetail
+} from "@/app_src/api/RCGZ/JCJGCX";
 export default {
   name: "JCJGCX",
   directives: {
@@ -164,6 +183,7 @@ export default {
     return {
       tableKey: 0,
       list: [],
+      detaillist: [],
       rules: {
         FWMC: [
           { required: true, message: "请输入房屋名称", trigger: "change" }
@@ -181,7 +201,7 @@ export default {
       total: 0,
       listLoading: false,
       listQuery: {
-        JCJG:"",
+        JCJG: "",
         year: "",
         FWBH: "",
         RWMC: "",
@@ -195,17 +215,18 @@ export default {
       editVisible: false,
       dialogStatus: "",
       treeData: [],
-      detailDialog:false,
+      detailDialog: false
     };
   },
   methods: {
-     select(selection, row) {
-      this.selectList =selection;
-      
+    select(selection, row) {
+      this.selectList = selection;
+    },
+    elselectchange() {
+      this.getList();
     },
     selectall(selection) {
       this.selectList = selection;
-      
     },
     deleteRow(index, rows) {
       //删除改行
@@ -246,9 +267,24 @@ export default {
         }
       });
     },
-    GetDetail(row){
-      this.detailDialog=true;
+    GetDetail(row) {
+      this.detailDialog = true;
       console.log(row.RESULT_ID);
+      let temp = {
+        RESULT_ID: row.RESULT_ID
+      };
+      GetCheckResultDetail(temp).then(res => {
+        if (res.data.code === 2000) {
+          this.detaillist = res.data.items;
+        }
+      });
+    },
+    arraySpanMethod({ row, column, rowIndex, columnIndex }) {
+      if(columnIndex===0){
+        return [1,3]
+      }
+      
+      
     },
     handleCreate() {
       this.resetTemp();
