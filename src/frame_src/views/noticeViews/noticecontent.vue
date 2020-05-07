@@ -98,8 +98,8 @@ export default {
     },
     downLoad(data) {
       //console.log(data);
+     // console.log(this.urlDown + data.FILE_URL);
       window.open(this.urlDown + data.FILE_URL);
-      console.log(this.urlDown + data.FILE_URL)
     },
     back() {
       this.$router.go(-1);

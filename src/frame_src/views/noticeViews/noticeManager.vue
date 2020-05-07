@@ -346,7 +346,7 @@ export default {
         ]
       },
       dialogStatus: "",
-      urlUpload: process.env.BASE_API + "/noticedetail/uploadNoticeFile",
+      urlUpload: process.env.BASE_API + "noticedetail/uploadNoticeFile",
       urlPicUpload: process.env.BASE_API + "Values/uploadNoticePic",
       fileList: [],
       detailList: [],
@@ -375,6 +375,7 @@ export default {
   },
   methods: {
     downLoad(data) {
+       //console.log(data);
       window.open(this.baseurl + data.FILE_URL);
     },
     dateFormat: function(row, column) {
@@ -604,7 +605,8 @@ export default {
       this.fileList = [];
       const query = { NOTICE_ID: this.filedata.noticeId };
       fetchNoticeDetailList(query).then(response => {
-        response.data.items.forEach(element => {
+        if( response.data.items){
+ response.data.items.forEach(element => {
           var obj = {};
           var fileobj = {
               id: "",
@@ -617,7 +619,9 @@ export default {
           fileobj.url = obj.FILE_URL;
           this.fileList.push(fileobj);
         });
-      });
+      }
+        }
+       );
     },
     handleRemove(file, fileList) {
       const query = { NOTICE_DETAIL_ID: file.id };
