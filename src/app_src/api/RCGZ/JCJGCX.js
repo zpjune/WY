@@ -23,3 +23,11 @@ export function GetTaskProcessInfo(query) {
       params: query
     })
   }
+
+  export function Rectification(data) {
+    return request({
+      url: '/CheckResult/Rectification',
+      method: 'post',
+      data
+    })
+  }

@@ -53,7 +53,7 @@
             icon="el-icon-search"
             @click="getList"
           >搜索</el-button>
-          <el-button size="mini" class="filter-item" type="success" v-waves @click="getList">提醒</el-button>
+          <el-button size="mini" class="filter-item" type="success" v-waves @click="notice" :disabled="selectList.length===0">提醒</el-button>
         </el-col>
       </el-row>
     </div>
@@ -101,9 +101,15 @@
                 <span>{{scope.row.ZHXM}}</span>
               </template>
             </el-table-column>
-            <el-table-column align="center" prop="JCJG" label="检查结果">
+            <el-table-column align="center" label="检查结果">
               <template slot-scope="scope">
                 <span>{{scope.row.JCJG|change}}</span>
+              </template> 
+            </el-table-column>
+            <el-table-column align="center" prop="JCCS" label="复查次数"></el-table-column>
+            <el-table-column align="center" label="是否反馈">
+              <template slot-scope="scope">
+                <span>{{scope.row.IS_REVIEW|changeFK}}</span>
               </template>
             </el-table-column>
             <el-table-column align="center" prop="JCSJ" label="检查时间">
@@ -148,7 +154,7 @@
           fit
           highlight-current-row
           style="width: 100%;text-align:left;"
-          :span-method="arraySpanMethod"
+          :span-method="objectSpanMethod"
         >
           <el-table-column label="检查大类" prop="DL"></el-table-column>
           <el-table-column label="检查内容" prop="XL"></el-table-column>
@@ -169,7 +175,8 @@ import waves from "@/frame_src/directive/waves"; // 水波纹指令
 import { getToken } from "@/frame_src/utils/auth";
 import {
   GetCheckResult,
-  GetCheckResultDetail
+  GetCheckResultDetail,
+  Rectification
 } from "@/app_src/api/RCGZ/JCJGCX";
 export default {
   name: "JCJGCX",
@@ -215,18 +222,24 @@ export default {
       editVisible: false,
       dialogStatus: "",
       treeData: [],
-      detailDialog: false
+      detailDialog: false,
+      spanArr: [],
+      selectList:[],
     };
   },
   methods: {
     select(selection, row) {
-      this.selectList = selection;
+      this.selectList = [];
+      this.selectList.push(selection.RESULT_ID);
     },
     elselectchange() {
       this.getList();
     },
     selectall(selection) {
-      this.selectList = selection;
+      this.selectList = [];
+      selection.forEach(item => {
+        this.selectList.push(item.RESULT_ID);
+      });
     },
     deleteRow(index, rows) {
       //删除改行
@@ -248,7 +261,34 @@ export default {
         FWSX: ""
       };
     },
-
+    notice(){
+      this.$confirm("确定要推送整改消息吗", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      }).then(() => {
+        Rectification(this.selectList).then(res=>{
+          if(res.data.code===2000){
+            this.$notify({
+              position: "bottom-right",
+              title: "成功",
+              message: res.data.message,
+              type: "success",
+              duration: 2000
+            });
+          }
+          else{
+            this.$notify({
+              position: "bottom-right",
+              title: "失败",
+              message: res.data.message,
+              type: "error",
+              duration: 2000
+            });
+          }
+        })
+      })
+    },
     getList() {
       this.listLoading = true;
       GetCheckResult(this.listQuery).then(res => {
@@ -269,22 +309,46 @@ export default {
     },
     GetDetail(row) {
       this.detailDialog = true;
-      console.log(row.RESULT_ID);
       let temp = {
         RESULT_ID: row.RESULT_ID
       };
       GetCheckResultDetail(temp).then(res => {
         if (res.data.code === 2000) {
           this.detaillist = res.data.items;
+          let contactDot = 0;
+          this.detaillist.forEach((item, index) => {
+            if (index === 0) {
+              this.spanArr.push(1); //首条数据肯定为不相同数据
+            } else {
+              if (item.DL === this.detaillist[index - 1].DL) {
+                this.spanArr[contactDot] += 1; //首条相同数据数量+1
+                this.spanArr.push(0); //其后的数据标识为0
+              } else {
+                contactDot = index; //记录当前的索引
+                this.spanArr.push(1); //不同数据标识为1
+              }
+            }
+          });
         }
       });
+
+      //console.log(this.spanArr);
     },
-    arraySpanMethod({ row, column, rowIndex, columnIndex }) {
-      if(columnIndex===0){
-        return [1,3]
+    objectSpanMethod({ row, column, rowIndex, columnIndex }) {
+      if (columnIndex === 0) {
+        if (this.spanArr[rowIndex]) {
+          //游标数组内对应索引不为0的返回合并数据,为0的直接返回原数据
+          return {
+            rowspan: this.spanArr[rowIndex],
+            colspan: 1
+          };
+        } else {
+          return {
+            rowspan: 0,
+            colspan: 0
+          };
+        }
       }
-      
-      
     },
     handleCreate() {
       this.resetTemp();
@@ -424,10 +488,24 @@ export default {
   },
   filters: {
     change(val) {
-      if (val === 1) {
-        return "合格";
+      switch (val) {
+        case 0:
+          return "不合格";
+        case 1:
+          return "合格";
+        case 2:
+          return "复查合格";
+        case 3:
+          return "复查不合格";
+        default:
+          return "不合格";
+      }
+    },
+    changeFK(val) {
+      if (val === 0) {
+        return "未反馈";
       } else {
-        return "不合格";
+        return "已反馈";
       }
     }
   }
