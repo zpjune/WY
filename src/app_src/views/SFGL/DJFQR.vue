@@ -367,7 +367,9 @@ export default {
           YXQS:items.YXQS,
           YXQZ:items.YXQZ,
           JFJE:items.JFJE,
-          ZHXM:items.ZHXM
+          ZHXM:items.ZHXM,
+          JFLX:items.JFLX,
+          SURPLUSVALUE:items.SURPLUSVALUE
         };
         this.selectList.push(temp);
       });
@@ -384,7 +386,9 @@ export default {
           YXQS:items.YXQS,
           YXQZ:items.YXQZ,
           JFJE:items.JFJE,
-          ZHXM:items.ZHXM
+          ZHXM:items.ZHXM,
+          JFLX:items.JFLX,
+          SURPLUSVALUE:items.SURPLUSVALUE
         };
         this.selectList.push(temp);
       });
