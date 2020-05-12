@@ -45,7 +45,7 @@
             <span>{{scope.row.cid}}</span>
           </template>
         </el-table-column>
-        <el-table-column width="110px" align="center" :label="'充值金额（元）'">
+        <el-table-column width="150px" align="center" :label="'充值金额（元）'">
           <template slot-scope="scope">
             <span>{{scope.row.Cost}}</span>
           </template>
@@ -55,7 +55,7 @@
           <span>失败</span>
         </el-table-column>
 
-        <el-table-column width="250px" align="center" :label="'失败原因'" :show-overflow-tooltip="true">
+        <el-table-column width="300px" align="center" :label="'失败原因'" :show-overflow-tooltip="true">
           <template slot-scope="scope">
             <span>{{scope.row.CMessage}}</span>
           </template>
@@ -63,11 +63,12 @@
         <el-table-column width="100px" align="center" :label="'开户状态'">
           <template slot-scope="scope">
             <span v-if="scope.row.KaiHu==1">已开户</span>
+            <span v-if="scope.row.KaiHu==0">开户失败</span>
             <span v-else></span>
           </template>
         </el-table-column>
         <el-table-column
-          width="250px"
+          width="350px"
           align="center"
           :label="'开户失败原因'"
           :show-overflow-tooltip="true"
@@ -79,11 +80,12 @@
         <el-table-column width="100px" align="center" :label="'清零状态'">
           <template slot-scope="scope">
             <span v-if="scope.row.QingLing==1">已清零</span>
+            <span v-if="scope.row.QingLing==0">清零失败</span>
             <span v-else></span>
           </template>
         </el-table-column>
         <el-table-column
-          width="250px"
+          width="350px"
           align="center"
           :label="'清零失败原因'"
           :show-overflow-tooltip="true"
@@ -109,7 +111,7 @@
   </div>
 </template>
 <script>
-import { GetData } from "@/app_src/api/ELE/EleManage";
+import { GetData, QingLing, KaiHu } from "@/app_src/api/ELE/EleManage";
 import waves from "@/frame_src/directive/waves"; // 水波纹指令
 import { parseTime } from "@/frame_src/utils/index.js";
 
@@ -167,51 +169,91 @@ export default {
       this.listQuery.page = val;
       this.getList();
     },
-    kaihu() {
-        if(this.multipleSelection.length==0){
-            this.$notify({
-            position: "bottom-right",
-            title: "提示",
-            message: "请选择一行数据！",
-            type: "error",
-            duration: 2000
-          });
-            return false;
-        }
-      this.$confirm("您确定要对选中的表进行开户操作么?", "提示", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        type: "warning"
-      })
-        .then(() => {
-         
-        })
-        .catch(() => {
-         
-        });
-    },
     qingling() {
-        if(this.multipleSelection.length==0){
-            this.$notify({
-            position: "bottom-right",
-            title: "提示",
-            message: "请选择一行数据！",
-            type: "error",
-            duration: 2000
-          });
-            return false;
-        }
+      if (this.multipleSelection.length == 0) {
+        this.$notify({
+          position: "bottom-right",
+          title: "提示",
+          message: "请选择一行数据！",
+          type: "error",
+          duration: 2000
+        });
+        return false;
+      }
       this.$confirm("您确定要对选中的表进行清零操作么?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
         type: "warning"
       })
         .then(() => {
-         
+          let temp = {
+            data: this.multipleSelection
+          };
+          QingLing(temp).then(response => {
+            if (response.data.code === 2000) {
+              this.$notify({
+                position: "bottom-right",
+                title: "成功",
+                message: response.data.message,
+                type: "success",
+                duration: 2000
+              });
+              this.getList();
+            } else {
+              this.$notify({
+                position: "bottom-right",
+                title: "失败",
+                message: response.data.message,
+                type: "error",
+                duration: 2000
+              });
+            }
+          });
         })
-        .catch(() => {
-         
+        .catch(() => {});
+    },
+    kaihu() {
+      if (this.multipleSelection.length == 0) {
+        this.$notify({
+          position: "bottom-right",
+          title: "提示",
+          message: "请选择一行数据！",
+          type: "error",
+          duration: 2000
         });
+        return false;
+      }
+      this.$confirm("您确定要对选中的表进行开户操作么?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      })
+        .then(() => {
+          let temp = {
+            data: this.multipleSelection
+          };
+          KaiHu(temp).then(response => {
+            if (response.data.code === 2000) {
+              this.$notify({
+                position: "bottom-right",
+                title: "成功",
+                message: response.data.message,
+                type: "success",
+                duration: 2000
+              });
+              this.getList();
+            } else {
+              this.$notify({
+                position: "bottom-right",
+                title: "失败",
+                message: response.data.message,
+                type: "error",
+                duration: 2000
+              });
+            }
+          });
+        })
+        .catch(() => {});
     },
     handleSelectionChange(val) {
       this.multipleSelection = val;
@@ -231,6 +273,9 @@ export default {
   created() {
     // 获取登陆信息的俩种方式
     this.listLoading = false;
+  },
+  mounted() {
+    this.getList();
   }
 };
 </script>

@@ -7,3 +7,17 @@ export function GetData(query) {
       params: query
     })
   }
+  export function QingLing(data) {
+    return request({
+      url: '/EleManage/QingLing',
+      method: 'post',
+      data
+    })
+  } 
+  export function KaiHu(data) {
+    return request({
+      url: '/EleManage/KaiHu',
+      method: 'post',
+      data
+    })
+  } 
