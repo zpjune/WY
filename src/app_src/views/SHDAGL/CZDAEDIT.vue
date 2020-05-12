@@ -83,7 +83,7 @@
 
         <el-row>
           <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-            <el-form-item label="身份证号" >
+            <el-form-item label="身份证号">
               <el-input size="small" v-model="temp.SFZH"></el-input>
             </el-form-item>
           </el-col>
@@ -118,7 +118,7 @@
         </el-row>
         <el-row>
           <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-            <el-form-item label="装修押金" >
+            <el-form-item label="装修押金">
               <el-input size="small" v-model="temp.ZXYJ"></el-input>
             </el-form-item>
           </el-col>
@@ -145,7 +145,7 @@
         </el-row>
         <el-row>
           <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-            <el-form-item label="消防保证金" >
+            <el-form-item label="消防保证金">
               <el-input size="small" v-model="temp.XFBZJ"></el-input>
             </el-form-item>
           </el-col>
@@ -222,7 +222,7 @@
       <div>
         <el-row>
           <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-            <el-form-item label="租赁起始日期" >
+            <el-form-item label="租赁起始日期">
               <el-date-picker
                 style="width:100%"
                 value-format="yyyy-MM-dd"
@@ -232,7 +232,7 @@
             </el-form-item>
           </el-col>
           <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-            <el-form-item label="租赁终止日期" >
+            <el-form-item label="租赁终止日期">
               <el-date-picker
                 style="width:100%"
                 value-format="yyyy-MM-dd"
@@ -243,7 +243,7 @@
           </el-col>
 
           <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-            <el-form-item label="租赁总额" >
+            <el-form-item label="租赁总额">
               <el-input size="small" v-model="temp.ZLZE"></el-input>
             </el-form-item>
           </el-col>
@@ -251,12 +251,12 @@
 
         <el-row>
           <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-            <el-form-item label="租赁押金" >
+            <el-form-item label="租赁押金">
               <el-input size="small" v-model="temp.ZLYJ"></el-input>
             </el-form-item>
           </el-col>
           <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-            <el-form-item label="租赁月数" >
+            <el-form-item label="租赁月数">
               <el-input size="small" v-model.number="temp.ZLYS"></el-input>
             </el-form-item>
           </el-col>
@@ -439,7 +439,7 @@ export default {
         limit: 10,
         page: 1,
         baseURL: process.env.BASE_API + "/UploadFiles/HouseImg//",
-        ORG_CODE:this.$store.state.user.orgCode
+        ORG_CODE: this.$store.state.user.orgCode
       },
       usedOptions: [
         {
@@ -647,7 +647,7 @@ export default {
         ZLZE: "",
         ZLYJ: "",
         ZLYS: "",
-        ZJJFFS:"",
+        ZJJFFS: "",
         //以下是基础信息
         userId: this.$store.state.user.userId,
         userType: 1 //出租用户
@@ -744,7 +744,7 @@ export default {
         ZLZE: "",
         ZLYJ: "",
         ZLYS: "",
-        ZJJFFS:"",
+        ZJJFFS: "",
         //以下是基础信息
         userId: this.$store.state.user.userId,
         userType: 1
@@ -812,23 +812,26 @@ export default {
         if (valid) {
           CreateShopInfo(this.temp).then(response => {
             var message = response.data.message;
-            var message = "成功";
-            var title = "失败";
-            var type = "error";
             if (response.data.code === 2000) {
-              this.getList();
-              title = "成功";
-              type = "success";
+              //this.getList();
+              this.$notify({
+                position: "bottom-right",
+                title: "成功",
+                message: message,
+                type: "success",
+                duration: 3000
+              });
               this.closetab();
+              this.editVisible = false;
+            } else {
+              this.$notify({
+                position: "bottom-right",
+                title: "失败",
+                message: message,
+                type: type,
+                duration: 3000
+              });
             }
-            this.editVisible = false;
-            this.$notify({
-              position: "bottom-right",
-              title: response.message,
-              message: response.message,
-              type: type,
-              duration: 3000
-            });
           });
         }
       });
@@ -845,7 +848,7 @@ export default {
             var title = "失败";
             var type = "error";
             if (response.data.code === 2000) {
-              this.getList();
+              //this.getList();
               title = "成功";
               type = "success";
               this.$notify({
@@ -856,15 +859,16 @@ export default {
                 duration: 3000
               });
               this.closetab();
+            } else {
+              this.editVisible = false;
+              this.$notify({
+                position: "bottom-right",
+                title: response.message,
+                message: response.message,
+                type: type,
+                duration: 3000
+              });
             }
-            this.editVisible = false;
-            this.$notify({
-              position: "bottom-right",
-              title: response.message,
-              message: response.message,
-              type: type,
-              duration: 3000
-            });
           });
         }
       });

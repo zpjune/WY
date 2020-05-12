@@ -315,7 +315,7 @@
 
         <el-row>
           <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-            <el-form-item label="身份证号" prop="SFZH1">
+            <el-form-item label="身份证号" >
               <el-input size="small" v-model="newtemp.SFZH1"></el-input>
             </el-form-item>
           </el-col>
@@ -350,7 +350,7 @@
         </el-row>
         <el-row>
           <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-            <el-form-item label="装修押金" prop="ZXYJ1">
+            <el-form-item label="装修押金" >
               <el-input size="small" v-model="newtemp.ZXYJ1"></el-input>
             </el-form-item>
           </el-col>
@@ -377,7 +377,7 @@
         </el-row>
         <el-row>
           <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-            <el-form-item label="消防保证金" prop="XFBZJ1">
+            <el-form-item label="消防保证金" >
               <el-input size="small" v-model="newtemp.XFBZJ1"></el-input>
             </el-form-item>
           </el-col>

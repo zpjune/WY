@@ -23,6 +23,16 @@ export function CreateNotification(query) {
   })
 }
 
+
+export function DeleteRecord(query) {
+  return request({
+    url: '/FeeResult/DeleteRecord',
+    method: 'get',
+    params: query
+  })
+}
+
+
 export function ConfirmNotificationList(data) {
   return request({
     url: '/FeeResult/ConfirmNotificationList',

@@ -181,17 +181,19 @@
               <el-form-item label="任务开始时间" prop="RWKSSJ">
                 <el-date-picker
                   type="date"
+                  value-format="yyyy-MM-dd"
                   placeholder="选择日期"
                   v-model="temp.RWKSSJ"
                   style="width: 100%;"
                 ></el-date-picker>
-              </el-form-item>
+              </el-form-item> 
             </el-col>
             <el-col :span="12">
               <el-form-item label="任务结束时间" prop="RWJSSJ">
                 <el-date-picker
                   type="date"
                   placeholder="选择日期"
+                  value-format="yyyy-MM-dd"
                   v-model="temp.RWJSSJ"
                   style="width: 100%;"
                 ></el-date-picker>

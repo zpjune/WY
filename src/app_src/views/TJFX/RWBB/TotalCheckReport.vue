@@ -1,6 +1,6 @@
 
 <template>
-  <div id="JCJGCX" class="app-container calendar-list-container">
+  <div id="ToalCheckReport" class="app-container calendar-list-container">
     <div class="topSearh" id="topsearch">
       <el-row>
         <el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="4">
@@ -179,7 +179,7 @@ import {
   Rectification
 } from "@/app_src/api/RCGZ/JCJGCX";
 export default {
-  name: "JCJGCX",
+  name: "ToalCheckReport",
   directives: {
     waves
   },

@@ -83,7 +83,7 @@
 
         <el-row>
           <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-            <el-form-item label="身份证号" >
+            <el-form-item label="身份证号">
               <el-input size="small" v-model="temp.SFZH"></el-input>
             </el-form-item>
           </el-col>
@@ -128,7 +128,7 @@
         </el-row>
         <el-row>
           <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-            <el-form-item label="装修押金" >
+            <el-form-item label="装修押金">
               <el-input size="small" v-model="temp.ZXYJ"></el-input>
             </el-form-item>
           </el-col>
@@ -155,7 +155,7 @@
         </el-row>
         <el-row>
           <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-            <el-form-item label="消防保证金" >
+            <el-form-item label="消防保证金">
               <el-input size="small" v-model="temp.XFBZJ"></el-input>
             </el-form-item>
           </el-col>
@@ -219,7 +219,7 @@
 
       <el-row>
         <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-          <el-form-item label="转租身份证号" >
+          <el-form-item label="转租身份证号">
             <el-input size="small" v-model="temp.SFZH1"></el-input>
           </el-form-item>
         </el-col>
@@ -520,7 +520,7 @@ export default {
         limit: 10,
         page: 1,
         baseURL: process.env.BASE_API + "/UploadFiles/HouseImg//",
-        ORG_CODE:this.$store.state.user.orgCode
+        ORG_CODE: this.$store.state.user.orgCode
       },
       usedOptions: [
         {
@@ -942,7 +942,7 @@ export default {
             var title = "失败";
             var type = "error";
             if (response.data.code === 2000) {
-              this.getList();
+              //this.getList();
               title = "成功";
               type = "success";
               this.closetab();
@@ -971,7 +971,7 @@ export default {
             var title = "失败";
             var type = "error";
             if (response.data.code === 2000) {
-              this.getList();
+              //this.getList();
               title = "成功";
               type = "success";
               this.$notify({
@@ -982,15 +982,16 @@ export default {
                 duration: 3000
               });
               this.closetab();
+            } else {
+              this.$notify({
+                position: "bottom-right",
+                title: title,
+                message: message,
+                type: type,
+                duration: 3000
+              });
             }
             this.editVisible = false;
-            this.$notify({
-              position: "bottom-right",
-              title: title,
-              message: message,
-              type: type,
-              duration: 3000
-            });
           });
         }
       });

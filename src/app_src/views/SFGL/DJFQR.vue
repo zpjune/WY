@@ -86,14 +86,14 @@
       @select="select"
       @select-all="selectall"
     >
-      <el-table-column type="selection" width="55"></el-table-column>
-      <el-table-column width="150px" align="center" label="缴费类型">
+      <el-table-column type="selection" width="40"></el-table-column>
+      <el-table-column align="center" label="缴费类型">
         <template slot-scope="scope">
           <span>{{scope.row.JFLX|changeType}}</span>
         </template>
       </el-table-column>
 
-      <el-table-column align="center" width="120px" label="房屋编号">
+      <el-table-column align="center" label="房屋编号">
         <template slot-scope="scope">
           <span>{{scope.row.FWBH}}</span>
         </template>
@@ -103,12 +103,12 @@
           <span>{{scope.row.FWMC}}</span>
         </template>
       </el-table-column>
-      <el-table-column align="center" width="120px" label="业主姓名">
+      <el-table-column align="center" label="业主姓名">
         <template slot-scope="scope">
           <span>{{scope.row.ZHXM}}</span>
         </template>
       </el-table-column>
-      <el-table-column align="center" width="120px" label="业主电话">
+      <el-table-column align="center" label="业主电话">
         <template slot-scope="scope">
           <span>{{scope.row.MOBILE_PHONE}}</span>
         </template>
@@ -119,28 +119,28 @@
           <span>{{scope.row.JFJE}}</span>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="有效期起">
+      <el-table-column align="center" label="有效期起" width="180">
         <template slot-scope="scope">{{scope.row.YXQS|parseTime}}</template>
       </el-table-column>
-      <el-table-column align="center" label="有效期止">
+      <el-table-column align="center" label="有效期止" width="180">
         <template slot-scope="scope">{{scope.row.YXQZ|parseTime}}</template>
       </el-table-column>
-      <el-table-column align="center" width="120px" label="是否发送通知单">
+      <el-table-column align="center" label="是否发送通知单">
         <template slot-scope="scope">
           <span>{{scope.row.SFTZ|changeSFTZ}}</span>
         </template>
       </el-table-column>
-      <el-table-column align="center" width="120px" label="催缴次数">
+      <el-table-column align="center" label="催缴次数">
         <template slot-scope="scope">
           <span>{{scope.row.JFCS}}</span>
         </template>
       </el-table-column>
-      <el-table-column align="center" width="120px" label="催缴日期">
+      <el-table-column align="center" label="催缴日期">
         <template slot-scope="scope">
           <span>{{scope.row.JFRQ|parseTime}}</span>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="操作" fixed="right">
+      <el-table-column align="center" label="操作" fixed="right" width="180">
         <template slot-scope="scope">
           <!-- <el-button type="primary" size="mini" @click="handleDetail(scope.row)">查看详情</el-button> -->
           <el-button
@@ -148,7 +148,13 @@
             size="mini"
             v-if="scope.row.JFZT===0"
             @click="handleCreate(scope.row)"
-          >手动缴费确认</el-button>
+          >手动缴费</el-button>
+          <el-button
+            type="danger"
+            size="mini"
+            v-if="scope.row.JFZT===0"
+            @click="handelDel(scope.row)"
+          >删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -277,7 +283,8 @@ import {
   ConfirmNotificationList,
   PushNotification,
   ConfirmFee,
-  ExportFeeResult
+  ExportFeeResult,
+  DeleteRecord
 } from "@/app_src/api/SFGL/SFGL";
 import { parseTime } from "@/frame_src/utils";
 
@@ -362,14 +369,14 @@ export default {
           RECORD_ID: items.RECORD_ID,
           CZ_SHID: items.CZ_SHID,
           OPEN_ID: items.OPEN_ID,
-          FWBH:items.FWBH,
-          FWMC:items.FWMC,
-          YXQS:items.YXQS,
-          YXQZ:items.YXQZ,
-          JFJE:items.JFJE,
-          ZHXM:items.ZHXM,
-          JFLX:items.JFLX,
-          SURPLUSVALUE:items.SURPLUSVALUE
+          FWBH: items.FWBH,
+          FWMC: items.FWMC,
+          YXQS: items.YXQS,
+          YXQZ: items.YXQZ,
+          JFJE: items.JFJE,
+          ZHXM: items.ZHXM,
+          JFLX: items.JFLX,
+          SURPLUSVALUE: items.SURPLUSVALUE
         };
         this.selectList.push(temp);
       });
@@ -381,14 +388,14 @@ export default {
           RECORD_ID: items.RECORD_ID,
           CZ_SHID: items.CZ_SHID,
           OPEN_ID: items.OPEN_ID,
-          FWBH:items.FWBH,
-          FWMC:items.FWMC,
-          YXQS:items.YXQS,
-          YXQZ:items.YXQZ,
-          JFJE:items.JFJE,
-          ZHXM:items.ZHXM,
-          JFLX:items.JFLX,
-          SURPLUSVALUE:items.SURPLUSVALUE
+          FWBH: items.FWBH,
+          FWMC: items.FWMC,
+          YXQS: items.YXQS,
+          YXQZ: items.YXQZ,
+          JFJE: items.JFJE,
+          ZHXM: items.ZHXM,
+          JFLX: items.JFLX,
+          SURPLUSVALUE: items.SURPLUSVALUE
         };
         this.selectList.push(temp);
       });
@@ -418,6 +425,41 @@ export default {
             duration: 2000
           });
         }
+      });
+    },
+    handelDel(row) {
+      this.$confirm(
+        "您确定要删除本条通知单吗?本操作的目的是可以成功的解除因提前生成通知单而无法解除物业的限制，您确定要继续吗？",
+        "警告",
+        {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning"
+        }
+      ).then(() => {
+        let temp = {
+          RECORD_ID: row.RECORD_ID
+        };
+        DeleteRecord(temp).then(res => {
+          if (res.data.code === 2000) {
+            this.$notify({
+              position: "bottom-right",
+              title: "成功",
+              message: res.data.message,
+              type: "success",
+              duration: 2000
+            });
+            this.getList();
+          } else {
+            this.$notify({
+              position: "bottom-right",
+              title: "失败",
+              message: res.data.message,
+              type: "error",
+              duration: 2000
+            });
+          }
+        });
       });
     },
     handlePush() {

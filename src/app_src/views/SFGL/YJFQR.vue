@@ -373,7 +373,7 @@ export default {
       });
     },
     confirmReciveMoney() {
-      this.$confirm("确定发送所勾选的用户的收据吗？", "提示", {
+      this.$confirm("确定收到所勾选数据的资金吗?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
         type: "warning"
