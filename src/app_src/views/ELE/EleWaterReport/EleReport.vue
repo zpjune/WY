@@ -83,7 +83,7 @@
           :show-overflow-tooltip="true"
         >
           <template slot-scope="scope">
-            <span>{{scope.row.CreateMonth}}</span>
+            <span>{{scope.row.monthdate}}</span>
           </template>
         </el-table-column>
         <el-table-column
@@ -104,7 +104,7 @@
         </el-table-column>
         <el-table-column width="120px" align="center" :label="'电表号'" :show-overflow-tooltip="true">
           <template slot-scope="scope">
-            <span>{{scope.row.address}}</span>
+            <span>{{scope.row.ELE_NUMBER}}</span>
           </template>
         </el-table-column>
          <el-table-column width="120px" align="center" :label="'采集器id'" :show-overflow-tooltip="true">
@@ -149,13 +149,13 @@
         </el-table-column>
         <el-table-column width="150px" align="center" :label="'用电度数'" :show-overflow-tooltip="true">
           <template slot-scope="scope">
-            <span>{{scope.row.MeterFlowDiff}}</span>
+            <span>{{scope.row.eleAmountDiff}}</span>
           </template>
         </el-table-column>
         <el-table-column
           width="120px"
           align="center"
-          :label="'预警标准(吨)'"
+          :label="'预警标准(度)'"
           :show-overflow-tooltip="true"
         >
           <template slot-scope="scope">
@@ -164,8 +164,8 @@
         </el-table-column>
         <el-table-column width="120px" align="center" :label="'预警状态'" :show-overflow-tooltip="true">
           <template slot-scope="scope">
-            <span v-if="scope.row.yjstate==1" style="color:#fff">超过正常用电标准</span>
-            <span v-else>正常用电</span>
+            <span v-if="scope.row.yjstate==1" style="color:red">超过正常用电标准</span>
+            <span v-else style="color:green">正常用电</span>
           </template>
         </el-table-column>
       </el-table>
@@ -185,10 +185,17 @@
   </div>
 </template>
 <script>
-import { GetWaterData, ExportWaterData } from "@/app_src/api/ELE/EleManage";
+import { GetEleData, ExportEleData } from "@/app_src/api/ELE/EleManage";
 import waves from "@/frame_src/directive/waves"; // 水波纹指令
 import { parseTime, dateFormatNew } from "@/frame_src/utils/index.js";
-
+const yjstateOptions = [
+  { key: 0, type_name: "正常用电" },
+  { key: 1, type_name: "超过正常用电标准" }
+];
+const TZKeyValue = yjstateOptions.reduce((acc, cur) => {
+  acc[cur.key] = cur.type_name;
+  return acc;
+}, {});
 export default {
   name: "EleReport",
   directives: {
@@ -249,35 +256,41 @@ export default {
           "业主电话",
           "转租商户姓名",
           "转租商户电话",
-          "用水吨数",
-          "预警标准(吨)",
+          "用电度数",
+          "预警标准(度)",
           "预警状态"
         ];
         const filterVal = [
-          "CreateMonth",
+          "monthdate",
           "FWBH",
           "FWMC",
           "ZHXM",
           "MOBILE_PHONE",
           "ZHXM1",
           "MOBILE_PHONE1",
-          "MeterFlowDiff",
+          "eleAmountDiff",
           "AmountLimit",
           "yjstate"
         ];
-        let temp = {
-          JFSTATUS: 0
-        };
-        ExportWaterData(temp).then(res => {
+       let monthnew = dateFormatNew(this.month);
+      if (monthnew == "1970-01-01") {
+        this.listQuery.month = "";
+      } else {
+        this.listQuery.month = monthnew;
+      }
+        ExportEleData(this.listQuery).then(res => {
           if (res.data.code === 2000) {
             let list = res.data.items;
             const data = this.formatJson(filterVal, this.list);
-            //console.log(data);
+             let month1 = dateFormatNew(this.month);
+            if (month1 == "1970-01-01") {
+              month1 = "";
+            }
             excel.export_json_to_excel({
               header: tHeader,
               data,
               filename:
-                dateFormatNew(this.listQuery).substr(0, 8) + "月度用水报表"
+                month1.substr(0, 7)  + "月度用电报表"
             });
           } else {
             this.$notify({
@@ -291,19 +304,33 @@ export default {
         });
       });
     },
+     formatJson(filterVal, jsonData) {
+      return jsonData.map(v =>
+        filterVal.map(j => {
+          if (j === "yjstate") {
+            return TZKeyValue[v[j]];
+          } else {
+            return v[j];
+          }
+        })
+      );
+    },
     handleSelectionChange(val) {
       this.multipleSelection = val;
     },
     handleFilter() {
-      console.log(this.month);
       this.listQuery.page = 1;
       this.getList();
     },
     getList() {
-      console.log(dateFormatNew(this.listQuery).substr(0, 8));
-      this.listQuery.month = dateFormatNew(this.month);
+      let monthnew = dateFormatNew(this.month);
+      if (monthnew == "1970-01-01") {
+        this.listQuery.month = "";
+      } else {
+        this.listQuery.month = monthnew;
+      }
       this.listLoading = true;
-      GetWaterData(this.listQuery).then(response => {
+      GetEleData(this.listQuery).then(response => {
         if (response.data.code === 2000) {
           this.list = response.data.items;
           this.total = response.data.total;

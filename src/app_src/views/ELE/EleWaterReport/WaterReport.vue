@@ -267,7 +267,12 @@ export default {
           "AmountLimit",
           "yjstate"
         ];
-        this.listQuery.month = dateFormatNew(this.month);
+        let monthnew = dateFormatNew(this.month);
+      if (monthnew == "1970-01-01") {
+        this.listQuery.month = "";
+      } else {
+        this.listQuery.month = monthnew;
+      }
         ExportWaterData(this.listQuery).then(res => {
           if (res.data.code === 2000) {
             let list = res.data.items;

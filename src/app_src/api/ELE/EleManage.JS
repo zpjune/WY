@@ -35,3 +35,17 @@ export function GetData(query) {
       params: query
     })
   }
+  export function GetEleData(query) {
+    return request({
+      url: '/EleManage/GetEleData',
+      method: 'get',
+      params: query
+    })
+  }
+  export function ExportEleData(query) {
+    return request({
+      url: '/EleManage/ExportEleData',
+      method: 'get',
+      params: query
+    })
+  }
