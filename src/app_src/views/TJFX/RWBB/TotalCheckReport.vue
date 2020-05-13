@@ -3,7 +3,7 @@
   <div id="ToalCheckReport" class="app-container calendar-list-container">
     <div class="topSearh" id="topsearch">
       <el-row>
-        <el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="4">
+        <el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
           <el-date-picker
             type="year"
             placeholder="选择年度"
@@ -13,7 +13,7 @@
             style="width:95%;"
           ></el-date-picker>
         </el-col>
-        <el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="4">
+        <el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
           <el-input
             placeholder="房屋编号"
             style="width:95%;"
@@ -22,7 +22,7 @@
             v-model="listQuery.FWBH"
           ></el-input>
         </el-col>
-        <el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="4">
+        <el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
           <el-input
             placeholder="任务名称"
             style="width:95%;"
@@ -31,20 +31,35 @@
             v-model="listQuery.RWMC"
           ></el-input>
         </el-col>
-        <el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="4">
+        <el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
           <el-select
             placeholder="请选择检查结果"
             v-model="listQuery.JCJG"
             clearable
             size="mini"
             style="width:95%"
-            @change="elselectchange"
           >
             <el-option label="合格" :value="1"></el-option>
             <el-option label="不合格" :value="0"></el-option>
           </el-select>
         </el-col>
-        <el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="4">
+        <el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
+          <el-select
+            placeholder="不合格大类"
+            v-model="listQuery.DLID"
+            clearable
+            size="mini"
+            style="width:95%"
+          >
+            <el-option
+              v-for="(item,key) in DLOptions"
+              :key="key"
+              :label="item.Name"
+              :value="item.ID"
+            ></el-option>
+          </el-select>
+        </el-col>
+        <el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
           <el-button
             size="mini"
             class="filter-item"
@@ -53,7 +68,7 @@
             icon="el-icon-search"
             @click="getList"
           >搜索</el-button>
-          <el-button size="mini" class="filter-item" type="success" v-waves @click="notice" :disabled="selectList.length===0">提醒</el-button>
+          <el-button size="mini" class="filter-item" type="success" v-waves @click="exprotReport">导出</el-button>
         </el-col>
       </el-row>
     </div>
@@ -75,13 +90,13 @@
             @select-all="selectall"
             ref="table"
           >
-            <el-table-column type="selection" width="55" v-if="listQuery.JCJG===0"></el-table-column>
+            <!-- <el-table-column type="selection" width="55" v-if="listQuery.JCJG===0"></el-table-column> -->
             <el-table-column align="center" prop="RWMC" label="任务名称" fixed="left">
               <template slot-scope="scope">
                 <span>{{scope.row.RWMC}}</span>
               </template>
             </el-table-column>
-            <el-table-column align="center" prop="JCQY" label="检查区域" fixed="left">
+            <el-table-column align="center" prop="JCQY" label="检查区域" fixed="left" width="400">
               <template slot-scope="scope">
                 <span>{{scope.row.JCQY}}</span>
               </template>
@@ -104,7 +119,7 @@
             <el-table-column align="center" label="检查结果">
               <template slot-scope="scope">
                 <span>{{scope.row.JCJG|change}}</span>
-              </template> 
+              </template>
             </el-table-column>
             <el-table-column align="center" prop="JCCS" label="复查次数"></el-table-column>
             <el-table-column align="center" label="是否反馈">
@@ -159,6 +174,13 @@
           <el-table-column label="检查大类" prop="DL"></el-table-column>
           <el-table-column label="检查内容" prop="XL"></el-table-column>
           <el-table-column label="检查结果" prop="result"></el-table-column>
+          <el-table-column label="复查结果" prop="result" v-if="JCJG==3"></el-table-column>
+          <el-table-column label="复查结果" v-if="JCJG==2">
+            <template slot-scope="scope">
+              <span>合格</span>
+              <span v-if="1===2">{{scope.row.result}}</span>
+            </template>
+          </el-table-column>
         </el-table>
       </el-card>
     </el-dialog>
@@ -176,8 +198,29 @@ import { getToken } from "@/frame_src/utils/auth";
 import {
   GetCheckResult,
   GetCheckResultDetail,
-  Rectification
-} from "@/app_src/api/RCGZ/JCJGCX";
+  GetParentCheckCodeOptions,
+  ExportTotalCheckReport
+} from "@/app_src/api/TJFX/BBTJ/TotalCheckReport.js";
+
+const passTypeOptions = [
+  { key: 0, type_name: "不合格" },
+  { key: 1, type_name: "合格" },
+  { key: 2, type_name: "复查不合格" },
+  { key: 3, type_name: "复查合格" },
+];
+const passTypeKeyValue = passTypeOptions.reduce((acc, cur) => {
+  acc[cur.key] = cur.type_name;
+  return acc;
+}, {});
+
+const IS_REVIEW_Options = [
+  { key: 0, type_name: "未反馈" },
+  { key: 1, type_name: "已反馈" },
+];
+const IS_REVIEW_KeyValue = IS_REVIEW_Options.reduce((acc, cur) => {
+  acc[cur.key] = cur.type_name;
+  return acc;
+}, {});
 export default {
   name: "ToalCheckReport",
   directives: {
@@ -189,8 +232,10 @@ export default {
   data() {
     return {
       tableKey: 0,
+      DLOptions: [],
       list: [],
       detaillist: [],
+      JCJG:0,
       total: 0,
       listLoading: false,
       listQuery: {
@@ -198,6 +243,7 @@ export default {
         year: "",
         FWBH: "",
         RWMC: "",
+        DLID: "",
         page: 1,
         limit: 10
       },
@@ -210,7 +256,7 @@ export default {
       treeData: [],
       detailDialog: false,
       spanArr: [],
-      selectList:[],
+      selectList: []
     };
   },
   methods: {
@@ -247,14 +293,14 @@ export default {
         FWSX: ""
       };
     },
-    notice(){
+    notice() {
       this.$confirm("确定要推送整改消息吗", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
         type: "warning"
       }).then(() => {
-        Rectification(this.selectList).then(res=>{
-          if(res.data.code===2000){
+        Rectification(this.selectList).then(res => {
+          if (res.data.code === 2000) {
             this.$notify({
               position: "bottom-right",
               title: "成功",
@@ -262,8 +308,7 @@ export default {
               type: "success",
               duration: 2000
             });
-          }
-          else{
+          } else {
             this.$notify({
               position: "bottom-right",
               title: "失败",
@@ -272,8 +317,78 @@ export default {
               duration: 2000
             });
           }
+        });
+      });
+    },
+    exprotReport() {
+      ExportTotalCheckReport(this.listQuery).then(res => {
+        if (res.data.code === 2000) {
+          let list = res.data.items;
+          import("@/frame_src/vendor/Export2Excel").then(excel => {
+            const tHeader = [
+              "任务名称",
+              "检查区域",
+              "房屋编号",
+              "房屋区域",
+              "业主名称",
+              "总体检查结果",
+              "复查次数",
+              "是否反馈",
+              "检查时间",
+              "检查大类",
+              "检查内容",
+              "明细检查结果",
+              "检查人"
+            ];
+            const filterVal = [
+              "RWMC",
+              "JCQY",
+              "FWBH",
+              "FWQY",
+              "ZHXM",
+              "JCJG",
+              "JCCS",
+              "IS_REVIEW",
+              "JCSJ",
+              "DL",
+              "XL",
+              "result",
+              "FZR"
+            ];
+            const data = this.formatJson(filterVal, list);
+            //console.log(data);
+            excel.export_json_to_excel({
+              header: tHeader,
+              data,
+              filename: "任务结果报表"
+            });
+          });
+        }
+        else{
+           this.$notify({
+            position: "bottom-right",
+            title: "失败",
+            message: res.message,
+            type: "error",
+            duration: 2000
+          });
+        }
+      });
+    },
+    formatJson(filterVal, jsonData) {
+      return jsonData.map(v =>
+        filterVal.map(j => {
+          if (j === "JCJG") {
+            return passTypeKeyValue[v[j]];
+          }
+          else if(j==="IS_REVIEW"){
+            return IS_REVIEW_KeyValue[v[j]];
+          } 
+          else {
+            return v[j];
+          }
         })
-      })
+      );
     },
     getList() {
       this.listLoading = true;
@@ -302,6 +417,7 @@ export default {
         if (res.data.code === 2000) {
           this.detaillist = res.data.items;
           let contactDot = 0;
+          this.spanArr = [];
           this.detaillist.forEach((item, index) => {
             if (index === 0) {
               this.spanArr.push(1); //首条数据肯定为不相同数据
@@ -367,14 +483,21 @@ export default {
       let date = new Date();
       let year = date.getFullYear();
       this.listQuery.year = year.toString();
+    },
+    getOptions() {
+      GetParentCheckCodeOptions().then(res => {
+        if (res.data.code === 2000) {
+          this.DLOptions = res.data.items;
+        }
+      });
     }
   },
   created() {
     this.listLoading = false;
+    this.getOptions();
     this.getYear();
     this.getList();
   },
-
   computed: {
     getRoleLevel() {
       if (this.$store.state.user.roleLevel === "admin") {

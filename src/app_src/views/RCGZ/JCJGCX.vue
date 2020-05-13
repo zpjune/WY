@@ -53,7 +53,14 @@
             icon="el-icon-search"
             @click="getList"
           >搜索</el-button>
-          <el-button size="mini" class="filter-item" type="success" v-waves @click="notice" :disabled="selectList.length===0">提醒</el-button>
+          <el-button
+            size="mini"
+            class="filter-item"
+            type="success"
+            v-waves
+            @click="notice"
+            :disabled="selectList.length===0"
+          >提醒</el-button>
         </el-col>
       </el-row>
     </div>
@@ -81,7 +88,7 @@
                 <span>{{scope.row.RWMC}}</span>
               </template>
             </el-table-column>
-            <el-table-column align="center" prop="JCQY" label="检查区域" fixed="left">
+            <el-table-column align="center" prop="JCQY" label="检查区域" fixed="left" width="400">
               <template slot-scope="scope">
                 <span>{{scope.row.JCQY}}</span>
               </template>
@@ -104,7 +111,7 @@
             <el-table-column align="center" label="检查结果">
               <template slot-scope="scope">
                 <span>{{scope.row.JCJG|change}}</span>
-              </template> 
+              </template>
             </el-table-column>
             <el-table-column align="center" prop="JCCS" label="复查次数"></el-table-column>
             <el-table-column align="center" label="是否反馈">
@@ -159,6 +166,12 @@
           <el-table-column label="检查大类" prop="DL"></el-table-column>
           <el-table-column label="检查内容" prop="XL"></el-table-column>
           <el-table-column label="检查结果" prop="result"></el-table-column>
+          <el-table-column label="复查结果" prop="result" v-if="JCJG==3"></el-table-column>
+          <el-table-column label="复查结果" v-if="JCJG==2">
+            <template slot-scope="scope">
+              <span>合格 </span><span v-if="1===2">{{scope.row.result}}</span>
+            </template>
+          </el-table-column>
         </el-table>
       </el-card>
     </el-dialog>
@@ -193,6 +206,7 @@ export default {
       detaillist: [],
       total: 0,
       listLoading: false,
+      JCJG: 0,
       listQuery: {
         JCJG: "",
         year: "",
@@ -210,22 +224,28 @@ export default {
       treeData: [],
       detailDialog: false,
       spanArr: [],
-      selectList:[],
+      selectList: []
     };
   },
   methods: {
     select(selection, row) {
       this.selectList = [];
-      this.selectList.push(selection.RESULT_ID);
+      //this.selectList.push(selection.RESULT_ID);
+      selection.forEach(item => {
+        this.selectList.push(item.RESULT_ID);
+      });
+      console.log(this.selectList);
     },
     elselectchange() {
       this.getList();
     },
     selectall(selection) {
       this.selectList = [];
+      //console.log(selection);
       selection.forEach(item => {
         this.selectList.push(item.RESULT_ID);
       });
+      console.log(this.selectList);
     },
     deleteRow(index, rows) {
       //删除改行
@@ -247,14 +267,14 @@ export default {
         FWSX: ""
       };
     },
-    notice(){
+    notice() {
       this.$confirm("确定要推送整改消息吗", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
         type: "warning"
       }).then(() => {
-        Rectification(this.selectList).then(res=>{
-          if(res.data.code===2000){
+        Rectification(this.selectList).then(res => {
+          if (res.data.code === 2000) {
             this.$notify({
               position: "bottom-right",
               title: "成功",
@@ -262,8 +282,7 @@ export default {
               type: "success",
               duration: 2000
             });
-          }
-          else{
+          } else {
             this.$notify({
               position: "bottom-right",
               title: "失败",
@@ -272,8 +291,8 @@ export default {
               duration: 2000
             });
           }
-        })
-      })
+        });
+      });
     },
     getList() {
       this.listLoading = true;
@@ -295,6 +314,7 @@ export default {
     },
     GetDetail(row) {
       this.detailDialog = true;
+      this.JCJG = row.JCJG;
       let temp = {
         RESULT_ID: row.RESULT_ID
       };
