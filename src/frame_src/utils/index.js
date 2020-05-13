@@ -294,3 +294,36 @@ export function deepClone(source) {
   })
   return targetObj
 }
+export function dateFormatNew(strDate){
+  if(strDate==""){
+    return "";
+  }
+  　　var t=new Date(strDate);//row 表示一行数据, updateTime 表示要格式化的字段名称
+  　　var year=t.getFullYear(),
+     　　 month=t.getMonth()+1,
+     　　 day=t.getDate();
+　　  var newTime=year+'-'+
+    　　  (month<10?'0'+month:month)+'-'+
+   　　   (day<10?'0'+day:day);
+　　  return newTime;
+　　}
+
+export function dateHourFormatNew(strDate){
+  if(strDate==""){
+    return "";
+  }
+  　　var t=new Date(strDate);//row 表示一行数据, updateTime 表示要格式化的字段名称
+  　　var year=t.getFullYear(),
+     　　 month=t.getMonth()+1,
+     　　 day=t.getDate(),
+    　　  hour=t.getHours(),
+    　　  min=t.getMinutes(),
+    　　  sec=t.getSeconds();
+　　  var newTime=year+'-'+
+    　　  (month<10?'0'+month:month)+'-'+
+   　　   (day<10?'0'+day:day)+' '+
+    　　  (hour<10?'0'+hour:hour)+':'+
+    　　  (min<10?'0'+min:min)+':'+
+    　　  (sec<10?'0'+sec:sec);
+　　  return newTime;
+　　}

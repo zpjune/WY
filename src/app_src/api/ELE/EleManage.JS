@@ -21,3 +21,17 @@ export function GetData(query) {
       data
     })
   } 
+  export function GetWaterData(query) {
+    return request({
+      url: '/EleManage/GetWaterData',
+      method: 'get',
+      params: query
+    })
+  }
+  export function ExportWaterData(query) {
+    return request({
+      url: '/EleManage/ExportWaterData',
+      method: 'get',
+      params: query
+    })
+  }
