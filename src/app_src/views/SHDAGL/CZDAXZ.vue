@@ -712,6 +712,7 @@ export default {
         ZLZE: "",
         ZLYJ: "",
         ZLYS: "",
+        ZJJFFS:"",
         //以下是基础信息
         userId: this.$store.state.user.userId,
         userType: 1 //出租用户
@@ -819,6 +820,7 @@ export default {
         ZLZE: "",
         ZLYJ: "",
         ZLYS: "",
+        ZJJFFS:"",
         //以下是基础信息
         userId: this.$store.state.user.userId,
         userType: 1

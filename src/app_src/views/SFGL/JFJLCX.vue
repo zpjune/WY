@@ -73,28 +73,28 @@
       id="table"
     >
       <!-- <el-table-column type="selection" width="55"></el-table-column> -->
-      <el-table-column width="150px" align="center" label="缴费类型">
+      <el-table-column  align="center" label="缴费类型">
         <template slot-scope="scope">
           <span>{{scope.row.JFLX|changeType}}</span>
         </template>
       </el-table-column>
 
-      <el-table-column align="center" width="120px" label="房屋编号">
+      <el-table-column align="center"  label="房屋编号">
         <template slot-scope="scope">
           <span>{{scope.row.FWBH}}</span>
         </template>
       </el-table-column>
-      <el-table-column width="150px" align="center" label="房屋名称">
+      <el-table-column align="center" label="房屋名称">
         <template slot-scope="scope">
           <span>{{scope.row.FWMC}}</span>
         </template>
       </el-table-column>
-      <el-table-column align="center" width="120px" label="业主姓名">
+      <el-table-column align="center"  label="业主姓名">
         <template slot-scope="scope">
           <span>{{scope.row.ZHXM}}</span>
         </template>
       </el-table-column>
-      <el-table-column align="center" width="120px" label="业主电话">
+      <el-table-column align="center"  label="业主电话">
         <template slot-scope="scope">
           <span>{{scope.row.MOBILE_PHONE}}</span>
         </template>
@@ -105,19 +105,29 @@
           <span>{{scope.row.JFJE}}</span>
         </template>
       </el-table-column>
-      <el-table-column align="center" width="120px" label="是否发送通知单">
+      <el-table-column align="center"  label="是否发送通知单">
         <template slot-scope="scope">
           <span>{{scope.row.SFTZ|changeSFTZ}}</span>
         </template>
       </el-table-column>
-      <el-table-column align="center" width="120px" label="催缴次数">
+      <el-table-column align="center"  label="催缴次数">
         <template slot-scope="scope">
           <span>{{scope.row.JFCS}}</span>
         </template>
       </el-table-column>
-      <el-table-column align="center" width="120px" label="催缴日期">
+      <el-table-column align="center"  label="催缴日期">
         <template slot-scope="scope">
           <span>{{scope.row.JFRQ|parseTime}}</span>
+        </template>
+      </el-table-column>
+      <el-table-column align="center" label="缴费期起">
+        <template slot-scope="scope">
+          <span>{{scope.row.YXQS|parseTime}}</span>
+        </template>
+      </el-table-column>
+      <el-table-column align="center"  label="缴费期止">
+        <template slot-scope="scope">
+          <span>{{scope.row.YXQZ|parseTime}}</span>
         </template>
       </el-table-column>
       <el-table-column align="center" width="120px" label="是否缴费">
@@ -125,8 +135,9 @@
           <span>{{scope.row.JFZT|changeSFTZ}}</span>
         </template>
       </el-table-column>
+      
     </el-table>
-    <div class="page">
+    <div style="text-align:center">
       <el-pagination
         background
         @size-change="handleSizeChange"

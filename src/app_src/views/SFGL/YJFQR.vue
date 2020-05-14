@@ -541,12 +541,15 @@ export default {
     },
     handleSizeChange(val) {
       this.listQuery.limit = val;
+      this.getList();
     },
     handleCurrentChange(val) {
       this.listQuery.page = val;
+      this.getList();
     },
     handleFilter() {
       this.listQuery.page = 1;
+      this.getList();
     },
     handleDownload() {
       // 导出

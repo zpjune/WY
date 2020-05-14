@@ -120,7 +120,7 @@
         </template>
       </el-table-column>
     </el-table>
-    <div class="page">
+    <div style="text-align:center">
       <el-pagination
         background
         @size-change="handleSizeChange"
