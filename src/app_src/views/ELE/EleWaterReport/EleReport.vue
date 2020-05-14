@@ -83,7 +83,7 @@
           :show-overflow-tooltip="true"
         >
           <template slot-scope="scope">
-            <span>{{scope.row.monthdate}}</span>
+            <span>{{scope.row.UpdateDateMonth}}</span>
           </template>
         </el-table-column>
         <el-table-column
@@ -109,7 +109,7 @@
         </el-table-column>
          <el-table-column width="120px" align="center" :label="'采集器id'" :show-overflow-tooltip="true">
           <template slot-scope="scope">
-            <span>{{scope.row.cid}}</span>
+            <span>{{scope.row.CID}}</span>
           </template>
         </el-table-column>WATER_NUMBER
         <el-table-column width="120px" align="center" :label="'业主姓名'" :show-overflow-tooltip="true">
@@ -252,6 +252,8 @@ export default {
           "月度",
           "房屋编号",
           "房屋名称",
+          "电表号",
+          "采集器id",
           "业主姓名",
           "业主电话",
           "转租商户姓名",
@@ -261,9 +263,11 @@ export default {
           "预警状态"
         ];
         const filterVal = [
-          "monthdate",
+          "UpdateDateMonth",
           "FWBH",
           "FWMC",
+          "ELE_NUMBER",
+          "CID",
           "ZHXM",
           "MOBILE_PHONE",
           "ZHXM1",
