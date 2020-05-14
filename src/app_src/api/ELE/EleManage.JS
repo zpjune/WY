@@ -49,3 +49,10 @@ export function GetData(query) {
       params: query
     })
   }
+  export function getEleWaterWarningMsg(query) {
+    return request({
+      url: '/EleManage/getEleWaterWarningMsg',
+      method: 'get',
+      params: query
+    })
+  }

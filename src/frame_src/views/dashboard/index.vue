@@ -139,6 +139,7 @@
 <script>
 import { mapGetters } from "vuex";
 import adminDashboard from "./admin";
+import {  getEleWaterWarningMsg } from "@/app_src/api/ELE/EleManage";
 import {
   getMonthData,
   getNotice,
@@ -504,9 +505,26 @@ export default {
     },
     getMore() {
       this.$router.push({ path: "noticeViews/noticelist/" });
+    },
+    getWarningMsg(){
+      getEleWaterWarningMsg().then(response => {
+        if (response.data.code === 2000) {
+         if(response.data.items!=""){
+           this.$notify({
+              position: "bottom-right",
+              title: "水电报警提示",
+              message: response.data.items,
+              type: "warning",
+              duration: 5000
+            });
+         }
+        }
+      });
     }
   },
-  created() {},
+  created() {
+    this.getWarningMsg();
+  },
   mounted() {
     this.getMonthData();
     this.getLv();
