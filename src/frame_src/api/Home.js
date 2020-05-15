@@ -38,3 +38,28 @@ export function CompareData(query) { // 通知公告查询
     params: query
   })
 }
+
+
+export function GetRegionalStatistics(query) { // 物业系统右上角第一个图
+  return request({
+    url: '/Home/GetRegionalStatistics',
+    method: 'get',
+    params: query
+  })
+}
+
+export function GetYearStatistics(query) { // 物业系统右下角
+  return request({
+    url: '/Home/GetYearStatistics',
+    method: 'get',
+    params: query
+  })
+}
+
+export function YearHistogram(query) { // 物业系统左下角
+  return request({
+    url: '/Home/YearHistogram',
+    method: 'get',
+    params: query
+  })
+}

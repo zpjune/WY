@@ -106,6 +106,11 @@
                 <span>{{scope.row.FWBH}}</span>
               </template>
             </el-table-column>
+            <el-table-column align="center" prop="FWMC" label="房屋名称">
+              <template slot-scope="scope">
+                <span>{{scope.row.FWMC}}</span>
+              </template>
+            </el-table-column>
             <el-table-column align="center" prop="FWBH" label="房屋区域">
               <template slot-scope="scope">
                 <span>{{scope.row.Name}}</span>

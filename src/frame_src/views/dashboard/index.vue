@@ -7,7 +7,7 @@
             <div slot="header" class="header">
               <el-row>
                 <el-col :span="2">
-                  <img src="../../../frame_src/imgs/notice.png" alt>
+                  <img src="../../../frame_src/imgs/notice.png" alt />
                 </el-col>
                 <el-col :span="14">
                   <span>通知公告</span>
@@ -40,10 +40,10 @@
             <div slot="header" class="header">
               <el-row>
                 <el-col :span="2">
-                  <img src="../../../frame_src/imgs/notice.png" alt>
+                  <img src="../../../frame_src/imgs/notice.png" alt />
                 </el-col>
                 <el-col :span="22">
-                  <span>区域费用统计</span>
+                  <span>区域检查次数统计</span>
                 </el-col>
               </el-row>
             </div>
@@ -54,7 +54,7 @@
           </el-card>
         </el-col>
         <el-col :xs="0" :sm="0" :md="0" :lg="0" :xl="1"></el-col>
-          <!-- <el-col :xs="12" :sm="12" :lg="8"></el-col> -->
+        <!-- <el-col :xs="12" :sm="12" :lg="8"></el-col> -->
       </el-row>
     </div>
 
@@ -65,10 +65,10 @@
             <div slot="header" class="header">
               <el-row>
                 <el-col :span="2">
-                  <img src="../../../frame_src/imgs/notice.png" alt class="pic">
+                  <img src="../../../frame_src/imgs/notice.png" alt class="pic" />
                 </el-col>
                 <el-col :span="22">
-                  <span>收入统计</span>
+                  <span>网上收入统计</span>
                 </el-col>
               </el-row>
             </div>
@@ -81,10 +81,10 @@
             <div slot="header" class="header">
               <el-row>
                 <el-col :span="2">
-                  <img src="../../../frame_src/imgs/notice.png" alt>
+                  <img src="../../../frame_src/imgs/notice.png" alt />
                 </el-col>
                 <el-col :span="22">
-                  <span>检查统计</span>
+                  <span>检查情况统计</span>
                 </el-col>
               </el-row>
             </div>
@@ -111,7 +111,8 @@
                   </el-row>
                 </div>
                 <el-row v-if="detailList!=null">
-                  <el-col :span="24">附件：
+                  <el-col :span="24">
+                    附件：
                     <div style="margin-left:25px;" v-for="(item,key) in detailList" :key="key">
                       <el-button
                         @click="downLoad(item)"
@@ -139,13 +140,16 @@
 <script>
 import { mapGetters } from "vuex";
 import adminDashboard from "./admin";
-import {  getEleWaterWarningMsg } from "@/app_src/api/ELE/EleManage";
+import { getEleWaterWarningMsg } from "@/app_src/api/ELE/EleManage";
 import {
   getMonthData,
   getNotice,
   getLv,
   CompareData,
-  getNoticeDetail
+  getNoticeDetail,
+  GetRegionalStatistics,
+  GetYearStatistics,
+  YearHistogram
 } from "@/frame_src/api/Home";
 import { parseTime } from "@/frame_src/utils";
 // import editorDashboard from './editor'
@@ -157,24 +161,7 @@ export default {
   data() {
     return {
       currentRole: "adminDashboard",
-      noticeList: [
-        {
-          NOTICE_TITLE:'关于普丰物业房屋管理系统建设项目开发通知',
-          NOTICE_DATETIME:'2019-05-22 12:00:00.000'
-        },{
-          NOTICE_TITLE:'关于普丰物业房屋管理系统建设试运行通知',
-          NOTICE_DATETIME:'2019-05-23 12:00:00.000'
-        },{
-          NOTICE_TITLE:'关于普丰物业房屋管理系统使用培训通知',
-          NOTICE_DATETIME:'2019-05-24 12:00:00.000'
-        },{
-          NOTICE_TITLE:'关于普丰物业房屋管理系统正式上线通知',
-          NOTICE_DATETIME:'2019-05-25 12:00:00.000'
-        },{
-          NOTICE_TITLE:'关于普丰物业房屋管理系统成果汇报通知',
-          NOTICE_DATETIME:'2019-05-26 12:00:00.000'
-        }
-      ],
+      noticeList: [],
       detailList: [],
       temp: {
         orgcode: this.$store.state.user.orgCode,
@@ -197,12 +184,12 @@ export default {
         },
         xAxis: {
           data: [],
-        //   grid: {
-        //   left: "0%",
-        //   right: "0%",
-        //   bottom: "0%",
-        //   containLabel: true
-        // },
+          //   grid: {
+          //   left: "0%",
+          //   right: "0%",
+          //   bottom: "0%",
+          //   containLabel: true
+          // },
           axisLabel: {
             inside: true,
             textStyle: {
@@ -218,6 +205,7 @@ export default {
           z: 10
         },
         yAxis: {
+          name:"单位:次",
           axisLine: {
             show: false
           },
@@ -249,7 +237,8 @@ export default {
           },
           {
             type: "bar",
-            barMaxWidth:80,
+            
+            barMaxWidth: 25,
             itemStyle: {
               normal: {
                 color: new this.$echarts.graphic.LinearGradient(0, 0, 0, 1, [
@@ -302,7 +291,8 @@ export default {
         xAxis: [],
         yAxis: [
           {
-            type: "value"
+            type: "value",
+            name:"单位:户"
           }
         ],
         series: []
@@ -336,7 +326,8 @@ export default {
         xAxis: [],
         yAxis: [
           {
-            type: "value"
+            type: "value",
+            name:"单位:元"
           }
         ],
         series: []
@@ -344,7 +335,6 @@ export default {
     };
   },
   methods: {
-       
     drawline() {
       ///绘制echarts 柱状图
       let mycharts = this.$echarts.init(document.getElementById("pic1"));
@@ -360,10 +350,10 @@ export default {
       mycharts2.setOption(this.option2);
     },
     getMonthData() {
-     let items=[{"A区":21317,"B区":21234,"C区":33074,"D区":12222,"E区":55548}];
-      this.option.xAxis.data = Object.keys(items[0]);
-          this.option.series[1].data = Object.values(items[0]);
-          this.drawline();
+      //let items=[{"A区":21317,"B区":21234,"C区":33074,"D区":12222,"E区":55548}];
+      //this.option.xAxis.data = Object.keys(items[0]);
+      //this.option.series[1].data = Object.values(items[0]);
+      // this.drawline();
       // getMonthData(this.temp).then(response => {
       //   if (response.data.code === 2000) {
       //     this.option.xAxis.data = Object.keys(response.data.items[0]);
@@ -371,11 +361,33 @@ export default {
       //     this.drawline();
       //   }
       // });
+      GetRegionalStatistics().then(response => {
+        if (response.data.code === 2000) {
+          let list = response.data.items;
+          let xdata = [];
+          let ydata = [];
+          list.forEach(items => {
+            xdata.push(items.Name);
+            ydata.push(items.NUM);
+          });
+          this.option.xAxis.data = xdata;
+          this.option.series[1].data = ydata;
+          this.drawline();
+        }
+      });
     },
     getLv() {
-      let items=[{"TaxRate":"整改商户","1月":500,"2月":400,"3月":300},{"TaxRate":"合格商户","1月":1863,"2月":2057,"3月":2423}];
-        this.changeLvData(items);
+      // let items = [
+      //    { TaxRate: "整改商户", "1月": 500, "2月": 400, "3月": 300 },
+      //   { TaxRate: "合格商户", "1月": 1863, "2月": 2057, "3月": 2423 }
+      // ];
+      GetYearStatistics().then(res => {
+        if (res.data.code === 2000) {
+          this.changeLvData(res.data.items);
           this.drawline2();
+        }
+      });
+
       // getLv(this.temp).then(response => {
       //   if (response.data.code === 2000) {
       //     this.changeLvData(response.data.items);
@@ -435,9 +447,19 @@ export default {
       this.option2.legend.data = namelist;
     },
     CompareData() {
-      let item=[{"mm":1,"KS":98366.06,"DJ":100366.06},{"mm":2,"KS":100702.29,"DJ":103453.27},{"mm":3,"KS":114047.24,"DJ":102994.45}];
-      this.changeCompareData(item);
-      this.drawline1();
+      let item = [
+        { mm: 1, KS: 98366.06, DJ: 100366.06 },
+        { mm: 2, KS: 100702.29, DJ: 103453.27 },
+        { mm: 3, KS: 114047.24, DJ: 102994.45 }
+      ];
+      YearHistogram().then(res=>{
+        if(res.data.code===2000){
+          this.changeCompareData(res.data.items);
+          this.drawline1();
+        }
+      })
+      //this.changeCompareData(item);
+      
       // CompareData(this.temp).then(response => {
       //   if (response.data.code === 2000) {
       //     this.changeCompareData(response.data.items);
@@ -448,30 +470,40 @@ export default {
     changeCompareData(data) {
       let arr1 = [];
       let arr2 = [];
+      let arr3 = [];
       let mon = [];
       let temp = "";
       data.forEach(item => {
         (temp = item.mm + "月"), mon.push(temp);
-        arr1.push(item.KS);
-        arr2.push(item.DJ);
-      });
-      this.option1.series.push({
-        name: "房租",
-        type: "bar",
-        barGap: 0,
-        label: "房租",
-        data: arr1,
-        barMaxWidth: 30
+        arr1.push(item.WYF);
+        arr2.push(item.SF);
+        arr3.push(item.DF);
       });
       this.option1.series.push({
         name: "物业费",
         type: "bar",
         barGap: 0,
         label: "物业费",
-        data: arr2,
-        barMaxWidth: 35
+        data: arr1,
+        barMaxWidth: 25
       });
-      this.option1.legend.data = ["房租", "物业费"];
+      this.option1.series.push({
+        name: "水费",
+        type: "bar",
+        barGap: 0,
+        label: "水费",
+        data: arr2,
+        barMaxWidth: 25
+      });
+      this.option1.series.push({
+        name: "电费",
+        type: "bar",
+        barGap: 0,
+        label: "电费",
+        data: arr3,
+        barMaxWidth: 25
+      });
+      this.option1.legend.data = ["物业费", "水费","电费"];
       this.option1.xAxis.push({
         type: "category",
         axisTick: { show: false },
@@ -506,18 +538,18 @@ export default {
     getMore() {
       this.$router.push({ path: "noticeViews/noticelist/" });
     },
-    getWarningMsg(){
+    getWarningMsg() {
       getEleWaterWarningMsg().then(response => {
         if (response.data.code === 2000) {
-         if(response.data.items!=""){
-           this.$notify({
+          if (response.data.items != "") {
+            this.$notify({
               position: "bottom-right",
               title: "水电报警提示",
               message: response.data.items,
               type: "warning",
               duration: 5000
             });
-         }
+          }
         }
       });
     }
@@ -596,8 +628,5 @@ export default {
   font-family: "微软雅黑";
   min-height: 360px;
 }
-
-
-
 </style>
 
