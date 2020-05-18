@@ -1,11 +1,14 @@
 <template>
   <div id="DJFQR" class="app-container calendar-list-container">
     <div class="filter-container">
+       <el-row>
+        <el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
       <el-select
         v-model="listQuery.JFLX"
         placeholder="缴费类型"
         size="mini"
         class="filter-item"
+        style="width:95%;"
         clearable
       >
         <el-option
@@ -15,24 +18,28 @@
           :value="item.value"
         ></el-option>
       </el-select>
-
+  </el-col>
+        <el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
       <el-input
         @keyup.enter.native="handleFilter"
-        style="width: 200px;"
+        style="width:95%;"
         class="filter-item"
         placeholder="请输入房屋名称"
         v-model="listQuery.FWMC"
         size="mini"
       ></el-input>
+        </el-col>
+        <el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
       <el-input
         @keyup.enter.native="handleFilter"
-        style="width: 200px;"
+       style="width:95%;"
         class="filter-item"
         placeholder="请输入房号"
         v-model="listQuery.FWBH"
         size="mini"
       ></el-input>
-
+  </el-col>
+        <el-col :xs="14" :sm="14" :md="13" :lg="12" :xl="12">
       <!-- <el-date-picker
         class="filter-item"
         v-model="dateQuery"
@@ -71,6 +78,8 @@
         class="filter-item"
         :disabled="selectList.length==0"
       >催缴</el-button>
+        </el-col>
+       </el-row>
     </div>
     <el-table
       :key="tableKey"

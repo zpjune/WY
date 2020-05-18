@@ -47,8 +47,8 @@
           v-model="listQuery.SHOPBH"
         ></el-input>
       </el-col>
-      <el-col :xs="4" :sm="4" :md="4" :lg="3" :xl="2">
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="getList">查询</el-button>
+      <el-col :xs="7" :sm="7" :md="7" :lg="7" :xl="3">
+        <el-button type="primary"  style="120px" icon="el-icon-search" size="mini" @click="getList">查询</el-button>
         <!-- <el-button type="primary" icon="el-icon-document" size="mini">导出</el-button> -->
         <!-- <el-button
             size="mini"

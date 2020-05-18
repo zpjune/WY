@@ -54,7 +54,7 @@
       border
       fit
       highlight-current-row
-      style="width: 50%"
+      style="width: 100%"
       size="mini"
       id="table"
     >

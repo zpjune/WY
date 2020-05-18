@@ -67,7 +67,7 @@
             end-placeholder="结束日期"
           ></el-date-picker>
         </el-col>-->
-        <el-col :xs="10" :sm="9" :md="8" :lg="7" :xl="6">
+        <el-col :xs="12" :sm="12" :md="12" :lg="7" :xl="6">
           <el-button
             size="mini"
             class="filter-item"
@@ -108,6 +108,12 @@
             <img src="@/app_src/img/rent.png" alt class="tableicon" title="出租"><span style="font-weight:bold;color:gray;">出租</span>
             <img src="@/app_src/img/sale.png" alt class="tableicon" title="出售"><span style="font-weight:bold;color:gray;">出售</span>-->
             <div style="width:70px;height:18px;float:right;margin:2px;">
+              <span style="float:right;">空闲</span>
+              <span
+                style="width:30px;height:18px;float:right;display:block;background-color:#909399;"
+              ></span>
+            </div>
+            <div style="width:70px;height:18px;float:right;margin:2px;">
               <span style="float:right;">出售</span>
               <span
                 style="width:30px;height:18px;float:right;display:block;background-color:#67C23A;"
@@ -119,12 +125,7 @@
                 style="width:30px;height:18px;float:right;display:block;background-color:#E6A23C;"
               ></span>
             </div>
-            <div style="width:70px;height:18px;float:right;margin:2px;">
-              <span style="float:right;">空闲</span>
-              <span
-                style="width:30px;height:18px;float:right;display:block;background-color:#909399;"
-              ></span>
-            </div>
+            
           </div>
         </el-col>
       </el-row>
@@ -155,7 +156,7 @@
                 <span>{{scope.row.FWMC}}</span>
               </template>
             </el-table-column>
-            <el-table-column align="right" prop="JZMJ" label="建筑面积">
+            <el-table-column align="right" prop="JZMJ" label="建筑面积(㎡)">
               <template slot-scope="scope">
                 <span>{{scope.row.JZMJ}}</span>
               </template>
@@ -174,8 +175,8 @@
             <el-table-column align="right" label="结构类型">
               <template slot-scope="scope">{{scope.row.JG}}</template>
             </el-table-column>
-            <el-table-column align="right" prop="ZCYZ" label="资产原值"></el-table-column>
-            <el-table-column align="right" prop="ZFK" label="总房款"></el-table-column>
+            <el-table-column align="right" prop="ZCYZ" label="资产原值(万元)"></el-table-column>
+            <el-table-column align="right" prop="ZFK" label="总房款(万元)"></el-table-column>
 
             <el-table-column align="center" width="260" label="操作">
               <template slot-scope="scope">
@@ -229,7 +230,7 @@
           </el-row>
           <el-row>
             <el-col :span="12">
-              <el-form-item label="建筑面积" prop="JZMJ">
+              <el-form-item label="建筑面积(㎡)" prop="JZMJ">
                 <el-input v-model="temp.JZMJ"></el-input>
               </el-form-item>
             </el-col>
@@ -280,14 +281,14 @@
               </el-form-item>
             </el-col>
             <el-col :span="12">
-              <el-form-item label="资产原值" prop="ZCYZ">
+              <el-form-item label="资产原值(万元)" prop="ZCYZ">
                 <el-input v-model="temp.ZCYZ"></el-input>
               </el-form-item>
             </el-col>
           </el-row>
           <el-row>
             <el-col :span="12">
-              <el-form-item label="总房款" prop="ZFK">
+              <el-form-item label="总房款(万元)" prop="ZFK">
                 <el-input v-model="temp.ZFK"></el-input>
               </el-form-item>
             </el-col>
@@ -305,7 +306,7 @@
               </el-form-item>
             </el-col>
             <el-col :span="12">
-              <el-form-item label="采集器ID" prop="CID">
+              <el-form-item label="电表采集器ID" prop="CID">
                 <el-input v-model="temp.CID"></el-input>
               </el-form-item>
             </el-col>
