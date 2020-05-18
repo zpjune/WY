@@ -167,7 +167,7 @@
           <el-row>
             <el-col :span="12">
               <el-form-item label="任务编号" prop="RWBH">
-                <el-input v-model="temp.RWBH"></el-input>
+                <el-input v-model="temp.RWBH" readonly="true" placeholder="自动生成"></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="12">
@@ -213,17 +213,24 @@
                 </el-select>
               </el-form-item>-->
             </el-col>
-            <el-col :span="12">
-              <el-form-item label="备注" prop="REMARK">
+            <!-- <el-col :span="12">
+              <el-form-item label="备注" >
                 <el-input v-model="temp.REMARK"></el-input>
               </el-form-item>
-            </el-col>
+            </el-col> -->
           </el-row>
 
           <el-row>
             <el-col :span="24">
               <el-form-item label="任务内容" prop="RWNR">
                 <el-input v-model="temp.RWNR" type="textarea" :rows="3"></el-input>
+              </el-form-item>
+            </el-col>
+          </el-row>
+           <el-row>
+            <el-col :span="24">
+              <el-form-item label="备注">
+                <el-input v-model="temp.REMARK" type="textarea" :rows="2"></el-input>
               </el-form-item>
             </el-col>
           </el-row>
@@ -246,7 +253,7 @@
         <el-form ref="dataForm" :model="temp" label-width="120px" style="width: 99%;">
           <el-row>
             <el-col :span="12">
-              <el-form-item label="任务编号" prop="RWBH">
+              <el-form-item label="任务编号"  prop="RWBH">
                 <span>{{temp.RWBH}}</span>
               </el-form-item>
             </el-col>
