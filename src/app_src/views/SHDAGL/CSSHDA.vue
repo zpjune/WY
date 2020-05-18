@@ -3,7 +3,16 @@
   <div id="CZSHDA" class="app-container calendar-list-container">
     <div class="topSearh" id="topsearch">
       <el-row>
-        <el-col :xs="5" :sm="5" :md="5" :lg="4" :xl="3">
+        <el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
+          <el-input
+            placeholder="房屋编号"
+            style="width:95%;"
+            size="mini"
+            clearable
+            v-model="listQuery.FWBH"
+          ></el-input>
+        </el-col>
+        <el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
           <el-input
             placeholder="租户姓名"
             style="width:95%;"
@@ -12,7 +21,7 @@
             v-model="listQuery.ZHXM"
           ></el-input>
         </el-col>
-        <el-col :xs="5" :sm="5" :md="5" :lg="4" :xl="3">
+        <el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
           <!-- <el-input placeholder="业主类型" style="width:95%;" size="mini" clearable></el-input> -->
           <el-select
             v-model="listQuery.IS_PASS"

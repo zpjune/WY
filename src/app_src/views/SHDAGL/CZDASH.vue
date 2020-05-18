@@ -7,6 +7,13 @@
           <el-input placeholder="业主姓名" style="width:95%;" size="mini" clearable v-model="listQuery.ZHXM"></el-input>
         </el-col>
         <el-col :xs="5" :sm="5" :md="5" :lg="4" :xl="3">
+           <el-input
+            placeholder="房屋编号"
+            style="width:95%;"
+            size="mini"
+            clearable
+            v-model="listQuery.FWBH"
+          ></el-input>
           <!-- <el-input placeholder="业主类型" style="width:95%;" size="mini" clearable></el-input> -->
           <!-- <el-select
             v-model="listQuery.FWSX"
@@ -417,7 +424,8 @@ export default {
         ZHXM: "",
         IS_PASS: "",
         FWSX: 1,
-        FWID: ""
+        FWID: "",
+        FWBH:""
       },
       temp: {
         //以下是房屋字段
