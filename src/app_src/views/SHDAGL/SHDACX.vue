@@ -631,13 +631,13 @@ export default {
           this.listLoading = false;
         } else {
           this.listLoading = false;
-          this.$notify({
-            position: "bottom-right",
-            title: "失败",
-            message: res.data.message,
-            type: "error",
-            duration: 2000
-          });
+          // this.$notify({
+          //   position: "bottom-right",
+          //   title: "失败",
+          //   message: res.data.message,
+          //   type: "error",
+          //   duration: 2000
+          // });
         }
       });
     },
@@ -734,16 +734,16 @@ export default {
           //       // const index = this.list.indexOf(row)
           //       // this.list.splice(index, 1)
           this.getList();
-          this.title = "成功";
-          this.type = "success";
-          //     }
-          this.$notify({
-            position: "bottom-right",
-            title: this.title,
-            message: this.message,
-            type: this.type,
-            duration: 2000
-          });
+          // this.title = "成功";
+          // this.type = "success";
+          // //     }
+          // this.$notify({
+          //   position: "bottom-right",
+          //   title: this.title,
+          //   message: this.message,
+          //   type: this.type,
+          //   duration: 2000
+          // });
           //   });
         })
         .catch(() => {});
