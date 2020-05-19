@@ -166,7 +166,7 @@
           </el-row>
           <el-row>
             <el-col :span="12">
-              <el-form-item label="任务编号" prop="RWBH">
+              <el-form-item label="任务编号" >
                 <el-input v-model="temp.RWBH" readonly="true" placeholder="自动生成"></el-input>
               </el-form-item>
             </el-col>
