@@ -120,5 +120,13 @@ export function DeleteShopInfo(query) {
     })
   }
 
+  export function GetFeeResult(query) {
+    return request({
+      url: '/ShopInfo/GetFeeResult',
+      method: 'get',
+      params:query
+    })
+  }
+
 
 

@@ -1,46 +1,46 @@
 <template>
   <div id="DJFQR" class="app-container calendar-list-container">
     <div class="filter-container">
-       <el-row>
+      <el-row>
         <el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
-      <el-select
-        v-model="listQuery.JFLX"
-        placeholder="缴费类型"
-        size="mini"
-        class="filter-item"
-        style="width:95%;"
-        clearable
-      >
-        <el-option
-          v-for="item in options"
-          :key="item.value"
-          :label="item.label"
-          :value="item.value"
-        ></el-option>
-      </el-select>
-  </el-col>
-        <el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
-      <el-input
-        @keyup.enter.native="handleFilter"
-        style="width:95%;"
-        class="filter-item"
-        placeholder="请输入房屋名称"
-        v-model="listQuery.FWMC"
-        size="mini"
-      ></el-input>
+          <el-select
+            v-model="listQuery.JFLX"
+            placeholder="缴费类型"
+            size="mini"
+            class="filter-item"
+            style="width:95%;"
+            clearable
+          >
+            <el-option
+              v-for="item in options"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+            ></el-option>
+          </el-select>
         </el-col>
         <el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
-      <el-input
-        @keyup.enter.native="handleFilter"
-       style="width:95%;"
-        class="filter-item"
-        placeholder="请输入房号"
-        v-model="listQuery.FWBH"
-        size="mini"
-      ></el-input>
-  </el-col>
+          <el-input
+            @keyup.enter.native="handleFilter"
+            style="width:95%;"
+            class="filter-item"
+            placeholder="请输入房屋名称"
+            v-model="listQuery.FWMC"
+            size="mini"
+          ></el-input>
+        </el-col>
+        <el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
+          <el-input
+            @keyup.enter.native="handleFilter"
+            style="width:95%;"
+            class="filter-item"
+            placeholder="请输入房号"
+            v-model="listQuery.FWBH"
+            size="mini"
+          ></el-input>
+        </el-col>
         <el-col :xs="14" :sm="14" :md="13" :lg="12" :xl="12">
-      <!-- <el-date-picker
+          <!-- <el-date-picker
         class="filter-item"
         v-model="dateQuery"
         type="daterange"
@@ -48,38 +48,38 @@
         size="mini"
         start-placeholder="开始日期"
         end-placeholder="结束日期"
-      ></el-date-picker>-->
-      <el-button
-        class="filter-item"
-        type="primary"
-        icon="el-icon-search"
-        @click="getList"
-        size="mini"
-      >查询</el-button>
-      <el-button
-        class="filter-item"
-        type="primary"
-        icon="el-icon-download"
-        @click="handleDownload"
-        size="mini"
-      >导出</el-button>
-      <el-button type="success" size="mini" @click="create" class="filter-item">生成通知单</el-button>
-      <el-button
-        type="success"
-        size="mini"
-        @click="handleConfirm"
-        class="filter-item"
-        :disabled="selectList.length==0"
-      >确认通知单</el-button>
-      <el-button
-        type="warning"
-        size="mini"
-        @click="handlePush"
-        class="filter-item"
-        :disabled="selectList.length==0"
-      >催缴</el-button>
+          ></el-date-picker>-->
+          <el-button
+            class="filter-item"
+            type="primary"
+            icon="el-icon-search"
+            @click="getList"
+            size="mini"
+          >查询</el-button>
+          <el-button
+            class="filter-item"
+            type="primary"
+            icon="el-icon-download"
+            @click="handleDownload"
+            size="mini"
+          >导出</el-button>
+          <el-button type="success" size="mini" @click="create" class="filter-item">生成通知单</el-button>
+          <el-button
+            type="success"
+            size="mini"
+            @click="handleConfirm"
+            class="filter-item"
+            :disabled="selectList.length==0"
+          >确认通知单</el-button>
+          <el-button
+            type="warning"
+            size="mini"
+            @click="handlePush"
+            class="filter-item"
+            :disabled="selectList.length==0"
+          >催缴</el-button>
         </el-col>
-       </el-row>
+      </el-row>
     </div>
     <el-table
       :key="tableKey"
@@ -179,7 +179,7 @@
         :total="total"
       ></el-pagination>
     </div>
-    <el-dialog width="50%" title="缴费通知" :visible.sync="innerVisible" append-to-body>
+    <el-dialog  title="缴费通知" :visible.sync="innerVisible" append-to-body>
       <el-card class="box-card">
         <h2 style="text-align:center;">缴费通知单</h2>
         <pre style="font-size:18px;">
@@ -206,9 +206,8 @@
       :visible.sync="editVisible"
       class="selecttrees"
       :title="textMap[dialogStatus]"
-      width="70%"
     >
-      <el-form ref="dataForm" :model="temp" label-width="120px" style="width: 99%;">
+      <el-form ref="dataForm" :model="temp" label-width="120px" >
         <el-row>
           <el-col :span="12">
             <el-form-item label="业主姓名" prop="yezhu">
@@ -223,8 +222,12 @@
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="缴费类型" prop="jflx">
-              <el-input v-model="temp.JFLX" disabled></el-input>
+            <el-form-item label="缴费类型">
+              <el-select v-model="temp.JFLX" disabled>
+                <el-option label="物业费" value="0"></el-option>
+                <el-option label="水费" value="1"></el-option>
+                <el-option label="电费" value="2"></el-option>
+              </el-select>
             </el-form-item>
           </el-col>
           <el-col :span="12">
@@ -236,7 +239,7 @@
         <el-row>
           <el-col :span="12">
             <el-form-item label="费用金额" prop="jiaonajine">
-              <el-input v-model="temp.JFJE" disabled></el-input>
+              <el-input v-model="temp.JFJE" :disabled="temp.JFLX==='0'"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
@@ -411,7 +414,9 @@ export default {
     },
     handleFee() {
       let temp = {
-        RECORD_ID: this.temp.RECORD_ID
+        RECORD_ID: this.temp.RECORD_ID,
+        JFLX: this.temp.JFLX,
+        JFJE: this.temp.JFJE
       };
       ConfirmFee(temp).then(response => {
         if (response.data.code === 2000) {

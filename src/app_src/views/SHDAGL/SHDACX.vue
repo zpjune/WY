@@ -48,7 +48,13 @@
         ></el-input>
       </el-col>
       <el-col :xs="7" :sm="7" :md="7" :lg="7" :xl="3">
-        <el-button type="primary"  style="120px" icon="el-icon-search" size="mini" @click="getList">查询</el-button>
+        <el-button
+          type="primary"
+          style="120px"
+          icon="el-icon-search"
+          size="mini"
+          @click="getList"
+        >查询</el-button>
         <!-- <el-button type="primary" icon="el-icon-document" size="mini">导出</el-button> -->
         <!-- <el-button
             size="mini"
@@ -122,38 +128,43 @@
           highlight-current-row
           style="width: 100%;text-align:left;"
         >
-          <el-table-column align="center" label="开始时间">
+          <el-table-column align="center" label="缴费类型">
             <template slot-scope="scope">
-              <span>{{scope.row.KSSJ}}</span>
+              <span>{{scope.row.FEE_TYPES|changetype}}</span>
             </template>
           </el-table-column>
 
-          <el-table-column label="结束时间">
+          <el-table-column label="租户姓名" align="center">
             <template slot-scope="scope">
-              <span>{{scope.row.JSSJ}}</span>
+              <span>{{scope.row.ZHXM}}</span>
             </template>
           </el-table-column>
-          <el-table-column align="right" prop="SYLX" label="缴费类型">
+          <el-table-column align="center" label="商铺编号">
             <template slot-scope="scope">
-              <span>{{scope.row.JFLX}}</span>
+              <span>{{scope.row.SHOPBH}}</span>
             </template>
           </el-table-column>
-          <el-table-column align="right" prop="LSFGS" label="缴费金额">
+          <el-table-column align="center" label="商铺名称">
             <template slot-scope="scope">
-              <span>{{scope.row.JFJE}}</span>
+              <span>{{scope.row.SHOP_NAME}}</span>
+            </template>
+          </el-table-column>
+          <el-table-column align="center" label="付款时间">
+            <template slot-scope="scope">
+              <span>{{scope.row.PAY_TIME}}</span>
             </template>
           </el-table-column>
         </el-table>
         <div class="page">
           <el-pagination
             background
-            @size-change="handleSizeChange"
-            @current-change="handleCurrentChange"
+            @size-change="handleSizeChange1"
+            @current-change="handleCurrentChange1"
             :current-page="listQuery.page"
             :page-sizes="[10,20,30, 50]"
             :page-size="listQuery.limit"
             layout="total, sizes, prev, pager, next, jumper"
-            :total="total"
+            :total="total1"
           ></el-pagination>
         </div>
 
@@ -386,7 +397,13 @@
             </el-col>
             <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
               <el-form-item label="物业基准日期" prop="WYJZSJ">
-                <el-date-picker style="width:100%" size="mini" v-model="temp.WYJZSJ" disabled value-format="yyyy-MM-dd"></el-date-picker>
+                <el-date-picker
+                  style="width:100%"
+                  size="mini"
+                  v-model="temp.WYJZSJ"
+                  disabled
+                  value-format="yyyy-MM-dd"
+                ></el-date-picker>
               </el-form-item>
             </el-col>
           </el-row>
@@ -462,7 +479,8 @@
 <script>
 import {
   GetShopUserInfo,
-  GetShopDetailUserInfo
+  GetShopDetailUserInfo,
+  GetFeeResult
 } from "@/app_src/api/SHDAGL/SHOPDA";
 export default {
   name: "NDJCJH",
@@ -475,78 +493,24 @@ export default {
         ZHXM: "",
         SFZH: "",
         SHOPBH: "",
-        SHOP_STATUS:0
+        SHOP_STATUS: 0
       },
       shopOptions: [
+        { label: "出租", value: 0 },
         {
-          value: 0,
-          label: "全部"
-        },
-        {
-          value: 1,
-          label: "出租"
-        },
-        {
-          value: 2,
-          label: "出售"
-        },
-        {
-          value: 3,
-          label: "转售"
-        },
-        {
-          value: 4,
-          label: "终止物业关系"
+          label: "出售",
+          value: 1
         }
       ],
-      options: [
-        {
-          value: "A区",
-          label: "A区"
-        },
-        {
-          value: "B区",
-          label: "B区"
-        },
-        {
-          value: "C区",
-          label: "C区"
-        },
-        {
-          value: "D区",
-          label: "D区"
-        }
-      ],
+      options: [],
       total: 15,
-      list2: [
-        {
-          KSSJ: "2015-6-27",
-          JSSJ: "2016-6-27",
-          JFLX: "物业费",
-          JFJE: "2000.00"
-        },
-        {
-          KSSJ: "2017-6-27",
-          JSSJ: "2018-6-27",
-          JFLX: "物业费",
-          JFJE: "2000.00"
-        },
-        {
-          KSSJ: "2015-6-27",
-          JSSJ: "2019-6-27",
-          JFLX: "房租",
-          JFJE: "200000.00"
-        }
-      ],
+      list2: [],
       value1: [],
       value2: [],
       infiledList: [],
       detailVisible: false,
       workFlowVisible: false,
-      fildtps: [
-        { text: "消防", value: "1" },
-        { text: "安全", value: "2" }
-      ],
+      fildtps: [],
       textMap: {
         update: "缴费记录",
         create: "缴费记录",
@@ -594,7 +558,13 @@ export default {
       editVisible: false,
       dialogStatus: "",
       listloading: false,
-      fac: []
+      fac: [],
+      queryDetailList: {
+        CZ_SHID: "",
+        limit: 10,
+        page: 1
+      },
+      total1: 0
     };
   },
   methods: {
@@ -615,12 +585,25 @@ export default {
       }
     },
     handleUpdate(row) {
-      this.temp = Object.assign({}, row); // copy obj
+      this.queryDetailList={
+        CZ_SHID:row.CZ_SHID,
+        limit:10,
+        page:1
+      };
+      this.getFeeResult();
       this.editVisible = true;
       this.dialogStatus = "update";
       // this.$nextTick(() => {
       //   this.$refs["dataForm"].clearValidate();
       // });
+    },
+    getFeeResult() {
+      GetFeeResult(this.queryDetailList).then(res => {
+        if (res.data.code === 2000) {
+          this.list2 = res.data.items;
+          this.total1 = res.data.total;
+        }
+      });
     },
     handleDetail(row) {
       this.resetTemp();
@@ -711,12 +694,20 @@ export default {
       this.workFlowVisible = true;
     },
     handleSizeChange(val) {
-      this.listQuery.limit=val;
+      this.listQuery.limit = val;
       this.getList();
     },
     handleCurrentChange(val) {
-      this.listQuery.page=val;
+      this.listQuery.page = val;
       this.getList();
+    },
+    handleSizeChange1(val) {
+      this.queryDetailList.limit = val;
+      this.getFeeResult();
+    },
+    handleCurrentChange1(val) {
+      this.queryDetailList.page = val;
+      this.getFeeResult();
     },
     handleCreate() {
       this.resetTemp();
@@ -833,6 +824,22 @@ export default {
           break;
         default:
           return "";
+          break;
+      }
+    },
+    changetype(val) {
+      switch (val) {
+        case "0":
+          return "物业费";
+          break;
+        case "1":
+          return "水费";
+          break;
+        case "2":
+          return "电费";
+          break;
+        default:
+          return "未知类型";
           break;
       }
     }

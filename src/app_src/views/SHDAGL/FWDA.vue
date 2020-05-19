@@ -125,7 +125,6 @@
                 style="width:30px;height:18px;float:right;display:block;background-color:#E6A23C;"
               ></span>
             </div>
-            
           </div>
         </el-col>
       </el-row>
@@ -461,7 +460,14 @@ const typeTypeKeyValue = typeOptions.reduce((acc, cur) => {
   acc[cur.key] = cur.type_name;
   return acc;
 }, {});
-
+const validateDecimal = (rule, value, callback) => {
+  const reg = /^\d+\.?\d*$/;
+  if (reg.test(value)) {
+    callback();
+  } else {
+    return callback(new Error("请输入正确的数字！"));
+  }
+};
 export default {
   name: "CBJHSQ",
   directives: {
@@ -496,7 +502,7 @@ export default {
       disabled: false,
       tableKey: 0,
       listQuery: {
-        ORG_CODE:this.$store.state.user.orgCode,
+        ORG_CODE: this.$store.state.user.orgCode,
         FWBH: "",
         FWMC: "",
         LSFGS: "",
@@ -504,11 +510,11 @@ export default {
         limit: 10,
         page: 1,
         baseURL: process.env.BASE_API + "WY_API/UploadFiles/HouseImg/",
-        ORG_CODE:this.$store.state.user.orgCode
+        ORG_CODE: this.$store.state.user.orgCode
       },
-      upLoadInfo:{
+      upLoadInfo: {
         userId: this.$store.state.user.userId,
-        ORG_CODE:this.$store.state.user.orgCode
+        ORG_CODE: this.$store.state.user.orgCode
       },
       temp: {
         FWID: "",
@@ -530,10 +536,10 @@ export default {
         CJR: "",
         BJR: "",
         ZFK: "",
-        CID:"",
+        CID: "",
         userId: this.$store.state.user.userId,
         newFilePath: "",
-        ORG_CODE:this.$store.state.user.orgCode
+        ORG_CODE: this.$store.state.user.orgCode
       },
       selectOptions: [
         {
@@ -563,7 +569,12 @@ export default {
           { required: true, message: "请输入所属分公司", trigger: "change" }
         ],
         JZMJ: [
-          { required: true, message: "请输入建筑面积", trigger: "change" }
+          { required: true, message: "请输入建筑面积", trigger: "change" },
+          {
+            validator: validateDecimal,
+            message: "请填写正确的数字",
+            trigger: "change"
+          }
         ],
         ZLWZ: [
           { required: true, message: "请输入坐落位置", trigger: "change" }
@@ -590,9 +601,7 @@ export default {
         WATER_NUMBER: [
           { required: true, message: "请输入电表号", trigger: "change" }
         ],
-        CID: [
-          { required: true, message: "请输入采集器ID", trigger: "change" }
-        ],
+        CID: [{ required: true, message: "请输入采集器ID", trigger: "change" }],
         ELE_NUMBER: [
           { required: true, message: "请输入水表号", trigger: "change" }
         ],
@@ -622,7 +631,8 @@ export default {
       JGOptions: [],
       showUpload: false,
       urlUpload: process.env.BASE_API + "HouseInfo/uploadHouseInfo",
-      urldownload: process.env.BASE_API + "WY_API/ExcelModel/房屋档案表模板.xlsx",
+      urldownload:
+        process.env.BASE_API + "WY_API/ExcelModel/房屋档案表模板.xlsx",
       fileList: []
     };
   },
@@ -639,8 +649,8 @@ export default {
     handleRemove(file) {},
     handleRemove1(file) {
       //平面图删除
-      let arr = file.url.split("/");//将访问路径拆分成数组
-      let url = arr[arr.length - 1];//数组的最后一个字符串为路径
+      let arr = file.url.split("/"); //将访问路径拆分成数组
+      let url = arr[arr.length - 1]; //数组的最后一个字符串为路径
       this.temp.newFilePath = this.temp.newFilePath.replace(url + ",", "");
       console.log(this.temp.newFilePath);
     },
@@ -681,10 +691,10 @@ export default {
         CJR: "",
         BJR: "",
         ZFK: "",
-        CID:"",
+        CID: "",
         userId: this.$store.state.user.userId,
         newFilePath: "",
-        ORG_CODE:this.$store.state.user.orgCode
+        ORG_CODE: this.$store.state.user.orgCode
       };
     },
 
