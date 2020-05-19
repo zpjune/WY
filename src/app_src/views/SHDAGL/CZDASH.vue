@@ -14,6 +14,7 @@
             clearable
             v-model="listQuery.FWBH"
           ></el-input>
+          
           <!-- <el-input placeholder="业主类型" style="width:95%;" size="mini" clearable></el-input> -->
           <!-- <el-select
             v-model="listQuery.FWSX"

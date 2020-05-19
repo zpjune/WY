@@ -73,6 +73,7 @@
             highlight-current-row
             style="width: 100%;text-align:left;"
           >
+          
             <el-table-column align="center" prop="FWBH" label="房屋编号" fixed="left" show-overflow-tooltip></el-table-column>
             <el-table-column align="right" prop="FWMC" label="房屋名称" fixed="left" show-overflow-tooltip></el-table-column>
             <el-table-column align="right" prop="Name" width="120" label="隶属分公司" fixed="left" show-overflow-tooltip></el-table-column>

@@ -67,7 +67,7 @@
             end-placeholder="结束日期"
           ></el-date-picker>
         </el-col>-->
-        <el-col :xs="12" :sm="12" :md="12" :lg="7" :xl="6">
+        <el-col :xs="12" :sm="12" :md="12" :lg="12" :xl="6">
           <el-button
             size="mini"
             class="filter-item"
@@ -107,12 +107,7 @@
             <!-- <img src="@/app_src/img/free.png" alt class="tableicon" title="空闲"><span style="font-weight:bold;color:gray;">空闲</span>
             <img src="@/app_src/img/rent.png" alt class="tableicon" title="出租"><span style="font-weight:bold;color:gray;">出租</span>
             <img src="@/app_src/img/sale.png" alt class="tableicon" title="出售"><span style="font-weight:bold;color:gray;">出售</span>-->
-            <div style="width:70px;height:18px;float:right;margin:2px;">
-              <span style="float:right;">空闲</span>
-              <span
-                style="width:30px;height:18px;float:right;display:block;background-color:#909399;"
-              ></span>
-            </div>
+           
             <div style="width:70px;height:18px;float:right;margin:2px;">
               <span style="float:right;">出售</span>
               <span
@@ -123,6 +118,12 @@
               <span style="float:right;">出租</span>
               <span
                 style="width:30px;height:18px;float:right;display:block;background-color:#E6A23C;"
+              ></span>
+            </div>
+             <div style="width:70px;height:18px;float:right;margin:2px;">
+              <span style="float:right;">空闲</span>
+              <span
+                style="width:30px;height:18px;float:right;display:block;background-color:#909399;"
               ></span>
             </div>
           </div>
@@ -143,39 +144,39 @@
             style="width: 100%;text-align:left;"
             :cell-style="cellStyle"
           >
-            <el-table-column align="center" label="房屋属性" width="80px"></el-table-column>
-            <el-table-column align="center" label="房屋编号">
+            <el-table-column align="center"  label="房屋属性" width="80px"></el-table-column>
+            <el-table-column align="center"  width="150" label="房屋编号">
               <template slot-scope="scope">
                 <span>{{scope.row.FWBH}}</span>
               </template>
             </el-table-column>
 
-            <el-table-column label="房屋名称" :show-overflow-tooltip="true">
+            <el-table-column label="房屋名称" width="150"  :show-overflow-tooltip="true">
               <template slot-scope="scope">
                 <span>{{scope.row.FWMC}}</span>
               </template>
             </el-table-column>
-            <el-table-column align="right" prop="JZMJ" label="建筑面积(㎡)">
+            <el-table-column align="right" prop="JZMJ" width="150" label="建筑面积(㎡)">
               <template slot-scope="scope">
                 <span>{{scope.row.JZMJ}}</span>
               </template>
             </el-table-column>
-            <el-table-column align="right" label="隶属分公司">
+            <el-table-column align="right" width="150" label="隶属分公司">
               <template slot-scope="scope">
                 <span>{{scope.row.LS}}</span>
               </template>
             </el-table-column>
-            <el-table-column align="right" prop="ZLWZ" label="坐落位置">
+            <el-table-column align="right" prop="ZLWZ" width="150" label="坐落位置">
               <template slot-scope="scope">
                 <span>{{scope.row.ZLWZ}}</span>
               </template>
             </el-table-column>
-            <el-table-column align="right" prop="SS" label="所属区域"></el-table-column>
-            <el-table-column align="right" label="结构类型">
+            <el-table-column align="right" prop="SS" width="150" label="所属区域"></el-table-column>
+            <el-table-column align="right" width="150" label="结构类型">
               <template slot-scope="scope">{{scope.row.JG}}</template>
             </el-table-column>
-            <el-table-column align="right" prop="ZCYZ" label="资产原值(万元)"></el-table-column>
-            <el-table-column align="right" prop="ZFK" label="总房款(万元)"></el-table-column>
+            <el-table-column align="right" prop="ZCYZ" width="150" label="资产原值(万元)"></el-table-column>
+            <el-table-column align="right" prop="ZFK" width="150" label="总房款(万元)"></el-table-column>
 
             <el-table-column align="center" width="260" label="操作">
               <template slot-scope="scope">

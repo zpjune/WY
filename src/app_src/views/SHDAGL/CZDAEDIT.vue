@@ -14,6 +14,7 @@
       </div>
       <div>
         <el-row>
+          
           <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
             <el-form-item label="房屋编号" prop="FWBH">
               <el-input v-model="temp.FWBH" disabled style="width:69%;"></el-input>
