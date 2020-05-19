@@ -103,11 +103,16 @@
     <el-card>
       <el-row>
         <el-col>
-          <div style="text-align:right">
+          <div >
             <!-- <img src="@/app_src/img/free.png" alt class="tableicon" title="空闲"><span style="font-weight:bold;color:gray;">空闲</span>
             <img src="@/app_src/img/rent.png" alt class="tableicon" title="出租"><span style="font-weight:bold;color:gray;">出租</span>
             <img src="@/app_src/img/sale.png" alt class="tableicon" title="出售"><span style="font-weight:bold;color:gray;">出售</span>-->
-           
+            <div style="width:70px;height:18px;float:right;margin:2px;">
+              <span style="float:right;">空闲</span>
+              <span
+                style="width:30px;height:18px;float:right;display:block;background-color:#909399;"
+              ></span>
+            </div>
             <div style="width:70px;height:18px;float:right;margin:2px;">
               <span style="float:right;">出售</span>
               <span
@@ -120,12 +125,7 @@
                 style="width:30px;height:18px;float:right;display:block;background-color:#E6A23C;"
               ></span>
             </div>
-             <div style="width:70px;height:18px;float:right;margin:2px;">
-              <span style="float:right;">空闲</span>
-              <span
-                style="width:30px;height:18px;float:right;display:block;background-color:#909399;"
-              ></span>
-            </div>
+            
           </div>
         </el-col>
       </el-row>
