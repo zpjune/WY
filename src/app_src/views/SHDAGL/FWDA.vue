@@ -235,7 +235,7 @@
               </el-form-item>
             </el-col>
             <el-col :span="12">
-              <el-form-item label="隶属分公司" >
+              <el-form-item label="隶属分公司" prop="LSFGS">
                 <!-- <el-input v-model="temp.LSFGS"></el-input> -->
                 <el-select
                   placeholder="隶属分公司"
@@ -256,7 +256,7 @@
           </el-row>
           <el-row>
             <el-col :span="24">
-              <el-form-item label="坐落位置" prop="ZLWZ">
+              <el-form-item label="坐落位置" >
                 <el-input v-model="temp.ZLWZ" type="textarea" :rows="3"></el-input>
               </el-form-item>
             </el-col>
@@ -281,14 +281,14 @@
               </el-form-item>
             </el-col>
             <el-col :span="12">
-              <el-form-item label="资产原值(万元)" >
+              <el-form-item label="资产原值(万元)" prop="ZCYZ">
                 <el-input v-model="temp.ZCYZ"></el-input>
               </el-form-item>
             </el-col>
           </el-row>
           <el-row>
             <el-col :span="12">
-              <el-form-item label="总房款(万元)" >
+              <el-form-item label="总房款(万元)" prop="ZFK">
                 <el-input v-model="temp.ZFK"></el-input>
               </el-form-item>
             </el-col>
@@ -584,7 +584,7 @@ export default {
           { required: true, message: "请输入结构类型", trigger: "change" }
         ],
         ZCYZ: [
-          { required: true, message: "请输入资产原值", trigger: "change" },
+          {  message: "请输入资产原值", trigger: "change" },
           {
             validator: validateDecimal,
             message: "请输入正确的值",
@@ -592,7 +592,7 @@ export default {
           }
         ],
         ZFK: [
-          { required: true, message: "请输入总房款", trigger: "change" },
+          { message: "请输入总房款", trigger: "change" },
           {
             validator: validateDecimal,
             message: "请输入正确的值",
