@@ -175,6 +175,35 @@
               </el-form-item>
             </el-col>
           </el-row>
+            <el-row>
+                <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
+                  <el-form-item label="违约保证金" >
+                    <el-input size="small" v-model="temp.WYBZJ" disabled></el-input>
+                  </el-form-item>
+                </el-col>
+                <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
+                  <el-form-item label="缴费时间">
+                    <el-date-picker
+                      style="width:100%"
+                      size="mini"
+                      v-model="temp.WYBZJJFSJ"
+                      value-format="yyyy-MM-dd"
+                      disabled
+                    ></el-date-picker>
+                  </el-form-item>
+                </el-col>
+                <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
+                  <el-form-item label="退费时间">
+                    <el-date-picker
+                      style="width:100%"
+                      size="mini"
+                      v-model="temp.WYBZJTFSJ"
+                      value-format="yyyy-MM-dd"
+                      disabled
+                    ></el-date-picker>
+                  </el-form-item>
+                </el-col>
+              </el-row>
           <el-row>
             <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
               <el-form-item label="经营内容" prop="JYNR">

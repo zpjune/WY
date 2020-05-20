@@ -14,7 +14,7 @@
       </div>
       <div>
         <el-row>
-          
+
           <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
             <el-form-item label="房屋编号" prop="FWBH">
               <el-input v-model="temp.FWBH" disabled style="width:69%;"></el-input>
@@ -73,7 +73,7 @@
             </el-form-item>
           </el-col>
           <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-            <el-form-item label="租户性别" prop="ZHXB">
+            <el-form-item label="租户性别">
               <el-select style="width:100%" size="small" v-model="temp.ZHXB">
                 <el-option value="0" label="男"></el-option>
                 <el-option value="1" label="女"></el-option>
@@ -166,6 +166,33 @@
                 style="width:100%"
                 size="mini"
                 v-model="temp.XFBZJTFSJ"
+                value-format="yyyy-MM-dd"
+              ></el-date-picker>
+            </el-form-item>
+          </el-col>
+        </el-row>
+         <el-row>
+          <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
+            <el-form-item label="违约保证金">
+              <el-input size="small" v-model="temp.WYBZJ"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
+            <el-form-item label="缴费时间">
+              <el-date-picker
+                style="width:100%"
+                size="mini"
+                v-model="temp.WYBZJJFSJ"
+                value-format="yyyy-MM-dd"
+              ></el-date-picker>
+            </el-form-item>
+          </el-col>
+          <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
+            <el-form-item label="退费时间">
+              <el-date-picker
+                style="width:100%"
+                size="mini"
+                v-model="temp.WYBZJTFSJ"
                 value-format="yyyy-MM-dd"
               ></el-date-picker>
             </el-form-item>
@@ -641,6 +668,9 @@ export default {
         XFBZJ: "",
         XFBZJJFSJ: "",
         XFBZJTFSJ: "",
+        WYBZJ:"",
+        WYBZJJFSJ:"",
+        WYBZJTFSJ:"",
         //以下是租赁信息
         LEASE_ID: "",
         ZLKSSJ: "",
@@ -738,6 +768,9 @@ export default {
         XFBZJ: "",
         XFBZJJFSJ: "",
         XFBZJTFSJ: "",
+         WYBZJ:"",
+        WYBZJJFSJ:"",
+        WYBZJTFSJ:"",
         //以下是租赁信息
         LEASE_ID: "",
         ZLKSSJ: "",
@@ -844,10 +877,10 @@ export default {
           tempData.userId = this.$store.state.user.userId;
           tempData.userType = 1;
           UpdateShopInfo(tempData).then(response => {
-            var message = response.data.message;
-            var message = "成功";
-            var title = "失败";
-            var type = "error";
+            // var message = response.data.message;
+            // var message = "成功";
+            // var title = "失败";
+            // var type = "error";
             if (response.data.code === 2000) {
               //this.getList();
               title = "成功";
@@ -855,7 +888,7 @@ export default {
               this.$notify({
                 position: "bottom-right",
                 title: title,
-                message: message,
+                message: title,
                 type: type,
                 duration: 3000
               });
@@ -864,9 +897,9 @@ export default {
               this.editVisible = false;
               this.$notify({
                 position: "bottom-right",
-                title: response.message,
-                message: response.message,
-                type: type,
+                title: "失败",
+                message: response.data.message,
+                type: "error",
                 duration: 3000
               });
             }

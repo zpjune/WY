@@ -235,7 +235,7 @@
               </el-form-item>
             </el-col>
             <el-col :span="12">
-              <el-form-item label="隶属分公司" prop="LSFGS">
+              <el-form-item label="隶属分公司" >
                 <!-- <el-input v-model="temp.LSFGS"></el-input> -->
                 <el-select
                   placeholder="隶属分公司"
@@ -263,7 +263,7 @@
           </el-row>
           <el-row>
             <el-col :span="12">
-              <el-form-item label="结构类型" prop="JGLX">
+              <el-form-item label="结构类型" >
                 <el-select
                   placeholder="结构类型"
                   style="width:95%"
@@ -281,19 +281,19 @@
               </el-form-item>
             </el-col>
             <el-col :span="12">
-              <el-form-item label="资产原值(万元)" prop="ZCYZ">
+              <el-form-item label="资产原值(万元)" >
                 <el-input v-model="temp.ZCYZ"></el-input>
               </el-form-item>
             </el-col>
           </el-row>
           <el-row>
             <el-col :span="12">
-              <el-form-item label="总房款(万元)" prop="ZFK">
+              <el-form-item label="总房款(万元)" >
                 <el-input v-model="temp.ZFK"></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="12">
-              <el-form-item label="水表号" prop="WATER_NUMBER">
+              <el-form-item label="水表号">
                 <el-input v-model="temp.WATER_NUMBER"></el-input>
               </el-form-item>
             </el-col>
@@ -301,12 +301,12 @@
 
           <el-row>
             <el-col :span="12">
-              <el-form-item label="电表号" prop="ELE_NUMBER">
+              <el-form-item label="电表号" >
                 <el-input v-model="temp.ELE_NUMBER"></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="12">
-              <el-form-item label="电表采集器ID" prop="CID">
+              <el-form-item label="电表采集器ID" >
                 <el-input v-model="temp.CID"></el-input>
               </el-form-item>
             </el-col>
