@@ -205,7 +205,7 @@ export default {
           z: 10
         },
         yAxis: {
-          name:"单位:次",
+          name: "单位:次",
           axisLine: {
             show: false
           },
@@ -237,7 +237,7 @@ export default {
           },
           {
             type: "bar",
-            
+
             barMaxWidth: 25,
             itemStyle: {
               normal: {
@@ -292,7 +292,7 @@ export default {
         yAxis: [
           {
             type: "value",
-            name:"单位:户"
+            name: "单位:户"
           }
         ],
         series: []
@@ -327,7 +327,7 @@ export default {
         yAxis: [
           {
             type: "value",
-            name:"单位:元"
+            name: "单位:元"
           }
         ],
         series: []
@@ -366,13 +366,15 @@ export default {
           let list = response.data.items;
           let xdata = [];
           let ydata = [];
-          list.forEach(items => {
-            xdata.push(items.Name);
-            ydata.push(items.NUM);
-          });
-          this.option.xAxis.data = xdata;
-          this.option.series[1].data = ydata;
-          this.drawline();
+          if (list.length > 0) {
+            list.forEach(items => {
+              xdata.push(items.Name);
+              ydata.push(items.NUM);
+            });
+            this.option.xAxis.data = xdata;
+            this.option.series[1].data = ydata;
+            this.drawline();
+          }
         }
       });
     },
@@ -383,8 +385,10 @@ export default {
       // ];
       GetYearStatistics().then(res => {
         if (res.data.code === 2000) {
-          this.changeLvData(res.data.items);
-          this.drawline2();
+          if (res.data.items.length > 0) {
+            this.changeLvData(res.data.items);
+            this.drawline2();
+          }
         }
       });
 
@@ -452,14 +456,16 @@ export default {
         { mm: 2, KS: 100702.29, DJ: 103453.27 },
         { mm: 3, KS: 114047.24, DJ: 102994.45 }
       ];
-      YearHistogram().then(res=>{
-        if(res.data.code===2000){
-          this.changeCompareData(res.data.items);
-          this.drawline1();
+      YearHistogram().then(res => {
+        if (res.data.code === 2000) {
+          if (res.data.items.length > 0) {
+            this.changeCompareData(res.data.items);
+            this.drawline1();
+          }
         }
-      })
+      });
       //this.changeCompareData(item);
-      
+
       // CompareData(this.temp).then(response => {
       //   if (response.data.code === 2000) {
       //     this.changeCompareData(response.data.items);
@@ -503,7 +509,7 @@ export default {
         data: arr3,
         barMaxWidth: 25
       });
-      this.option1.legend.data = ["物业费", "水费","电费"];
+      this.option1.legend.data = ["物业费", "水费", "电费"];
       this.option1.xAxis.push({
         type: "category",
         axisTick: { show: false },
