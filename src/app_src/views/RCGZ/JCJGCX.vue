@@ -53,14 +53,14 @@
             icon="el-icon-search"
             @click="getList"
           >搜索</el-button>
-          <el-button
+          <!-- <el-button
             size="mini"
             class="filter-item"
             type="success"
             v-waves
             @click="notice"
             :disabled="selectList.length===0"
-          >提醒</el-button>
+          >提醒</el-button> -->
         </el-col>
       </el-row>
     </div>
@@ -82,7 +82,7 @@
             @select-all="selectall"
             ref="table"
           >
-            <el-table-column type="selection" width="55" v-if="listQuery.JCJG===0"></el-table-column>
+            <!-- <el-table-column type="selection" width="55" v-if="listQuery.JCJG===0"></el-table-column> -->
             <el-table-column align="center" prop="RWMC" label="任务名称" fixed="left">
               <template slot-scope="scope">
                 <span>{{scope.row.RWMC}}</span>
@@ -239,7 +239,6 @@ export default {
       selection.forEach(item => {
         this.selectList.push(item.RESULT_ID);
       });
-      console.log(this.selectList);
     },
     elselectchange() {
       this.getList();
@@ -250,7 +249,6 @@ export default {
       selection.forEach(item => {
         this.selectList.push(item.RESULT_ID);
       });
-      console.log(this.selectList);
     },
     deleteRow(index, rows) {
       //删除改行

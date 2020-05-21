@@ -68,7 +68,7 @@
                   <img src="../../../frame_src/imgs/notice.png" alt class="pic" />
                 </el-col>
                 <el-col :span="22">
-                  <span>网上收入统计</span>
+                  <span>收入统计</span>
                 </el-col>
               </el-row>
             </div>
