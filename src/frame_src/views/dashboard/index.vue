@@ -550,7 +550,7 @@ export default {
           if (response.data.items != "") {
             this.$notify({
               position: "bottom-right",
-              title: "水电报警提示",
+              title: "水电使用量报警提示",
               message: response.data.items,
               type: "warning",
               duration: 5000

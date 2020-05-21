@@ -86,6 +86,38 @@
             <span>{{scope.row.CreateMonth}}</span>
           </template>
         </el-table-column>
+        <el-table-column width="150px" align="center" :label="'用水吨数'" :show-overflow-tooltip="true">
+          <template slot-scope="scope">
+            <span>{{scope.row.MeterFlowDiff}}</span>
+          </template>
+        </el-table-column>
+        <el-table-column width="120px" align="center" :label="'预警状态'" :show-overflow-tooltip="true">
+          <template slot-scope="scope">
+            <span v-if="scope.row.yjstate==1" style="color:red">异常</span>
+            <span v-else style="color:green">正常</span>
+          </template>
+        </el-table-column>
+
+        <el-table-column
+          width="120px"
+          align="center"
+          :label="'预警标准(吨)'"
+          :show-overflow-tooltip="true"
+        >
+          <template slot-scope="scope">
+            <span>{{scope.row.AmountLimit}}</span>
+          </template>
+        </el-table-column>
+        <el-table-column
+          width="120px"
+          align="center"
+          :label="'预警百分比(±%)'"
+          :show-overflow-tooltip="true"
+        >
+          <template slot-scope="scope">
+            <span>{{scope.row.WaterPercent}}</span>
+          </template>
+        </el-table-column>
         <el-table-column
           width="200px"
           class="link-type"
@@ -142,27 +174,6 @@
             <span>{{scope.row.MOBILE_PHONE1}}</span>
           </template>
         </el-table-column>
-        <el-table-column width="150px" align="center" :label="'用水吨数'" :show-overflow-tooltip="true">
-          <template slot-scope="scope">
-            <span>{{scope.row.MeterFlowDiff}}</span>
-          </template>
-        </el-table-column>
-        <el-table-column
-          width="120px"
-          align="center"
-          :label="'预警标准(吨)'"
-          :show-overflow-tooltip="true"
-        >
-          <template slot-scope="scope">
-            <span>{{scope.row.AmountLimit}}</span>
-          </template>
-        </el-table-column>
-        <el-table-column width="120px" align="center" :label="'预警状态'" :show-overflow-tooltip="true">
-          <template slot-scope="scope">
-            <span v-if="scope.row.yjstate==1" style="color:red">超过正常用水标准</span>
-            <span v-else style="color:green">正常用水</span>
-          </template>
-        </el-table-column>
       </el-table>
     </el-card>
     <div class="pagination-container">
@@ -183,9 +194,9 @@
 import { GetWaterData, ExportWaterData } from "@/app_src/api/ELE/EleManage";
 import waves from "@/frame_src/directive/waves"; // 水波纹指令
 import { parseTime, dateFormatNew } from "@/frame_src/utils/index.js";
-  const yjstateOptions = [
-  { key: 0, type_name: "正常用水" },
-  { key: 1, type_name: "超过正常用水标准" }
+const yjstateOptions = [
+  { key: 0, type_name: "正常" },
+  { key: 1, type_name: "异常" }
 ];
 const TZKeyValue = yjstateOptions.reduce((acc, cur) => {
   acc[cur.key] = cur.type_name;
@@ -204,11 +215,11 @@ export default {
       options: [
         {
           value: "1",
-          label: "是"
+          label: "异常"
         },
         {
           value: "0",
-          label: "否"
+          label: "正常"
         }
       ],
       total: null,
@@ -245,19 +256,25 @@ export default {
       import("@/frame_src/vendor/Export2Excel").then(excel => {
         const tHeader = [
           "月度",
+          "用水吨数",
+          "预警状态",
+          "预警标准(吨)",
+          "预警百分比(±%)",
           "房屋编号",
           "房屋名称",
           "水表号",
           "业主姓名",
           "业主电话",
           "转租商户姓名",
-          "转租商户电话",
-          "用水吨数",
-          "预警标准(吨)",
-          "预警状态"
+          "转租商户电话"
+          
         ];
         const filterVal = [
           "CreateMonth",
+           "MeterFlowDiff",
+           "yjstate",
+          "AmountLimit",
+          "WaterPercent",
           "FWBH",
           "FWMC",
           "WATER_NUMBER",
@@ -265,16 +282,13 @@ export default {
           "MOBILE_PHONE",
           "ZHXM1",
           "MOBILE_PHONE1",
-          "MeterFlowDiff",
-          "AmountLimit",
-          "yjstate"
         ];
         let monthnew = dateFormatNew(this.month);
-      if (monthnew == "1970-01-01") {
-        this.listQuery.month = "";
-      } else {
-        this.listQuery.month = monthnew;
-      }
+        if (monthnew == "1970-01-01") {
+          this.listQuery.month = "";
+        } else {
+          this.listQuery.month = monthnew;
+        }
         ExportWaterData(this.listQuery).then(res => {
           if (res.data.code === 2000) {
             let list = res.data.items;
@@ -311,7 +325,7 @@ export default {
         })
       );
     },
-  
+
     handleSelectionChange(val) {
       this.multipleSelection = val;
     },

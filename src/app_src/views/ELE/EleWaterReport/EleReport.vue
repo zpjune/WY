@@ -86,6 +86,37 @@
             <span>{{scope.row.UpdateDateMonth}}</span>
           </template>
         </el-table-column>
+          <el-table-column width="150px" align="center" :label="'用电度数'" :show-overflow-tooltip="true">
+          <template slot-scope="scope">
+            <span>{{scope.row.eleAmountDiff}}</span>
+          </template>
+        </el-table-column>
+         <el-table-column width="120px" align="center" :label="'预警状态'" :show-overflow-tooltip="true">
+          <template slot-scope="scope">
+            <span v-if="scope.row.yjstate==1" style="color:red">异常</span>
+            <span v-else style="color:green">正常</span>
+          </template>
+        </el-table-column>
+        <el-table-column
+          width="120px"
+          align="center"
+          :label="'预警标准(度)'"
+          :show-overflow-tooltip="true"
+        >
+          <template slot-scope="scope">
+            <span>{{scope.row.AmountLimit}}</span>
+          </template>
+        </el-table-column>
+        <el-table-column
+          width="120px"
+          align="center"
+          :label="'预警百分比(±%)'"
+          :show-overflow-tooltip="true"
+        >
+          <template slot-scope="scope">
+            <span>{{scope.row.elePercent}}</span>
+          </template>
+        </el-table-column>
         <el-table-column
           width="200px"
           class="link-type"
@@ -147,27 +178,6 @@
             <span>{{scope.row.MOBILE_PHONE1}}</span>
           </template>
         </el-table-column>
-        <el-table-column width="150px" align="center" :label="'用电度数'" :show-overflow-tooltip="true">
-          <template slot-scope="scope">
-            <span>{{scope.row.eleAmountDiff}}</span>
-          </template>
-        </el-table-column>
-        <el-table-column
-          width="120px"
-          align="center"
-          :label="'预警标准(度)'"
-          :show-overflow-tooltip="true"
-        >
-          <template slot-scope="scope">
-            <span>{{scope.row.AmountLimit}}</span>
-          </template>
-        </el-table-column>
-        <el-table-column width="120px" align="center" :label="'预警状态'" :show-overflow-tooltip="true">
-          <template slot-scope="scope">
-            <span v-if="scope.row.yjstate==1" style="color:red">超过正常用电标准</span>
-            <span v-else style="color:green">正常用电</span>
-          </template>
-        </el-table-column>
       </el-table>
     </el-card>
     <div class="pagination-container">
@@ -189,8 +199,8 @@ import { GetEleData, ExportEleData } from "@/app_src/api/ELE/EleManage";
 import waves from "@/frame_src/directive/waves"; // 水波纹指令
 import { parseTime, dateFormatNew } from "@/frame_src/utils/index.js";
 const yjstateOptions = [
-  { key: 0, type_name: "正常用电" },
-  { key: 1, type_name: "超过正常用电标准" }
+  { key: 0, type_name: "正常" },
+  { key: 1, type_name: "异常" }
 ];
 const TZKeyValue = yjstateOptions.reduce((acc, cur) => {
   acc[cur.key] = cur.type_name;
@@ -209,11 +219,11 @@ export default {
       options: [
         {
           value: "1",
-          label: "是"
+          label: "异常"
         },
         {
           value: "0",
-          label: "否"
+          label: "正常"
         }
       ],
       total: null,
@@ -250,6 +260,10 @@ export default {
       import("@/frame_src/vendor/Export2Excel").then(excel => {
         const tHeader = [
           "月度",
+          "用电度数",
+          "预警状态",
+          "预警标准(度)",
+          "预警百分比(±%)",
           "房屋编号",
           "房屋名称",
           "电表号",
@@ -257,13 +271,14 @@ export default {
           "业主姓名",
           "业主电话",
           "转租商户姓名",
-          "转租商户电话",
-          "用电度数",
-          "预警标准(度)",
-          "预警状态"
+          "转租商户电话"
         ];
         const filterVal = [
           "UpdateDateMonth",
+           "eleAmountDiff",
+           "yjstate",
+          "AmountLimit",
+          "elePercent",
           "FWBH",
           "FWMC",
           "ELE_NUMBER",
@@ -271,10 +286,8 @@ export default {
           "ZHXM",
           "MOBILE_PHONE",
           "ZHXM1",
-          "MOBILE_PHONE1",
-          "eleAmountDiff",
-          "AmountLimit",
-          "yjstate"
+          "MOBILE_PHONE1"
+         
         ];
        let monthnew = dateFormatNew(this.month);
       if (monthnew == "1970-01-01") {
