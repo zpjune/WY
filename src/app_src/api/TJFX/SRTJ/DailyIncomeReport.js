@@ -6,3 +6,12 @@ export function GetWYIncomeReport(query) {
       params: query
     })
   }
+
+
+  export function GetPFIncomeReport(query) {
+    return request({
+      url: '/IncomeReport/GetPFIncomeReport',
+      method: 'get',
+      params: query
+    })
+  }

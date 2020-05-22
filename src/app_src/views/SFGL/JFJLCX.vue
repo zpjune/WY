@@ -73,64 +73,73 @@
       id="table"
     >
       <!-- <el-table-column type="selection" width="55"></el-table-column> -->
-      <el-table-column  align="center" label="缴费类型">
+      <el-table-column  align="center" label="缴费类型" show-overflow-tooltip>
         <template slot-scope="scope">
           <span>{{scope.row.JFLX|changeType}}</span>
         </template>
       </el-table-column>
-
-      <el-table-column align="center"  label="房屋编号">
+      <el-table-column align="center" label="缴费方式" show-overflow-tooltip>
+        <template slot-scope="scope">
+          <span>{{scope.row.PAY_WAY|changePAY_WAY}}</span>
+        </template>
+      </el-table-column>
+      <el-table-column align="center" label="线上支付订单号" show-overflow-tooltip>
+        <template slot-scope="scope">
+          <span>{{scope.row.ORDER_ID}}</span>
+        </template>
+      </el-table-column>
+      <el-table-column align="center"  label="房屋编号" show-overflow-tooltip>
         <template slot-scope="scope">
           <span>{{scope.row.FWBH}}</span>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="房屋名称">
+      <el-table-column align="center" label="房屋名称" show-overflow-tooltip>
         <template slot-scope="scope">
           <span>{{scope.row.FWMC}}</span>
         </template>
       </el-table-column>
-      <el-table-column align="center"  label="业主姓名">
+      <el-table-column align="center"  label="业主姓名" show-overflow-tooltip>
         <template slot-scope="scope">
           <span>{{scope.row.ZHXM}}</span>
         </template>
       </el-table-column>
-      <el-table-column align="center"  label="业主电话">
+      <el-table-column align="center"  label="业主电话" show-overflow-tooltip>
         <template slot-scope="scope">
           <span>{{scope.row.MOBILE_PHONE}}</span>
         </template>
       </el-table-column>
 
-      <el-table-column align="center" label="缴费金额">
+      <el-table-column align="center" label="缴费金额" show-overflow-tooltip>
         <template slot-scope="scope">
           <span>{{scope.row.JFJE}}</span>
         </template>
       </el-table-column>
-      <el-table-column align="center"  label="是否发送通知单">
+      <el-table-column align="center"  label="是否发送通知单" show-overflow-tooltip>
         <template slot-scope="scope">
           <span>{{scope.row.SFTZ|changeSFTZ}}</span>
         </template>
       </el-table-column>
-      <el-table-column align="center"  label="催缴次数">
+      <el-table-column align="center"  label="催缴次数" show-overflow-tooltip>
         <template slot-scope="scope">
           <span>{{scope.row.JFCS}}</span>
         </template>
       </el-table-column>
-      <el-table-column align="center"  label="催缴日期">
+      <el-table-column align="center"  label="催缴日期" show-overflow-tooltip>
         <template slot-scope="scope">
           <span>{{scope.row.JFRQ|parseTime}}</span>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="缴费期起">
+      <el-table-column align="center" label="缴费期起" show-overflow-tooltip>
         <template slot-scope="scope">
           <span>{{scope.row.YXQS|parseTime}}</span>
         </template>
       </el-table-column>
-      <el-table-column align="center"  label="缴费期止">
+      <el-table-column align="center"  label="缴费期止" show-overflow-tooltip>
         <template slot-scope="scope">
           <span>{{scope.row.YXQZ|parseTime}}</span>
         </template>
       </el-table-column>
-      <el-table-column align="center" width="120px" label="是否缴费">
+      <el-table-column align="center" width="120px" label="是否缴费" show-overflow-tooltip>
         <template slot-scope="scope">
           <span>{{scope.row.JFZT|changeSFTZ}}</span>
         </template>
@@ -486,7 +495,18 @@ export default {
       } else {
         return "否";
       }
-    }
+    },
+    changePAY_WAY(val){
+      if(val===0){
+        return "线下";
+      }
+      else if(val===1){
+        return "线上";
+      }
+      else{
+        return "无";
+      }
+    },
   }
 };
 </script>

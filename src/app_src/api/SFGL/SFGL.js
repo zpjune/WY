@@ -7,6 +7,15 @@ export function GetFeeResult(query) {
     params: query
   })
 }
+
+export function PaidFeeResult(query) {
+  return request({
+    url: '/FeeResult/PaidFeeResult',
+    method: 'get',
+    params: query
+  })
+}
+
 export function GetShopInfo(query) {
   return request({
     url: '/FeeResult/GetShopInfo',

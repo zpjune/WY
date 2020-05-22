@@ -77,7 +77,6 @@
           <span>{{scope.row.JFLX|changeType}}</span>
         </template>
       </el-table-column>
-
       <el-table-column align="center" label="房屋编号">
         <template slot-scope="scope">
           <span>{{scope.row.FWBH}}</span>
@@ -305,14 +304,14 @@ export default {
           RECORD_ID: items.RECORD_ID,
           CZ_SHID: items.CZ_SHID,
           OPEN_ID: items.OPEN_ID,
-          FWBH:items.FWBH,
-          FWMC:items.FWMC,
-          YXQS:items.YXQS,
-          YXQZ:items.YXQZ,
-          JFJE:items.JFJE,
-          ZHXM:items.ZHXM,
-          JFLX:items.JFLX,
-          SURPLUSVALUE:items.SURPLUSVALUE
+          FWBH: items.FWBH,
+          FWMC: items.FWMC,
+          YXQS: items.YXQS,
+          YXQZ: items.YXQZ,
+          JFJE: items.JFJE,
+          ZHXM: items.ZHXM,
+          JFLX: items.JFLX,
+          SURPLUSVALUE: items.SURPLUSVALUE
         };
         this.selectList.push(temp);
       });
@@ -324,14 +323,14 @@ export default {
           RECORD_ID: items.RECORD_ID,
           CZ_SHID: items.CZ_SHID,
           OPEN_ID: items.OPEN_ID,
-          FWBH:items.FWBH,
-          FWMC:items.FWMC,
-          YXQS:items.YXQS,
-          YXQZ:items.YXQZ,
-          JFJE:items.JFJE,
-          ZHXM:items.ZHXM,
-          JFLX:items.JFLX,
-          SURPLUSVALUE:items.SURPLUSVALUE
+          FWBH: items.FWBH,
+          FWMC: items.FWMC,
+          YXQS: items.YXQS,
+          YXQZ: items.YXQZ,
+          JFJE: items.JFJE,
+          ZHXM: items.ZHXM,
+          JFLX: items.JFLX,
+          SURPLUSVALUE: items.SURPLUSVALUE
         };
         this.selectList.push(temp);
       });
@@ -514,11 +513,17 @@ export default {
     changeSFTZ(val) {
       if (val === 0) {
         return "否";
-      } else if(val===1) {
+      } else if (val === 1) {
         return "是";
-      }
-      else if(val===2){
+      } else if (val === 2) {
         return "法律诉讼";
+      }
+    },
+    changePAY_WAY(val) {
+      if (val === 0) {
+        return "线下";
+      } else {
+        return "线上";
       }
     }
   }

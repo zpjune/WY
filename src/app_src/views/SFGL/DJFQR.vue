@@ -96,60 +96,60 @@
       @select-all="selectall"
     >
       <el-table-column type="selection" width="40"></el-table-column>
-      <el-table-column align="center" label="缴费类型">
+      <el-table-column align="center" label="缴费类型" show-overflow-tooltip>
         <template slot-scope="scope">
           <span>{{scope.row.JFLX|changeType}}</span>
         </template>
       </el-table-column>
 
-      <el-table-column align="center" label="房屋编号">
+      <el-table-column align="center" label="房屋编号" show-overflow-tooltip>
         <template slot-scope="scope">
           <span>{{scope.row.FWBH}}</span>
         </template>
       </el-table-column>
-      <el-table-column width="150px" align="center" label="房屋名称">
+      <el-table-column width="150px" align="center" label="房屋名称" show-overflow-tooltip>
         <template slot-scope="scope">
           <span>{{scope.row.FWMC}}</span>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="业主姓名">
+      <el-table-column align="center" label="业主姓名" show-overflow-tooltip>
         <template slot-scope="scope">
           <span>{{scope.row.ZHXM}}</span>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="业主电话">
+      <el-table-column align="center" label="业主电话" show-overflow-tooltip>
         <template slot-scope="scope">
           <span>{{scope.row.MOBILE_PHONE}}</span>
         </template>
       </el-table-column>
 
-      <el-table-column align="center" label="缴费金额">
+      <el-table-column align="center" label="缴费金额" show-overflow-tooltip>
         <template slot-scope="scope">
           <span>{{scope.row.JFJE}}</span>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="有效期起" width="180">
+      <el-table-column align="center" label="有效期起" width="180" show-overflow-tooltip>
         <template slot-scope="scope">{{scope.row.YXQS|parseTime}}</template>
       </el-table-column>
-      <el-table-column align="center" label="有效期止" width="180">
+      <el-table-column align="center" label="有效期止" width="180" show-overflow-tooltip>
         <template slot-scope="scope">{{scope.row.YXQZ|parseTime}}</template>
       </el-table-column>
-      <el-table-column align="center" label="是否发送通知单">
+      <el-table-column align="center" label="是否发送通知单" show-overflow-tooltip>
         <template slot-scope="scope">
           <span>{{scope.row.SFTZ|changeSFTZ}}</span>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="催缴次数">
+      <el-table-column align="center" label="催缴次数" show-overflow-tooltip>
         <template slot-scope="scope">
           <span>{{scope.row.JFCS}}</span>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="催缴日期">
+      <el-table-column align="center" label="催缴日期" show-overflow-tooltip> 
         <template slot-scope="scope">
           <span>{{scope.row.JFRQ|parseTime}}</span>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="操作" fixed="right" width="180">
+      <el-table-column align="center" label="操作" fixed="right" width="180" show-overflow-tooltip>
         <template slot-scope="scope">
           <!-- <el-button type="primary" size="mini" @click="handleDetail(scope.row)">查看详情</el-button> -->
           <el-button

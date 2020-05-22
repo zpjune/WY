@@ -68,13 +68,13 @@
                 @click="handleDelete(scope.row)"
                 v-if="scope.row.IS_PUSH==0"
               >删除</el-button>
-              <el-button
+              <!-- <el-button
                 type="success"
                 v-if="scope.row.IS_PUSH==0"
                 size="mini"
                 @click="push(scope.row)"
               >推送</el-button>
-              <el-button type="success" v-else-if="scope.row.IS_PUSH==1" size="mini">已推送</el-button>
+              <el-button type="success" v-else-if="scope.row.IS_PUSH==1" size="mini">已推送</el-button> -->
               <el-button type="info" @click="handleDetail(scope.row)" size="mini">查看详情</el-button>
               <!-- <el-button type="primary" v-if="scope.row.IS_PUSH=='2'" size="mini">执行情况</el-button> -->
             </template>
@@ -159,15 +159,16 @@
                     <el-table-column label="检查内容" :show-overflow-tooltip="true" prop="JCNR"></el-table-column>
                     <el-table-column prop="JCNAME" label="检查类型"></el-table-column>
                     <el-table-column label="排查次数" prop="PCCS"></el-table-column>
+                    <el-table-column label="执行次数" prop="ZXCS"></el-table-column>
                   </el-table>
                 </el-row>
               </el-form-item>
             </el-col>
           </el-row>
-          <el-row>
+          <el-row>  
             <el-col :span="12">
               <el-form-item label="任务编号" >
-                <el-input v-model="temp.RWBH" readonly="true" placeholder="自动生成"></el-input>
+                <el-input v-model="temp.RWBH" :readonly="true" placeholder="自动生成"></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="12">

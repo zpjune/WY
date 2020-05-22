@@ -39,13 +39,9 @@
           <el-table-column label="缴费日期" prop="payday"></el-table-column>
           <el-table-column label="底商地址商铺号" prop="SHOPBH"></el-table-column>
           <el-table-column label="商户姓名" prop="USER_NAME"></el-table-column>
-          <el-table-column label="物业费" prop="WYF"></el-table-column>
-          <el-table-column label="水费" prop="SF"></el-table-column>
+          <el-table-column label="电费" prop="DF"></el-table-column>
           <el-table-column label="违约保证金" prop="WYBZJ"></el-table-column>
-          <el-table-column label="装修押金" prop="ZXYJ"></el-table-column>
-          <el-table-column label="消防保证金" prop="XFBZJ"></el-table-column>
-          <el-table-column label="今日缴费金额" prop="WYTotal"></el-table-column>
-          <el-table-column label="物业费有效期" prop="YXQ"></el-table-column>
+          <el-table-column label="今日缴费金额" prop="PFTotal"></el-table-column>
         </el-table>
       </el-col>
     </el-row>
@@ -66,7 +62,7 @@
 
 <script>
 import waves from "@/frame_src/directive/waves";
-import { GetWYIncomeReport } from "@/app_src/api/TJFX/SRTJ/WYDailyIncomeReport";
+import { GetPFIncomeReport } from "@/app_src/api/TJFX/SRTJ/DailyIncomeReport";
 export default {
   name: "PFDailyIncomeReport",
   directives: {
@@ -86,7 +82,7 @@ export default {
   },
   methods: {
     getList() {
-      GetWYIncomeReport(this.listQuery).then(res => {
+      GetPFIncomeReport(this.listQuery).then(res => {
         if (res.data.code === 2000) {
           this.list = res.data.items;
           this.total = res.data.total;

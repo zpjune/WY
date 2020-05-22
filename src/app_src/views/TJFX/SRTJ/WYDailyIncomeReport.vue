@@ -44,7 +44,7 @@
           <el-table-column label="违约保证金" prop="WYBZJ"></el-table-column>
           <el-table-column label="装修押金" prop="ZXYJ"></el-table-column>
           <el-table-column label="消防保证金" prop="XFBZJ"></el-table-column>
-          <el-table-column label="今日缴费金额" prop="Total"></el-table-column>
+          <el-table-column label="今日缴费金额" prop="WYTotal"></el-table-column>
           <el-table-column label="物业费有效期" prop="YXQ"></el-table-column>
         </el-table>
       </el-col>
@@ -66,7 +66,7 @@
 
 <script>
 import waves from "@/frame_src/directive/waves";
-import { GetWYIncomeReport } from "@/app_src/api/TJFX/SRTJ/WYDailyIncomeReport";
+import { GetWYIncomeReport } from "@/app_src/api/TJFX/SRTJ/DailyIncomeReport";
 export default {
   name: "WYDailyIncomeReport",
   directives: {

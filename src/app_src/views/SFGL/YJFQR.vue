@@ -1,46 +1,57 @@
 <template>
   <div id="YJFQR" class="app-container calendar-list-container">
     <div class="filter-container">
-       <el-row>
+      <el-row>
         <el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
-      <el-select
-        v-model="listQuery.JFLX"
-         style="width:95%;"
-        placeholder="缴费类型"
-        size="mini"
-        class="filter-item"
-        clearable
-      >
-        <el-option
-          v-for="item in options"
-          :key="item.value"
-          :label="item.label"
-          :value="item.value"
-        ></el-option>
-      </el-select>
- </el-col>
+        <el-date-picker
+          type="date"
+          placeholder="请选择报表日期"
+          v-model="listQuery.date"
+          value-format="yyyy-MM-dd"
+          size="mini"
+          style="width:95%;"
+          clearable
+        ></el-date-picker>
+      </el-col>
         <el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
-      <el-input
-        @keyup.enter.native="handleFilter"
-        style="width:95%;"
-        class="filter-item"
-        placeholder="请输入房屋名称"
-        v-model="listQuery.FWMC"
-        size="mini"
-      ></el-input>
-       </el-col>
+          <el-select
+            v-model="listQuery.JFLX"
+            style="width:95%;"
+            placeholder="缴费类型"
+            size="mini"
+            class="filter-item"
+            clearable
+          >
+            <el-option
+              v-for="item in options"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+            ></el-option>
+          </el-select>
+        </el-col>
         <el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
-      <el-input
-        @keyup.enter.native="handleFilter"
-         style="width:95%;"
-        class="filter-item"
-        placeholder="请输入房号"
-        v-model="listQuery.FWBH"
-        size="mini"
-      ></el-input>
- </el-col>
+          <el-input
+            @keyup.enter.native="handleFilter"
+            style="width:95%;"
+            class="filter-item"
+            placeholder="请输入房屋名称"
+            v-model="listQuery.FWMC"
+            size="mini"
+          ></el-input>
+        </el-col>
+        <el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
+          <el-input
+            @keyup.enter.native="handleFilter"
+            style="width:95%;"
+            class="filter-item"
+            placeholder="请输入房号"
+            v-model="listQuery.FWBH"
+            size="mini"
+          ></el-input>
+        </el-col>
         <el-col :xs="14" :sm="14" :md="13" :lg="12" :xl="12">
-      <!-- <el-date-picker
+          <!-- <el-date-picker
         class="filter-item"
         v-model="dateQuery"
         type="daterange"
@@ -48,30 +59,30 @@
         size="mini"
         start-placeholder="开始日期"
         end-placeholder="结束日期"
-      ></el-date-picker>-->
-      <el-button
-        class="filter-item"
-        type="primary"
-        icon="el-icon-search"
-        @click="getList"
-        size="mini"
-      >查询</el-button>
-      <el-button
-        class="filter-item"
-        type="primary"
-        icon="el-icon-download"
-        @click="handleDownload"
-        size="mini"
-      >导出</el-button>
-      <el-button
-        type="success"
-        size="mini"
-        @click="confirmReciveMoney"
-        class="filter-item"
-        :disabled="selectList.length==0"
-      >确认缴费</el-button>
+          ></el-date-picker>-->
+          <el-button
+            class="filter-item"
+            type="primary"
+            icon="el-icon-search"
+            @click="getList"
+            size="mini"
+          >查询</el-button>
+          <el-button
+            class="filter-item"
+            type="primary"
+            icon="el-icon-download"
+            @click="handleDownload"
+            size="mini"
+          >导出</el-button>
+          <el-button
+            type="success"
+            size="mini"
+            @click="confirmReciveMoney"
+            class="filter-item"
+            :disabled="selectList.length==0"
+          >确认缴费</el-button>
         </el-col>
-       </el-row>
+      </el-row>
     </div>
     <el-table
       :key="tableKey"
@@ -88,55 +99,64 @@
       @select-all="selectall"
     >
       <el-table-column type="selection" width="55"></el-table-column>
-      <el-table-column width="150px" align="center" label="缴费类型">
+      <el-table-column  align="center" label="缴费类型" show-overflow-tooltip>
         <template slot-scope="scope">
           <span>{{scope.row.JFLX|changeType}}</span>
         </template>
       </el-table-column>
-
-      <el-table-column align="center" width="120px" label="房屋编号">
+      <el-table-column  align="center" label="缴费方式" show-overflow-tooltip>
+        <template slot-scope="scope">
+          <span>{{scope.row.PAY_WAY|changePAY_WAY}}</span>
+        </template>
+      </el-table-column>
+      <el-table-column align="center" label="线上支付订单号" show-overflow-tooltip>
+        <template slot-scope="scope">
+          <span>{{scope.row.ORDER_ID}}</span>
+        </template>
+      </el-table-column>
+      <el-table-column align="center" width="100px" label="房屋编号" show-overflow-tooltip>
         <template slot-scope="scope">
           <span>{{scope.row.FWBH}}</span>
         </template>
       </el-table-column>
-      <el-table-column width="150px" align="center" label="房屋名称">
+      <el-table-column width="150px" align="center" label="房屋名称" show-overflow-tooltip>
         <template slot-scope="scope">
           <span>{{scope.row.FWMC}}</span>
         </template>
       </el-table-column>
-      <el-table-column align="center" width="120px" label="业主姓名">
+      <el-table-column align="center" width="120px" label="业主姓名" show-overflow-tooltip>
         <template slot-scope="scope">
           <span>{{scope.row.ZHXM}}</span>
         </template>
       </el-table-column>
-      <el-table-column align="center" width="120px" label="业主电话">
+      <el-table-column align="center" width="120px" label="业主电话" show-overflow-tooltip>
         <template slot-scope="scope">
           <span>{{scope.row.MOBILE_PHONE}}</span>
         </template>
       </el-table-column>
 
-      <el-table-column align="center" label="缴费金额">
+      <el-table-column align="center" label="缴费金额" show-overflow-tooltip>
         <template slot-scope="scope">
           <span>{{scope.row.JFJE}}</span>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="有效期起">
+      <el-table-column align="center" label="有效期起" show-overflow-tooltip>
         <template slot-scope="scope">{{scope.row.YXQS|parseTime}}</template>
       </el-table-column>
-      <el-table-column align="center" label="有效期止">
+      <el-table-column align="center" label="有效期止" show-overflow-tooltip>
         <template slot-scope="scope">{{scope.row.YXQZ|parseTime}}</template>
       </el-table-column>
-      <el-table-column align="center" width="120px" label="是否确认收据">
+      <el-table-column align="center" width="120px" label="是否确认收据" show-overflow-tooltip>
         <template slot-scope="scope">
           <span>{{scope.row.CONFIRM_RECIVEMONEY|changeSFTZ}}</span>
         </template>
       </el-table-column>
-      <el-table-column align="center" width="120px" label="催缴次数">
+      <el-table-column align="center" width="120px" label="催缴次数" show-overflow-tooltip>
         <template slot-scope="scope">
           <span>{{scope.row.JFCS}}</span>
         </template>
       </el-table-column>
-      <el-table-column align="center" width="120px" label="催缴日期">
+      <el-table-column align="center" width="120px" label="催缴日期" show-overflow-tooltip>
         <template slot-scope="scope">
           <span>{{scope.row.JFRQ|parseTime}}</span>
         </template>
@@ -268,7 +288,8 @@ import {
   PushNotification,
   ConfirmFee,
   ConfirmReciveMoney,
-  ExportFeeResult
+  ExportFeeResult,
+  PaidFeeResult
 } from "@/app_src/api/SFGL/SFGL";
 import { parseTime } from "@/frame_src/utils";
 const TypeOptions = [
@@ -296,10 +317,7 @@ export default {
       listLoading: false,
       dialogStatus: "",
       listQuery: {
-        JFLX: "",
-        FWMC: "",
-        FWBH: "",
-        JFSTATUS: 1,
+        date:"",
         page: 1,
         limit: 10
       },
@@ -352,12 +370,12 @@ export default {
           RECORD_ID: items.RECORD_ID,
           CZ_SHID: items.CZ_SHID,
           OPEN_ID: items.OPEN_ID,
-          FWBH:items.FWBH,
-          FWMC:items.FWMC,
-          YXQS:items.YXQS,
-          YXQZ:items.YXQZ,
-          JFJE:items.JFJE,
-          ZHXM:items.ZHXM,
+          FWBH: items.FWBH,
+          FWMC: items.FWMC,
+          YXQS: items.YXQS,
+          YXQZ: items.YXQZ,
+          JFJE: items.JFJE,
+          ZHXM: items.ZHXM,
           CONFIRM_RECIVEMONEY: items.CONFIRM_RECIVEMONEY
         };
         this.selectList.push(temp);
@@ -370,12 +388,12 @@ export default {
           RECORD_ID: items.RECORD_ID,
           CZ_SHID: items.CZ_SHID,
           OPEN_ID: items.OPEN_ID,
-          FWBH:items.FWBH,
-          FWMC:items.FWMC,
-          YXQS:items.YXQS,
-          YXQZ:items.YXQZ,
-          JFJE:items.JFJE,
-          ZHXM:items.ZHXM,
+          FWBH: items.FWBH,
+          FWMC: items.FWMC,
+          YXQS: items.YXQS,
+          YXQZ: items.YXQZ,
+          JFJE: items.JFJE,
+          ZHXM: items.ZHXM,
           CONFIRM_RECIVEMONEY: items.CONFIRM_RECIVEMONEY
         };
         this.selectList.push(temp);
@@ -455,7 +473,7 @@ export default {
     },
     getList() {
       this.listLoading = true;
-      GetFeeResult(this.listQuery).then(response => {
+      PaidFeeResult(this.listQuery).then(response => {
         if (response.data.code === 2000) {
           this.list = response.data.items;
           this.total = response.data.total;
@@ -627,9 +645,19 @@ export default {
           }
         })
       );
+    },
+    getDateTimeNow() {
+      let date = new Date();
+      this.listQuery.date =
+        date.getFullYear().toString() +
+        "-" +
+        (date.getMonth() + 1).toString() +
+        "-" +
+        date.getDate().toString();
     }
   },
   mounted() {
+    this.getDateTimeNow();
     this.getList();
   },
   filters: {
@@ -649,6 +677,14 @@ export default {
         return "是";
       } else if (val === 2) {
         return "法律诉讼";
+      }
+    },
+    changePAY_WAY(val){
+      if(val===0){
+        return "线下";
+      }
+      else{
+        return "线上";
       }
     },
     parseTime
