@@ -144,44 +144,44 @@
             style="width: 100%;text-align:left;"
             :cell-style="cellStyle"
           >
-            <el-table-column align="center"  label="房屋属性" width="80px"></el-table-column>
-            <el-table-column align="center"  width="150" label="房屋编号">
+            <el-table-column align="center"  label="房屋属性" width="80px" show-overflow-tooltip ></el-table-column>
+            <el-table-column align="center"  label="房屋编号" show-overflow-tooltip>
               <template slot-scope="scope">
                 <span>{{scope.row.FWBH}}</span>
               </template>
             </el-table-column>
 
-            <el-table-column label="房屋名称" width="150"  :show-overflow-tooltip="true">
+            <el-table-column label="房屋名称"  align="center"  :show-overflow-tooltip="true">
               <template slot-scope="scope">
                 <span>{{scope.row.FWMC}}</span>
               </template>
             </el-table-column>
-            <el-table-column align="right" prop="JZMJ" width="150" label="建筑面积(㎡)">
+            <el-table-column align="center" prop="JZMJ"   label="建筑面积(㎡)" show-overflow-tooltip>
               <template slot-scope="scope">
                 <span>{{scope.row.JZMJ}}</span>
               </template>
             </el-table-column>
-            <el-table-column align="right" width="150" label="隶属分公司">
+            <el-table-column align="center" label="隶属分公司"  show-overflow-tooltip>
               <template slot-scope="scope">
                 <span>{{scope.row.LS}}</span>
               </template>
             </el-table-column>
-            <el-table-column align="right" prop="ZLWZ" width="150" label="坐落位置">
+            <el-table-column align="center" prop="ZLWZ"  label="坐落位置"  show-overflow-tooltip>
               <template slot-scope="scope">
                 <span>{{scope.row.ZLWZ}}</span>
               </template>
             </el-table-column>
-            <el-table-column align="right" prop="SS" width="150" label="所属区域"></el-table-column>
-            <el-table-column align="right" width="150" label="结构类型">
+            <el-table-column align="center" prop="SS"  label="所属区域"  show-overflow-tooltip></el-table-column>
+            <el-table-column align="center"  label="结构类型"  show-overflow-tooltip>
               <template slot-scope="scope">{{scope.row.JG}}</template>
             </el-table-column>
-            <el-table-column align="right" prop="ZCYZ" width="150" label="资产原值(万元)"></el-table-column>
-            <el-table-column align="right" prop="ZFK" width="150" label="总房款(万元)"></el-table-column>
+            <el-table-column align="center" prop="ZCYZ"  label="资产原值(万元)"  show-overflow-tooltip></el-table-column>
+            <el-table-column align="center" prop="ZFK"  label="总房款(万元)"  show-overflow-tooltip></el-table-column>
 
-            <el-table-column align="center" width="260" label="操作">
+            <el-table-column align="center"  label="操作"  show-overflow-tooltip>
               <template slot-scope="scope">
                 <el-button type="primary" size="mini" @click="handleUpdate(scope.row)">修改</el-button>
-                <el-button type="danger" size="mini" @click="handleDelete(scope.row)">删除</el-button>
+                <el-button type="danger" size="mini" @click="handleDelete(scope.row)" v-if="scope.row.FWSX===0">删除</el-button>
                 <!-- <el-button type="success" size="mini" @click="handleCondition(scope.row)">使用情况</el-button> -->
               </template>
             </el-table-column>

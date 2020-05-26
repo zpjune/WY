@@ -60,7 +60,7 @@
             v-waves
             @click="notice"
             :disabled="selectList.length===0"
-          >提醒</el-button> -->
+          >提醒</el-button>-->
         </el-col>
       </el-row>
     </div>
@@ -83,53 +83,66 @@
             ref="table"
           >
             <!-- <el-table-column type="selection" width="55" v-if="listQuery.JCJG===0"></el-table-column> -->
-            <el-table-column align="center" prop="RWMC" label="任务名称" fixed="left">
+            <el-table-column
+              align="center"
+              prop="RWMC"
+              label="任务名称"
+              fixed="left"
+              show-overflow-tooltip
+            >
               <template slot-scope="scope">
                 <span>{{scope.row.RWMC}}</span>
               </template>
             </el-table-column>
-            <el-table-column align="center" prop="JCQY" label="检查区域" fixed="left" width="400">
+            <el-table-column
+              align="center"
+              prop="JCQY"
+              label="检查区域"
+              fixed="left"
+              width="300"
+              show-overflow-tooltip
+            >
               <template slot-scope="scope">
                 <span>{{scope.row.JCQY}}</span>
               </template>
             </el-table-column>
-            <el-table-column align="center" prop="FWBH" label="房屋编号">
+            <el-table-column align="center" prop="FWBH" label="房屋编号" show-overflow-tooltip>
               <template slot-scope="scope">
                 <span>{{scope.row.FWBH}}</span>
               </template>
             </el-table-column>
-            <el-table-column align="center" prop="FWMC" label="房屋名称">
+            <el-table-column align="center" prop="FWMC" label="房屋名称" show-overflow-tooltip>
               <template slot-scope="scope">
                 <span>{{scope.row.FWMC}}</span>
               </template>
             </el-table-column>
-            <el-table-column align="center" prop="FWBH" label="房屋区域">
+            <el-table-column align="center" prop="FWBH" label="房屋区域" show-overflow-tooltip>
               <template slot-scope="scope">
                 <span>{{scope.row.Name}}</span>
               </template>
             </el-table-column>
-            <el-table-column align="center" prop="YZMC" label="业主名称">
+            <el-table-column align="center" prop="YZMC" label="业主名称" show-overflow-tooltip>
               <template slot-scope="scope">
                 <span>{{scope.row.ZHXM}}</span>
               </template>
             </el-table-column>
-            <el-table-column align="center" label="检查结果">
+            <el-table-column align="center" label="检查结果" show-overflow-tooltip>
               <template slot-scope="scope">
                 <span>{{scope.row.JCJG|change}}</span>
               </template>
             </el-table-column>
-            <el-table-column align="center" prop="JCCS" label="复查次数"></el-table-column>
+            <el-table-column align="center" prop="JCCS" label="复查次数" show-overflow-tooltip></el-table-column>
             <el-table-column align="center" label="是否反馈">
               <template slot-scope="scope">
                 <span>{{scope.row.IS_REVIEW|changeFK}}</span>
               </template>
             </el-table-column>
-            <el-table-column align="center" prop="JCSJ" label="检查时间">
+            <el-table-column align="center" prop="JCSJ" label="检查时间" show-overflow-tooltip>
               <template slot-scope="scope">
                 <span>{{scope.row.JCSJ}}</span>
               </template>
             </el-table-column>
-            <el-table-column align="center" prop="JCR" label="检查人">
+            <el-table-column align="center" prop="JCR" label="检查人" show-overflow-tooltip>
               <template slot-scope="scope">
                 <span>{{scope.row.FZR}}</span>
               </template>
@@ -155,8 +168,11 @@
         </el-col>
       </el-row>
     </el-card>
-    <el-dialog :visible.sync="detailDialog" title="检查结果详情">
+    <el-dialog :visible.sync="detailDialog" title="检查结果详情" :close-on-click-modal="false">
       <el-card>
+        <div slot="header" class="clearfix">
+          <span>检查明细</span>
+        </div>
         <el-table
           :data="detaillist"
           size="mini"
@@ -174,10 +190,17 @@
           <el-table-column label="复查结果" prop="result" v-if="JCJG==3"></el-table-column>
           <el-table-column label="复查结果" v-if="JCJG==2">
             <template slot-scope="scope">
-              <span>合格 </span><span v-if="1===2">{{scope.row.result}}</span>
+              <span>合格</span>
+              <span v-if="1===2">{{scope.row.result}}</span>
             </template>
           </el-table-column>
         </el-table>
+      </el-card>
+      <el-card style="margin-top:20px;">
+        <div slot="header" class="clearfix">
+          <span>现场照片</span>
+        </div>
+        <img  v-for="(item,key) in PicList" :key="key" :src="item" alt="" style="margin: 0 auto">
       </el-card>
     </el-dialog>
   </div>
@@ -209,6 +232,7 @@ export default {
       tableKey: 0,
       list: [],
       detaillist: [],
+      PicList: [],
       total: 0,
       listLoading: false,
       JCJG: 0,
@@ -321,10 +345,13 @@ export default {
       let temp = {
         RESULT_ID: row.RESULT_ID
       };
+      this.PicList =JSON.parse(row.IMGS);
+      console.log(this.PicList);
       GetCheckResultDetail(temp).then(res => {
         if (res.data.code === 2000) {
           this.detaillist = res.data.items;
           let contactDot = 0;
+          this.spanArr = [];
           this.detaillist.forEach((item, index) => {
             if (index === 0) {
               this.spanArr.push(1); //首条数据肯定为不相同数据
@@ -356,6 +383,11 @@ export default {
           };
         }
       }
+    },
+    decodeBase64Content(base64Content){
+      let commonContent = base64Content.replace(/\s/g, "+");
+      commonContent = Buffer.from(commonContent, "base64").toString();
+      return commonContent;
     },
     handleCreate() {
       this.resetTemp();

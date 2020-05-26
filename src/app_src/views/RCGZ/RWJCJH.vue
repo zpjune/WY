@@ -44,13 +44,13 @@
           highlight-current-row
           style="width: 100%"
         >
-          <el-table-column label="任务编号" prop="RWBH" fixed="left"></el-table-column>
-          <el-table-column label="任务名称" prop="RWMC" fixed="left"></el-table-column>
-          <el-table-column label="任务开始时间" prop="RWKSSJ" fixed="left"></el-table-column>
-          <el-table-column label="任务结束时间" prop="RWJSSJ" fixed="left"></el-table-column>
-          <el-table-column label="任务内容" prop="RWNR"></el-table-column>
-          <el-table-column label="任务范围" prop="NAME" show-overflow-tooltip></el-table-column>
-          <el-table-column label="备注" prop="REMARK"></el-table-column>
+          <el-table-column label="任务编号" align="center" prop="RWBH" fixed="left" show-overflow-tooltip></el-table-column>
+          <el-table-column label="任务名称" align="center" prop="RWMC" fixed="left" show-overflow-tooltip></el-table-column>
+          <el-table-column label="任务开始时间" align="center" prop="RWKSSJ" fixed="left" show-overflow-tooltip></el-table-column>
+          <el-table-column label="任务结束时间" align="center" prop="RWJSSJ" fixed="left" show-overflow-tooltip></el-table-column>
+          <el-table-column label="任务内容" align="center" prop="RWNR"></el-table-column>
+          <el-table-column label="任务范围" align="center" prop="NAME" show-overflow-tooltip></el-table-column>
+          <el-table-column label="备注" align="center" prop="REMARK" show-overflow-tooltip></el-table-column>
           <!-- <el-table-column label="任务状态" prop="TASK_STATE_NAME"></el-table-column> -->
           <el-table-column align="center" label="操作" fixed="right" min-width="150">
             <template slot-scope="scope">

@@ -36,33 +36,41 @@
           style="width: 100%;text-align:left;"
           ref="table"
         >
-          <el-table-column label="缴费日期" prop="payday"></el-table-column>
-          <el-table-column label="底商地址商铺号" prop="SHOPBH"></el-table-column>
-          <el-table-column label="商户姓名" prop="USER_NAME"></el-table-column>
-          <el-table-column label="电费" prop="DF"></el-table-column>
-          <el-table-column label="违约保证金" prop="WYBZJ"></el-table-column>
-          <el-table-column label="今日缴费金额" prop="PFTotal"></el-table-column>
+          <el-table-column label="缴费日期" prop="payday" align="center" show-overflow-tooltip></el-table-column>
+          <el-table-column label="底商地址商铺号" prop="SHOPBH" align="center" show-overflow-tooltip></el-table-column>
+          <el-table-column label="商户姓名" prop="USER_NAME" align="center" show-overflow-tooltip></el-table-column>
+          <el-table-column label="电费" prop="DF" align="center" show-overflow-tooltip></el-table-column>
+          <el-table-column label="违约保证金" prop="WYBZJ" align="center" show-overflow-tooltip></el-table-column>
+          <el-table-column label="今日缴费金额" prop="PFTotal" align="center" show-overflow-tooltip></el-table-column>
+          <el-table-column label="操作"  align="center" >
+            <template slot-scope="scope">
+              <el-button type="primary" size="mini" @click="print(scope.row)">打印收据</el-button>
+            </template>
+          </el-table-column>
         </el-table>
       </el-col>
     </el-row>
     <div style="text-align:center">
-        <el-pagination
-          background
-          @size-change="handleSizeChange"
-          @current-change="handleCurrentChange"
-          :current-page="listQuery.page"
-          :page-sizes="[10,20,30, 50]"
-          :page-size="listQuery.limit"
-          layout="total, sizes, prev, pager, next, jumper"
-          :total="total"
-        ></el-pagination>
-      </div>
+      <el-pagination
+        background
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+        :current-page="listQuery.page"
+        :page-sizes="[10,20,30, 50]"
+        :page-size="listQuery.limit"
+        layout="total, sizes, prev, pager, next, jumper"
+        :total="total"
+      ></el-pagination>
+    </div>
   </div>
 </template>
 
 <script>
 import waves from "@/frame_src/directive/waves";
-import { GetPFIncomeReport } from "@/app_src/api/TJFX/SRTJ/DailyIncomeReport";
+import {
+  GetPFIncomeReport,
+  ExportRecipet
+} from "@/app_src/api/TJFX/SRTJ/DailyIncomeReport";
 export default {
   name: "PFDailyIncomeReport",
   directives: {
@@ -94,6 +102,15 @@ export default {
             type: "error",
             duration: 2000
           });
+        }
+      });
+    },
+    print(row) {
+      let temp = Object.assign({}, row);
+      temp.ExportType = 1;
+      ExportRecipet(temp).then(res => {
+        if (res.data.code === 2000) {
+          window.open(process.env.BASE_API + res.data.path);
         }
       });
     },

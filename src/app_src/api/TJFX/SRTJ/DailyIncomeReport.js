@@ -15,3 +15,11 @@ export function GetWYIncomeReport(query) {
       params: query
     })
   }
+
+  export function ExportRecipet(data) {
+    return request({
+      url: '/IncomeReport/ExportRecipet',
+      method: 'post',
+      data
+    })
+  }

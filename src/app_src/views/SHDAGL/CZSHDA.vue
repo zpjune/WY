@@ -90,16 +90,16 @@
             style="width: 100%;text-align:left;"
           >
             <el-table-column align="center" prop="FWBH" label="房屋编号" fixed="left" show-overflow-tooltip></el-table-column>
-            <el-table-column align="right" prop="FWMC" label="房屋名称" fixed="left" show-overflow-tooltip></el-table-column>
-            <el-table-column align="right" prop="Name" width="120" label="隶属分公司" show-overflow-tooltip fixed="left"></el-table-column>
-            <el-table-column align="right" prop="SHOPBH" label="商户编号" show-overflow-tooltip></el-table-column>
-            <el-table-column align="right" prop="SHOP_NAME" label="商户名称" show-overflow-tooltip></el-table-column>
-            <el-table-column align="right" prop="ZHXM" label="租户姓名" show-overflow-tooltip></el-table-column>
-            <el-table-column align="right" prop="SFZH" label="身份证号" show-overflow-tooltip></el-table-column>
-            <el-table-column align="right" prop="MOBILE_PHONE" label="租户手机" show-overflow-tooltip></el-table-column>
-            <el-table-column align="right" prop="TELEPHONE" label="租户固话" show-overflow-tooltip></el-table-column>
-            <el-table-column align="right" prop="JYNR" label="经营内容" show-overflow-tooltip></el-table-column>
-            <el-table-column align="right" prop="IS_PASS" label="审核状态">
+            <el-table-column align="center" prop="FWMC" label="房屋名称" fixed="left" show-overflow-tooltip></el-table-column>
+            <el-table-column align="center" prop="Name" width="120" label="隶属分公司" show-overflow-tooltip fixed="left"></el-table-column>
+            <el-table-column align="center" prop="SHOPBH" label="商户编号" show-overflow-tooltip></el-table-column>
+            <el-table-column align="center" prop="SHOP_NAME" label="商户名称" show-overflow-tooltip></el-table-column>
+            <el-table-column align="center" prop="ZHXM" label="租户姓名" show-overflow-tooltip></el-table-column>
+            <el-table-column align="center" prop="SFZH" label="身份证号" show-overflow-tooltip></el-table-column>
+            <el-table-column align="center" prop="MOBILE_PHONE" label="租户手机" show-overflow-tooltip></el-table-column>
+            <el-table-column align="center" prop="TELEPHONE" label="租户固话" show-overflow-tooltip></el-table-column>
+            <el-table-column align="center" prop="JYNR" label="经营内容" show-overflow-tooltip></el-table-column>
+            <el-table-column align="center" prop="IS_PASS" label="审核状态">
               <template slot-scope="scope">{{scope.row.IS_PASS|ChangeIS_PASS}}</template>
             </el-table-column>
 

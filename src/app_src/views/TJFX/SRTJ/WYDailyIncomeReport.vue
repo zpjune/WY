@@ -36,37 +36,42 @@
           style="width: 100%;text-align:left;"
           ref="table"
         >
-          <el-table-column label="缴费日期" prop="payday"></el-table-column>
-          <el-table-column label="底商地址商铺号" prop="SHOPBH"></el-table-column>
-          <el-table-column label="商户姓名" prop="USER_NAME"></el-table-column>
-          <el-table-column label="物业费" prop="WYF"></el-table-column>
-          <el-table-column label="水费" prop="SF"></el-table-column>
-          <el-table-column label="违约保证金" prop="WYBZJ"></el-table-column>
-          <el-table-column label="装修押金" prop="ZXYJ"></el-table-column>
-          <el-table-column label="消防保证金" prop="XFBZJ"></el-table-column>
-          <el-table-column label="今日缴费金额" prop="WYTotal"></el-table-column>
-          <el-table-column label="物业费有效期" prop="YXQ"></el-table-column>
+          <el-table-column label="缴费日期" prop="payday" align="center" show-overflow-tooltip></el-table-column>
+          <el-table-column label="底商地址商铺号" prop="SHOPBH" align="center" show-overflow-tooltip></el-table-column>
+          <el-table-column label="商户姓名" prop="USER_NAME" align="center" show-overflow-tooltip></el-table-column>
+          <el-table-column label="物业费" prop="WYF" align="center" show-overflow-tooltip></el-table-column>
+          <el-table-column label="水费" prop="SF" align="center" show-overflow-tooltip></el-table-column>
+          <el-table-column label="违约保证金" prop="WYBZJ" align="center" show-overflow-tooltip></el-table-column>
+          <el-table-column label="装修押金" prop="ZXYJ" align="center" show-overflow-tooltip></el-table-column>
+          <el-table-column label="消防保证金" prop="XFBZJ" align="center" show-overflow-tooltip></el-table-column>
+          <el-table-column label="今日缴费金额" prop="WYTotal" align="center" show-overflow-tooltip></el-table-column>
+          <el-table-column label="物业费有效期" prop="YXQ" align="center" show-overflow-tooltip></el-table-column>
+          <el-table-column label="操作"  align="center" >
+            <template slot-scope="scope">
+              <el-button type="primary" size="mini" @click="print(scope.row)">打印收据</el-button>
+            </template>
+          </el-table-column>
         </el-table>
       </el-col>
     </el-row>
     <div style="text-align:center">
-        <el-pagination
-          background
-          @size-change="handleSizeChange"
-          @current-change="handleCurrentChange"
-          :current-page="listQuery.page"
-          :page-sizes="[10,20,30, 50]"
-          :page-size="listQuery.limit"
-          layout="total, sizes, prev, pager, next, jumper"
-          :total="total"
-        ></el-pagination>
-      </div>
+      <el-pagination
+        background
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+        :current-page="listQuery.page"
+        :page-sizes="[10,20,30, 50]"
+        :page-size="listQuery.limit"
+        layout="total, sizes, prev, pager, next, jumper"
+        :total="total"
+      ></el-pagination>
+    </div>
   </div>
 </template>
 
 <script>
 import waves from "@/frame_src/directive/waves";
-import { GetWYIncomeReport } from "@/app_src/api/TJFX/SRTJ/DailyIncomeReport";
+import { GetWYIncomeReport,ExportRecipet} from "@/app_src/api/TJFX/SRTJ/DailyIncomeReport";
 export default {
   name: "WYDailyIncomeReport",
   directives: {
@@ -100,6 +105,15 @@ export default {
           });
         }
       });
+    },
+    print(row){
+      let temp=Object.assign({},row);
+      temp.ExportType=0;
+      ExportRecipet(temp).then(res=>{
+        if(res.data.code===2000){
+          window.open(process.env.BASE_API+res.data.path);
+        }
+      })
     },
     handleSizeChange(val) {
       this.listQuery.limit = val;

@@ -45,11 +45,11 @@
           highlight-current-row
           style="width: 100%"
         >
-          <el-table-column label="计划年度" prop="JHND"></el-table-column>
-          <el-table-column label="计划名称" prop="JHMC"></el-table-column>
-          <el-table-column label="计划说明" prop="JHSM"></el-table-column>
-          <el-table-column label="计划时间" prop="JHSJ"></el-table-column>
-          <el-table-column label="备注" prop="REMARK"></el-table-column>
+          <el-table-column label="计划年度" prop="JHND" align="center" show-overflow-tooltip></el-table-column>
+          <el-table-column label="计划名称" prop="JHMC" align="center" show-overflow-tooltip></el-table-column>
+          <el-table-column label="计划说明" prop="JHSM" align="center" show-overflow-tooltip></el-table-column>
+          <el-table-column label="计划时间" prop="JHSJ" align="center" show-overflow-tooltip></el-table-column>
+          <el-table-column label="备注" prop="REMARK" align="center" show-overflow-tooltip></el-table-column>
           <el-table-column align="center" width="200" label="操作" fixed="right">
             <template slot-scope="scope">
               <el-button type="primary" size="mini" @click="handleUpdate(scope.row)">修改</el-button>
