@@ -196,7 +196,7 @@
           </el-table-column>
         </el-table>
       </el-card>
-      <el-card style="margin-top:20px;">
+      <el-card style="margin-top:20px;" v-if="PicList.length>0">
         <div slot="header" class="clearfix">
           <span>现场照片</span>
         </div>
