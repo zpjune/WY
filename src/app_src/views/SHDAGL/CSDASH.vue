@@ -88,7 +88,7 @@
               <template slot-scope="scope">{{scope.row.IS_PASS|ChangeIS_PASS}}</template>
             </el-table-column>
 
-            <el-table-column align="center" width="300" label="操作" fixed="right">
+            <el-table-column align="center" min-width="200" label="操作" fixed="right">
               <template slot-scope="scope">
                 <el-button type="primary" size="mini" @click="handleUpdate(scope.row,0)">查看详情</el-button>
                 <el-button
@@ -103,7 +103,7 @@
                   size="mini"
                   @click="unpass(scope.row)"
                 >取消审核</el-button>
-                <el-button type="danger" size="mini" @click="EndLease(scope.row)">终止物业</el-button>
+                <!-- <el-button type="danger" size="mini" @click="EndLease(scope.row)">终止物业</el-button> -->
               </template>
             </el-table-column>
           </el-table>

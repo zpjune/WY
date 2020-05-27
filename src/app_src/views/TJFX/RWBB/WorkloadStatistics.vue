@@ -1,7 +1,7 @@
 <template>
   <div id="WorkloadStatistics" class="app-container calendar-list-container">
     <el-row :gutter="20">
-      <el-col :xs="6" :sm="6" :md="5" :lg="4" :xl="4">
+      <el-col :xs="8" :sm="7" :md="6" :lg="5" :xl="4">
         <span>报表类型：</span>
         <el-radio-group v-model="listQuery.type" size="mini">
           <el-radio-button :label="0">年度</el-radio-button>

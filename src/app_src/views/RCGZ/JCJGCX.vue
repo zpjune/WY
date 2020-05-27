@@ -147,7 +147,7 @@
                 <span>{{scope.row.FZR}}</span>
               </template>
             </el-table-column>
-            <el-table-column align="center" prop="JCR" label="操作">
+            <el-table-column align="center" prop="JCR" label="操作" min-width="120px">
               <template slot-scope="scope">
                 <el-button type="primary" @click="GetDetail(scope.row)" size="mini">查看检查明细</el-button>
               </template>

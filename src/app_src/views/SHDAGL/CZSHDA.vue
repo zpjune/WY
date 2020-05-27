@@ -40,7 +40,7 @@
           </el-select>
         </el-col>
 
-        <el-col :xs="14" :sm="14" :md="14" :lg="14" :xl="4">
+        <el-col :xs="14" :sm="14" :md="14" :lg="14" :xl="12">
           <el-button
             size="mini"
             class="filter-item"

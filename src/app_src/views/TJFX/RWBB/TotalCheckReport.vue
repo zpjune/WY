@@ -59,7 +59,7 @@
             ></el-option>
           </el-select>
         </el-col>
-        <el-col :xs="3" :sm="3" :md="3" :lg="3" :xl="3">
+        <el-col :xs="6" :sm="6" :md="6" :lg="5" :xl="5">
           <el-button
             size="mini"
             class="filter-item"
@@ -91,58 +91,58 @@
             ref="table"
           >
             <!-- <el-table-column type="selection" width="55" v-if="listQuery.JCJG===0"></el-table-column> -->
-            <el-table-column align="center" prop="RWMC" label="任务名称" fixed="left">
+            <el-table-column align="center"  label="任务名称" fixed="left"  show-overflow-tooltip>
               <template slot-scope="scope">
                 <span>{{scope.row.RWMC}}</span>
               </template>
             </el-table-column>
-            <el-table-column align="center" prop="JCQY" label="检查区域" fixed="left" width="400">
+            <el-table-column align="center"  label="检查区域" fixed="left" width="400"  show-overflow-tooltip>
               <template slot-scope="scope">
                 <span>{{scope.row.JCQY}}</span>
               </template>
             </el-table-column>
-            <el-table-column align="center" prop="FWBH" label="房屋编号">
+            <el-table-column align="center" label="房屋编号"  show-overflow-tooltip>
               <template slot-scope="scope">
                 <span>{{scope.row.FWBH}}</span>
               </template>
             </el-table-column>
-            <el-table-column align="center" prop="FWMC" label="房屋名称">
+            <el-table-column align="center" label="房屋名称"  show-overflow-tooltip>
               <template slot-scope="scope">
                 <span>{{scope.row.FWMC}}</span>
               </template>
             </el-table-column>
-            <el-table-column align="center" prop="FWBH" label="房屋区域">
+            <el-table-column align="center" label="房屋区域"  show-overflow-tooltip>
               <template slot-scope="scope">
                 <span>{{scope.row.Name}}</span>
               </template>
             </el-table-column>
-            <el-table-column align="center" prop="YZMC" label="业主名称">
+            <el-table-column align="center" label="业主名称"  show-overflow-tooltip>
               <template slot-scope="scope">
                 <span>{{scope.row.ZHXM}}</span>
               </template>
             </el-table-column>
-            <el-table-column align="center" label="检查结果">
+            <el-table-column align="center" label="检查结果"  show-overflow-tooltip>
               <template slot-scope="scope">
                 <span>{{scope.row.JCJG|change}}</span>
               </template>
             </el-table-column>
-            <el-table-column align="center" prop="JCCS" label="复查次数"></el-table-column>
-            <el-table-column align="center" label="是否反馈">
+            <el-table-column align="center" label="复查次数 "  show-overflow-tooltip></el-table-column>
+            <el-table-column align="center" label="是否反馈"  show-overflow-tooltip>
               <template slot-scope="scope">
                 <span>{{scope.row.IS_REVIEW|changeFK}}</span>
               </template>
             </el-table-column>
-            <el-table-column align="center" prop="JCSJ" label="检查时间">
+            <el-table-column align="center" label="检查时间 "  show-overflow-tooltip>
               <template slot-scope="scope">
                 <span>{{scope.row.JCSJ}}</span>
               </template>
-            </el-table-column>
-            <el-table-column align="center" prop="JCR" label="检查人">
+            </el-table-column> 
+            <el-table-column align="center" label="检查人"  show-overflow-tooltip>
               <template slot-scope="scope">
                 <span>{{scope.row.FZR}}</span>
               </template>
             </el-table-column>
-            <el-table-column align="center" prop="JCR" label="操作">
+            <el-table-column align="center" label="操作" min-width="120px">
               <template slot-scope="scope">
                 <el-button type="primary" @click="GetDetail(scope.row)" size="mini">查看检查明细</el-button>
               </template>

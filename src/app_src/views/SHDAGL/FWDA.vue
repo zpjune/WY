@@ -156,7 +156,7 @@
                 <span>{{scope.row.FWMC}}</span>
               </template>
             </el-table-column>
-            <el-table-column align="center" prop="JZMJ"   label="建筑面积(㎡)" show-overflow-tooltip>
+            <el-table-column align="center" prop="JZMJ"   label="建筑面积(㎡)"  min-width="120" show-overflow-tooltip>
               <template slot-scope="scope">
                 <span>{{scope.row.JZMJ}}</span>
               </template>
@@ -175,10 +175,10 @@
             <el-table-column align="center"  label="结构类型"  show-overflow-tooltip>
               <template slot-scope="scope">{{scope.row.JG}}</template>
             </el-table-column>
-            <el-table-column align="center" prop="ZCYZ"  label="资产原值(万元)"  show-overflow-tooltip></el-table-column>
-            <el-table-column align="center" prop="ZFK"  label="总房款(万元)"  show-overflow-tooltip></el-table-column>
+            <el-table-column align="center" prop="ZCYZ"  label="资产原值(万元)"  show-overflow-tooltip  min-width="150"></el-table-column>
+            <el-table-column align="center" prop="ZFK"  label="总房款(万元)"  show-overflow-tooltip  min-width="150"></el-table-column>
 
-            <el-table-column align="center"  label="操作"  show-overflow-tooltip>
+            <el-table-column align="center"  label="操作"  min-width="150">
               <template slot-scope="scope">
                 <el-button type="primary" size="mini" @click="handleUpdate(scope.row)">修改</el-button>
                 <el-button type="danger" size="mini" @click="handleDelete(scope.row)" v-if="scope.row.FWSX===0">删除</el-button>
@@ -428,7 +428,7 @@
               type="success"
               @click="btnSubmit"
             >导&nbsp;&nbsp;入</el-button>
-            <a :href="urldownload" style="text-decoration:underline;">模板下載</a>
+            <a :href="urldownload" style="text-decoration:underline;">模板下载</a>
           </el-upload>
         </div>
       </el-card>
@@ -633,7 +633,7 @@ export default {
       showUpload: false,
       urlUpload: process.env.BASE_API + "HouseInfo/uploadHouseInfo",
       urldownload:
-        process.env.BASE_API + "WY_API/ExcelModel/房屋档案表模板.xlsx",
+        process.env.BASE_API + "WY_API/ExcelModel/房屋档案表模板.xls",
       fileList: []
     };
   },

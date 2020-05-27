@@ -39,16 +39,16 @@
           <el-table-column label="缴费日期" prop="payday" align="center" show-overflow-tooltip></el-table-column>
           <el-table-column label="底商地址商铺号" prop="SHOPBH" align="center" show-overflow-tooltip></el-table-column>
           <el-table-column label="商户姓名" prop="USER_NAME" align="center" show-overflow-tooltip></el-table-column>
-          <el-table-column label="物业费" prop="WYF" align="center" show-overflow-tooltip></el-table-column>
-          <el-table-column label="水费" prop="SF" align="center" show-overflow-tooltip></el-table-column>
-          <el-table-column label="违约保证金" prop="WYBZJ" align="center" show-overflow-tooltip></el-table-column>
-          <el-table-column label="装修押金" prop="ZXYJ" align="center" show-overflow-tooltip></el-table-column>
-          <el-table-column label="消防保证金" prop="XFBZJ" align="center" show-overflow-tooltip></el-table-column>
-          <el-table-column label="今日缴费金额" prop="WYTotal" align="center" show-overflow-tooltip></el-table-column>
+          <el-table-column label="物业费(元)" prop="WYF" align="center" show-overflow-tooltip></el-table-column>
+          <el-table-column label="水费(元)" prop="SF" align="center" show-overflow-tooltip></el-table-column>
+          <el-table-column label="违约保证金(元)" prop="WYBZJ" align="center" show-overflow-tooltip></el-table-column>
+          <el-table-column label="装修押金(元)" prop="ZXYJ" align="center" show-overflow-tooltip></el-table-column>
+          <el-table-column label="消防保证金(元)" prop="XFBZJ" align="center" show-overflow-tooltip></el-table-column>
+          <el-table-column label="今日缴费金额(元)" prop="WYTotal" align="center" show-overflow-tooltip></el-table-column>
           <el-table-column label="物业费有效期" prop="YXQ" align="center" show-overflow-tooltip></el-table-column>
           <el-table-column label="操作"  align="center" >
             <template slot-scope="scope">
-              <el-button type="primary" size="mini" @click="print(scope.row)">打印收据</el-button>
+              <el-button type="primary" size="mini" @click="print(scope.row)">下载收据</el-button>
             </template>
           </el-table-column>
         </el-table>
