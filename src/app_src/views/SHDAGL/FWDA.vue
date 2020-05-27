@@ -103,7 +103,7 @@
     <el-card>
       <el-row>
         <el-col>
-          <div >
+          <div>
             <!-- <img src="@/app_src/img/free.png" alt class="tableicon" title="空闲"><span style="font-weight:bold;color:gray;">空闲</span>
             <img src="@/app_src/img/rent.png" alt class="tableicon" title="出租"><span style="font-weight:bold;color:gray;">出租</span>
             <img src="@/app_src/img/sale.png" alt class="tableicon" title="出售"><span style="font-weight:bold;color:gray;">出售</span>-->
@@ -125,7 +125,6 @@
                 style="width:30px;height:18px;float:right;display:block;background-color:#E6A23C;"
               ></span>
             </div>
-            
           </div>
         </el-col>
       </el-row>
@@ -144,44 +143,67 @@
             style="width: 100%;text-align:left;"
             :cell-style="cellStyle"
           >
-            <el-table-column align="center"  label="房屋属性" width="80px" show-overflow-tooltip ></el-table-column>
-            <el-table-column align="center"  label="房屋编号" show-overflow-tooltip>
+            <el-table-column align="center" label="房屋属性" width="80px" show-overflow-tooltip></el-table-column>
+            <el-table-column align="center" label="房屋编号" show-overflow-tooltip>
               <template slot-scope="scope">
                 <span>{{scope.row.FWBH}}</span>
               </template>
             </el-table-column>
 
-            <el-table-column label="房屋名称"  align="center"  :show-overflow-tooltip="true">
+            <el-table-column label="房屋名称" align="center" :show-overflow-tooltip="true">
               <template slot-scope="scope">
                 <span>{{scope.row.FWMC}}</span>
               </template>
             </el-table-column>
-            <el-table-column align="center" prop="JZMJ"   label="建筑面积(㎡)"  min-width="120" show-overflow-tooltip>
+            <el-table-column
+              align="center"
+              prop="JZMJ"
+              label="建筑面积(㎡)"
+              min-width="120"
+              show-overflow-tooltip
+            >
               <template slot-scope="scope">
                 <span>{{scope.row.JZMJ}}</span>
               </template>
             </el-table-column>
-            <el-table-column align="center" label="隶属分公司"  show-overflow-tooltip>
+            <el-table-column align="center" label="隶属分公司" show-overflow-tooltip>
               <template slot-scope="scope">
                 <span>{{scope.row.LS}}</span>
               </template>
             </el-table-column>
-            <el-table-column align="center" prop="ZLWZ"  label="坐落位置"  show-overflow-tooltip>
+            <el-table-column align="center" prop="ZLWZ" label="坐落位置" show-overflow-tooltip>
               <template slot-scope="scope">
                 <span>{{scope.row.ZLWZ}}</span>
               </template>
             </el-table-column>
-            <el-table-column align="center" prop="SS"  label="所属区域"  show-overflow-tooltip></el-table-column>
-            <el-table-column align="center"  label="结构类型"  show-overflow-tooltip>
+            <el-table-column align="center" prop="SS" label="所属区域" show-overflow-tooltip></el-table-column>
+            <el-table-column align="center" label="结构类型" show-overflow-tooltip>
               <template slot-scope="scope">{{scope.row.JG}}</template>
             </el-table-column>
-            <el-table-column align="center" prop="ZCYZ"  label="资产原值(万元)"  show-overflow-tooltip  min-width="150"></el-table-column>
-            <el-table-column align="center" prop="ZFK"  label="总房款(万元)"  show-overflow-tooltip  min-width="150"></el-table-column>
+            <el-table-column
+              align="center"
+              prop="ZCYZ"
+              label="资产原值(万元)"
+              show-overflow-tooltip
+              min-width="150"
+            ></el-table-column>
+            <el-table-column
+              align="center"
+              prop="ZFK"
+              label="总房款(万元)"
+              show-overflow-tooltip
+              min-width="150"
+            ></el-table-column>
 
-            <el-table-column align="center"  label="操作"  min-width="150">
+            <el-table-column align="center" label="操作" min-width="150">
               <template slot-scope="scope">
                 <el-button type="primary" size="mini" @click="handleUpdate(scope.row)">修改</el-button>
-                <el-button type="danger" size="mini" @click="handleDelete(scope.row)" v-if="scope.row.FWSX===0">删除</el-button>
+                <el-button
+                  type="danger"
+                  size="mini"
+                  @click="handleDelete(scope.row)"
+                  v-if="scope.row.FWSX===0"
+                >删除</el-button>
                 <!-- <el-button type="success" size="mini" @click="handleCondition(scope.row)">使用情况</el-button> -->
               </template>
             </el-table-column>
@@ -256,14 +278,14 @@
           </el-row>
           <el-row>
             <el-col :span="24">
-              <el-form-item label="坐落位置" >
+              <el-form-item label="坐落位置">
                 <el-input v-model="temp.ZLWZ" type="textarea" :rows="3"></el-input>
               </el-form-item>
             </el-col>
           </el-row>
           <el-row>
             <el-col :span="12">
-              <el-form-item label="结构类型" >
+              <el-form-item label="结构类型">
                 <el-select
                   placeholder="结构类型"
                   style="width:95%"
@@ -301,12 +323,12 @@
 
           <el-row>
             <el-col :span="12">
-              <el-form-item label="电表号" >
+              <el-form-item label="电表号">
                 <el-input v-model="temp.ELE_NUMBER"></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="12">
-              <el-form-item label="电表采集器ID" >
+              <el-form-item label="电表采集器ID">
                 <el-input v-model="temp.CID"></el-input>
               </el-form-item>
             </el-col>
@@ -461,14 +483,6 @@ const typeTypeKeyValue = typeOptions.reduce((acc, cur) => {
   acc[cur.key] = cur.type_name;
   return acc;
 }, {});
-const validateDecimal = (rule, value, callback) => {
-  const reg = /^\d+\.?\d*$/;
-  if (reg.test(value)) {
-    callback();
-  } else {
-    return callback(new Error("请输入正确的数字！"));
-  }
-};
 export default {
   name: "CBJHSQ",
   directives: {
@@ -480,7 +494,7 @@ export default {
   data() {
     const validateDecimal = (rule, value, callback) => {
       const reg = /^\d+\.?\d*$/;
-      if (reg.test(value)) {
+      if (value===""||reg.test(value)) {
         callback();
       } else {
         return callback(new Error("请输入正确的数字！"));
@@ -584,7 +598,6 @@ export default {
           { required: true, message: "请输入结构类型", trigger: "change" }
         ],
         ZCYZ: [
-          {  message: "请输入资产原值", trigger: "change" },
           {
             validator: validateDecimal,
             message: "请输入正确的值",
@@ -592,7 +605,6 @@ export default {
           }
         ],
         ZFK: [
-          { message: "请输入总房款", trigger: "change" },
           {
             validator: validateDecimal,
             message: "请输入正确的值",
@@ -818,10 +830,12 @@ export default {
     updateData() {
       this.$refs["dataForm"].validate(valid => {
         if (valid) {
-          const tempData = Object.assign({}, this.temp); // 这样就不会共用同一个对象
+          const tempData = Object.assign({}, this.temp);
+          console.log(tempData);
           this.temp.PMT.forEach(item => {
             this.temp.newFilePath += item.url;
           });
+          console.log(tempData);
           UpdateHouseInfo(tempData).then(response => {
             var message = response.data.message;
             var title = "失败";

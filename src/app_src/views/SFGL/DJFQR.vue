@@ -128,10 +128,10 @@
           <span>{{scope.row.JFJE}}</span>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="有效期起" width="180" show-overflow-tooltip>
+      <el-table-column align="center" label="有效期起"  show-overflow-tooltip>
         <template slot-scope="scope">{{scope.row.YXQS|parseTime}}</template>
       </el-table-column>
-      <el-table-column align="center" label="有效期止" width="180" show-overflow-tooltip>
+      <el-table-column align="center" label="有效期止" show-overflow-tooltip>
         <template slot-scope="scope">{{scope.row.YXQZ|parseTime}}</template>
       </el-table-column>
       <el-table-column align="center" label="是否发送通知单" show-overflow-tooltip>

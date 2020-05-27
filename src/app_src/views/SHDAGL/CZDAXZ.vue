@@ -60,12 +60,12 @@
         <div>
           <el-row>
             <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-              <el-form-item label="租户姓名" prop="ZHXM">
+              <el-form-item label="租户姓名">
                 <el-input size="small" v-model="temp.ZHXM" disabled></el-input>
               </el-form-item>
             </el-col>
             <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-              <el-form-item label="租户类型" prop="ZHLX">
+              <el-form-item label="租户类型">
                 <el-select style="width:100%" size="small" v-model="temp.ZHLX" disabled>
                   <el-option value="0" label="个人"></el-option>
                   <el-option value="1" label="公司"></el-option>
@@ -73,7 +73,7 @@
               </el-form-item>
             </el-col>
             <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-              <el-form-item label="租户性别" prop="ZHXB">
+              <el-form-item label="租户性别">
                 <el-select style="width:100%" size="small" v-model="temp.ZHXB" disabled>
                   <el-option value="0" label="男"></el-option>
                   <el-option value="1" label="女"></el-option>
@@ -89,7 +89,7 @@
               </el-form-item>
             </el-col>
             <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-              <el-form-item label="手机号码" prop="MOBILE_PHONE">
+              <el-form-item label="手机号码">
                 <el-input size="small" v-model="temp.MOBILE_PHONE" disabled></el-input>
               </el-form-item>
             </el-col>
@@ -107,19 +107,19 @@
               </el-form-item>
             </el-col>
             <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-              <el-form-item label="商户编号" prop="SHOPBH">
+              <el-form-item label="商户编号">
                 <el-input size="small" v-model="temp.SHOPBH" disabled></el-input>
               </el-form-item>
             </el-col>
             <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-              <el-form-item label="商户名称" prop="SHOP_NAME">
+              <el-form-item label="商户名称">
                 <el-input size="small" v-model="temp.SHOP_NAME" disabled></el-input>
               </el-form-item>
             </el-col>
           </el-row>
           <el-row>
             <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-              <el-form-item label="装修押金" prop="ZXYJ">
+              <el-form-item label="装修押金">
                 <el-input size="small" v-model="temp.ZXYJ" disabled></el-input>
               </el-form-item>
             </el-col>
@@ -148,7 +148,7 @@
           </el-row>
           <el-row>
             <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-              <el-form-item label="消防保证金" prop="XFBZJ">
+              <el-form-item label="消防保证金">
                 <el-input size="small" v-model="temp.XFBZJ" disabled></el-input>
               </el-form-item>
             </el-col>
@@ -219,7 +219,7 @@
         </div>
         <el-row>
           <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-            <el-form-item label="原费缴纳方式" prop="WYJFFS">
+            <el-form-item label="原费缴纳方式">
               <el-select style="width:100%" size="small" v-model="temp.WYJFFS" disabled>
                 <el-option
                   v-for="(item,key) in PAY_WAYOPTIONS"
@@ -231,14 +231,14 @@
             </el-form-item>
           </el-col>
           <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-            <el-form-item label="原物业费标准" prop="WYDJ">
+            <el-form-item label="原物业费标准">
               <el-input size="small" v-model="temp.WYDJ" disabled>
                 <template slot="append">元/平/月</template>
               </el-input>
             </el-form-item>
           </el-col>
           <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-            <el-form-item label="原物业基准日期" prop="WYJZSJ">
+            <el-form-item label="原物业基准日期">
               <el-date-picker
                 style="width:100%"
                 size="mini"
@@ -257,7 +257,7 @@
         <div>
           <el-row>
             <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-              <el-form-item label="原起始日期" prop="ZLKSSJ">
+              <el-form-item label="原起始日期">
                 <el-date-picker
                   style="width:100%"
                   value-format="yyyy-MM-dd"
@@ -268,7 +268,7 @@
               </el-form-item>
             </el-col>
             <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-              <el-form-item label="原终止日期" prop="ZLZZSJ">
+              <el-form-item label="原终止日期">
                 <el-date-picker
                   style="width:100%"
                   value-format="yyyy-MM-dd"
@@ -280,7 +280,7 @@
             </el-col>
 
             <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-              <el-form-item label="原租赁总额" prop="ZLZE">
+              <el-form-item label="原租赁总额">
                 <el-input size="small" v-model="temp.ZLZE" disabled></el-input>
               </el-form-item>
             </el-col>
@@ -288,17 +288,17 @@
 
           <el-row>
             <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-              <el-form-item label="原租赁押金" prop="ZLYJ">
+              <el-form-item label="原租赁押金">
                 <el-input size="small" v-model="temp.ZLYJ" disabled></el-input>
               </el-form-item>
             </el-col>
             <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-              <el-form-item label="原租赁月数" prop="ZLYS">
+              <el-form-item label="原租赁月数">
                 <el-input size="small" v-model.number="temp.ZLYS" disabled></el-input>
               </el-form-item>
             </el-col>
             <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-              <el-form-item label="原缴费方式" prop="ZJJFFS">
+              <el-form-item label="原缴费方式">
                 <el-select style="width:100%" size="small" v-model="temp.ZJJFFS" disabled>
                   <el-option
                     v-for="(item,key) in PAY_WAYOPTIONS"
@@ -755,7 +755,8 @@ export default {
         ZLZZSJ: "",
         ZLZE: "",
         ZLYJ: "",
-        ZLYS: ""
+        ZLYS: "",
+        ZJJFFS:"",
       },
       textMap: {
         update: "修改房屋信息",
@@ -852,7 +853,7 @@ export default {
         ZJJFFS:"",
         //以下是基础信息
         userId: this.$store.state.user.userId,
-        userType: 1
+        userType: 1,
       };
     },
     closetab() {
