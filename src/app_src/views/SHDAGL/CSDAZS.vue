@@ -1003,7 +1003,7 @@ export default {
             this.$notify({
               position: "bottom-right",
               title: title,
-              message: message,
+              message: response.data.message,
               type: type,
               duration: 3000
             });

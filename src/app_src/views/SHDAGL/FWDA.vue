@@ -830,12 +830,10 @@ export default {
     updateData() {
       this.$refs["dataForm"].validate(valid => {
         if (valid) {
-          const tempData = Object.assign({}, this.temp);
           console.log(tempData);
           this.temp.PMT.forEach(item => {
             this.temp.newFilePath += item.url;
           });
-          console.log(tempData);
           UpdateHouseInfo(tempData).then(response => {
             var message = response.data.message;
             var title = "失败";
