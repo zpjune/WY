@@ -877,19 +877,12 @@ export default {
           tempData.userId = this.$store.state.user.userId;
           tempData.userType = 1;
           UpdateShopInfo(tempData).then(response => {
-            // var message = response.data.message;
-            // var message = "成功";
-            // var title = "失败";
-            // var type = "error";
             if (response.data.code === 2000) {
-              //this.getList();
-              title = "成功";
-              type = "success";
               this.$notify({
                 position: "bottom-right",
-                title: title,
-                message: title,
-                type: type,
+                title: "成功",
+                message: response.data.message,
+                type: "success",
                 duration: 3000
               });
               this.closetab();

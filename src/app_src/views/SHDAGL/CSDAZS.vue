@@ -9,7 +9,6 @@
       style="width: 99%;"
       id="CZDAEDIT"
     >
-    
       <el-card style="margin-top:20px;">
         <div slot="header">
           <span>房屋信息</span>
@@ -181,34 +180,61 @@
             </el-col>
           </el-row>
           <el-row>
-                <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-                  <el-form-item label="违约保证金" >
-                    <el-input size="small" v-model="temp.WYBZJ" disabled></el-input>
-                  </el-form-item>
-                </el-col>
-                <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-                  <el-form-item label="缴费时间">
-                    <el-date-picker
-                      style="width:100%"
-                      size="mini"
-                      v-model="temp.WYBZJJFSJ"
-                      value-format="yyyy-MM-dd"
-                      disabled
-                    ></el-date-picker>
-                  </el-form-item>
-                </el-col>
-                <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-                  <el-form-item label="退费时间">
-                    <el-date-picker
-                      style="width:100%"
-                      size="mini"
-                      v-model="temp.WYBZJTFSJ"
-                      value-format="yyyy-MM-dd"
-                      disabled
-                    ></el-date-picker>
-                  </el-form-item>
-                </el-col>
-              </el-row>
+            <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
+              <el-form-item label="违约保证金">
+                <el-input size="small" v-model="temp.WYBZJ" disabled></el-input>
+              </el-form-item>
+            </el-col>
+            <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
+              <el-form-item label="缴费时间">
+                <el-date-picker
+                  style="width:100%"
+                  size="mini"
+                  v-model="temp.WYBZJJFSJ"
+                  value-format="yyyy-MM-dd"
+                  disabled
+                ></el-date-picker>
+              </el-form-item>
+            </el-col>
+            <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
+              <el-form-item label="退费时间">
+                <el-date-picker
+                  style="width:100%"
+                  size="mini"
+                  v-model="temp.WYBZJTFSJ"
+                  value-format="yyyy-MM-dd"
+                  disabled
+                ></el-date-picker>
+              </el-form-item>
+            </el-col>
+            <el-row>
+          <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
+            <el-form-item label="违约保证金">
+              <el-input size="small" v-model="temp.WYBZJ"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
+            <el-form-item label="缴费时间">
+              <el-date-picker
+                style="width:100%"
+                size="mini"
+                v-model="temp.WYBZJJFSJ"
+                value-format="yyyy-MM-dd"
+              ></el-date-picker>
+            </el-form-item>
+          </el-col>
+          <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
+            <el-form-item label="退费时间">
+              <el-date-picker
+                style="width:100%"
+                size="mini"
+                v-model="temp.WYBZJTFSJ"
+                value-format="yyyy-MM-dd"
+              ></el-date-picker>
+            </el-form-item>
+          </el-col>
+        </el-row>
+          </el-row>
           <el-row>
             <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
               <el-form-item label="经营内容">
@@ -334,7 +360,7 @@
             </el-form-item>
           </el-col>
           <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-            <el-form-item label="业主性别" >
+            <el-form-item label="业主性别">
               <el-select style="width:100%" size="small" v-model="newtemp.ZHXB1">
                 <el-option value="0" label="男"></el-option>
                 <el-option value="1" label="女"></el-option>
@@ -345,7 +371,7 @@
 
         <el-row>
           <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-            <el-form-item label="身份证号" >
+            <el-form-item label="身份证号">
               <el-input size="small" v-model="newtemp.SFZH1"></el-input>
             </el-form-item>
           </el-col>
@@ -380,7 +406,7 @@
         </el-row>
         <el-row>
           <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-            <el-form-item label="装修押金" >
+            <el-form-item label="装修押金">
               <el-input size="small" v-model="newtemp.ZXYJ1"></el-input>
             </el-form-item>
           </el-col>
@@ -407,7 +433,7 @@
         </el-row>
         <el-row>
           <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-            <el-form-item label="消防保证金" >
+            <el-form-item label="消防保证金">
               <el-input size="small" v-model="newtemp.XFBZJ1"></el-input>
             </el-form-item>
           </el-col>
@@ -432,35 +458,33 @@
             </el-form-item>
           </el-col>
         </el-row>
-          <el-row>
-                <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-                  <el-form-item label="违约保证金" >
-                    <el-input size="small" v-model="newtemp.WYBZJ" ></el-input>
-                  </el-form-item>
-                </el-col>
-                <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-                  <el-form-item label="缴费时间">
-                    <el-date-picker
-                      style="width:100%"
-                      size="mini"
-                      v-model="newtemp.WYBZJJFSJ"
-                      value-format="yyyy-MM-dd"
-                      
-                    ></el-date-picker>
-                  </el-form-item>
-                </el-col>
-                <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-                  <el-form-item label="退费时间">
-                    <el-date-picker
-                      style="width:100%"
-                      size="mini"
-                      v-model="newtemp.WYBZJTFSJ"
-                      value-format="yyyy-MM-dd"
-                      
-                    ></el-date-picker>
-                  </el-form-item>
-                </el-col>
-              </el-row>
+        <el-row>
+          <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
+            <el-form-item label="违约保证金">
+              <el-input size="small" v-model="newtemp.WYBZJ1"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
+            <el-form-item label="缴费时间">
+              <el-date-picker
+                style="width:100%"
+                size="mini"
+                v-model="newtemp.WYBZJJFSJ1"
+                value-format="yyyy-MM-dd"
+              ></el-date-picker>
+            </el-form-item>
+          </el-col>
+          <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
+            <el-form-item label="退费时间">
+              <el-date-picker
+                style="width:100%"
+                size="mini"
+                v-model="newtemp.WYBZJTFSJ1"
+                value-format="yyyy-MM-dd"
+              ></el-date-picker>
+            </el-form-item>
+          </el-col>
+        </el-row>
         <el-row>
           <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
             <el-form-item label="经营内容" prop="JYNR1">
@@ -736,6 +760,9 @@ export default {
         XFBZJ: "",
         XFBZJJFSJ: "",
         XFBZJTFSJ: "",
+        WYBZJ: "",
+        WYBZJJFSJ: "",
+        WYBZJTFSJ: "",
         //转租信息
         CZ_SHID1: "",
         ZHXM1: "",
@@ -781,7 +808,10 @@ export default {
         ZXYJTFSJ1: "",
         XFBZJ1: "",
         XFBZJJFSJ1: "",
-        XFBZJTFSJ1: ""
+        XFBZJTFSJ1: "",
+        WYBZJ1: "",
+        WYBZJJFSJ1: "",
+        WYBZJTFSJ1: ""
       },
       textMap: {
         update: "修改房屋信息",
@@ -856,6 +886,9 @@ export default {
         XFBZJ: "",
         XFBZJJFSJ: "",
         XFBZJTFSJ: "",
+        WYBZJ: "",
+        WYBZJJFSJ: "",
+        WYBZJTFSJ: "",
         //转租信息
         CZ_SHID1: "",
         ZHXM1: "",
