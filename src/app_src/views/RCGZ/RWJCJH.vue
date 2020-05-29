@@ -44,15 +44,43 @@
           highlight-current-row
           style="width: 100%"
         >
-          <el-table-column label="任务编号" align="center" prop="RWBH" fixed="left" show-overflow-tooltip></el-table-column>
-          <el-table-column label="任务名称" align="center" prop="RWMC" fixed="left" show-overflow-tooltip></el-table-column>
-          <el-table-column label="任务开始时间" align="center" prop="RWKSSJ" fixed="left" show-overflow-tooltip></el-table-column>
-          <el-table-column label="任务结束时间" align="center" prop="RWJSSJ" fixed="left" show-overflow-tooltip></el-table-column>
+          <el-table-column
+            label="任务编号"
+            align="center"
+            prop="RWBH"
+            fixed="left"
+            show-overflow-tooltip
+          ></el-table-column>
+          <el-table-column
+            label="任务名称"
+            align="center"
+            prop="RWMC"
+            fixed="left"
+            show-overflow-tooltip
+          ></el-table-column>
+          <el-table-column
+            label="任务开始时间"
+            align="center"
+            prop="RWKSSJ"
+            fixed="left"
+            show-overflow-tooltip
+          ></el-table-column>
+          <el-table-column
+            label="任务结束时间"
+            align="center"
+            prop="RWJSSJ"
+            fixed="left"
+            show-overflow-tooltip
+          ></el-table-column>
           <el-table-column label="任务内容" align="center" prop="RWNR"></el-table-column>
           <el-table-column label="任务范围" align="center" prop="NAME" show-overflow-tooltip></el-table-column>
           <el-table-column label="备注" align="center" prop="REMARK" show-overflow-tooltip></el-table-column>
-          <!-- <el-table-column label="任务状态" prop="TASK_STATE_NAME"></el-table-column> -->
-          <el-table-column align="center" label="操作" fixed="right" min-width="150">
+          <el-table-column align="center" label="详情" fixed="right" min-width="100">
+            <template slot-scope="scope">
+              <el-button type="info" @click="handleDetail(scope.row)" size="mini">查看详情</el-button>
+            </template>
+          </el-table-column>
+          <el-table-column align="center" label="操作" fixed="right" min-width="100">
             <template slot-scope="scope">
               <!-- <el-button type="primary" size="mini" @click="handleUpdate(scope.row)">修改</el-button>
               <el-button type="danger" size="mini" @click="handleDelete(scope.row)">删除</el-button>-->
@@ -74,8 +102,7 @@
                 size="mini"
                 @click="push(scope.row)"
               >推送</el-button>
-              <el-button type="success" v-else-if="scope.row.IS_PUSH==1" size="mini">已推送</el-button> -->
-              <el-button type="info" @click="handleDetail(scope.row)" size="mini">查看详情</el-button>
+              <el-button type="success" v-else-if="scope.row.IS_PUSH==1" size="mini">已推送</el-button>-->
               <!-- <el-button type="primary" v-if="scope.row.IS_PUSH=='2'" size="mini">执行情况</el-button> -->
             </template>
           </el-table-column>
@@ -154,7 +181,7 @@
                           @change="selectCheckPlanDetail(scope.row)"
                         >&nbsp;</el-radio>
                       </template>
-                    </el-table-column> -->
+                    </el-table-column>-->
                     <el-table-column label="检查区域" prop="ALLPLACENAME"></el-table-column>
                     <el-table-column label="检查内容" :show-overflow-tooltip="true" prop="JCNR"></el-table-column>
                     <el-table-column prop="JCNAME" label="检查类型"></el-table-column>
@@ -165,9 +192,9 @@
               </el-form-item>
             </el-col>
           </el-row>
-          <el-row>  
+          <el-row>
             <el-col :span="12">
-              <el-form-item label="任务编号" >
+              <el-form-item label="任务编号">
                 <el-input v-model="temp.RWBH" :readonly="true" placeholder="自动生成"></el-input>
               </el-form-item>
             </el-col>
@@ -186,8 +213,10 @@
                   placeholder="选择日期"
                   v-model="temp.RWKSSJ"
                   style="width: 100%;"
+                  @change="GetStartTime"
+                  :picker-options="StarttimeOptions"
                 ></el-date-picker>
-              </el-form-item> 
+              </el-form-item>
             </el-col>
             <el-col :span="12">
               <el-form-item label="任务结束时间" prop="RWJSSJ">
@@ -197,6 +226,8 @@
                   value-format="yyyy-MM-dd"
                   v-model="temp.RWJSSJ"
                   style="width: 100%;"
+                  @change="GetEndTime"
+                  :picker-options="EndtimeOptions"
                 ></el-date-picker>
               </el-form-item>
             </el-col>
@@ -218,7 +249,7 @@
               <el-form-item label="备注" >
                 <el-input v-model="temp.REMARK"></el-input>
               </el-form-item>
-            </el-col> -->
+            </el-col>-->
           </el-row>
 
           <el-row>
@@ -228,7 +259,7 @@
               </el-form-item>
             </el-col>
           </el-row>
-           <el-row>
+          <el-row>
             <el-col :span="24">
               <el-form-item label="备注">
                 <el-input v-model="temp.REMARK" type="textarea" :rows="2"></el-input>
@@ -254,7 +285,7 @@
         <el-form ref="dataForm" :model="temp" label-width="120px" style="width: 99%;">
           <el-row>
             <el-col :span="12">
-              <el-form-item label="任务编号"  prop="RWBH">
+              <el-form-item label="任务编号" prop="RWBH">
                 <span>{{temp.RWBH}}</span>
               </el-form-item>
             </el-col>
@@ -376,24 +407,7 @@ export default {
         page: 1,
         limit: 10
       },
-      options: [
-        {
-          value: "A区",
-          label: "A区"
-        },
-        {
-          value: "B区",
-          label: "B区"
-        },
-        {
-          value: "C区",
-          label: "C区"
-        },
-        {
-          value: "D区",
-          label: "D区"
-        }
-      ],
+      options: [],
       checkPlanQuery: {
         JHMC: "",
         JHND: "",
@@ -433,6 +447,8 @@ export default {
       list2: [],
       list3: [],
       fac: [],
+      StarttimeOptions: {},
+      EndtimeOptions: {},
       rules: {
         JHMC: [
           {
@@ -508,6 +524,20 @@ export default {
     };
   },
   methods: {
+    GetStartTime() {
+      this.EndtimeOptions = {
+        disabledDate: time => {
+          return time < new Date(this.temp.RWKSSJ);
+        }
+      };
+    },
+    GetEndTime() {
+      this.StarttimeOptions = {
+        disabledDate: time => {
+          return time > new Date(this.temp.RWJSSJ);
+        }
+      };
+    },
     showRow(row) {
       //赋值给radio
       this.radio = this.list2.indexOf(row);
@@ -523,13 +553,12 @@ export default {
       this.temp.JHMC = row.JHMC;
       this.innerVisible = false;
     },
-    handleSelectionChange(val){
-      this.multipleSelection=val.map(item=>item.PLAN_DETAIL_ID);
-      if(this.multipleSelection.length>0){
-        this.temp.PLAN_DETAIL_ID="已选中";
-      }
-      else{
-        this.temp.PLAN_DETAIL_ID="";
+    handleSelectionChange(val) {
+      this.multipleSelection = val.map(item => item.PLAN_DETAIL_ID);
+      if (this.multipleSelection.length > 0) {
+        this.temp.PLAN_DETAIL_ID = "已选中";
+      } else {
+        this.temp.PLAN_DETAIL_ID = "";
       }
     },
     GetAllCheckPlanDetail() {
@@ -568,12 +597,12 @@ export default {
           this.temp.JHMC = res.data.checkplan[0].JHMC;
           this.temp.PLAN_DETAIL_ID = res.data.detail[0].PLAN_DETAIL_ID;
           this.list3 = res.data.detail;
-          this.$nextTick(()=>{
+          this.$nextTick(() => {
             this.list3.forEach(items => {
-            this.$refs.multipleTable.toggleRowSelection(items,true);
+              this.$refs.multipleTable.toggleRowSelection(items, true);
+            });
           });
-          })
-          
+
           this.radio1 = 0;
         }
       });
@@ -630,7 +659,6 @@ export default {
         }
       });
     },
-
     resetTemp() {
       this.temp = {
         PLAN_ID: "",
@@ -649,8 +677,8 @@ export default {
       this.radio = "";
       this.radio1 = "";
       this.CheckPlanList = [];
-      this.multipleSelection=[];
-      this.list3=[];
+      this.multipleSelection = [];
+      this.list3 = [];
     },
     tableRowClassName({ row, rowIndex }) {
       // 表头行的 className 的回调方法，也可以使用字符串为所有表头行设置一个固定的 className。
@@ -713,8 +741,8 @@ export default {
       // 创建
       this.$refs["dataForm"].validate(valid => {
         if (valid) {
-          let tempData=Object.assign({},this.temp);
-          tempData.PLAN_DETAIL_ARR=this.multipleSelection;
+          let tempData = Object.assign({}, this.temp);
+          tempData.PLAN_DETAIL_ARR = this.multipleSelection;
           CreateTask(tempData).then(res => {
             if (res.data.code === 2000) {
               this.$notify({
@@ -743,7 +771,7 @@ export default {
       this.$refs["dataForm"].validate(valid => {
         if (valid) {
           let tempData = Object.assign({}, this.temp); // 这样就不会共用同一个对象
-          tempData.PLAN_DETAIL_ARR=this.multipleSelection;
+          tempData.PLAN_DETAIL_ARR = this.multipleSelection;
           tempData.userId = this.$store.state.user.userId;
           UpdateTask(tempData).then(res => {
             if (res.data.code === 2000) {

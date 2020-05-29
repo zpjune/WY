@@ -168,9 +168,6 @@
           ></el-pagination>
         </div>
 
-        <div style="text-align:center;margin-top:10px">
-          <el-button @click="editVisible = false">取消</el-button>
-        </div>
       </el-card>
     </el-dialog>
     <el-dialog
@@ -496,10 +493,23 @@ export default {
         SHOP_STATUS: 0
       },
       shopOptions: [
-        { label: "出租", value: 0 },
+        { label: "全部", value: 0 },
+        { label: "出租", value: 1 },
         {
           label: "出售",
-          value: 1
+          value: 2
+        },
+        {
+          label: "转租",
+          value: 5
+        },
+        {
+          label: "转售",
+          value: 3
+        },
+        {
+          label: "终止物业关系",
+          value: 4
         }
       ],
       options: [],
@@ -585,10 +595,10 @@ export default {
       }
     },
     handleUpdate(row) {
-      this.queryDetailList={
-        CZ_SHID:row.CZ_SHID,
-        limit:10,
-        page:1
+      this.queryDetailList = {
+        CZ_SHID: row.CZ_SHID,
+        limit: 10,
+        page: 1
       };
       this.getFeeResult();
       this.editVisible = true;
@@ -625,19 +635,20 @@ export default {
     getList() {
       this.listLoading = true;
       GetShopUserInfo(this.listQuery).then(res => {
-        if (res.data.code === 2000) {
+        if (res.data.code === 2000) {      
           this.fac = res.data.items;
           this.total = res.data.total;
           this.listLoading = false;
         } else {
           this.listLoading = false;
-          // this.$notify({
-          //   position: "bottom-right",
-          //   title: "失败",
-          //   message: res.data.message,
-          //   type: "error",
-          //   duration: 2000
-          // });
+          this.fac=[];
+          this.$notify({
+            position: "bottom-right",
+            title: "失败",
+            message: res.data.message,
+            type: "error",
+            duration: 2000
+          });
         }
       });
     },

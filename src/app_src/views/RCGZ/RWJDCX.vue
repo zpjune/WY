@@ -47,12 +47,36 @@
           highlight-current-row
           style="width: 100%"
         >
-          <el-table-column label="任务编号" prop="RWBH" fixed="left" align="center" show-overflow-tooltip></el-table-column>
-          <el-table-column label="任务名称" prop="RWMC" fixed="left" align="center" show-overflow-tooltip></el-table-column>
-          <el-table-column label="任务开始时间" prop="RWKSSJ" fixed="left" align="center" show-overflow-tooltip></el-table-column>
-          <el-table-column label="任务结束时间" prop="RWJSSJ" fixed="left" align="center" show-overflow-tooltip></el-table-column>
-          <el-table-column label="任务范围" prop="Name" align="center" show-overflow-tooltip ></el-table-column>
-          <el-table-column label="应查任务总数" prop="total" align="center" show-overflow-tooltip ></el-table-column>
+          <el-table-column
+            label="任务编号"
+            prop="RWBH"
+            fixed="left"
+            align="center"
+            show-overflow-tooltip
+          ></el-table-column>
+          <el-table-column
+            label="任务名称"
+            prop="RWMC"
+            fixed="left"
+            align="center"
+            show-overflow-tooltip
+          ></el-table-column>
+          <el-table-column
+            label="任务开始时间"
+            prop="RWKSSJ"
+            fixed="left"
+            align="center"
+            show-overflow-tooltip
+          ></el-table-column>
+          <el-table-column
+            label="任务结束时间"
+            prop="RWJSSJ"
+            fixed="left"
+            align="center"
+            show-overflow-tooltip
+          ></el-table-column>
+          <el-table-column label="任务范围" prop="Name" align="center" show-overflow-tooltip></el-table-column>
+          <el-table-column label="应查任务总数" prop="total" align="center" show-overflow-tooltip></el-table-column>
           <el-table-column label="已完成数量" prop="complete" align="center" show-overflow-tooltip></el-table-column>
           <el-table-column label="未完成数量" prop="incomplete" align="center" show-overflow-tooltip></el-table-column>
           <!-- <el-table-column align="center" width="280" label="操作" fixed="right">
@@ -318,8 +342,7 @@ export default {
       editVisible: false,
       dialogStatus: "",
       listloading: false,
-      list: [
-      ]
+      list: []
     };
   },
   methods: {
@@ -378,8 +401,14 @@ export default {
     handleProcess() {
       this.workFlowVisible = true;
     },
-    handleSizeChange() {},
-    handleCurrentChange() {},
+    handleSizeChange(val) {
+      this.listQuery.limit = val;
+      this.getList();
+    },
+    handleCurrentChange(val) {
+      this.listQuery.page = val;
+      this.getList();
+    },
     handleCreate() {
       this.resetTemp();
       this.editVisible = true;
