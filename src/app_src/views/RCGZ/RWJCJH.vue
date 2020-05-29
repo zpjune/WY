@@ -80,7 +80,7 @@
               <el-button type="info" @click="handleDetail(scope.row)" size="mini">查看详情</el-button>
             </template>
           </el-table-column>
-          <el-table-column align="center" label="操作" fixed="right" min-width="100">
+          <el-table-column align="center" label="操作" fixed="right" min-width="120">
             <template slot-scope="scope">
               <!-- <el-button type="primary" size="mini" @click="handleUpdate(scope.row)">修改</el-button>
               <el-button type="danger" size="mini" @click="handleDelete(scope.row)">删除</el-button>-->

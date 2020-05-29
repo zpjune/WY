@@ -618,7 +618,7 @@ export default {
             excel.export_json_to_excel({
               header: tHeader,
               data,
-              filename: "待缴费信息表"
+              filename: "已缴费信息表"
             });
           } else {
             this.$notify({
