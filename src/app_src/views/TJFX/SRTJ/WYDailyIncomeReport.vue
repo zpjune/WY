@@ -37,7 +37,7 @@
           ref="table"
         >
           <el-table-column label="缴费日期" prop="payday" align="center" show-overflow-tooltip></el-table-column>
-          <el-table-column label="底商地址商铺号" prop="SHOPBH" align="center" show-overflow-tooltip></el-table-column>
+          <el-table-column label="商铺号" prop="SHOPBH" align="center" show-overflow-tooltip></el-table-column>
           <el-table-column label="商户姓名" prop="USER_NAME" align="center" show-overflow-tooltip></el-table-column>
           <el-table-column label="物业费(元)" prop="WYF" align="center" show-overflow-tooltip></el-table-column>
           <el-table-column label="水费(元)" prop="SF" align="center" show-overflow-tooltip></el-table-column>

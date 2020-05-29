@@ -830,7 +830,7 @@ export default {
     updateData() {
       this.$refs["dataForm"].validate(valid => {
         if (valid) {
-          console.log(tempData);
+          const tempData=Object.assign({},this.temp);
           this.temp.PMT.forEach(item => {
             this.temp.newFilePath += item.url;
           });
