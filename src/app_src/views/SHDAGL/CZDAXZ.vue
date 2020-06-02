@@ -206,7 +206,7 @@
               </el-row>
           <el-row>
             <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
-              <el-form-item label="经营内容" prop="JYNR">
+              <el-form-item label="经营内容" >
                 <el-input v-model="temp.JYNR" type="textarea" :rows="3" disabled></el-input>
               </el-form-item>
             </el-col>
@@ -648,9 +648,6 @@ export default {
         ],
         SHOP_NAME: [
           { required: true, message: "请填写商铺名称", trigger: "change" }
-        ],
-        JYNR: [
-          { required: true, message: "请填写经营内容", trigger: "change" }
         ],
         ZLKSSJ: [
           { required: true, message: "请填写租赁开始时间", trigger: "change" }

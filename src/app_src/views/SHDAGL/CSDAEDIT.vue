@@ -209,7 +209,7 @@
         </el-row>
         <el-row>
           <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
-            <el-form-item label="经营内容" prop="JYNR">
+            <el-form-item label="经营内容" >
               <el-input v-model="temp.JYNR" type="textarea" :rows="3"></el-input>
             </el-form-item>
           </el-col>
@@ -281,7 +281,7 @@
       </el-row>
       <el-row>
         <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
-          <el-form-item label="转租经营内容" prop="JYNR1">
+          <el-form-item label="转租经营内容" >
             <el-input v-model="temp.JYNR1" type="textarea" :rows="3"></el-input>
           </el-form-item>
         </el-col>
@@ -658,9 +658,6 @@ export default {
         SHOP_NAME: [
           { required: true, message: "请填写商铺名称", trigger: "change" }
         ],
-        JYNR: [
-          { required: true, message: "请填写经营内容", trigger: "change" }
-        ],
         IS_SUBLET: [
           { required: true, message: "请选择是否转租", trigger: "change" }
         ],
@@ -709,9 +706,7 @@ export default {
         SHOP_NAME1: [
           { required: true, message: "请填写转租商铺名称", trigger: "change" }
         ],
-        JYNR1: [
-          { required: true, message: "请填写转租经营内容", trigger: "change" }
-        ],
+        
         ZXYJ: [
           {
             validator: validateDecimal,

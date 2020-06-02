@@ -487,7 +487,7 @@
         </el-row>
         <el-row>
           <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
-            <el-form-item label="经营内容" prop="JYNR1">
+            <el-form-item label="经营内容" >
               <el-input v-model="newtemp.JYNR1" type="textarea" :rows="3"></el-input>
             </el-form-item>
           </el-col>
@@ -683,9 +683,6 @@ export default {
         ],
         SHOP_NAME1: [
           { required: true, message: "请填写转售商铺名称", trigger: "change" }
-        ],
-        JYNR1: [
-          { required: true, message: "请填写转售经营内容", trigger: "change" }
         ],
         WYJZSJ1: [
           { required: true, message: "请填写物业基准时间", trigger: "change" }
