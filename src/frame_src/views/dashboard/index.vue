@@ -94,7 +94,7 @@
       </el-row>
     </div>
     <el-dialog :visible.sync="detailVisible" title="详情" width="800px">
-      <el-card>
+      <el-card style="overflow-x:scroll;overflow-y:scroll;width:100%;height:500px;">
         <el-form ref="dataForm" :model="temp">
           <el-row type="flex">
             <el-col :span="2"></el-col>
