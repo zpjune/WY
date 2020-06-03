@@ -374,7 +374,7 @@
         </div>
       </el-card>
     </el-dialog>
-    <el-dialog :visible.sync="editVisible2" class="selecttrees" title="商户详情" width="1000px">
+    <el-dialog :visible.sync="editVisible2" class="selecttrees" title="商户详情" width="1000px" :close-on-click-modal="false">
       <el-table
         :key="tableKey"
         :data="list2"

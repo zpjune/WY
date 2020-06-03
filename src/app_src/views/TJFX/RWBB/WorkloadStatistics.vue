@@ -67,7 +67,7 @@
         ></el-pagination>
       </div>
     </el-card>
-    <el-dialog :visible.sync="detailDialog" title="检查详情" width="70%">
+    <el-dialog :visible.sync="detailDialog" title="检查详情" width="70%" :close-on-click-modal="false">
       <el-table
         :header-cell-class-name="tableRowClassName"
         size="mini"
@@ -85,6 +85,18 @@
         <el-table-column label="检查时间" prop="JCSJ"></el-table-column>
         <el-table-column label="是否逾期检查" prop="overdue"></el-table-column>
       </el-table>
+      <div style="text-align:center">
+        <el-pagination
+          background
+          @size-change="handleSizeChange1"
+          @current-change="handleCurrentChange1"
+          :current-page="listQuery.page"
+          :page-sizes="[12,24,36, 48]"
+          :page-size="listQuery.limit"
+          layout="total, sizes, prev, pager, next, jumper"
+          :total="total1"
+        ></el-pagination>
+      </div>
     </el-dialog>
   </div>
 </template>
@@ -104,9 +116,17 @@ export default {
         limit: 20,
         page: 1
       },
+      detailQuery: {
+        limit: 10,
+        page: 1,
+        RD_ID: "",
+        yyyy: "",
+        mon: ""
+      },
       list: [],
       detailList: [],
       total: 0,
+      total1:0,
       spanArr: [],
       detailDialog: false
     };
@@ -130,7 +150,7 @@ export default {
             if (index === 0) {
               this.spanArr.push(1); //首条数据肯定为不相同数据
             } else {
-              if (item.FZR === this.list[index - 1].FZR) {
+              if (item.WX_OPEN_ID === this.list[index - 1].WX_OPEN_ID) {
                 this.spanArr[contactDot] += 1; //首条相同数据数量+1
                 this.spanArr.push(0); //其后的数据标识为0
               } else {
@@ -174,19 +194,39 @@ export default {
       this.listQuery.page = val;
       this.getList();
     },
-    getDetail(row) {
-      this.detailDialog = true;
-      let temp = {
-        RD_ID: row.RD_ID,
-        mon: row.mon,
-        yyyy: row.yyyy
-      };
-      WorkloadStatisticsDetail(temp).then(res => {
+    handleSizeChange11(val) {
+      this.detailQuery.limit = val;
+      WorkloadStatisticsDetail(this.detailQuery).then(res => {
         if (res.data.code === 2000) {
           this.detailList = res.data.items;
+          this.total1=res.data.total;
         }
       });
-      console.log(temp);
+    },
+    handleCurrentChange1(val) {
+      this.detailQuery.page = val;
+      WorkloadStatisticsDetail(this.detailQuery).then(res => {
+        if (res.data.code === 2000) {
+          this.detailList = res.data.items;
+          this.total1=res.data.total;
+        }
+      });
+    },
+    getDetail(row) {
+      this.detailDialog = true;
+      this.detailQuery = {
+        RD_ID: row.RD_ID,
+        mon: row.mon,
+        yyyy: row.yyyy,
+        page: 1,
+        limit: 10
+      };
+      WorkloadStatisticsDetail(this.detailQuery).then(res => {
+        if (res.data.code === 2000) {
+          this.detailList = res.data.items;
+          this.total1=res.data.total;
+        }
+      });
     }
   },
   mounted() {
