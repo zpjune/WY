@@ -182,11 +182,11 @@
                         >&nbsp;</el-radio>
                       </template>
                     </el-table-column>-->
-                    <el-table-column label="检查区域" prop="ALLPLACENAME"></el-table-column>
+                    <el-table-column label="检查区域" prop="ALLPLACENAME" show-overflow-tooltip></el-table-column>
                     <el-table-column label="检查内容" :show-overflow-tooltip="true" prop="JCNR"></el-table-column>
-                    <el-table-column prop="JCNAME" label="检查类型"></el-table-column>
-                    <el-table-column label="年度检查次数" prop="PCCS"></el-table-column>
-                    <el-table-column label="已创建任务次数" prop="ZXCS"></el-table-column>
+                    <el-table-column prop="JCNAME" label="检查类型" show-overflow-tooltip></el-table-column>
+                    <el-table-column label="年度检查次数" prop="PCCS" show-overflow-tooltip></el-table-column>
+                    <el-table-column label="已创建任务次数" prop="ZXCS" show-overflow-tooltip></el-table-column>
                   </el-table>
                 </el-row>
               </el-form-item>
