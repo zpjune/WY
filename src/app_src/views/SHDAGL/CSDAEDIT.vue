@@ -72,7 +72,7 @@
             </el-form-item>
           </el-col>
           <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-            <el-form-item label="业主性别" >
+            <el-form-item label="业主性别">
               <el-select style="width:100%" size="small" v-model="temp.ZHXB">
                 <el-option value="0" label="男"></el-option>
                 <el-option value="1" label="女"></el-option>
@@ -209,7 +209,7 @@
         </el-row>
         <el-row>
           <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
-            <el-form-item label="经营内容" >
+            <el-form-item label="经营内容">
               <el-input v-model="temp.JYNR" type="textarea" :rows="3"></el-input>
             </el-form-item>
           </el-col>
@@ -235,7 +235,7 @@
           </el-form-item>
         </el-col>
         <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-          <el-form-item label="转租性别" >
+          <el-form-item label="转租性别">
             <el-select style="width:100%" size="small" v-model="temp.ZHXB1">
               <el-option value="0" label="男"></el-option>
               <el-option value="1" label="女"></el-option>
@@ -281,7 +281,7 @@
       </el-row>
       <el-row>
         <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
-          <el-form-item label="转租经营内容" >
+          <el-form-item label="转租经营内容">
             <el-input v-model="temp.JYNR1" type="textarea" :rows="3"></el-input>
           </el-form-item>
         </el-col>
@@ -323,67 +323,6 @@
         </el-col>
       </el-row>
     </el-card>
-
-    <!-- <el-card style="margin-top:20px;">
-      <div slot="header">
-        <span>租赁信息</span>
-      </div>
-      <div>
-        <el-row>
-          <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-            <el-form-item label="租赁起始日期" prop="ZLKSSJ">
-              <el-date-picker
-                style="width:100%"
-                format="yyyy-MM-dd"
-                size="small"
-                v-model="temp.ZLKSSJ"
-              ></el-date-picker>
-            </el-form-item>
-          </el-col>
-          <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-            <el-form-item label="租赁终止日期" prop="ZLZZSJ">
-              <el-date-picker
-                style="width:100%"
-                format="yyyy-MM-dd"
-                size="small"
-                v-model="temp.ZLZZSJ"
-              ></el-date-picker>
-            </el-form-item>
-          </el-col>
-
-          <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-            <el-form-item label="租赁总额" prop="ZLZE">
-              <el-input size="small" v-model="temp.ZLZE"></el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
-
-        <el-row>
-          <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-            <el-form-item label="租赁押金" prop="ZLYJ">
-              <el-input size="small" v-model="temp.ZLYJ"></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-            <el-form-item label="租赁月数" prop="ZLYS">
-              <el-input size="small" v-model="temp.ZLYS"></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-            <el-form-item label="缴费方式" prop="ZJJFFS">
-              <el-select style="width:100%" size="small" v-model="temp.ZJJFFS">
-                <el-option value="0" label="月度"></el-option>
-                <el-option value="1" label="季度"></el-option>
-                <el-option value="2" label="半年度"></el-option>
-                <el-option value="3" label="年度"></el-option>
-                <el-option value="3" label="全额"></el-option>
-              </el-select>
-            </el-form-item>
-          </el-col>
-        </el-row>
-      </div>
-    </el-card>-->
-
     <div style="text-align:center;margin-top:20px;margin-bottom:20px;">
       <el-button v-if="dialogStatus=='create'" type="primary" @click="createData">保存</el-button>
       <el-button v-else type="primary" @click="updateData">修改</el-button>
@@ -706,7 +645,7 @@ export default {
         SHOP_NAME1: [
           { required: true, message: "请填写转租商铺名称", trigger: "change" }
         ],
-        
+
         ZXYJ: [
           {
             validator: validateDecimal,
@@ -757,9 +696,9 @@ export default {
         XFBZJ: "",
         XFBZJJFSJ: "",
         XFBZJTFSJ: "",
-        WYBZJ:"",
-        WYBZJJFSJ:"",
-        WYBZJTFSJ:"",
+        WYBZJ: "",
+        WYBZJJFSJ: "",
+        WYBZJTFSJ: "",
         //转租信息
         CZ_SHID1: "",
         ZHXM1: "",
@@ -868,9 +807,9 @@ export default {
         XFBZJ: "",
         XFBZJJFSJ: "",
         XFBZJTFSJ: "",
-        WYBZJ:"",
-        WYBZJJFSJ:"",
-        WYBZJTFSJ:"",
+        WYBZJ: "",
+        WYBZJJFSJ: "",
+        WYBZJTFSJ: "",
         //转租信息
         CZ_SHID1: "",
         ZHXM1: "",
