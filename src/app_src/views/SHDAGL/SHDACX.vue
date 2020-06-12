@@ -404,6 +404,13 @@
               </el-form-item>
             </el-col>
           </el-row>
+          <el-row>
+              <el-col :span="8">
+                <el-form-item label="物业费备注">
+                  <el-input size="small" v-model="temp.REMARK" disabled></el-input>
+                </el-form-item>
+              </el-col>
+            </el-row>
         </el-card>
         <el-card style="margin-top:20px;" v-if="temp.FWSX===1">
           <div slot="header">
@@ -541,6 +548,7 @@ export default {
         WYJFFS: "",
         WYJZSJ: "",
         WYJZ: "",
+        REMARK:"",
         //以下是商户信息
         CZ_SHID: "",
         ZHXM: "",
@@ -669,6 +677,7 @@ export default {
         WYJFFS: "",
         WYJZSJ: "",
         WYJZ: "",
+        REMARK:"",
         //以下是商户信息
         CZ_SHID: "",
         ZHXM: "",

@@ -104,3 +104,11 @@ export function ExportFeeResult(query) {
     params: query
   })
 }
+
+export function GetPER_WATER_PRICE(query) {
+  return request({
+    url: '/FeeResult/GetPER_WATER_PRICE',
+    method: 'get',
+    params: query
+  })
+}

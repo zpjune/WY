@@ -74,16 +74,61 @@
             style="width: 100%;text-align:left;"
           >
 
-            <el-table-column align="center" prop="FWBH" label="房屋编号" fixed="left" show-overflow-tooltip></el-table-column>
-            <el-table-column align="center" prop="FWMC" label="房屋名称" fixed="left" show-overflow-tooltip></el-table-column>
-            <el-table-column align="center" prop="Name" width="120" label="隶属分公司" fixed="left" show-overflow-tooltip></el-table-column>
+           <el-table-column
+              align="center"
+              prop="FWBH"
+              label="房屋编号"
+              fixed="left"
+              show-overflow-tooltip
+              width="200"
+            ></el-table-column>
+            <el-table-column
+              align="center"
+              prop="FWMC"
+              label="房屋名称"
+              fixed="left"
+              show-overflow-tooltip
+              width="200"
+            ></el-table-column>
+            <el-table-column
+              align="center"
+              prop="Name"
+              width="120"
+              label="隶属分公司"
+              fixed="left"
+              show-overflow-tooltip
+            ></el-table-column>
             <el-table-column align="center" prop="SHOPBH" label="商户编号" show-overflow-tooltip></el-table-column>
-            <el-table-column align="center" prop="SHOP_NAME" label="商户名称" show-overflow-tooltip></el-table-column>
-            <el-table-column align="center" prop="ZHXM" label="租户姓名" show-overflow-tooltip></el-table-column>
-            <el-table-column align="center" prop="SFZH" label="身份证号" show-overflow-tooltip></el-table-column>
+            <el-table-column
+              align="center"
+              prop="SHOP_NAME"
+              label="商户名称"
+              show-overflow-tooltip
+              width="200"
+            ></el-table-column>
+            <el-table-column
+              align="center"
+              prop="ZHXM"
+              label="租户姓名"
+              show-overflow-tooltip
+              width="120"
+            ></el-table-column>
+            <el-table-column
+              align="center"
+              prop="SFZH"
+              label="身份证号"
+              show-overflow-tooltip
+              width="200"
+            ></el-table-column>
             <el-table-column align="center" prop="MOBILE_PHONE" label="租户手机" show-overflow-tooltip></el-table-column>
             <el-table-column align="center" prop="TELEPHONE" label="租户固话" show-overflow-tooltip></el-table-column>
-            <el-table-column align="center" prop="JYNR" label="经营内容" show-overflow-tooltip></el-table-column>
+            <el-table-column
+              align="center"
+              prop="JYNR"
+              label="经营内容"
+              show-overflow-tooltip
+              width="200"
+            ></el-table-column>
             <el-table-column align="center" prop="IS_PASS" label="审核状态">
               <template slot-scope="scope">{{scope.row.IS_PASS|ChangeIS_PASS}}</template>
             </el-table-column>
@@ -107,7 +152,7 @@
               </template>
             </el-table-column>
           </el-table>
-          <div class="page">
+          <div style="text-align:center">
             <el-pagination
               background
               @size-change="handleSizeChange"
@@ -361,6 +406,13 @@
               <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
                 <el-form-item label="物业基准日期">
                   <el-date-picker style="width:100%" size="mini" v-model="temp.WYJZSJ" disabled></el-date-picker>
+                </el-form-item>
+              </el-col>
+            </el-row>
+            <el-row>
+              <el-col :span="8">
+                <el-form-item label="物业费备注">
+                  <el-input size="small" v-model="temp.REMARK" disabled></el-input>
                 </el-form-item>
               </el-col>
             </el-row>

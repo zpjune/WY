@@ -45,7 +45,7 @@
             @keyup.enter.native="handleFilter"
             style="width:95%;"
             class="filter-item"
-            placeholder="请输入房号"
+            placeholder="请输入房屋编号"
             v-model="listQuery.FWBH"
             size="mini"
           ></el-input>

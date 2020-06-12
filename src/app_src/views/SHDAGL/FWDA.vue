@@ -144,58 +144,42 @@
             :cell-style="cellStyle"
           >
             <el-table-column align="center" label="房屋属性" width="80px" show-overflow-tooltip></el-table-column>
-            <el-table-column align="center" label="房屋编号" show-overflow-tooltip>
+            <el-table-column align="center" label="房屋编号" show-overflow-tooltip width="250">
               <template slot-scope="scope">
                 <span>{{scope.row.FWBH}}</span>
               </template>
             </el-table-column>
 
-            <el-table-column label="房屋名称" align="center" :show-overflow-tooltip="true">
+            <el-table-column label="房屋名称" align="center" :show-overflow-tooltip="true" width="250">
               <template slot-scope="scope">
                 <span>{{scope.row.FWMC}}</span>
               </template>
             </el-table-column>
-            <el-table-column
-              align="center"
-              prop="JZMJ"
-              label="建筑面积(㎡)"
-              min-width="120"
-              show-overflow-tooltip
-            >
-              <template slot-scope="scope">
-                <span>{{scope.row.JZMJ}}</span>
-              </template>
-            </el-table-column>
-            <el-table-column align="center" label="隶属分公司" show-overflow-tooltip>
+
+            <el-table-column align="center" label="隶属分公司" show-overflow-tooltip width="200">
               <template slot-scope="scope">
                 <span>{{scope.row.LS}}</span>
               </template>
             </el-table-column>
-            <el-table-column align="center" prop="ZLWZ" label="坐落位置" show-overflow-tooltip>
+
+            <el-table-column align="center" prop="SS" label="所属区域" show-overflow-tooltip width="200"></el-table-column>
+            <el-table-column align="center" label="结构类型" show-overflow-tooltip width="120">
+              <template slot-scope="scope">{{scope.row.JG}}</template>
+            </el-table-column>
+            <el-table-column align="center" prop="ZLWZ" label="坐落位置" show-overflow-tooltip width="120">
               <template slot-scope="scope">
                 <span>{{scope.row.ZLWZ}}</span>
               </template>
             </el-table-column>
-            <el-table-column align="center" prop="SS" label="所属区域" show-overflow-tooltip></el-table-column>
-            <el-table-column align="center" label="结构类型" show-overflow-tooltip>
-              <template slot-scope="scope">{{scope.row.JG}}</template>
+            <el-table-column align="center" prop="JZMJ" label="建筑面积(㎡)" show-overflow-tooltip width="120">
+              <template slot-scope="scope">
+                <span>{{scope.row.JZMJ}}</span>
+              </template>
             </el-table-column>
-            <el-table-column
-              align="center"
-              prop="ZCYZ"
-              label="资产原值(万元)"
-              show-overflow-tooltip
-              min-width="150"
-            ></el-table-column>
-            <el-table-column
-              align="center"
-              prop="ZFK"
-              label="总房款(万元)"
-              show-overflow-tooltip
-              min-width="150"
-            ></el-table-column>
+            <el-table-column align="center" prop="ZCYZ" label="资产原值(万元)" show-overflow-tooltip width="120"></el-table-column>
+            <el-table-column align="center" prop="ZFK" label="总房款(万元)" show-overflow-tooltip width="120"></el-table-column>
 
-            <el-table-column align="center" label="操作" min-width="150">
+            <el-table-column align="left" label="操作" width="200">
               <template slot-scope="scope">
                 <el-button type="primary" size="mini" @click="handleUpdate(scope.row)">修改</el-button>
                 <el-button
@@ -368,13 +352,19 @@
           </el-col>
         </el-form>
         <div style="text-align:center">
-          <el-button @click="editVisible = false">取消</el-button>
+          <el-button @click="closeDialog">取消</el-button>
           <el-button v-if="dialogStatus=='create'" type="primary" @click="createData">保存</el-button>
           <el-button v-else type="primary" @click="updateData">保存</el-button>
         </div>
       </el-card>
     </el-dialog>
-    <el-dialog :visible.sync="editVisible2" class="selecttrees" title="商户详情" width="1000px" :close-on-click-modal="false">
+    <el-dialog
+      :visible.sync="editVisible2"
+      class="selecttrees"
+      title="商户详情"
+      width="1000px"
+      :close-on-click-modal="false"
+    >
       <el-table
         :key="tableKey"
         :data="list2"
@@ -494,7 +484,7 @@ export default {
   data() {
     const validateDecimal = (rule, value, callback) => {
       const reg = /^\d+\.?\d*$/;
-      if (value===""||reg.test(value)) {
+      if (value === "" || reg.test(value)) {
         callback();
       } else {
         return callback(new Error("请输入正确的数字！"));
@@ -794,6 +784,9 @@ export default {
         })
         .catch(() => {});
     },
+    closeDialog(){
+      this.editVisible=false;
+    },
     createData() {
       // 创建
       this.$refs["dataForm"].validate(valid => {
@@ -830,7 +823,7 @@ export default {
     updateData() {
       this.$refs["dataForm"].validate(valid => {
         if (valid) {
-          const tempData=Object.assign({},this.temp);
+          const tempData = Object.assign({}, this.temp);
           this.temp.PMT.forEach(item => {
             this.temp.newFilePath += item.url;
           });

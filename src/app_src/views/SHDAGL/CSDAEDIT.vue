@@ -106,7 +106,7 @@
             </el-form-item>
           </el-col>
           <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-            <el-form-item label="商户编号" prop="SHOPBH">
+            <el-form-item label="商户编号">
               <el-input size="small" v-model="temp.SHOPBH"></el-input>
             </el-form-item>
           </el-col>
@@ -269,7 +269,7 @@
           </el-form-item>
         </el-col>
         <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-          <el-form-item label="转租商户编号" prop="SHOPBH1">
+          <el-form-item label="转租商户编号" >
             <el-input size="small" v-model="temp.SHOPBH1"></el-input>
           </el-form-item>
         </el-col>
@@ -321,6 +321,14 @@
             ></el-date-picker>
           </el-form-item>
         </el-col>
+      </el-row>
+       <el-row>
+         <el-col :span=8>
+           <el-form-item label="物业费备注" >
+            <el-input size="small" v-model="temp.REMARK">
+            </el-input>
+          </el-form-item>
+         </el-col>
       </el-row>
     </el-card>
     <div style="text-align:center;margin-top:20px;margin-bottom:20px;">
@@ -677,6 +685,7 @@ export default {
         WYJFFS: "",
         WYJZSJ: "",
         WYJZ: "",
+        REMARK:"",
         //以下是商户信息
         CZ_SHID: "",
         ZHXM: "",
@@ -788,6 +797,7 @@ export default {
         WYJFFS: "",
         WYJZSJ: "",
         WYJZ: "",
+        REMARK:"",
         //以下是商户信息
         CZ_SHID: "",
         ZHXM: "",

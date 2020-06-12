@@ -128,7 +128,7 @@
           <span>{{scope.row.JFJE}}</span>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="有效期起"  show-overflow-tooltip>
+      <el-table-column align="center" label="有效期起" show-overflow-tooltip>
         <template slot-scope="scope">{{scope.row.YXQS|parseTime}}</template>
       </el-table-column>
       <el-table-column align="center" label="有效期止" show-overflow-tooltip>
@@ -144,7 +144,7 @@
           <span>{{scope.row.JFCS}}</span>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="催缴日期" show-overflow-tooltip> 
+      <el-table-column align="center" label="催缴日期" show-overflow-tooltip>
         <template slot-scope="scope">
           <span>{{scope.row.JFRQ|parseTime}}</span>
         </template>
@@ -179,7 +179,7 @@
         :total="total"
       ></el-pagination>
     </div>
-    <el-dialog  title="缴费通知" :visible.sync="innerVisible" append-to-body>
+    <el-dialog title="缴费通知" :visible.sync="innerVisible" append-to-body>
       <el-card class="box-card">
         <h2 style="text-align:center;">缴费通知单</h2>
         <pre style="font-size:18px;">
@@ -202,71 +202,89 @@
       </el-card>
     </el-dialog>
 
-    <el-dialog
-      :visible.sync="editVisible"
-      class="selecttrees"
-      :title="textMap[dialogStatus]"
-    >
-      <el-form ref="dataForm" :model="temp" label-width="120px" >
-        <el-row>
-          <el-col :span="12">
-            <el-form-item label="业主姓名" prop="yezhu">
-              <el-input v-model="temp.ZHXM" disabled></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="房屋编号" prop="fanghao">
-              <el-input v-model="temp.FWBH" disabled></el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="12">
-            <el-form-item label="缴费类型">
-              <el-select v-model="temp.JFLX" disabled>
-                <el-option label="物业费" value="0"></el-option>
-                <el-option label="水费" value="1"></el-option>
-                <el-option label="电费" value="2"></el-option>
-              </el-select>
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="房屋名称" prop="name">
-              <el-input v-model="temp.FWMC" disabled></el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="12">
-            <el-form-item label="费用金额" prop="jiaonajine">
-              <el-input v-model="temp.JFJE" :disabled="temp.JFLX==='0'"></el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="12">
-            <el-form-item label="有效期（起）" prop="YXQQ">
-              <el-date-picker v-model="temp.YXQS" disabled></el-date-picker>
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="有效期（止）" prop="YXQZ">
-              <el-date-picker v-model="temp.YXQZ" disabled></el-date-picker>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <!-- <el-row>
+    <el-dialog :visible.sync="editVisible" class="selecttrees" :title="textMap[dialogStatus]">
+      <el-card>
+        <el-form ref="dataForm" :model="temp" label-width="120px" :rules="rules">
+          <el-row>
+            <el-col :span="12">
+              <el-form-item label="业主姓名">
+                <el-input v-model="temp.ZHXM" disabled></el-input>
+              </el-form-item>
+            </el-col>
+            <el-col :span="12">
+              <el-form-item label="房屋编号">
+                <el-input v-model="temp.FWBH" disabled></el-input>
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="12">
+              <el-form-item label="缴费类型">
+                <el-select v-model="temp.JFLX" disabled style="width:100%">
+                  <el-option label="物业费" value="0"></el-option>
+                  <el-option label="水费" value="1"></el-option>
+                  <el-option label="电费" value="2"></el-option>
+                </el-select>
+              </el-form-item>
+            </el-col>
+            <el-col :span="12">
+              <el-form-item label="房屋名称">
+                <el-input v-model="temp.FWMC" disabled></el-input>
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="12">
+              <el-form-item label="费用金额(物业费)" v-if="temp.JFLX==='0'">
+                <el-input v-model="temp.JFJE" disabled>
+                  <template slot="append">元</template>
+                </el-input>
+              </el-form-item>
+              <el-form-item label="费用金额(水费)" v-if="temp.JFLX==='1'">
+                <el-input v-model="TotalWaterFee" disabled>
+                  <template slot="append">元</template>
+                </el-input>
+              </el-form-item>
+              <el-form-item label="费用金额(电费)" v-if="temp.JFLX==='2'">
+                <el-input v-model="temp.JFJE">
+                  <template slot="append">元</template>
+                </el-input>
+              </el-form-item>
+            </el-col>
+            <el-col :span="12">
+              <el-form-item label="购买数量" v-if="temp.JFLX==='1'" prop="GMSL">
+                <el-input v-model.number="temp.GMSL">
+                  <template slot="prepend">{{PER_WATER_PRICE}}元/吨</template>
+                  <template slot="append">吨</template>
+                </el-input>
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="12">
+              <el-form-item label="有效期（起）">
+                <el-date-picker v-model="temp.YXQS" disabled style="width:100%"></el-date-picker>
+              </el-form-item>
+            </el-col>
+            <el-col :span="12">
+              <el-form-item label="有效期（止）">
+                <el-date-picker v-model="temp.YXQZ" disabled style="width:100%"></el-date-picker>
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <!-- <el-row>
           <el-col :span="24">
             <el-form-item label="备注" prop="REMARK">
               <el-input v-model="temp.REMARK" type="textarea" :rows="3"></el-input>
             </el-form-item>
           </el-col>
-        </el-row>-->
-      </el-form>
-      <div style="text-align:center;margin-top:20px;">
-        <el-button @click="editVisible = false">取消</el-button>
-        <el-button type="primary" @click="handleFee">确定</el-button>
-      </div>
+          </el-row>-->
+        </el-form>
+        <div style="text-align:center;margin-top:20px;">
+          <el-button @click="editVisible = false">取消</el-button>
+          <el-button type="primary" @click="handleFee">确定</el-button>
+        </div>
+      </el-card>
     </el-dialog>
     <el-dialog :visible.sync="createdialogVisible" class="selecttrees" title="选择生成方式" width="20%">
       <el-card>
@@ -296,7 +314,8 @@ import {
   PushNotification,
   ConfirmFee,
   ExportFeeResult,
-  DeleteRecord
+  DeleteRecord,
+  GetPER_WATER_PRICE
 } from "@/app_src/api/SFGL/SFGL";
 import { parseTime } from "@/frame_src/utils";
 
@@ -320,6 +339,7 @@ const TZKeyValue = TZOptions.reduce((acc, cur) => {
 }, {});
 export default {
   name: "DJFQR",
+
   data() {
     return {
       listLoading: false,
@@ -351,19 +371,16 @@ export default {
         }
       ],
       anquan: "",
+      PER_WATER_PRICE: 0,
       selectList: [],
       list: [],
+      temp: {},
       tableKey: 0,
-      temp: {
-        yezhu: "",
-        fanghao: "",
-        jflx: "",
-        name: "",
-        jfrq: "",
-        jiaonajine: "",
-        YXQQ: "",
-        YXQZ: "",
-        REMARK: ""
+      rules: {
+        GMSL: [
+          { required: true, message: "购买数量不能为空" },
+          { type: "number", message: "购买数量必须为整数" }
+        ]
       },
       textMap: {
         update: "确认缴费",
@@ -413,32 +430,60 @@ export default {
       });
     },
     handleFee() {
-      let temp = {
-        RECORD_ID: this.temp.RECORD_ID,
-        JFLX: this.temp.JFLX,
-        JFJE: this.temp.JFJE
-      };
-      ConfirmFee(temp).then(response => {
-        if (response.data.code === 2000) {
-          this.$notify({
-            position: "bottom-right",
-            title: "成功",
-            message: response.data.message,
-            type: "success",
-            duration: 2000
-          });
-          this.editVisible = false;
-          this.getList();
-        } else {
-          this.listLoading = false;
-          this.$notify({
-            position: "bottom-right",
-            title: "失败",
-            message: response.data.message,
-            type: "error",
-            duration: 2000
-          });
+      let MapJFLX = new Map([
+        ["0", "物业费"],
+        ["1", "水费"],
+        ["2", "电费"]
+      ]);
+      let MapJFJE=new Map([
+        ["0",this.temp.JFJE],
+        ["1",this.TotalWaterFee],
+        ["2",this.temp.JFJE]
+      ]);
+      this.$confirm(
+        "您确定执行本次手动缴费操作吗？本次的缴费类型为"+MapJFLX.get(this.temp.JFLX)+",缴费金额为"+MapJFJE.get(this.temp.JFLX)+"元",
+        "警告",
+        {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning"
         }
+      ).then(() => {
+        this.$refs["dataForm"].validate(valid => {
+          if (valid) {
+            let temp = {
+              RECORD_ID: this.temp.RECORD_ID,
+              JFLX: this.temp.JFLX,
+              JFJE: this.temp.JFJE
+            };
+            if (this.temp.JFLX.toString() === "1") {
+              temp.GMSL = this.temp.GMSL;
+            } else {
+            }
+            ConfirmFee(temp).then(response => {
+              if (response.data.code === 2000) {
+                this.$notify({
+                  position: "bottom-right",
+                  title: "成功",
+                  message: response.data.message,
+                  type: "success",
+                  duration: 2000
+                });
+                this.editVisible = false;
+                this.getList();
+              } else {
+                this.listLoading = false;
+                this.$notify({
+                  position: "bottom-right",
+                  title: "失败",
+                  message: response.data.message,
+                  type: "error",
+                  duration: 2000
+                });
+              }
+            });
+          }
+        });
       });
     },
     handelDel(row) {
@@ -536,19 +581,6 @@ export default {
         }
       });
     },
-    resetTemp() {
-      this.temp = {
-        yezhu: "",
-        fanghao: "",
-        jflx: "",
-        name: "",
-        jfrq: "",
-        jiaonajine: "",
-        YXQQ: "",
-        YXQZ: "",
-        REMARK: ""
-      };
-    },
     getList() {
       this.listLoading = true;
       GetFeeResult(this.listQuery).then(response => {
@@ -584,12 +616,15 @@ export default {
       this.innerVisible = true;
     },
     handleCreate(row) {
-      this.resetTemp();
+      this.temp = {};
       this.temp = Object.assign({}, row);
       this.editVisible = true;
       this.dialogStatus = "create";
       if (this.$refs["dataForm"] !== undefined) {
         this.$refs["dataForm"].resetFields();
+      }
+      if (row.JFLX === 1 || this.PER_WATER_PRICE === 0) {
+        this.GetPER_WATER_PRICE();
       }
     },
     handleConfirm() {
@@ -672,6 +707,13 @@ export default {
             duration: 3000
           });
           //   });
+        }
+      });
+    },
+    GetPER_WATER_PRICE() {
+      GetPER_WATER_PRICE().then(res => {
+        if (res.data.code === 2000) {
+          this.PER_WATER_PRICE = parseFloat(res.data.items[0].CONF_VALUE);
         }
       });
     },
@@ -762,8 +804,19 @@ export default {
       );
     }
   },
+  computed: {
+    TotalWaterFee: function() {
+      let TotalFee = this.PER_WATER_PRICE * this.temp.GMSL * 100;
+      if (Number.isNaN(TotalFee)) {
+        return 0;
+      } else {
+        return Math.round(TotalFee) / 100;
+      }
+    }
+  },
   mounted() {
     this.getList();
+    this.GetPER_WATER_PRICE();
   },
   filters: {
     changeType(val) {

@@ -248,6 +248,13 @@
             </el-form-item>
           </el-col>
         </el-row>
+        <el-row>
+          <el-col :span="8">
+            <el-form-item label="物业费备注">
+              <el-input size="small" v-model="temp.REMARK" disabled></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
       </el-card>
 
       <el-dialog
@@ -368,7 +375,7 @@
             </el-form-item>
           </el-col>
           <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
-            <el-form-item label="商户编号" prop="SHOPBH1">
+            <el-form-item label="商户编号">
               <el-input size="small" v-model="newtemp.SHOPBH1"></el-input>
             </el-form-item>
           </el-col>
@@ -499,6 +506,13 @@
                 v-model="newtemp.WYJZSJ1"
                 value-format="yyyy-MM-dd"
               ></el-date-picker>
+            </el-form-item>
+          </el-col>
+        </el-row>
+         <el-row>
+          <el-col :span="8">
+            <el-form-item label="物业费备注">
+              <el-input size="small" v-model="newtemp.REMARK1" ></el-input>
             </el-form-item>
           </el-col>
         </el-row>

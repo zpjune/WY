@@ -292,7 +292,7 @@
             </div>
 
             <!--表单form-->
-            <el-dialog :title="textMap[dialogStatus]" width="40%" :visible.sync="dialogFormVisible">
+            <el-dialog :title="textMap[dialogStatus]" width="60%" :visible.sync="dialogFormVisible">
               <el-form
                 :rules="rules"
                 ref="dataForm"
